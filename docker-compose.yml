@@ -10,7 +10,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./data:/var/lib/mysql
+      - ./docker/mariadb-data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin
