@@ -1,0 +1,5 @@
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# * @Projecte-UrbanTree/coordinacio @Projecte-UrbanTree/correctors-ortografics
+* @Projecte-UrbanTree/coordinacio
+/.github/ @Projecte-UrbanTree/coordinacio
