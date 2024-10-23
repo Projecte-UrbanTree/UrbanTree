@@ -1,0 +1,18 @@
+#
+# This file defines the services that make up the application
+# Each service is a container that runs a single process
+# Each container is built from an image, according to the Dockerfile specified in the build section
+# For more information, see: https://docs.docker.com/compose/compose-file/
+#
+
+version: '3.9'  # Specify the Docker Compose version
+services:
+  web:  # Define the web service
+    build:  # Define how to build the Docker image
+      context: .  # Directory containing the Dockerfile
+      dockerfile: Dockerfile  # Specify the Dockerfile (optional if named Dockerfile)
+    ports:  # Specify port mappings
+      - "8000:80"  # Map port 8000 on the host to port 80 in the container
+    volumes:  # Define volume mounts
+      - "./src:/var/www/html"  # Mount the local ./src directory to /var/www/html in the container
+    restart: always  # Always restart the container if it stops
