@@ -1,0 +1,3 @@
+[submodule ".devcontainer/mariadb-data"]
+	path = .devcontainer/mariadb-data
+	url = https://github.com/Projecte-UrbanTree/mariadb-data
