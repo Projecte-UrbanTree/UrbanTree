@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ../..:/workspaces:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:phpmyadmin
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  db:
+    image: mariadb:lts
+    restart: unless-stopped
+    volumes:
+      - ./mariadb-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: projecte
+      MYSQL_DATABASE: phpmyadmin
+
+    # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: unless-stopped
+    environment:
+      - APACHE_PORT=8090
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=projecte
+      - UPLOAD_LIMIT=50M
+    network_mode: service:db
