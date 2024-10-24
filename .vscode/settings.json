@@ -2,9 +2,10 @@
   "editor.formatOnSave": true,
   "editor.guides.bracketPairs": true,
   "editor.inlineSuggest.enabled": true,
-  "files.autoSave": "afterDelay",
   "files.associations": {
-    "*.md": "markdown"
+    "*.md": "markdown",
+    "CODEOWNERS": "plaintext"
   },
+  "files.autoSave": "afterDelay",
   "git.autofetch": true
 }
