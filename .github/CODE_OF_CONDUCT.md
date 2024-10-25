@@ -113,7 +113,6 @@ individual, or aggression toward or disparagement of classes of individuals.
 community.
 
 <!-- omit in toc -->
-
 ## Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage],
@@ -201,7 +200,6 @@ Los administradores de la comunidad seguirán estas Guías de Impacto en la Comu
 **Consecuencia**: Una expulsión permanente de cualquier tipo de interacción pública con la comunidad del proyecto.
 
 <!-- omit in toc -->
-
 ## Atribución
 
 Este Código de Conducta es una adaptación del [Contributor Covenant][homepage], versión 2.1,
@@ -283,7 +281,6 @@ Els administradors de la comunitat seguiran aquestes Pautes d'Impacte en la Comu
 **Conseqüència**: Una restricció (**ban**) permanent de qualsevol forma d'interacció pública amb la comunitat del projecte.
 
 <!-- omit in toc -->
-
 ## Atribució
 
 Aquest Codi de Conducta és una adaptació del [Contributor Covenant][homepage], versió 2.0, disponible a <https://www.contributor-covenant.org/es/version/2/0/code_of_conduct.html>
