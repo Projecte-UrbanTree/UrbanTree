@@ -1,0 +1,11 @@
+{
+    "name": "projecte-urbantree/urbantree",
+    "description": "Aplicatiu web per la gestió del manteniment d'arbrat urbà i periurbà",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "ProjecteUrbantree\\Urbantree\\": "app/"
+        }
+    },
+    "require": {}
+}
