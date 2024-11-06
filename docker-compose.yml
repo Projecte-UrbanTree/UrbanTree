@@ -35,10 +35,9 @@ services:
       - mariadb
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin:latest
     environment:
       PMA_HOST: mariadb
-      PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: dev123
     ports:
       - "8080:80"
