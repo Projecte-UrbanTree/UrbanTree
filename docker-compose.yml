@@ -6,8 +6,8 @@
 #
 
 services:
-  mysql:
-    image: mysql:5.7
+  mariadb:
+    image: mariadb:latest
     environment:
       MYSQL_ROOT_PASSWORD: dev123
       MYSQL_DATABASE: demo_db
@@ -32,12 +32,12 @@ services:
     networks:
       - app-network
     depends_on:
-      - mysql
+      - mariadb
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: mariadb
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: dev123
     ports:
@@ -45,7 +45,7 @@ services:
     networks:
       - app-network
     depends_on:
-      - mysql
+      - mariadb
 
 networks:
   app-network:
