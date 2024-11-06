@@ -38,5 +38,4 @@
 # End of https://www.toptal.com/developers/gitignore/api/git,visualstudiocode
 
 # Ignore Composer files
-composer.lock
 src/vendor
