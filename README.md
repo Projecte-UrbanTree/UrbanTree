@@ -24,4 +24,5 @@ Aplicatiu web per la gestió del manteniment d'arbrat urbà i periurbà
 Això crearà els contenidors necessaris per al projecte i posarà en marxa l'aplicació.
 
 Accedir a l'aplicació en entorn de desenvolupament: [http://localhost:8000](http://localhost:8000)
+
 Accedir al phpMyAdmin per: [http://localhost:8080](http://localhost:8080)
