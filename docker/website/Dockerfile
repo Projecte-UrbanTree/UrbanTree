@@ -11,9 +11,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set permissions for the public directory
 RUN chown -R www-data:www-data /var/www/html
 
-# Set up working directory
-WORKDIR /var/www/html
-
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
