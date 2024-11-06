@@ -2,15 +2,11 @@
 FROM php:8.3-apache
 
 # Install Xdebug and MySQL extension with cleanup
-#RUN apt-get update && apt-get install -y --no-install-recommends \
-#    && pecl install xdebug \
-#    && docker-php-ext-enable xdebug \
-#    && docker-php-ext-install pdo_mysql \
-#    && rm -rf /var/lib/apt/lists/*
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
-     && docker-php-ext-install mysqli pdo_mysql \
-     && rm -rf /var/lib/apt/lists/*
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && docker-php-ext-install mysqli pdo_mysql \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set permissions for the public directory
 RUN chown -R www-data:www-data /var/www/html
