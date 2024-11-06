@@ -9,7 +9,7 @@ services:
   mysql:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: silence_is_golden
+      MYSQL_ROOT_PASSWORD: dev123
       MYSQL_DATABASE: demo_db
       MYSQL_USER: demo_user
       MYSQL_PASSWORD: demo_pass
@@ -39,7 +39,7 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: silence_is_golden
+      MYSQL_ROOT_PASSWORD: dev123
     ports:
       - "8080:80"
     networks:
