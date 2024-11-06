@@ -1,5 +1,8 @@
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 
 # * @Projecte-UrbanTree/coordinacio @Projecte-UrbanTree/correctors-ortografics
-* @Projecte-UrbanTree/coordinacio
-/.github/ @Projecte-UrbanTree/coordinacio
+* @Projecte-UrbanTree/alumnat
+/.git* @Projecte-UrbanTree/coordinacio @Projecte-UrbanTree/professorat
+/.vscode @Projecte-UrbanTree/coordinacio @Projecte-UrbanTree/testers-de-qualitat
+
+/public/assets/ @Projecte-UrbanTree/coordinacio @Projecte-UrbanTree/especialistes-multimedia
