@@ -6,7 +6,7 @@ Aplicatiu web per la gestió del manteniment d'arbrat urbà i periurbà
 
 ## Instruccions d'instal·lació
 
-1. **Instal·lar les dependències de Composer:**
+1. **Preparació de l'entorn de desenvolupament:**
    Abans de començar, has de garantir que tens Composer instal·lat a la teva màquina. Si no el tens, pots descarregar-lo des de [aquí](https://getcomposer.org/).
 
    Executa el següent comandament per instal·lar les dependències del projecte:
