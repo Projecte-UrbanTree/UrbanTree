@@ -6,3 +6,4 @@
 /.vscode @Projecte-UrbanTree/coordinacio @Projecte-UrbanTree/testers-de-qualitat
 
 /public/assets/ @Projecte-UrbanTree/coordinacio @Projecte-UrbanTree/especialistes-multimedia
+*.md @Projecte-UrbanTree/coordinacio @Projecte-UrbanTree/correctors-ortografics
