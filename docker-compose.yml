@@ -16,14 +16,14 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - "./docker/database/start-scripts:/docker-entrypoint-initdb.d"
+      - "./docker/mariadb/start-scripts:/docker-entrypoint-initdb.d"
     networks:
       - app-network
 
   apache:
     build:
       context: .
-      dockerfile: ./docker/website/Dockerfile
+      dockerfile: ./docker/apache/Dockerfile
     ports:
       - "8000:80"
     volumes:

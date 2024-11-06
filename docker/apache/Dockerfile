@@ -15,7 +15,7 @@ RUN chown -R www-data:www-data /var/www/html
 RUN a2enmod rewrite
 
 # Copy the local xdebug.ini file to the specified location in the container
-COPY ./docker/website/conf.d/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY ./docker/apache/conf.d/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Copy custom-apache.conf to the container
-COPY ./docker/website/conf.d/custom-apache.conf /etc/apache2/sites-available/000-default.conf
+COPY ./docker/apache/conf.d/custom-apache.conf /etc/apache2/sites-available/000-default.conf
