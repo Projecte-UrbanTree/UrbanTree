@@ -111,7 +111,7 @@ create table tasks (
   foreign key (part_id) references parts(id)
 );
 
-create table workers_task (
+create table worker_tasks (
   id int primary key,
   task_id int,
   worker_id int,
@@ -119,7 +119,7 @@ create table workers_task (
   foreign key (worker_id) references workers(id)
 );
 
-create table sensor (
+create table sensors (
   id int auto_increment primary key,
   entidad_vegetal int,
   element_id int,
@@ -137,5 +137,5 @@ create table sensorhistory (
   humedad float,
   inclination float,
   created_at timestamp default current_timestamp,
-  foreign key (sensor_id) references sensor(id)
+  foreign key (sensor_id) references sensors(id)
 );
