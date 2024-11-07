@@ -1,12 +1,18 @@
 <?php
 
-require '../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+use App\Core\Database;
 
 echo 'Testing our Docker setup for UrbanTree <br><br>';
 
 echo 'MySQL connection test: ';
-$mysql = new mysqli('mariadb', 'demo_user', 'demo_pass', 'demo_db');
-$result = $mysql->query('SELECT * FROM demo_table');
+
+$db = Database::connect();
+$result = $db->query('SELECT * FROM demo_table');
 
 while ($row = $result->fetch_assoc()) {
     echo $row['name'] . PHP_EOL;
