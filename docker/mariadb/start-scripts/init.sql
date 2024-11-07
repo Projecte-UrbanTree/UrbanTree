@@ -130,7 +130,7 @@ create table sensors (
   foreign key (element_id) references elements(id)
 );
 
-create table sensorhistory (
+create table sensor_history (
   id int auto_increment primary key,
   sensor_id int,
   temperature float,
