@@ -5,14 +5,47 @@
 # For more information, see: https://docs.docker.com/compose/compose-file/
 #
 
-version: '3.9'  # Specify the Docker Compose version
 services:
-  web:  # Define the web service
-    build:  # Define how to build the Docker image
-      context: .  # Directory containing the Dockerfile
-      dockerfile: Dockerfile  # Specify the Dockerfile (optional if named Dockerfile)
-    ports:  # Specify port mappings
-      - "8000:80"  # Map port 8000 on the host to port 80 in the container
-    volumes:  # Define volume mounts
-      - "./src:/var/www/html"  # Mount the local ./src directory to /var/www/html in the container
-    restart: always  # Always restart the container if it stops
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: dev123
+      MYSQL_DATABASE: demo_db
+      MYSQL_USER: demo_user
+      MYSQL_PASSWORD: demo_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./docker/mariadb/start-scripts:/docker-entrypoint-initdb.d"
+    networks:
+      - app-network
+
+  apache:
+    build:
+      context: .
+      dockerfile: ./docker/apache/Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - "./src:/var/www/html"
+    restart: always
+    networks:
+      - app-network
+    depends_on:
+      - mariadb
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: dev123
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+    depends_on:
+      - mariadb
+
+networks:
+  app-network:
+    driver: bridge

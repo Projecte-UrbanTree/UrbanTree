@@ -1,0 +1,19 @@
+{
+    "name": "daw-iesmontsia/urban-tree",
+    "description": "Aplicatiu web per la gestió del manteniment d'arbrat urbà i periurbà.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/app"
+        }
+    },
+    "config": {
+        "vendor-dir": "src/vendor" 
+    },
+    "authors": [
+        {
+            "name": "DAW Ies Montsià"
+        }
+    ],
+    "require": {}
+}

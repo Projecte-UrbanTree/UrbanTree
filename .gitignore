@@ -1,5 +1,14 @@
-# Created by https://www.toptal.com/developers/gitignore/api/git,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=git,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/git,visualstudiocode,composer
+# Edit at https://www.toptal.com/developers/gitignore?templates=git,visualstudiocode,composer
+
+### Composer ###
+composer.phar
+#! EDITED ↓
+/src/vendor/
+
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -35,4 +44,4 @@
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/git,visualstudiocode
+# End of https://www.toptal.com/developers/gitignore/api/git,visualstudiocode,composer
