@@ -18,13 +18,13 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 - [Code of Conduct](#code-of-conduct)
 - [I Have a Question](#i-have-a-question)
 - [I Want To Contribute](#i-want-to-contribute)
-	- [Reporting Bugs](#reporting-bugs)
-	- [Suggesting Enhancements](#suggesting-enhancements)
-	- [Your First Code Contribution](#your-first-code-contribution)
-	- [Improving The Documentation](#improving-the-documentation)
+  - [Reporting Bugs](#reporting-bugs)
+  - [Suggesting Enhancements](#suggesting-enhancements)
+  - [Your First Code Contribution](#your-first-code-contribution)
+  - [Improving The Documentation](#improving-the-documentation)
 - [Styleguides](#styleguides)
-	- [Commit Messages](#commit-messages)
-	- [Naming Conventions](#naming-conventions)
+  - [Commit Messages](#commit-messages)
+  - [Naming Conventions](#naming-conventions)
 
 ## Code of Conduct
 
@@ -120,29 +120,30 @@ Enhancement suggestions are tracked as [GitHub issues][Issues].
 
 ### Your First Code Contribution
 
+<!-- TODO
+include Setup of env, IDE and typical getting started instructions?
+-->
+
 1. **Preparation of the development environment:**
+   Before starting, you need to ensure that you have Composer installed in your machine. If you don't have it, you can install it from [here](https://getcomposer.org/).
 
- Before starting, you need to ensure that u have Composer installed in your machine. If you dont have it, you can install it from [here](https://getcomposer.org/)
-
- 
- Run the following command to install the project dependencies:
+   Run the following command to install the project dependencies:
 
    ```bash
    composer install
    ```
 
 2. **Start the environment with Docker:**
-   "Once the dependencies are installed, you can start the development environment using Docker. Run the following command:"
+   Once the dependencies are installed, you can start the development environment using Docker. Run the following command:
 
    ```bash
    docker compose up
    ```
-This will create the necessary containers for the project and start the application.
 
-<!-- TODO
-include Setup of env, IDE and typical getting started instructions?
--->
+   This will create the necessary containers for the project and start the application.
 
+3. **Development:**
+   Now you can start developing your feature or fixing a bug. You can find the source code in the `src` directory.
 
 ### Improving The Documentation
 
