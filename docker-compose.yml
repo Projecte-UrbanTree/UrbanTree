@@ -6,46 +6,79 @@
 #
 
 services:
-  mariadb:
-    image: mariadb:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: dev123
-      MYSQL_DATABASE: demo_db
-      MYSQL_USER: demo_user
-      MYSQL_PASSWORD: demo_pass
-    ports:
-      - "3306:3306"
-    volumes:
-      - "./docker/mariadb/start-scripts:/docker-entrypoint-initdb.d"
-    networks:
-      - app-network
-
-  apache:
+  server:
     build:
       context: .
-      dockerfile: ./docker/apache/Dockerfile
+      dockerfile: ./docker/server/Dockerfile
+      target: development
     ports:
-      - "8000:80"
-    volumes:
-      - "./src:/var/www/html"
-    restart: always
+      - 8000:80
     networks:
       - app-network
     depends_on:
-      - mariadb
+      database:
+        condition: service_healthy
+    secrets:
+      - database-password
+    environment:
+      - PASSWORD_FILE_PATH=/run/secrets/database-password
+      - DB_HOST=database
+      - DB_NAME=urbantree
+      - DB_USER=root
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /var/www/html
+
+  database:
+    build:
+      context: .
+      dockerfile: ./docker/database/Dockerfile
+    restart: always
+    user: root
+    secrets:
+      - database-password
+    networks:
+      - app-network
+    volumes:
+      - database-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/database-password
+      MYSQL_DATABASE: urbantree
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "/usr/local/bin/healthcheck.sh",
+          "--su-mysql",
+          "--connect",
+          "--innodb_initialized",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   phpmyadmin:
     image: phpmyadmin:latest
-    environment:
-      PMA_HOST: mariadb
-      MYSQL_ROOT_PASSWORD: dev123
     ports:
       - "8080:80"
     networks:
       - app-network
     depends_on:
-      - mariadb
+      - database
+    environment:
+      PMA_HOST: database
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  database-data:
+
+secrets:
+  database-password:
+    file: docker/secrets/database-password.txt

@@ -1,0 +1,1 @@
+<!-- Per alguna raó el .htaccess no funciona si no existeix aquest fitxer buit -->
