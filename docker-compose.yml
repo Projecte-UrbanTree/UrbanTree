@@ -41,8 +41,9 @@ services:
       - database-password
     networks:
       - app-network
-    volumes:
-      - database-data:/var/lib/mysql
+    #* Uncomment the following lines to persist the database data
+    # volumes:
+    #   - database-data:/var/lib/mysql
     ports:
       - "3306:3306"
     environment:
