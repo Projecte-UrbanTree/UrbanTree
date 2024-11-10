@@ -1,13 +1,21 @@
 <?php
 
-require '../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Core\Database;
 
 echo 'Testing our Docker setup for UrbanTree <br><br>';
 
 echo 'MySQL connection test: ';
-$mysql = new mysqli('mariadb', 'demo_user', 'demo_pass', 'demo_db');
-$result = $mysql->query('SELECT * FROM demo_table');
-
-while ($row = $result->fetch_assoc()) {
-    echo $row['name'] . PHP_EOL;
+$db = Database::connect();
+if ($db) {
+    echo 'Success';
+} else {
+    echo 'Failed';
 }
+
+// $result = $mysql->query('SELECT * FROM demo_table');
+
+// while ($row = $result->fetch_assoc()) {
+//     echo $row['name'] . PHP_EOL;
+// }

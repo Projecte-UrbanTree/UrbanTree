@@ -18,7 +18,7 @@ Aplicatiu web per a la gestió del manteniment d'arbrat urbà i periurbà.
 2. **Arrencar l'entorn amb Docker:**
    Un cop les dependències estiguin instal·lades, pots arrencar l'entorn de desenvolupament utilitzant Docker. Executa el següent comandament:
    ```bash
-   docker compose up
+   docker-compose up --build --watch --remove-orphans
    ```
 
 Això crearà els contenidors necessaris per al projecte i posarà en marxa l'aplicació.
