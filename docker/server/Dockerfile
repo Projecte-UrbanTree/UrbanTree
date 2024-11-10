@@ -25,6 +25,10 @@ COPY ./src /var/www/html
 #* Create a development stage.
 FROM base AS development
 COPY ./tests /var/www/html/tests
+# Add PECL extensions, and enable Xdebug.
+# See https://github.com/docker-library/docs/tree/master/php#pecl-extensions
+RUN pecl install xdebug-3.2.1 \
+    && docker-php-ext-enable xdebug
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 COPY --from=dev-deps app/vendor/ /var/www/html/vendor
 
