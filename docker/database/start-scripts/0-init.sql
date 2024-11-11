@@ -1,12 +1,11 @@
-
 create table points (
-  id int primary key,
+  id int auto_increment primary key,
   latitude decimal,
   longitude decimal
 );
 
 create table zones (
-  id int primary key,
+  id int auto_increment primary key,
   name varchar(255),
   quantity int,
   postal_code int, 
@@ -15,7 +14,7 @@ create table zones (
 );
 
 create table elements (
-  id int primary key,
+  id int auto_increment primary key,
   name varchar(255),
   latitude decimal,
   longitude decimal,
@@ -25,7 +24,7 @@ create table elements (
 );
 
 create table inventory (
-  id int primary key,
+  id int auto_increment primary key,
   element_id int, 
   zone_id int,   
   foreign key (element_id) references elements(id),
@@ -33,7 +32,7 @@ create table inventory (
 );
 
 create table incidences (
-  id int primary key,
+  id int auto_increment primary key,
   name varchar(255),
   photo varchar(255),
   element_id int, 
@@ -43,12 +42,12 @@ create table incidences (
 );
 
 create table roles (
-  id int primary key,
-  role_name varchar(255) 
+  id int auto_increment primary key,
+  role_name varchar(255)
 );
 
 create table workers (
-  id int primary key,
+  id int auto_increment primary key,
   company varchar(255),
   name varchar(255),
   dni varchar(255) unique, 
@@ -62,7 +61,7 @@ create table workers (
 );
 
 create table work_orders (
-  id int primary key,
+  id int auto_increment primary key,
   name varchar(255),
   created_at timestamp,
   deleted_at timestamp,
@@ -70,13 +69,13 @@ create table work_orders (
 );
 
 create table machines (
-  id int primary key,
+  id int auto_increment primary key,
   name varchar(255),
   basket_size varchar(255) NULL
 );
 
 create table parts (
-  id int primary key,
+  id int auto_increment primary key,
   observation varchar(255),
   quantity int,
   fuel decimal,
@@ -84,7 +83,7 @@ create table parts (
 );
 
 create table routes (
-  id int primary key,
+  id int auto_increment primary key,
   distance float, 
   point_id int,  
   travel_time int,  
@@ -92,7 +91,7 @@ create table routes (
 );
 
 create table tasks (
-  id int primary key,
+  id int auto_increment primary key,
   task_name varchar(255), 
   work_order_id int,      
   description varchar(255),
@@ -112,7 +111,7 @@ create table tasks (
 );
 
 create table worker_tasks (
-  id int primary key,
+  id int auto_increment primary key,
   task_id int,
   worker_id int,
   foreign key (task_id) references tasks(id),
