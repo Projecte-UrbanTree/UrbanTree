@@ -21,15 +21,16 @@ services:
     secrets:
       - database-password
     environment:
-      - PASSWORD_FILE_PATH=/run/secrets/database-password
+      - APP_NAME=UrbanTree
       - DB_HOST=database
       - DB_NAME=urbantree
       - DB_USER=root
-    develop:
-      watch:
-        - action: sync
-          path: ./src
-          target: /var/www/html
+      - PASSWORD_FILE_PATH=/run/secrets/database-password
+      - LOG_FILE_PATH=/var/www/html/storage/logs/app.log
+    volumes:
+      - ./src:/var/www/html
+      - /var/www/html/vendor
+    entrypoint: /bin/sh -c "export DB_PASS=$(cat /run/secrets/database-password) && exec apache2-foreground"
 
   database:
     build:
@@ -41,8 +42,6 @@ services:
       - database-password
     networks:
       - app-network
-    volumes:
-      - database-data:/var/lib/mysql
     ports:
       - "3306:3306"
     environment:
@@ -77,7 +76,8 @@ networks:
     driver: bridge
 
 volumes:
-  database-data:
+  vendor-data:
+    driver: local
 
 secrets:
   database-password:
