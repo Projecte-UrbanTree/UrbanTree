@@ -16,7 +16,7 @@ class Router
     {
         // Check for direct match first
         if (isset($this->routes[$requestMethod][$requestUri])) {
-            return $this->callRoute($this->routes[$requestMethod][$requestUri]);
+            return $this->callRoute($this->routes[$requestMethod][$requestUri], $requestMethod === 'POST' ? $_POST : []);
         }
 
         // If no direct match, check for dynamic routes with parameters
@@ -27,7 +27,7 @@ class Router
             if (preg_match($pattern, $requestUri, $matches)) {
                 array_shift($matches); // Remove the full match
                 $params = $this->extractParams($route, $matches);
-                return $this->callRoute($routeInfo, $params);
+                return $this->callRoute($routeInfo, $params, $requestMethod === 'POST' ? $_POST : []);
             }
         }
 
@@ -40,10 +40,15 @@ class Router
         return array_combine($paramNames[1], $matches);
     }
 
-    protected function callRoute($routeInfo, $params = [])
+    protected function callRoute($routeInfo, $params = [], $postData = [])
     {
         $controller = new $routeInfo['controller']();
         $method = $routeInfo['method'];
-        $controller->$method(...array_values($params));
+        
+        // Combine route parameters and POST data
+        $arguments = array_merge(array_values($params), [$postData]);
+        
+        // Unpack the combined array into the method call
+        $controller->$method(...$arguments);
     }
 }

@@ -13,13 +13,17 @@
  * 
  **/
 
-use App\Core\View;
 use App\Controllers\HomeController;
+use App\Controllers\AuthController;
 
 return $routes = [
     "GET" => [ 
         "/" => [
             "controller" => HomeController::class,
+            "method" => "index"
+        ],
+        "/login" => [
+            "controller" => AuthController::class,
             "method" => "index"
         ],
     ],
