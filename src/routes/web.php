@@ -26,9 +26,17 @@ return $routes = [
             "controller" => AuthController::class,
             "method" => "index"
         ],
+<<<<<<< Updated upstream
         "/exemple" => [
             "controller" => HomeController::class,
             "method" => "exemple"
+=======
+        [
+            "/incidences" => [
+                "controller" => HomeController::class,
+                "method" => "incidences"
+            ],
+>>>>>>> Stashed changes
         ],
     ],
 ];
