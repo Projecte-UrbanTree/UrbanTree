@@ -12,7 +12,8 @@ class IncidenceController
 {
     public function index()
     {
-        $incidences = Incidence::getAllIncidences();
+        $incidences = Incidence::getAll();
+        
         View::render([
             "view" => "Incidence",
             "title" => "Incidences",
