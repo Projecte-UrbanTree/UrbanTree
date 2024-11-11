@@ -21,10 +21,12 @@ services:
     secrets:
       - database-password
     environment:
-      - PASSWORD_FILE_PATH=/run/secrets/database-password
+      - APP_NAME=UrbanTree
       - DB_HOST=database
       - DB_NAME=urbantree
       - DB_USER=root
+      - PASSWORD_FILE_PATH=/run/secrets/database-password
+      - LOG_FILE_PATH=/var/www/html/storage/logs/app.log
     develop:
       watch:
         - action: sync
@@ -32,18 +34,16 @@ services:
           target: /var/www/html
 
   database:
-    build:
-      context: .
-      dockerfile: ./docker/database/Dockerfile
+    image: mariadb:latest
     restart: always
     user: root
     secrets:
       - database-password
     networks:
       - app-network
-    #* Uncomment the following lines to persist the database data
-    # volumes:
-    #   - database-data:/var/lib/mysql
+    volumes:
+      # - database-data:/var/lib/mysql
+      - ./docker/database/start-scripts/:/docker-entrypoint-initdb.d/
     ports:
       - "3306:3306"
     environment:

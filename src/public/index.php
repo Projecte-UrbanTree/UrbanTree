@@ -1,21 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once '../bootstrap/app.php';
 
-use App\Core\Database;
+use App\Core\Router;
 
-echo 'Testing our Docker setup for UrbanTree <br><br>';
-
-echo 'MySQL connection test: ';
-$db = Database::connect();
-if ($db) {
-    echo 'Success';
-} else {
-    echo 'Failed';
-}
-
-// $result = $mysql->query('SELECT * FROM demo_table');
-
-// while ($row = $result->fetch_assoc()) {
-//     echo $row['name'] . PHP_EOL;
-// }
+$router = new Router();
+$router->load('../routes/web.php');
+$router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

@@ -3,42 +3,44 @@
 namespace App\Core;
 
 use PDO;
+use PDOException;
 
 class Database
 {
-	public static function connect()
-	{
-		// Read the database connection parameters from environment variables
-		$db_host = getenv('DB_HOST');
-		$db_name = getenv('DB_NAME');
-		$db_user = getenv('DB_USER');
+    private static $instance = null;
 
-		// Read the password file path from an environment variable
-		$password_file_path = getenv('PASSWORD_FILE_PATH');
+    public static function connect()
+    {
+        if (!self::$instance) {
+            try {
+                $password_file_path = getenv('PASSWORD_FILE_PATH');
 
-		// Read the password from the file
-		$db_pass = trim(file_get_contents($password_file_path));
+                // Read the password from the file
+                $db_pass = trim(file_get_contents($password_file_path));
 
-		// Create a new PDO instance
-		$db_handle = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
+                self::$instance = new PDO(
+                    "mysql:host=" . getenv('DB_HOST') . ";dbname=" . getenv('DB_NAME'),
+                    getenv('DB_USER'), $db_pass
+                );
+                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                Logger::log("Database connection error: " . $e->getMessage());
+                throw new \Exception("Database connection failed.");
+            }
+        }
+        return self::$instance;
+    }
 
-		// Set the PDO error mode to exception
-		$db_handle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-		return $db_handle;
-	}
-
-	public static function disconnect($db_handle)
-	{
-		return $db_handle = null;
-	}
-
-	public static function query($db_handle, $query)
-	{
-		$result = $db_handle->query($query);
-
-		Database::disconnect($db_handle);
-
-		return $result;
-	}
+    public static function prepareAndExecute($query, $params = [], $fetchMode = PDO::FETCH_ASSOC)
+    {
+        $db = self::connect();
+        try {
+            $stmt = $db->prepare($query);
+            $stmt->execute($params);
+            return $stmt->fetchAll($fetchMode);
+        } catch (PDOException $e) {
+            Logger::log("Database query error: " . $e->getMessage());
+            throw new \Exception("Query failed.");
+        }
+    }
 }

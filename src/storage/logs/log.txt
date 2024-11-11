@@ -1,1 +1,0 @@
-Els logs aniran en fitxers txt en aquest directori.
