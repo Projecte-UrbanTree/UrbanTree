@@ -15,9 +15,10 @@
 
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
+use App\Controllers\IncidenceController;
 
 return $routes = [
-    "GET" => [ 
+    "GET" => [
         "/" => [
             "controller" => HomeController::class,
             "method" => "index"
@@ -26,17 +27,10 @@ return $routes = [
             "controller" => AuthController::class,
             "method" => "index"
         ],
-<<<<<<< Updated upstream
-        "/exemple" => [
-            "controller" => HomeController::class,
-            "method" => "exemple"
-=======
-        [
-            "/incidences" => [
-                "controller" => HomeController::class,
-                "method" => "incidences"
-            ],
->>>>>>> Stashed changes
+        "/incidences" => [
+            "controller" => IncidenceController::class,
+            "method" => "index"
         ],
+
     ],
 ];
