@@ -12,12 +12,12 @@
         <!-- Sidebar -->
         <aside class="bg-gray-800 w-64 flex-shrink-0">
             <div class="text-white text-2xl font-bold p-4 border-b border-gray-700">
-                Dashboard
+                <?php echo getenv('APP_NAME'); ?>
             </div>
             <nav class="mt-4">
-                <a href="#" class="block py-2 px-4 text-white hover:bg-gray-700">Home</a>
-                <a href="#" class="block py-2 px-4 text-white hover:bg-gray-700">Analytics</a>
-                <a href="#" class="block py-2 px-4 text-white hover:bg-gray-700">Settings</a>
+                <a href="/" class="block py-2 px-4 text-white hover:bg-gray-700">Home</a>
+                <a href="#" class="block py-2 px-4 text-white hover:bg-gray-700">Example 1</a>
+                <a href="#" class="block py-2 px-4 text-white hover:bg-gray-700">Example 2</a>
             </nav>
         </aside>
 
