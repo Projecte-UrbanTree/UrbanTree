@@ -27,10 +27,11 @@ services:
       - DB_USER=root
       - PASSWORD_FILE_PATH=/run/secrets/database-password
       - LOG_FILE_PATH=/var/www/html/storage/logs/app.log
-    volumes:
-      - ./src:/var/www/html
-      - /var/www/html/vendor
-    entrypoint: /bin/sh -c "export DB_PASS=$(cat /run/secrets/database-password) && exec apache2-foreground"
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /var/www/html
 
   database:
     image: mariadb:latest
@@ -40,13 +41,14 @@ services:
       - database-password
     networks:
       - app-network
+    volumes:
+      # - database-data:/var/lib/mysql
+      - ./docker/database/start-scripts/:/docker-entrypoint-initdb.d/
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/database-password
       MYSQL_DATABASE: urbantree
-    volumes:
-      - ./docker/database/start-scripts/:/docker-entrypoint-initdb.d/
     healthcheck:
       test:
         [
@@ -76,8 +78,7 @@ networks:
     driver: bridge
 
 volumes:
-  vendor-data:
-    driver: local
+  database-data:
 
 secrets:
   database-password:

@@ -13,10 +13,14 @@ class Database
     {
         if (!self::$instance) {
             try {
+                $password_file_path = getenv('PASSWORD_FILE_PATH');
+
+                // Read the password from the file
+                $db_pass = trim(file_get_contents($password_file_path));
+
                 self::$instance = new PDO(
                     "mysql:host=" . getenv('DB_HOST') . ";dbname=" . getenv('DB_NAME'),
-                    getenv('DB_USER'),
-                    getenv('DB_PASS')
+                    getenv('DB_USER'), $db_pass
                 );
                 self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {

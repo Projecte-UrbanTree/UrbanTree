@@ -17,6 +17,7 @@ RUN --mount=type=bind,source=./composer.json,target=composer.json \
 FROM php:8.2-apache AS base
 RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod rewrite
+COPY ./src /var/www/html
 
 FROM base AS development
 COPY ./tests /var/www/html/tests
