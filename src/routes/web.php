@@ -15,6 +15,7 @@
 
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
+use App\Controllers\ElementController;
 
 return $routes = [
     "GET" => [ 
@@ -26,9 +27,9 @@ return $routes = [
             "controller" => AuthController::class,
             "method" => "index"
         ],
-        "/exemple" => [
-            "controller" => HomeController::class,
-            "method" => "exemple"
-        ],
+        "/element" => [
+            "controller"=>ElementController::class,
+            "method"=>"index"
+        ]
     ],
 ];

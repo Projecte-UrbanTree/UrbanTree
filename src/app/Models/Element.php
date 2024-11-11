@@ -6,15 +6,12 @@ use App\Core\Database;
 use PDO;
 use PDOException;
 
-class Worker
+class Element
 {
     private $id;
-    private $company;
     private $name;
-    private $dni;
-    private $password;
-    private $email;
-    private $role_id;
+    private $latitude;
+    private $longitude;
     private $created_at;
     private $deleted_at;
     private $updated_at;
