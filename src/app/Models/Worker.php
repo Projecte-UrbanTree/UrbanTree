@@ -31,7 +31,11 @@ class Worker
     public static function getAll()
     {
         $query = "SELECT * FROM workers";
-        return Database::prepareAndExecute($query);
+        $results = Database::prepareAndExecute($query);
+        foreach ($results as $key => $value) {
+            $results[$key] = new self($value);
+        }
+        return $results;
     }
 
     // Static method to find a worker by ID
@@ -97,6 +101,41 @@ class Worker
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getDni()
+    {
+        return $this->dni;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getRoleId()
+    {
+        return $this->role_id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function setCompany($company)
