@@ -26,5 +26,9 @@ return $routes = [
             "controller" => AuthController::class,
             "method" => "index"
         ],
+        "/exemple" => [
+            "controller" => HomeController::class,
+            "method" => "exemple"
+        ],
     ],
 ];
