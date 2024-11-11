@@ -33,9 +33,7 @@ services:
     entrypoint: /bin/sh -c "export DB_PASS=$(cat /run/secrets/database-password) && exec apache2-foreground"
 
   database:
-    build:
-      context: .
-      dockerfile: ./docker/database/Dockerfile
+    image: mariadb:latest
     restart: always
     user: root
     secrets:
@@ -47,6 +45,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/database-password
       MYSQL_DATABASE: urbantree
+    volumes:
+      - ./docker/database/start-scripts/:/docker-entrypoint-initdb.d/
     healthcheck:
       test:
         [
