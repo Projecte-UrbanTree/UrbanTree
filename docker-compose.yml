@@ -42,10 +42,9 @@ services:
       - database-password
     networks:
       - app-network
-    volumes:
-      - ./docker/database/start-scripts/:/docker-entrypoint-initdb.d/
-      #! Necessary for production ↓
-      # - database-data:/var/lib/mysql
+    #! Necessary for production ↓
+    # volumes:
+    #  - database-data:/var/lib/mysql
     #* This will store the database in memory, so it will be lost when the container is stopped
     #* Allows start-scripts to be run on each container start
     #! Necessary for development, remove in production ↓
