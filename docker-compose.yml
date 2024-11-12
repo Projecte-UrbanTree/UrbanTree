@@ -9,7 +9,6 @@ services:
   server:
     build:
       context: .
-      dockerfile: ./docker/server/Dockerfile
       target: development
     ports:
       - 8000:80
@@ -34,7 +33,9 @@ services:
           target: /var/www/html
 
   database:
-    image: mariadb:latest
+    build:
+      context: .
+      target: database
     restart: always
     user: root
     secrets:
@@ -42,8 +43,14 @@ services:
     networks:
       - app-network
     volumes:
-      # - database-data:/var/lib/mysql
       - ./docker/database/start-scripts/:/docker-entrypoint-initdb.d/
+      #! Necessary for production ↓
+      # - database-data:/var/lib/mysql
+    #* This will store the database in memory, so it will be lost when the container is stopped
+    #* Allows start-scripts to be run on each container start
+    #! Necessary for development, remove in production ↓
+    tmpfs:
+      - /var/lib/mysql
     ports:
       - "3306:3306"
     environment:
@@ -61,6 +68,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    develop:
+      watch:
+        - action: rebuild
+          path: ./docker/database
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -69,7 +80,8 @@ services:
     networks:
       - app-network
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     environment:
       PMA_HOST: database
 
