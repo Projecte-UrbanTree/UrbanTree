@@ -45,13 +45,13 @@ services:
     #! Necessary for production ↓
     # volumes:
     #  - database-data:/var/lib/mysql
+    #! Necessary for development, remove in production ↓
     #* This will store the database in memory, so it will be lost when the container is stopped
     #* Allows start-scripts to be run on each container start
-    #! Necessary for development, remove in production ↓
     tmpfs:
       - /var/lib/mysql
     ports:
-      - "3306:3306"
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/database-password
       MYSQL_DATABASE: urbantree
@@ -75,7 +75,7 @@ services:
   phpmyadmin:
     image: phpmyadmin:latest
     ports:
-      - "8080:80"
+      - 8080:80
     networks:
       - app-network
     depends_on:
