@@ -63,7 +63,7 @@ create table workers (
 create table work_orders (
   id int auto_increment primary key,
   name varchar(255),
-  created_at timestamp,
+  created_at timestamp NOT NULL,
   deleted_at timestamp,
   updated_at timestamp
 );
@@ -74,12 +74,14 @@ create table machines (
   basket_size varchar(255) NULL
 );
 
-create table parts (
-  id int auto_increment primary key,
+create table work_reports (
+  work_order_id int primary key,
   observation varchar(255),
-  quantity int,
-  fuel decimal,
-  picture varchar(255)
+  spent_fuel decimal,
+  picture varchar(255),
+  created_at timestamp NOT NULL,
+  updated_at timestamp,
+  foreign key (work_order_id) references work_orders(id)
 );
 
 create table routes (
@@ -99,15 +101,13 @@ create table tasks (
   machine_id int,          
   route_id int,            
   status BIT,
-  part_id int,             
   history_id int,         
   created_at timestamp,
   deleted_at timestamp,
   foreign key (work_order_id) references work_orders(id),
   foreign key (inventory_id) references inventory(id),
   foreign key (machine_id) references machines(id),
-  foreign key (route_id) references routes(id),
-  foreign key (part_id) references parts(id)
+  foreign key (route_id) references routes(id)
 );
 
 create table worker_tasks (
