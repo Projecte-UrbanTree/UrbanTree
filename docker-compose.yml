@@ -24,7 +24,7 @@ services:
       - DB_HOST=database
       - DB_NAME=urbantree
       - DB_USER=root
-      - PASSWORD_FILE_PATH=/run/secrets/database-password
+      - DB_PASS_FILE_PATH=/run/secrets/database-password
       - LOG_FILE_PATH=/var/www/html/storage/logs/app.log
     develop:
       watch:
