@@ -15,7 +15,7 @@
 
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
-
+use App\Controllers\TaskTypeController;
 return $routes = [
     "GET" => [ 
         "/" => [
@@ -29,6 +29,10 @@ return $routes = [
         "/exemple" => [
             "controller" => HomeController::class,
             "method" => "exemple"
+        ],
+        "/task-types" => [
+            "controller" => TaskTypeController::class,
+            "method" => "index"
         ],
     ],
 ];
