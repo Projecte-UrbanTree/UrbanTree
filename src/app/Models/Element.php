@@ -24,69 +24,64 @@ class Element
         }
     }
 
-    // Static method to retrieve all workers
+    // Static method to retrieve all elements
     public static function getAll()
     {
-        $query = "SELECT * FROM workers";
+        $query = "SELECT * FROM elements";
         return Database::prepareAndExecute($query);
     }
 
-    // Static method to find a worker by ID
+    // Static method to find a element by ID
     public static function findById($id)
     {
-        $query = "SELECT * FROM workers WHERE id = :id AND deleted_at IS NULL";
+        $query = "SELECT * FROM elements WHERE id = :id AND deleted_at IS NULL";
         $results = Database::prepareAndExecute($query, ['id' => $id]);
 
         return $results ? new self($results[0]) : null;
     }
 
-    // Static method to find a worker by DNI
+    // Static method to find a element by DNI
     public static function findByDni($dni)
     {
-        $query = "SELECT * FROM workers WHERE dni = :dni AND deleted_at IS NULL";
+        $query = "SELECT * FROM elements WHERE dni = :dni AND deleted_at IS NULL";
         $results = Database::prepareAndExecute($query, ['dni' => $dni]);
 
         return $results ? new self($results[0]) : null;
     }
 
-    // Method to save a new worker
+    // Method to save a new element
     public function save()
     {
-        $query = "INSERT INTO workers (company, name, dni, password, email, role_id, created_at, updated_at) 
-                  VALUES (:company, :name, :dni, :password, :email, :role_id, NOW(), NOW())";
+        $query = "INSERT INTO elements (name, latitude, longitude, created_at, updated_at) 
+                  VALUES (:name, :latitude, :longitude, NOW(), NOW())";
         $params = [
-            'company' => $this->company,
             'name' => $this->name,
-            'dni' => $this->dni,
-            'password' => password_hash($this->password, PASSWORD_BCRYPT), // Hashing password
-            'email' => $this->email,
-            'role_id' => $this->role_id
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ];
 
         return Database::prepareAndExecute($query, $params);
     }
 
-    // Method to update an existing worker
+    // Method to update an existing element
     public function update()
     {
-        $query = "UPDATE workers SET company = :company, name = :name, dni = :dni, email = :email, 
-                  role_id = :role_id, updated_at = NOW() WHERE id = :id AND deleted_at IS NULL";
+        $query = "UPDATE elements SET name = :name, latitude = :latitude, longitude = :longitude, 
+                   updated_at = NOW() WHERE id = :id AND deleted_at IS NULL";
         $params = [
             'id' => $this->id,
-            'company' => $this->company,
             'name' => $this->name,
-            'dni' => $this->dni,
-            'email' => $this->email,
-            'role_id' => $this->role_id
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude
         ];
 
         return Database::prepareAndExecute($query, $params);
     }
 
-    // Method to delete a worker (soft delete by updating `deleted_at` timestamp)
+    // Method to delete a element (soft delete by updating `deleted_at` timestamp)
     public function delete()
     {
-        $query = "UPDATE workers SET deleted_at = NOW() WHERE id = :id";
+        $query = "UPDATE elements SET deleted_at = NOW() WHERE id = :id";
         return Database::prepareAndExecute($query, ['id' => $this->id]);
     }
 
@@ -96,34 +91,20 @@ class Element
         return $this->id;
     }
 
-    public function setCompany($company)
-    {
-        $this->company = $company;
-    }
 
     public function setName($name)
     {
         $this->name = $name;
     }
 
-    public function setDni($dni)
+    public function setLatitude($latitude)
     {
-        $this->dni = $dni;
+        $this->latitude = $latitude;
     }
 
-    public function setPassword($password)
+    public function setLongitude($longitude)
     {
-        $this->password = $password;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function setRoleId($role_id)
-    {
-        $this->role_id = $role_id;
+        $this->longitude = $longitude;
     }
 
     public function setUpdatedAt($updated_at)
