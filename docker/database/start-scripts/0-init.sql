@@ -15,10 +15,10 @@ create table zones (
 
 create table elements (
   id int auto_increment primary key,
-  name varchar(255),
-  latitude decimal,
-  longitude decimal,
-  created_at timestamp,
+  name varchar(255) NOT NULL,
+  latitude decimal (10, 7)NOT NULL,
+  longitude decimal (10, 7)NOT NULL,
+  created_at timestamp default current_timestamp,
   deleted_at timestamp,
   updated_at timestamp
 );
