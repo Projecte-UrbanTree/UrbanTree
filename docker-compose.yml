@@ -9,7 +9,6 @@ services:
   server:
     build:
       context: .
-      dockerfile: ./docker/server/Dockerfile
       target: development
     ports:
       - 8000:80
@@ -27,7 +26,7 @@ services:
       - DB_HOST=database
       - DB_NAME=urbantree
       - DB_USER=root
-      - PASSWORD_FILE_PATH=/run/secrets/database-password
+      - DB_PASS_FILE_PATH=/run/secrets/database-password
       - LOG_FILE_PATH=/var/www/html/storage/logs/app.log
     develop:
       watch:
@@ -36,18 +35,25 @@ services:
           target: /var/www/html
 
   database:
-    image: mariadb:latest
+    build:
+      context: .
+      target: database
     restart: always
     user: root
     secrets:
       - database-password
     networks:
       - app-network
-    volumes:
-      # - database-data:/var/lib/mysql
-      - ./docker/database/start-scripts/:/docker-entrypoint-initdb.d/
+    #! Necessary for production ↓
+    # volumes:
+    #  - database-data:/var/lib/mysql
+    #! Necessary for development, remove in production ↓
+    #* This will store the database in memory, so it will be lost when the container is stopped
+    #* Allows start-scripts to be run on each container start
+    tmpfs:
+      - /var/lib/mysql
     ports:
-      - "3306:3306"
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/database-password
       MYSQL_DATABASE: urbantree
@@ -63,15 +69,20 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    develop:
+      watch:
+        - action: rebuild
+          path: ./docker/database
 
   phpmyadmin:
     image: phpmyadmin:latest
     ports:
-      - "8080:80"
+      - 8080:80
     networks:
       - app-network
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     environment:
       PMA_HOST: database
 
