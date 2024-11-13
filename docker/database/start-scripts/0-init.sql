@@ -139,7 +139,7 @@ create table sensor_history (
   foreign key (sensor_id) references sensors(id)
 );
 
-create table pruning_type (
+create table pruning_types (
   id int auto_increment primary key,
   name varchar(20),
   description varchar(255)

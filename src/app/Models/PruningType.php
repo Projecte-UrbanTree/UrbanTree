@@ -20,10 +20,10 @@ class PruningType
         }
     }
 
-    // Static method to retrieve all pruning_type
+    // Static method to retrieve all pruning_types
     public static function getAll()
     {
-        $query = "SELECT * FROM pruning_type";
+        $query = "SELECT * FROM pruning_types";
         $results = Database::prepareAndExecute($query);
         foreach ($results as $key => $value) {
             $results[$key] = new self($value);
@@ -34,7 +34,7 @@ class PruningType
     // Static method to find a pruning type by ID
     public static function findById($id)
     {
-        $query = "SELECT * FROM pruning_type WHERE id = :id AND deleted_at IS NULL";
+        $query = "SELECT * FROM pruning_types WHERE id = :id AND deleted_at IS NULL";
         $results = Database::prepareAndExecute($query, ['id' => $id]);
 
         return $results ? new self($results[0]) : null;
@@ -43,7 +43,7 @@ class PruningType
     // Static method to find a pruning type by Name
     public static function findByName($name)
     {
-        $query = "SELECT * FROM pruning_type WHERE name = :name AND deleted_at IS NULL";
+        $query = "SELECT * FROM pruning_types WHERE name = :name AND deleted_at IS NULL";
         $results = Database::prepareAndExecute($query, ['name' => $name]);
 
         return $results ? new self($results[0]) : null;
@@ -52,7 +52,7 @@ class PruningType
     // Method to save a new pruning type
     public function save()
     {
-        $query = "INSERT INTO pruning_type (name, description) 
+        $query = "INSERT INTO pruning_types (name, description) 
                   VALUES (:name, :description)";
         $params = [
             'name' => $this->name,
@@ -65,7 +65,7 @@ class PruningType
     // Method to update an existing pruning type
     public function update()
     {
-        $query = "UPDATE pruning_type SET name = :name, description = :description
+        $query = "UPDATE pruning_types SET name = :name, description = :description
                   WHERE id = :id AND deleted_at IS NULL";
         $params = [
             'id' => $this->id,
