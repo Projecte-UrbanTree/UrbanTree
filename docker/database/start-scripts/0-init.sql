@@ -138,3 +138,7 @@ create table sensor_history (
   created_at timestamp default current_timestamp,
   foreign key (sensor_id) references sensors(id)
 );
+create table task_types (
+  id int auto_increment primary key,
+  name varchar(255)
+)
