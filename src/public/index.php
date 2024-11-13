@@ -1,6 +1,6 @@
 <?php
 
-require_once '../bootstrap/app.php';
+require_once '../app/bootstrap.php';
 
 use App\Core\Router;
 
