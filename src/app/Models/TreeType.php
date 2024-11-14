@@ -13,8 +13,7 @@ class TreeType
     private $subspecies;
     private $family;
 
-
-    // Constructor to initialize properties (optional)
+    // Constructor para inicializar propiedades
     public function __construct($data = [])
     {
         foreach ($data as $key => $value) {
@@ -22,7 +21,7 @@ class TreeType
         }
     }
 
-    // Static method to retrieve all tree_types
+    // Método estático para recuperar todos los tipos de árboles
     public static function getAll()
     {
         $query = "SELECT * FROM tree_types";
@@ -33,29 +32,29 @@ class TreeType
         return $results;
     }
 
-    // Static method to find a tree_type by ID
+    // Método estático para encontrar un tipo de árbol por ID
     public static function findById($id)
     {
-        $query = "SELECT * FROM tree_types WHERE id = :id AND deleted_at IS NULL";
+        $query = "SELECT * FROM tree_types WHERE id = :id";
         $results = Database::prepareAndExecute($query, ['id' => $id]);
 
         return $results ? new self($results[0]) : null;
     }
 
-    // Static method to find a tree_type by family
-    public static function findByfamily($family)
+    // Método estático para encontrar un tipo de árbol por familia
+    public static function findByFamily($family)
     {
-        $query = "SELECT * FROM tree_types WHERE family = :family AND deleted_at IS NULL";
+        $query = "SELECT * FROM tree_types WHERE family = :family";
         $results = Database::prepareAndExecute($query, ['family' => $family]);
 
         return $results ? new self($results[0]) : null;
     }
 
-    // Method to save a new tree_type
+    // Método para guardar un nuevo tipo de árbol
     public function save()
     {
         $query = "INSERT INTO tree_types (species, subspecies, family) 
-                  VALUES (:species, :subspecies, :family, NOW(), NOW())";
+                  VALUES (:species, :subspecies, :family)";
         $params = [
             'species' => $this->species,
             'subspecies' => $this->subspecies,
@@ -64,9 +63,8 @@ class TreeType
 
         return Database::prepareAndExecute($query, $params);
     }
- 
 
-    // Getters and setters (you can add more as needed)
+    // Getters y setters
     public function getId()
     {
         return $this->id;
@@ -86,6 +84,4 @@ class TreeType
     {
         return $this->family;
     }
-
-
 }
