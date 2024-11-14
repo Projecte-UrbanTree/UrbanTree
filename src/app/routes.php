@@ -13,7 +13,6 @@
  * 
  **/
 
-use App\Controllers\ContractController;
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
 
@@ -27,9 +26,9 @@ return $routes = [
             "controller" => AuthController::class,
             "method" => "index"
         ],
-        "/contracts" => [
-            "controller" => ContractController::class,
-            "method" => "index"
+        "/exemple" => [
+            "controller" => HomeController::class,
+            "method" => "exemple"
         ],
     ],
 ];
