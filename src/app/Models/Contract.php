@@ -9,17 +9,13 @@ use PDOException;
 class Contract
 {
     private $id;
-    private $company;
-    private $name;
-    private $dni;
-    private $password;
-    private $email;
-    private $role_id;
-    private $created_at;
-    private $deleted_at;
-    private $updated_at;
+    private $contract_type;
+    private $start_date;
+    private $end_date;
+    private $salary;
+    private $worker_id;
 
-    // Constructor to initialize properties (optional)
+    // Constructor per inicialitzar les propietats
     public function __construct($data = [])
     {
         foreach ($data as $key => $value) {
@@ -27,7 +23,7 @@ class Contract
         }
     }
 
-    // Static method to retrieve all workers
+    // Mètode per obtenir tots els contractes
     public static function getAll()
     {
         $query = "SELECT * FROM contracts";
@@ -38,99 +34,84 @@ class Contract
         return $results;
     }
 
-    // Static method to find a worker by ID
+    // Mètode per obtenir un contracte per ID
     public static function findById($id)
     {
-        $query = "SELECT * FROM contracts WHERE id = :id AND deleted_at IS NULL";
+        $query = "SELECT * FROM contracts WHERE id = :id";
         $results = Database::prepareAndExecute($query, ['id' => $id]);
 
         return $results ? new self($results[0]) : null;
     }
 
-    // Static method to find a worker by DNI
-    public static function findByDni($dni)
-    {
-        $query = "SELECT * FROM contracts WHERE id = :id AND deleted_at IS NULL";
-        $results = Database::prepareAndExecute($query, ['id' => $dni]);
-
-        return $results ? new self($results[0]) : null;
-    }
-
-    // Method to save a new worker
+    // Mètode per guardar un nou contracte
     public function save()
     {
-        $query = "INSERT INTO contracts (company_type, start_date. end_date, salary, worker_id),
-                  VALUES (:company, :name, :dni, :password, :email, :role_id, NOW(), NOW())";
+        $query = "INSERT INTO contracts (contract_type, start_date, end_date, salary, worker_id)
+                  VALUES (:contract_type, :start_date, :end_date, :salary, :worker_id)";
         $params = [
-            'company' => $this->company,
-            'name' => $this->name,
-            'dni' => $this->dni,
-            'password' => password_hash($this->password, PASSWORD_BCRYPT), // Hashing password
-            'email' => $this->email,
-            'role_id' => $this->role_id
+            'contract_type' => $this->contract_type,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'salary' => $this->salary,
+            'worker_id' => $this->worker_id,
         ];
 
         return Database::prepareAndExecute($query, $params);
     }
 
-    // Method to update an existing worker
+    // Mètode per actualitzar un contracte existent
     public function update()
     {
-        $query = "UPDATE contracts SET contract_type = :company, name = :name, dni = :dni, email = :email, 
-                  role_id = :role_id, updated_at = NOW() WHERE id = :id AND deleted_at IS NULL";
+        $query = "UPDATE contracts SET contract_type = :contract_type, start_date = :start_date, 
+                  end_date = :end_date, salary = :salary, worker_id = :worker_id WHERE id = :id";
         $params = [
+            'contract_type' => $this->contract_type,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'salary' => $this->salary,
+            'worker_id' => $this->worker_id,
             'id' => $this->id,
-            'contract_type' => $this->company,
-            'start_date' => $this->name,
-            'end_date' => $this->dni,
-            'salary' => $this->email,
-            'worker_id' => $this->role_id
         ];
 
         return Database::prepareAndExecute($query, $params);
     }
 
-    // Method to delete a worker (soft delete by updating `deleted_at` timestamp)
+    // Mètode per esborrar un contracte
     public function delete()
     {
-        $query = "UPDATE contracts SET deleted_at = NOW() WHERE id = :id";
+        $query = "DELETE FROM contracts WHERE id = :id";
         return Database::prepareAndExecute($query, ['id' => $this->id]);
     }
 
-    // Getters and setters (you can add more as needed)
+    // Getters i setters
     public function getId()
     {
         return $this->id;
     }
 
-    public function getCompany()
+    public function getContractType()
     {
-        return $this->company;
+        return $this->contract_type;
     }
 
-    public function getName()
+    public function getStartDate()
     {
-        return $this->name;
+        return $this->start_date;
     }
 
-    public function getDni()
+    public function getEndDate()
     {
-        return $this->dni;
+        return $this->end_date;
     }
 
-    public function getPassword()
+    public function getSalary()
     {
-        return $this->password;
+        return $this->salary;
     }
 
-    public function getEmail()
+    public function getWorkerId()
     {
-        return $this->email;
-    }
-
-    public function getRoleId()
-    {
-        return $this->role_id;
+        return $this->worker_id;
     }
 
     public function setId($id)
@@ -138,53 +119,28 @@ class Contract
         $this->id = $id;
     }
 
-    public function setCompany($company)
+    public function setContractType($contract_type)
     {
-        $this->company = $company;
+        $this->contract_type = $contract_type;
     }
 
-    public function setName($name)
+    public function setStartDate($start_date)
     {
-        $this->name = $name;
+        $this->start_date = $start_date;
     }
 
-    public function setDni($dni)
+    public function setEndDate($end_date)
     {
-        $this->dni = $dni;
+        $this->end_date = $end_date;
     }
 
-    public function setPassword($password)
+    public function setSalary($salary)
     {
-        $this->password = $password;
+        $this->salary = $salary;
     }
 
-    public function setEmail($email)
+    public function setWorkerId($worker_id)
     {
-        $this->email = $email;
-    }
-
-    public function setRoleId($role_id)
-    {
-        $this->role_id = $role_id;
-    }
-
-    public function setUpdatedAt($updated_at)
-    {
-        $this->updated_at = $updated_at;
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->created_at;
-    }
-
-    public function getDeletedAt()
-    {
-        return $this->deleted_at;
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->updated_at;
+        $this->worker_id = $worker_id;
     }
 }
