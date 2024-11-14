@@ -15,19 +15,13 @@ create table zones (
 
 create table elements (
   id int auto_increment primary key,
+  zone_id int NOT NULL,
   name varchar(255) NOT NULL,
-  latitude decimal (10, 7)NOT NULL,
-  longitude decimal (10, 7)NOT NULL,
+  latitude decimal(10, 7) NOT NULL,
+  longitude decimal(10, 7) NOT NULL,
   created_at timestamp default current_timestamp,
   deleted_at timestamp,
-  updated_at timestamp
-);
-
-create table inventory (
-  id int auto_increment primary key,
-  element_id int, 
-  zone_id int,   
-  foreign key (element_id) references elements(id),
+  updated_at timestamp,
   foreign key (zone_id) references zones(id)
 );
 
@@ -95,8 +89,8 @@ create table tasks (
   task_name varchar(255), 
   work_order_id int,      
   description varchar(255),
-  inventory_id int,      
-  machine_id int,          
+  element_id int,
+  machine_id int,
   route_id int,            
   status BIT,
   part_id int,             
@@ -104,7 +98,7 @@ create table tasks (
   created_at timestamp,
   deleted_at timestamp,
   foreign key (work_order_id) references work_orders(id),
-  foreign key (inventory_id) references inventory(id),
+  foreign key (element_id) references element(id),
   foreign key (machine_id) references machines(id),
   foreign key (route_id) references routes(id),
   foreign key (part_id) references parts(id)
