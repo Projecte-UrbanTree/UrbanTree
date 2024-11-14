@@ -62,12 +62,12 @@ create table workers (
 
 
 CREATE TABLE contracts (
-  id INT PRIMARY KEY,
+  id int auto_increment primary key,
   contract_type VARCHAR(255),
   start_date DATE,
   end_date DATE,
   salary DECIMAL(10, 2),
-  worker_id INT,
+  worker_id INT
 );
 
 create table work_orders (
