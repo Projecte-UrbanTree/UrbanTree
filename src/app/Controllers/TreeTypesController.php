@@ -11,7 +11,7 @@ class TreeTypesController
     {
         $tree_types = TreeType::getAll();
         View::render([
-            "view" => "TreeTypes",
+            "view" => "TreeType",
             "title" => "Tree Types",
             "layout" => "MainLayout",
             "data" => ["tree_types" => $tree_types]
