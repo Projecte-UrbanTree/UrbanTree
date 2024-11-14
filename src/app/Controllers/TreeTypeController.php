@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Core\View;
 use App\Models\TreeType;
 
-class TreeTypesController
+class TreeTypeController
 {
     public function index()
     {
