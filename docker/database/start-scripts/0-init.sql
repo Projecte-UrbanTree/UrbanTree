@@ -15,9 +15,10 @@ create table zones (
 
 create table tree_types (
   id int auto_increment primary key,
-  species varchar(255),
-  subspecies varchar(255),
-  family varchar(255)
+  family varchar(255) not null,
+  genus varchar(255) not null,
+  species varchar(255) not null unique,
+  constraint UC_TreeType unique (family, genus, species)
 );
 
 create table elements (
