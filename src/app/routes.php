@@ -13,22 +13,22 @@
  * 
  **/
 
-use App\Controllers\TreeTypesController;
+use App\Controllers\HomeController;
 use App\Controllers\AuthController;
 
 return $routes = [
     "GET" => [ 
         "/" => [
-            "controller" => TreeTypesController::class,
+            "controller" => HomeController::class,
             "method" => "index"
         ],
         "/login" => [
             "controller" => AuthController::class,
             "method" => "index"
         ],
-        "/tree-types" => [
-            "controller" => TreeTypesController::class,
-            "method" => "index"
+        "/exemple" => [
+            "controller" => HomeController::class,
+            "method" => "exemple"
         ],
     ],
 ];

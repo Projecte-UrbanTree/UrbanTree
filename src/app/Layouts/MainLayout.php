@@ -17,7 +17,7 @@
             <nav class="mt-4">
                 <a href="/" class="block py-2 px-4 text-white hover:bg-gray-700">Home</a>
                 <a href="#" class="block py-2 px-4 text-white hover:bg-gray-700">Example 1</a>
-                <a href="/tree-types" class="block py-2 px-4 text-white hover:bg-gray-700">TreeTypes</a>
+                <a href="#" class="block py-2 px-4 text-white hover:bg-gray-700">Example 2</a>
             </nav>
         </aside>
 
