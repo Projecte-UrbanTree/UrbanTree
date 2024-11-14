@@ -60,6 +60,16 @@ create table workers (
   foreign key (role_id) references roles(id)
 );
 
+
+CREATE TABLE contracts (
+  id INT PRIMARY KEY,
+  contract_type VARCHAR(255),
+  start_date DATE,
+  end_date DATE,
+  salary DECIMAL(10, 2),
+  worker_id INT,
+);
+
 create table work_orders (
   id int auto_increment primary key,
   name varchar(255),
