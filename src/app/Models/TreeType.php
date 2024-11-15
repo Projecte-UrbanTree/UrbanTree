@@ -50,7 +50,7 @@ class TreeType
         return $results ? new self($results[0]) : null;
     }
 
-    
+
     public static function findByGenus($genus)
     {
         $query = "SELECT * FROM tree_types WHERE genus = :genus";
@@ -59,7 +59,7 @@ class TreeType
         return $results ? new self($results[0]) : null;
     }
 
-    
+
     public static function findBySpecies($species)
     {
         $query = "SELECT * FROM tree_types WHERE species = :species";
@@ -71,7 +71,7 @@ class TreeType
     // Método para guardar un nuevo tipo de árbol
     public function save()
     {
-        $query = "INSERT INTO tree_types (family, genus, species) 
+        $query = "INSERT INTO tree_types (family, genus, species)
                   VALUES (:family, :genus, :species)";
         $params = [
             'family' => $this->family,
@@ -99,7 +99,22 @@ class TreeType
     }
 
     public function getSpecies()
-    {   
+    {
         return $this->species;
+    }
+
+    public function setFamily($family)
+    {
+        $this->family = $family;
+    }
+
+    public function setGenus($genus)
+    {
+        $this->genus = $genus;
+    }
+
+    public function setSpecies($species)
+    {
+        $this->species = $species;
     }
 }
