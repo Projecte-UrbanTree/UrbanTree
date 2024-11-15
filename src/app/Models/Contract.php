@@ -13,7 +13,6 @@ class Contract
     private $start_date;
     private $end_date;
     private $salary;
-    private $worker_id;
 
     // Constructor per inicialitzar les propietats
     public function __construct($data = [])
@@ -46,14 +45,13 @@ class Contract
     // Mètode per guardar un nou contracte
     public function save()
     {
-        $query = "INSERT INTO contracts (contract_type, start_date, end_date, salary, worker_id)
-                  VALUES (:contract_type, :start_date, :end_date, :salary, :worker_id)";
+        $query = "INSERT INTO contracts (contract_type, start_date, end_date, salary)
+                  VALUES (:contract_type, :start_date, :end_date, :salary)";
         $params = [
             'contract_type' => $this->contract_type,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'salary' => $this->salary,
-            'worker_id' => $this->worker_id,
         ];
 
         return Database::prepareAndExecute($query, $params);
@@ -63,13 +61,12 @@ class Contract
     public function update()
     {
         $query = "UPDATE contracts SET contract_type = :contract_type, start_date = :start_date, 
-                  end_date = :end_date, salary = :salary, worker_id = :worker_id WHERE id = :id";
+                  end_date = :end_date, salary = :salary WHERE id = :id";
         $params = [
             'contract_type' => $this->contract_type,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'salary' => $this->salary,
-            'worker_id' => $this->worker_id,
             'id' => $this->id,
         ];
 
@@ -109,11 +106,6 @@ class Contract
         return $this->salary;
     }
 
-    public function getWorkerId()
-    {
-        return $this->worker_id;
-    }
-
     public function setId($id)
     {
         $this->id = $id;
@@ -137,10 +129,5 @@ class Contract
     public function setSalary($salary)
     {
         $this->salary = $salary;
-    }
-
-    public function setWorkerId($worker_id)
-    {
-        $this->worker_id = $worker_id;
     }
 }

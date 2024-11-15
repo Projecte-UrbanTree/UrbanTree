@@ -67,7 +67,6 @@ CREATE TABLE contracts (
   start_date DATE,
   end_date DATE,
   salary DECIMAL(10, 2),
-  worker_id INT
 );
 
 create table work_orders (
