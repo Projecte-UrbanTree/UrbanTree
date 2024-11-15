@@ -8,10 +8,10 @@ use PDOException;
 
 class TreeType
 {
-    private $id;
-    private $species;
-    private $subspecies;
-    private $family;
+    private int $id;
+    private string $family;
+    private string $genus;
+    private string $species;
 
     // Constructor para inicializar propiedades
     public function __construct($data = [])
@@ -50,15 +50,33 @@ class TreeType
         return $results ? new self($results[0]) : null;
     }
 
+    
+    public static function findByGenus($genus)
+    {
+        $query = "SELECT * FROM tree_types WHERE genus = :genus";
+        $results = Database::prepareAndExecute($query, ['genus' => $genus]);
+
+        return $results ? new self($results[0]) : null;
+    }
+
+    
+    public static function findBySpecies($species)
+    {
+        $query = "SELECT * FROM tree_types WHERE species = :species";
+        $results = Database::prepareAndExecute($query, ['species' => $species]);
+        return $results ? new self($results[0]) : null;
+    }
+
+
     // Método para guardar un nuevo tipo de árbol
     public function save()
     {
-        $query = "INSERT INTO tree_types (species, subspecies, family) 
-                  VALUES (:species, :subspecies, :family)";
+        $query = "INSERT INTO tree_types (family, genus, species) 
+                  VALUES (:family, :genus, :species)";
         $params = [
-            'species' => $this->species,
-            'subspecies' => $this->subspecies,
             'family' => $this->family,
+            'genus' => $this->genus,
+            'species' => $this->species
         ];
 
         return Database::prepareAndExecute($query, $params);
@@ -70,18 +88,18 @@ class TreeType
         return $this->id;
     }
 
-    public function getSpecies()
-    {
-        return $this->species;
-    }
-
-    public function getSubspecies()
-    {
-        return $this->subspecies;
-    }
-
     public function getFamily()
     {
         return $this->family;
+    }
+
+    public function getGenus()
+    {
+        return $this->genus;
+    }
+
+    public function getSpecies()
+    {   
+        return $this->species;
     }
 }
