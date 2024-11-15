@@ -82,6 +82,28 @@ class TreeType
         return Database::prepareAndExecute($query, $params);
     }
 
+    public function update()
+    {
+        $query = "UPDATE tree_types SET family = :family, genus = :genus, species = :species
+                  WHERE id = :id";
+        $params = [
+            'id' => $this->id,
+            'family' => $this->family,
+            'genus' => $this->genus,
+            'species' => $this->species,
+        ];
+
+        return Database::prepareAndExecute($query, $params);
+    }
+
+    // Method to delete a tree type (hard delete)
+    public function delete()
+    {
+        $query = "DELETE FROM tree_types WHERE id = :id";
+        return Database::prepareAndExecute($query, ['id' => $this->id]);
+    }
+
+
     // Getters y setters
     public function getId()
     {
