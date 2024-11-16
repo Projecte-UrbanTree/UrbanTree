@@ -3,36 +3,17 @@
 /***
  * Web Routes are defined here in this file and are loaded in the Router class
  * All routes are defined in the following format:
- * 
- * METHOD => [
- *     "URI" => [
- *        "controller" => "ControllerName",
- *        "method" => "methodName"
- *    ]
+ *
+ * [
+ *     "URI" => "ControllerName",
  * ]
- * 
+ *
  **/
 
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
 use App\Controllers\TaskTypeController;
 return $routes = [
-    "GET" => [ 
-        "/" => [
-            "controller" => HomeController::class,
-            "method" => "index"
-        ],
-        "/login" => [
-            "controller" => AuthController::class,
-            "method" => "index"
-        ],
-        "/exemple" => [
-            "controller" => HomeController::class,
-            "method" => "exemple"
-        ],
-        "/task-types" => [
-            "controller" => TaskTypeController::class,
-            "method" => "index"
-        ],
-    ],
+    "/" => HomeController::class,
+    "/login" => AuthController::class,
 ];

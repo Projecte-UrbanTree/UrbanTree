@@ -1,7 +1,5 @@
 <?php
 
-require_once '../vendor/autoload.php';
-
 use App\Core\Session;
 use App\Core\Database;
 use App\Core\Logger;
