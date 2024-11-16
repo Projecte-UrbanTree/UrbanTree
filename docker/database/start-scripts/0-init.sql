@@ -1,7 +1,8 @@
 create table points (
   id int auto_increment primary key,
-  latitude decimal,
-  longitude decimal
+  latitude decimal(10, 7) not null,
+  longitude decimal(10, 7) not null,
+  constraint UC_Point unique (latitude, longitude)
 );
 
 create table zones (
@@ -23,14 +24,14 @@ create table tree_types (
 
 create table elements (
   id int auto_increment primary key,
-  zone_id int not null,
   name varchar(255) not null,
-  latitude decimal(10, 7) not null,
-  longitude decimal(10, 7) not null,
+  zone_id int not null,
+  point_id int not null,
   created_at timestamp default current_timestamp,
   deleted_at timestamp,
   updated_at timestamp,
-  foreign key (zone_id) references zones(id)
+  foreign key (zone_id) references zones(id),
+  foreign key (point_id) references points(id)
 );
 
 create table incidences (
