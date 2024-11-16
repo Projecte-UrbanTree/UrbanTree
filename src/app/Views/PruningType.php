@@ -12,8 +12,8 @@
             <?php foreach ($pruning_types as $pruning_type): ?>
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2 border-b"><?php echo $pruning_type->getId(); ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $pruning_type->getName(); ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $pruning_type->getDescription(); ?></td>
+                    <td class="px-4 py-2 border-b"><?php echo $pruning_type->name; ?></td>
+                    <td class="px-4 py-2 border-b"><?php echo $pruning_type->description; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

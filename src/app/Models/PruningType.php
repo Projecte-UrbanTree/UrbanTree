@@ -2,109 +2,25 @@
 
 namespace App\Models;
 
+use App\Core\BaseModel;
 use App\Core\Database;
-use PDO;
-use PDOException;
 
-class PruningType
+class PruningType extends BaseModel
 {
-    private $id;
-    private $name;
-    private $description;
+    public string $name;
+    public ?string $description;
 
-    // Constructor to initialize properties (optional)
-    public function __construct($data = [])
+    protected static function getTableName()
     {
-        foreach ($data as $key => $value) {
-            $this->$key = $value;
-        }
+        return 'pruning_types';
     }
 
-    // Static method to retrieve all pruning_types
-    public static function getAll()
+    protected static function mapDataToModel($data)
     {
-        $query = "SELECT * FROM pruning_types";
-        $results = Database::prepareAndExecute($query);
-        foreach ($results as $key => $value) {
-            $results[$key] = new self($value);
-        }
-        return $results;
+        $pruning_type = new PruningType();
+        $pruning_type->id = $data['id'];
+        $pruning_type->name = $data['name'];
+        $pruning_type->description = $data['description'];
+        return $pruning_type;
     }
-
-    // Static method to find a pruning type by ID
-    public static function findById($id)
-    {
-        $query = "SELECT * FROM pruning_types WHERE id = :id AND deleted_at IS NULL";
-        $results = Database::prepareAndExecute($query, ['id' => $id]);
-
-        return $results ? new self($results[0]) : null;
-    }
-
-    // Static method to find a pruning type by Name
-    public static function findByName($name)
-    {
-        $query = "SELECT * FROM pruning_types WHERE name = :name AND deleted_at IS NULL";
-        $results = Database::prepareAndExecute($query, ['name' => $name]);
-
-        return $results ? new self($results[0]) : null;
-    }
-
-    // Method to save a new pruning type
-    public function save()
-    {
-        $query = "INSERT INTO pruning_types (name, description) 
-                  VALUES (:name, :description)";
-        $params = [
-            'name' => $this->name,
-            'description' => $this->description,
-        ];
-
-        return Database::prepareAndExecute($query, $params);
-    }
-
-    // Method to update an existing pruning type
-    public function update()
-    {
-        $query = "UPDATE pruning_types SET name = :name, description = :description
-                  WHERE id = :id AND deleted_at IS NULL";
-        $params = [
-            'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description,
-        ];
-
-        return Database::prepareAndExecute($query, $params);
-    }
-
-    // Getters and setters (you can add more as needed)
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
 }
