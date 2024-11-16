@@ -1,5 +1,5 @@
 -- Insert sample roles (Admin, Manager, Worker)
-INSERT INTO roles (role_name) VALUES
+INSERT INTO roles (name) VALUES
 ('Administrador'),
 ('Gerente'),
 ('Trabajador');
@@ -15,3 +15,4 @@ INSERT INTO tree_types (family, genus, species) VALUES
 ('Fagaceae', 'Quercus', 'Quercus robur'),
 ('Pinaceae', 'Pinus', 'Pinus sylvestris'),
 ('Sapindaceae', 'Acer', 'Acer campestre');
+

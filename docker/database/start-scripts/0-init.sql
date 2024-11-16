@@ -8,8 +8,8 @@ create table zones (
   id int auto_increment primary key,
   name varchar(255),
   quantity int,
-  postal_code int, 
-  point_id int,   
+  postal_code int,
+  point_id int,
   foreign key (point_id) references points(id)
 );
 
@@ -35,8 +35,8 @@ create table elements (
 
 create table inventory (
   id int auto_increment primary key,
-  element_id int, 
-  zone_id int,   
+  element_id int,
+  zone_id int,
   foreign key (element_id) references elements(id),
   foreign key (zone_id) references zones(id)
 );
@@ -45,25 +45,25 @@ create table incidences (
   id int auto_increment primary key,
   name varchar(255),
   photo varchar(255),
-  element_id int, 
+  element_id int,
   description varchar(255),
-  incident_date timestamp, 
+  incident_date timestamp,
   foreign key (element_id) references elements(id)
 );
 
 create table roles (
   id int auto_increment primary key,
-  role_name varchar(255)
+  name varchar(255) unique
 );
 
 create table workers (
   id int auto_increment primary key,
   company varchar(255),
   name varchar(255),
-  dni varchar(255) unique, 
+  dni varchar(255) unique,
   password varchar(255),
-  email varchar(255),    
-  role_id int,          
+  email varchar(255),
+  role_id int,
   created_at timestamp,
   deleted_at timestamp,
   updated_at timestamp,
@@ -94,23 +94,23 @@ create table parts (
 
 create table routes (
   id int auto_increment primary key,
-  distance float, 
-  point_id int,  
-  travel_time int,  
+  distance float,
+  point_id int,
+  travel_time int,
   foreign key (point_id) references points(id)
 );
 
 create table tasks (
   id int auto_increment primary key,
-  task_name varchar(255), 
-  work_order_id int,      
+  task_name varchar(255),
+  work_order_id int,
   description varchar(255),
-  inventory_id int,      
-  machine_id int,          
-  route_id int,            
+  inventory_id int,
+  machine_id int,
+  route_id int,
   status BIT,
-  part_id int,             
-  history_id int,         
+  part_id int,
+  history_id int,
   created_at timestamp,
   deleted_at timestamp,
   foreign key (work_order_id) references work_orders(id),
