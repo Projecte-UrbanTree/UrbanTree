@@ -70,6 +70,20 @@ create table workers (
   foreign key (role_id) references roles(id)
 );
 
+
+CREATE TABLE contracts (
+  id int auto_increment primary key,
+  name varchar(255),
+  start_date DATE,
+  end_date DATE,
+  invoice_proposed float,
+  invoice_agreed float,
+  invoice_paid float,
+  created_at timestamp default current_timestamp,
+  deleted_at timestamp,
+  updated_at timestamp
+);
+
 create table work_orders (
   id int auto_increment primary key,
   name varchar(255),
