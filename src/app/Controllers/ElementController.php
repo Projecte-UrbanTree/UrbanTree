@@ -2,20 +2,21 @@
 
 namespace App\Controllers;
 
+
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Worker;
+use App\Models\Element;
 
-class HomeController implements BaseController
+class ElementController implements BaseController
 {
     public function get()
     {
-        $workers = Worker::findAll();
+        $elements = Element::findAll();
         View::render([
-            "view" => "Home",
-            "title" => "Home Page",
+            "view" => "Element",
+            "title" => "Element",
             "layout" => "MainLayout",
-            "data" => ["workers" => $workers]
+            "data" => ["elements" => $elements]
         ]);
     }
 

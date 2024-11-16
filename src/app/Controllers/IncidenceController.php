@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Worker;
+use App\Models\Incidence;
 
-class HomeController implements BaseController
+class IncidenceController implements BaseController
 {
     public function get()
     {
-        $workers = Worker::findAll();
+        $incidences = Incidence::findAll();
         View::render([
-            "view" => "Home",
-            "title" => "Home Page",
+            "view" => "Incidence",
+            "title" => "Incidences",
             "layout" => "MainLayout",
-            "data" => ["workers" => $workers]
+            "data" => ["incidences" => $incidences]
         ]);
     }
 

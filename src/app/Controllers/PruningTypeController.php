@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Worker;
+use App\Models\PruningType;
 
-class HomeController implements BaseController
+class PruningTypeController implements BaseController
 {
     public function get()
     {
-        $workers = Worker::findAll();
+        $pruning_types = PruningType::findAll();
         View::render([
-            "view" => "Home",
-            "title" => "Home Page",
+            "view" => "PruningType",
+            "title" => "Pruning Types",
             "layout" => "MainLayout",
-            "data" => ["workers" => $workers]
+            "data" => ["pruning_types" => $pruning_types]
         ]);
     }
 
