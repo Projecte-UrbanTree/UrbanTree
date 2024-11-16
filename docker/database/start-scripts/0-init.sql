@@ -94,13 +94,13 @@ create table machines (
 );
 
 create table work_reports (
-  work_order_id int primary key,
+  id int primary key,
   observation varchar(255),
   spent_fuel decimal,
   picture varchar(255),
   created_at timestamp NOT NULL,
   updated_at timestamp,
-  foreign key (work_order_id) references work_orders(id)
+  foreign key (id) references work_orders(id)
 );
 
 create table routes (
