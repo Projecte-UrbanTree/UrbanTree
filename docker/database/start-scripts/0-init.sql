@@ -8,17 +8,25 @@ create table zones (
   id int auto_increment primary key,
   name varchar(255),
   quantity int,
-  postal_code int, 
-  point_id int,   
+  postal_code int,
+  point_id int,
   foreign key (point_id) references points(id)
+);
+
+create table tree_types (
+  id int auto_increment primary key,
+  family varchar(255) not null,
+  genus varchar(255) not null,
+  species varchar(255) not null unique,
+  constraint UC_TreeType unique (family, genus, species)
 );
 
 create table elements (
   id int auto_increment primary key,
-  zone_id int NOT NULL,
-  name varchar(255) NOT NULL,
-  latitude decimal(10, 7) NOT NULL,
-  longitude decimal(10, 7) NOT NULL,
+  zone_id int not null,
+  name varchar(255) not null,
+  latitude decimal(10, 7) not null,
+  longitude decimal(10, 7) not null,
   created_at timestamp default current_timestamp,
   deleted_at timestamp,
   updated_at timestamp,
@@ -29,29 +37,43 @@ create table incidences (
   id int auto_increment primary key,
   name varchar(255),
   photo varchar(255),
-  element_id int, 
+  element_id int,
   description varchar(255),
-  incident_date timestamp, 
+  incident_date timestamp,
   foreign key (element_id) references elements(id)
 );
 
 create table roles (
   id int auto_increment primary key,
-  role_name varchar(255)
+  name varchar(255) unique
 );
 
 create table workers (
   id int auto_increment primary key,
   company varchar(255),
   name varchar(255),
-  dni varchar(255) unique, 
+  dni varchar(255) unique,
   password varchar(255),
-  email varchar(255),    
-  role_id int,          
+  email varchar(255),
+  role_id int,
   created_at timestamp,
   deleted_at timestamp,
   updated_at timestamp,
   foreign key (role_id) references roles(id)
+);
+
+
+CREATE TABLE contracts (
+  id int auto_increment primary key,
+  name varchar(255),
+  start_date DATE,
+  end_date DATE,
+  invoice_proposed float,
+  invoice_agreed float,
+  invoice_paid float,
+  created_at timestamp default current_timestamp,
+  deleted_at timestamp,
+  updated_at timestamp
 );
 
 create table work_orders (
@@ -78,23 +100,23 @@ create table parts (
 
 create table routes (
   id int auto_increment primary key,
-  distance float, 
-  point_id int,  
-  travel_time int,  
+  distance float,
+  point_id int,
+  travel_time int,
   foreign key (point_id) references points(id)
 );
 
 create table tasks (
   id int auto_increment primary key,
-  task_name varchar(255), 
-  work_order_id int,      
+  task_name varchar(255),
+  work_order_id int,
   description varchar(255),
   element_id int,
   machine_id int,
-  route_id int,            
+  route_id int,
   status BIT,
-  part_id int,             
-  history_id int,         
+  part_id int,
+  history_id int,
   created_at timestamp,
   deleted_at timestamp,
   foreign key (work_order_id) references work_orders(id),
@@ -131,4 +153,15 @@ create table sensor_history (
   inclination float,
   created_at timestamp default current_timestamp,
   foreign key (sensor_id) references sensors(id)
+);
+
+create table pruning_types (
+  id int auto_increment primary key,
+  name varchar(20) unique,
+  description varchar(255)
+);
+
+create table task_types (
+  id int auto_increment primary key,
+  name varchar(255) unique
 );

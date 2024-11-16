@@ -19,6 +19,8 @@ services:
         condition: service_healthy
     secrets:
       - database-password
+    volumes:
+      - storage-data:/var/www/html/storage
     environment:
       - APP_NAME=UrbanTree
       - DB_HOST=database
@@ -90,6 +92,7 @@ networks:
 
 volumes:
   database-data:
+  storage-data:
 
 secrets:
   database-password:
