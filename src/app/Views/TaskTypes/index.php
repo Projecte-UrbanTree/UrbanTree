@@ -10,7 +10,7 @@
             <?php foreach ($task_types as $task_type): ?>
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2 border-b"><?php echo $task_type->getId(); ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo htmlspecialchars($task_type->getName()); ?></td>
+                    <td class="px-4 py-2 border-b"><?php echo $task_type->name; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
