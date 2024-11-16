@@ -39,3 +39,9 @@ INSERT INTO points (latitude, longitude) VALUES
 (40.416775, -3.703790),
 (40.416776, -3.703795),
 (40.416777, -3.703800);
+
+-- Insert sample zones
+INSERT INTO zones (name, postal_code, point_id) VALUES
+('Zona 1', '46001', 1),
+('Zona 2', '46002', 2),
+('Zona 3', '46003', 3);

@@ -7,11 +7,11 @@ create table points (
 
 create table zones (
   id int auto_increment primary key,
-  name varchar(255),
-  quantity int,
-  postal_code int,
-  point_id int,
-  foreign key (point_id) references points(id)
+  name varchar(255) not null,
+  postal_code int not null,
+  point_id int not null unique,
+  foreign key (point_id) references points(id),
+  constraint UC_Zone unique (name, postal_code)
 );
 
 create table tree_types (
