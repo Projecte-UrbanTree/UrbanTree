@@ -81,7 +81,7 @@ CREATE TABLE contracts (
   invoice_paid float,
   created_at timestamp default current_timestamp,
   deleted_at timestamp,
-  updated_at timestamp,
+  updated_at timestamp
 );
 
 create table work_orders (

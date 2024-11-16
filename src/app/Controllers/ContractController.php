@@ -2,14 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Core\BaseController;
 use App\Core\View;
 use App\Models\Contract;
 
-class ContractController
+class ContractController implements BaseController
 {
-    public function index()
+    public function get()
     {
-        $contracts = Contract::getAll();
+        $contracts = Contract::findAll();
         View::render([
             "view" => "Contracts",
             "title" => "Contracts",
@@ -17,4 +18,8 @@ class ContractController
             "data" => ["contracts" => $contracts]
         ]);
     }
+
+    public function post() {}
+    public function put() {}
+    public function delete() {}
 }
