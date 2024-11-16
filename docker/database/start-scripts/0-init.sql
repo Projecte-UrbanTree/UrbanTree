@@ -38,11 +38,11 @@ create table elements (
 
 create table incidences (
   id int auto_increment primary key,
-  name varchar(255),
-  photo varchar(255),
-  element_id int,
+  element_id int not null,
+  name varchar(255) not null,
   description varchar(255),
-  incident_date timestamp,
+  photo varchar(255),
+  created_at timestamp default current_timestamp,
   foreign key (element_id) references elements(id)
 );
 
