@@ -120,7 +120,7 @@ create table tasks (
   created_at timestamp,
   deleted_at timestamp,
   foreign key (work_order_id) references work_orders(id),
-  foreign key (element_id) references element(id),
+  foreign key (element_id) references elements(id),
   foreign key (machine_id) references machines(id),
   foreign key (route_id) references routes(id),
   foreign key (part_id) references parts(id)
