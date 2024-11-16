@@ -2,18 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Core\BaseController;
 use App\Core\View;
 use App\Models\Incidence;
 
-
-
-
-class IncidenceController
+class IncidenceController implements BaseController
 {
-    public function index()
+    public function get()
     {
-        $incidences = Incidence::getAll();
-        
+        $incidences = Incidence::findAll();
         View::render([
             "view" => "Incidence",
             "title" => "Incidences",
@@ -21,5 +18,8 @@ class IncidenceController
             "data" => ["incidences" => $incidences]
         ]);
     }
-}
 
+    public function post() {}
+    public function put() {}
+    public function delete() {}
+}

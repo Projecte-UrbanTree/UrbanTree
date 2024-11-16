@@ -52,11 +52,11 @@ INSERT INTO elements (name, zone_id, point_id, tree_type_id) VALUES
 ('Árbol 2', 2, 2, 2),
 ('Árbol 3', 3, 3, 3);
 
--- INSERT SAMPLE INCIDENCTS
-INSERT INTO incidences (name, element_id, description, incident_date) VALUES
-('Rama caída', 1, 'Rama caída en el suelo', NOW()),
-('Banco roto', 2, 'Banco roto en el parque', NOW()),
-('Fuente sin agua', 3, 'Fuente sin agua en el parque', NOW()),
-('Árbol enfermo', 1, 'Árbol con signos de enfermedad', NOW()),
-('Banco pintado', 2, 'Banco pintado con grafitis', NOW()),
-('Fuente con fuga', 3, 'Fuente con fuga de agua', NOW());
+-- Insert sample incidences
+INSERT INTO incidences (name, element_id, description) VALUES
+('Rama caída', 1, 'Rama caída en el suelo'),
+('Banco roto', 2, 'Banco roto en el parque'),
+('Fuente sin agua', 3, 'Fuente sin agua en el parque'),
+('Árbol enfermo', 1, 'Árbol con signos de enfermedad'),
+('Banco pintado', 2, 'Banco pintado con grafitis'),
+('Fuente con fuga', 3, 'Fuente con fuga de agua');
