@@ -2,14 +2,16 @@
 
 namespace App\Controllers;
 
+
+use App\Core\BaseController;
 use App\Core\View;
 use App\Models\Element;
 
-class ElementController
+class ElementController implements BaseController
 {
-    public function index()
+    public function get()
     {
-        $elements = Element::getAll();
+        $elements = Element::findAll();
         View::render([
             "view" => "Element",
             "title" => "Element",
@@ -17,4 +19,8 @@ class ElementController
             "data" => ["elements" => $elements]
         ]);
     }
+
+    public function post() {}
+    public function put() {}
+    public function delete() {}
 }
