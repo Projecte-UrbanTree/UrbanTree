@@ -2,12 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Core\BaseController;
 use App\Core\View;
 use App\Models\Worker;
 
-class HomeController
+class HomeController implements BaseController
 {
-    public function index()
+    public function get()
     {
         $workers = Worker::getAll();
         View::render([
@@ -17,4 +18,8 @@ class HomeController
             "data" => ["workers" => $workers]
         ]);
     }
+
+    public function post() {}
+    public function put() {}
+    public function delete() {}
 }
