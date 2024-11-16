@@ -12,9 +12,9 @@
             <?php foreach ($tree_types as $tree_type): ?>
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2 border-b"><?php echo $tree_type->getId(); ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $tree_type->getFamily(); ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $tree_type->getGenus(); ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $tree_type->getSpecies(); ?></td>
+                    <td class="px-4 py-2 border-b"><?php echo $tree_type->family; ?></td>
+                    <td class="px-4 py-2 border-b"><?php echo $tree_type->genus; ?></td>
+                    <td class="px-4 py-2 border-b"><?php echo $tree_type->species; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
