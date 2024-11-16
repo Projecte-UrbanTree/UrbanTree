@@ -13,14 +13,24 @@ create table zones (
   foreign key (point_id) references points(id)
 );
 
+create table tree_types (
+  id int auto_increment primary key,
+  family varchar(255) not null,
+  genus varchar(255) not null,
+  species varchar(255) not null unique,
+  constraint UC_TreeType unique (family, genus, species)
+);
+
 create table elements (
   id int auto_increment primary key,
   name varchar(255),
   latitude decimal,
   longitude decimal,
+  tree_types_id int,
   created_at timestamp,
   deleted_at timestamp,
-  updated_at timestamp
+  updated_at timestamp,
+  foreign key (tree_types_id) references tree_types(id)
 );
 
 create table inventory (
@@ -58,6 +68,20 @@ create table workers (
   deleted_at timestamp,
   updated_at timestamp,
   foreign key (role_id) references roles(id)
+);
+
+
+CREATE TABLE contracts (
+  id int auto_increment primary key,
+  name varchar(255),
+  start_date DATE,
+  end_date DATE,
+  invoice_proposed float,
+  invoice_agreed float,
+  invoice_paid float,
+  created_at timestamp default current_timestamp,
+  deleted_at timestamp,
+  updated_at timestamp
 );
 
 create table work_orders (
