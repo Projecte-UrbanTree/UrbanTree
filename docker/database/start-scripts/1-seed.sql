@@ -45,3 +45,9 @@ INSERT INTO zones (name, postal_code, point_id) VALUES
 ('Zona 1', '46001', 1),
 ('Zona 2', '46002', 2),
 ('Zona 3', '46003', 3);
+
+-- Insert sample elements
+INSERT INTO elements (name, zone_id, point_id, tree_type_id) VALUES
+('Árbol 1', 1, 1, 1),
+('Árbol 2', 2, 2, 2),
+('Árbol 3', 3, 3, 3);

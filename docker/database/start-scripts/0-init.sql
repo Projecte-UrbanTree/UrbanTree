@@ -27,11 +27,13 @@ create table elements (
   name varchar(255) not null,
   zone_id int not null,
   point_id int not null,
+  tree_type_id int not null,
   created_at timestamp default current_timestamp,
   deleted_at timestamp,
   updated_at timestamp,
   foreign key (zone_id) references zones(id),
-  foreign key (point_id) references points(id)
+  foreign key (point_id) references points(id),
+  foreign key (tree_type_id) references tree_types(id)
 );
 
 create table incidences (
