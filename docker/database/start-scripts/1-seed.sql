@@ -27,3 +27,9 @@ INSERT INTO task_types (name) VALUES
 ('Abono arbustos'),
 ('Podar setos'),
 ('Abono setos');
+
+-- Insert sample pruning types
+INSERT INTO pruning_types (name, description) VALUES
+('A', 'Poda de mantenimiento en árbol tipo A, caduco, de p.c. entre 41/80 cm.'),
+('B', 'Poda de mantenimiento en árbol tipo B, caduco, de p.c. mayor de 81 cm.'),
+('C', 'Poda de mantenimiento en árbol tipo C, perenne, de p.c. entre 41/60 cm.');

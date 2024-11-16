@@ -162,7 +162,14 @@ create table sensor_history (
   created_at timestamp default current_timestamp,
   foreign key (sensor_id) references sensors(id)
 );
+
+create table pruning_types (
+  id int auto_increment primary key,
+  name varchar(20) unique,
+  description varchar(255)
+);
+
 create table task_types (
   id int auto_increment primary key,
-  name varchar(255)
-)
+  name varchar(255) unique
+);
