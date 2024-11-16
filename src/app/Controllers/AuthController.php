@@ -2,11 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Core\BaseController;
 use App\Core\View;
 
-class AuthController
+class AuthController implements BaseController
 {
-    public function index()
+    public function get()
     {
         View::render([
             "view" => "Auth/Login",
@@ -15,4 +16,8 @@ class AuthController
             "data" => []
         ]);
     }
+
+    public function post() {}
+    public function put() {}
+    public function delete() {}
 }

@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Worker;
+use App\Models\TreeType;
 
-class HomeController implements BaseController
+class TreeTypeController implements BaseController
 {
     public function get()
     {
-        $workers = Worker::findAll();
+        $tree_types = TreeType::findAll();
         View::render([
-            "view" => "Home",
-            "title" => "Home Page",
+            "view" => "TreeType",
+            "title" => "Tree Types",
             "layout" => "MainLayout",
-            "data" => ["workers" => $workers]
+            "data" => ["tree_types" => $tree_types]
         ]);
     }
 

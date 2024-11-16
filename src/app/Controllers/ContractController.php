@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Worker;
+use App\Models\Contract;
 
-class HomeController implements BaseController
+class ContractController implements BaseController
 {
     public function get()
     {
-        $workers = Worker::findAll();
+        $contracts = Contract::findAll();
         View::render([
-            "view" => "Home",
-            "title" => "Home Page",
+            "view" => "Contracts",
+            "title" => "Contracts",
             "layout" => "MainLayout",
-            "data" => ["workers" => $workers]
+            "data" => ["contracts" => $contracts]
         ]);
     }
 
