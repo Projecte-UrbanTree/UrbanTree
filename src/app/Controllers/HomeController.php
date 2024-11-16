@@ -10,7 +10,7 @@ class HomeController implements BaseController
 {
     public function get()
     {
-        $workers = Worker::getAll();
+        $workers = Worker::findAll();
         View::render([
             "view" => "Home",
             "title" => "Home Page",
