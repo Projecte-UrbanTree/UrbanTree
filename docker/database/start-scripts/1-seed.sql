@@ -34,11 +34,23 @@ INSERT INTO pruning_types (name, description) VALUES
 ('B', 'Poda de mantenimiento en árbol tipo B, caduco, de p.c. mayor de 81 cm.'),
 ('C', 'Poda de mantenimiento en árbol tipo C, perenne, de p.c. entre 41/60 cm.');
 
--- Insert sample elements (trees, benches, fountains)
-INSERT INTO elements(name, latitude, longitude, created_at, updated_at, deleted_at) VALUES
-('Árbol', 40.416775, -3.703790, NOW(), NOW(), NULL),
-('Banco', 40.416775, -3.703790, NOW(), NOW(), NULL),
-('Fuente', 40.416775, -3.703790, NOW(), NOW(), NULL);
+-- Insert sample points
+INSERT INTO points (latitude, longitude) VALUES
+(40.416775, -3.703790),
+(40.416776, -3.703795),
+(40.416777, -3.703800);
+
+-- Insert sample zones
+INSERT INTO zones (name, postal_code, point_id) VALUES
+('Zona 1', '46001', 1),
+('Zona 2', '46002', 2),
+('Zona 3', '46003', 3);
+
+-- Insert sample elements
+INSERT INTO elements (name, zone_id, point_id, tree_type_id) VALUES
+('Árbol 1', 1, 1, 1),
+('Árbol 2', 2, 2, 2),
+('Árbol 3', 3, 3, 3);
 
 -- INSERT SAMPLE INCIDENCTS
 INSERT INTO incidences (name, element_id, description, incident_date) VALUES

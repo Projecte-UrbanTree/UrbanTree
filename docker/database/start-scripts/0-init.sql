@@ -1,16 +1,17 @@
 create table points (
   id int auto_increment primary key,
-  latitude decimal,
-  longitude decimal
+  latitude decimal(10, 7) not null,
+  longitude decimal(10, 7) not null,
+  constraint UC_Point unique (latitude, longitude)
 );
 
 create table zones (
   id int auto_increment primary key,
-  name varchar(255),
-  quantity int,
-  postal_code int,
-  point_id int,
-  foreign key (point_id) references points(id)
+  name varchar(255) not null,
+  postal_code int not null,
+  point_id int not null unique,
+  foreign key (point_id) references points(id),
+  constraint UC_Zone unique (name, postal_code)
 );
 
 create table tree_types (
@@ -23,22 +24,16 @@ create table tree_types (
 
 create table elements (
   id int auto_increment primary key,
-  name varchar(255),
-  latitude decimal,
-  longitude decimal,
-  tree_types_id int,
-  created_at timestamp,
+  name varchar(255) not null,
+  zone_id int not null,
+  point_id int not null,
+  tree_type_id int not null,
+  created_at timestamp default current_timestamp,
   deleted_at timestamp,
   updated_at timestamp,
-  foreign key (tree_types_id) references tree_types(id)
-);
-
-create table inventory (
-  id int auto_increment primary key,
-  element_id int,
-  zone_id int,
-  foreign key (element_id) references elements(id),
-  foreign key (zone_id) references zones(id)
+  foreign key (zone_id) references zones(id),
+  foreign key (point_id) references points(id),
+  foreign key (tree_type_id) references tree_types(id)
 );
 
 create table incidences (
@@ -119,7 +114,7 @@ create table tasks (
   task_name varchar(255),
   work_order_id int,
   description varchar(255),
-  inventory_id int,
+  element_id int,
   machine_id int,
   route_id int,
   status BIT,
@@ -128,7 +123,7 @@ create table tasks (
   created_at timestamp,
   deleted_at timestamp,
   foreign key (work_order_id) references work_orders(id),
-  foreign key (inventory_id) references inventory(id),
+  foreign key (element_id) references elements(id),
   foreign key (machine_id) references machines(id),
   foreign key (route_id) references routes(id),
   foreign key (part_id) references parts(id)
