@@ -63,10 +63,15 @@ create table workers (
 
 CREATE TABLE contracts (
   id int auto_increment primary key,
-  contract_type VARCHAR(255),
+  name varchar(255),
   start_date DATE,
   end_date DATE,
-  salary DECIMAL(10, 2),
+  invoice_proposed float,
+  invoice_agreed float,
+  invoice_paid float,
+  created_at timestamp default current_timestamp,
+  deleted_at timestamp,
+  updated_at timestamp,
 );
 
 create table work_orders (
