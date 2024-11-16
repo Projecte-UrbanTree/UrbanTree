@@ -1,7 +1,8 @@
 create table points (
   id int auto_increment primary key,
-  latitude decimal,
-  longitude decimal
+  latitude decimal(10, 7) not null,
+  longitude decimal(10, 7) not null,
+  constraint UC_Point unique (latitude, longitude)
 );
 
 create table zones (
