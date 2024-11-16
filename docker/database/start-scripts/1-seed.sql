@@ -33,3 +33,15 @@ INSERT INTO pruning_types (name, description) VALUES
 ('A', 'Poda de mantenimiento en árbol tipo A, caduco, de p.c. entre 41/80 cm.'),
 ('B', 'Poda de mantenimiento en árbol tipo B, caduco, de p.c. mayor de 81 cm.'),
 ('C', 'Poda de mantenimiento en árbol tipo C, perenne, de p.c. entre 41/60 cm.');
+
+-- Insert sample points
+INSERT INTO points (latitude, longitude) VALUES
+(40.416775, -3.703790),
+(40.416776, -3.703795),
+(40.416777, -3.703800);
+
+-- Insert sample zones
+INSERT INTO zones (name, postal_code, point_id) VALUES
+('Zona 1', '46001', 1),
+('Zona 2', '46002', 2),
+('Zona 3', '46003', 3);
