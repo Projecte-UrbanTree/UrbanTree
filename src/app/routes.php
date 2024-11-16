@@ -12,7 +12,7 @@
 
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
-use App\Controllers\TaskTypeController;
+
 return $routes = [
     "/" => HomeController::class,
     "/login" => AuthController::class,
