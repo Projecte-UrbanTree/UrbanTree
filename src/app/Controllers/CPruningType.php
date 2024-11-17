@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\TreeType;
+use App\Models\MPruningType;
 
-class TreeTypeController implements BaseController
+class CPruningType implements BaseController
 {
     public function get()
     {
-        $tree_types = TreeType::findAll();
+        $pruning_types = MPruningType::findAll();
         View::render([
-            "view" => "TreeType",
-            "title" => "Tree Types",
+            "view" => "PruningType",
+            "title" => "Pruning Types",
             "layout" => "MainLayout",
-            "data" => ["tree_types" => $tree_types]
+            "data" => ["pruning_types" => $pruning_types]
         ]);
     }
 

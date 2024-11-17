@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Worker;
+use App\Models\MZone;
 
-class HomeController implements BaseController
+class CZone implements BaseController
 {
     public function get()
     {
-        $workers = Worker::findAll();
+        $zones = MZone::findAll();
         View::render([
-            "view" => "Home",
-            "title" => "Home Page",
+            "view" => "Zone",
+            "title" => "Zones",
             "layout" => "MainLayout",
-            "data" => ["workers" => $workers]
+            "data" => ["zones" => $zones]
         ]);
     }
 

@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Zone;
+use App\Models\MElement;
 
-class ZoneController implements BaseController
+class CElement implements BaseController
 {
     public function get()
     {
-        $zones = Zone::findAll();
+        $elements = MElement::findAll();
         View::render([
-            "view" => "Zone",
-            "title" => "Zones",
+            "view" => "Element",
+            "title" => "Element",
             "layout" => "MainLayout",
-            "data" => ["zones" => $zones]
+            "data" => ["elements" => $elements]
         ]);
     }
 

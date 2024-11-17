@@ -4,13 +4,13 @@ namespace App\Controllers;
 
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Contract;
+use App\Models\MContract;
 
-class ContractController implements BaseController
+class CContract implements BaseController
 {
     public function get()
     {
-        $contracts = Contract::findAll();
+        $contracts = MContract::findAll();
         View::render([
             "view" => "Contracts",
             "title" => "Contracts",

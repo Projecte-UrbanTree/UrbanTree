@@ -10,10 +10,10 @@
  *
  **/
 
-use App\Controllers\HomeController;
-use App\Controllers\AuthController;
+use App\Controllers\CHome;
+use App\Controllers\CAuth;
 
 return $routes = [
-    "/" => HomeController::class,
-    "/login" => AuthController::class,
+    "/" => CHome::class,
+    "/login" => CAuth::class,
 ];

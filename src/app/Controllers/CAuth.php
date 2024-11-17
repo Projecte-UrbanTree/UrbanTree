@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Core\BaseController;
 use App\Core\View;
 
-class AuthController implements BaseController
+class CAuth implements BaseController
 {
     public function get()
     {

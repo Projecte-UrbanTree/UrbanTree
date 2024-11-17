@@ -4,13 +4,13 @@ namespace App\Controllers;
 
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\TaskType;
+use App\Models\MTaskType;
 
-class TaskTypeController implements BaseController
+class CTaskType implements BaseController
 {
     public function get()
     {
-        $task_types = TaskType::findAll();
+        $task_types = MTaskType::findAll();
         View::render([
             "view" => "TaskTypes/index",
             "title" => "Task Types",
@@ -19,13 +19,7 @@ class TaskTypeController implements BaseController
         ]);
     }
 
-    public function post()
-    {
-    }
-    public function put()
-    {
-    }
-    public function delete()
-    {
-    }
+    public function post() {}
+    public function put() {}
+    public function delete() {}
 }

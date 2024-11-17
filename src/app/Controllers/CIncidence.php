@@ -2,21 +2,20 @@
 
 namespace App\Controllers;
 
-
 use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Element;
+use App\Models\MIncidence;
 
-class ElementController implements BaseController
+class CIncidence implements BaseController
 {
     public function get()
     {
-        $elements = Element::findAll();
+        $incidences = MIncidence::findAll();
         View::render([
-            "view" => "Element",
-            "title" => "Element",
+            "view" => "Incidence",
+            "title" => "Incidences",
             "layout" => "MainLayout",
-            "data" => ["elements" => $elements]
+            "data" => ["incidences" => $incidences]
         ]);
     }
 
