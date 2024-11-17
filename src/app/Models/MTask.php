@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Core\BaseModel;
-use App\Models\Order;
+use App\Models\MWorkOrder;
 
-class Task extends BaseModel
+class MTask extends BaseModel
 {    
-    public ?string$notes;
+    public ?string $notes;
     public $work_order_id;
 
     protected static function getTableName()
@@ -17,7 +17,7 @@ class Task extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $task = new Task();
+        $task = new MTask();
         $task->id = $data['id'];
         $task->notes = $data['notes'];
         $task->work_order_id = $data['work_order_id'];
@@ -26,22 +26,22 @@ class Task extends BaseModel
     }
 
     public function Order() {
-        return $this->belongsTo(Order::class, 'work_order_id', 'id');
+        return $this->belongsTo(MWorkOrder::class, 'work_order_id', 'id');
     }
 
     // Many-to-Many relationship with Post
     public function zones()
     {
-        return $this->belongsToMany(Zone::class, 'tasks_zones', 'task_id', 'zone_id');
+        return $this->belongsToMany(MZone::class, 'tasks_zones', 'task_id', 'zone_id');
     }
 
     public function workers()
     {
-        return $this->belongsToMany(Worker::class, 'tasks_workers', 'task_id', 'worker_id');
+        return $this->belongsToMany(MWorker::class, 'tasks_workers', 'task_id', 'worker_id');
     }
 
     public function taskTypes()
     {
-        return $this->belongsToMany(TaskType::class, 'tasks_tasktypes', 'task_id', 'tasktype_id');
+        return $this->belongsToMany(MTaskType::class, 'tasks_tasktypes', 'task_id', 'tasktype_id');
     }
 }
