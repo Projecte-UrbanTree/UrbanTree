@@ -2,13 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
 use App\Core\View;
 use App\Models\PruningType;
 
-class PruningTypeController implements BaseController
+class PruningTypeController
 {
-    public function get()
+    public function index()
     {
         $pruning_types = PruningType::findAll();
         View::render([
@@ -18,8 +17,4 @@ class PruningTypeController implements BaseController
             "data" => ["pruning_types" => $pruning_types]
         ]);
     }
-
-    public function post() {}
-    public function put() {}
-    public function delete() {}
 }
