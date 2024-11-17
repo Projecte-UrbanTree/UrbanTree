@@ -2,15 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
 use App\Core\View;
-use App\Models\Worker;
+use App\Models\MWorker;
 
-class HomeController implements BaseController
+class CHome
 {
-    public function get()
+    public function index()
     {
-        $workers = Worker::findAll();
+        $workers = MWorker::findAll();
         View::render([
             "view" => "Home",
             "title" => "Home Page",
@@ -18,8 +17,4 @@ class HomeController implements BaseController
             "data" => ["workers" => $workers]
         ]);
     }
-
-    public function post() {}
-    public function put() {}
-    public function delete() {}
 }

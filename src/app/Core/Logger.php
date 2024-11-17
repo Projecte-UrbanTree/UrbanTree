@@ -12,6 +12,5 @@ class Logger
             touch($logFile);
         }
         file_put_contents($logFile, $logMessage, FILE_APPEND);
-    }    
+    }
 }
-

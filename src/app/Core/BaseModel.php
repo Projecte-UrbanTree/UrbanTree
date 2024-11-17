@@ -5,6 +5,7 @@ namespace App\Core;
 abstract class BaseModel
 {
     protected int $id;
+    protected $created_at;
 
     // One-to-one relationship
     public function belongsTo($relatedModel, $foreignKey, $ownerKey = 'id')
@@ -166,5 +167,10 @@ abstract class BaseModel
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->created_at;
     }
 }
