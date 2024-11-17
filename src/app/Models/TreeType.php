@@ -10,7 +10,7 @@ class TreeType extends BaseModel
     public string $genus;
     public string $species;
 
-    protected static function getTableName(): string
+    protected static function getTableName()
     {
         return 'tree_types';
     }
