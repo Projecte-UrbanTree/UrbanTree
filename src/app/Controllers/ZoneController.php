@@ -2,13 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
 use App\Core\View;
 use App\Models\Zone;
 
-class ZoneController implements BaseController
+class ZoneController
 {
-    public function get()
+    public function index()
     {
         $zones = Zone::findAll();
         View::render([
@@ -18,8 +17,4 @@ class ZoneController implements BaseController
             "data" => ["zones" => $zones]
         ]);
     }
-
-    public function post() {}
-    public function put() {}
-    public function delete() {}
 }
