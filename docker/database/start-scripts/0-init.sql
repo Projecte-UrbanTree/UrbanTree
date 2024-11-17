@@ -112,10 +112,11 @@ create table incidences (
 --TODO: tasks, routes and works
 create table work_orders (
     id int auto_increment primary key,
-    name varchar(255),
+    contract_id int,
     created_at timestamp default current_timestamp,
+    deleted_at timestamp,
     updated_at timestamp,
-    deleted_at timestamp
+    foreign key (contract_id) references contracts(id)
 );
 
 create table parts (
@@ -136,32 +137,36 @@ create table routes (
 );
 
 create table tasks (
-    id int auto_increment primary key,
-    task_name varchar(255),
+    id int auto_increment primary key, 
     work_order_id int,
-    description varchar(255),
-    element_id int,
-    machine_id int,
-    route_id int,
-    part_id int,
-    history_id int,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp,
+    notes varchar(255),
+    created_at timestamp,
     deleted_at timestamp,
-    foreign key (work_order_id) references work_orders(id),
-    foreign key (element_id) references elements(id),
-    foreign key (machine_id) references machines(id),
-    foreign key (route_id) references routes(id),
-    foreign key (part_id) references parts(id)
+    foreign key (work_order_id) references work_orders(id)
 );
 
-create table task_workers (
+create table tasks_workers (
     id int auto_increment primary key,
     task_id int,
     worker_id int,
-    created_at timestamp default current_timestamp,
     foreign key (task_id) references tasks(id),
     foreign key (worker_id) references workers(id)
+);
+
+create table tasks_zones (
+    id int auto_increment primary key,
+    task_id int,
+    zone_id int,
+    foreign key (task_id) references tasks(id),
+    foreign key (zone_id) references zones(id)
+);
+
+create table tasks_tasktypes (
+    id int auto_increment primary key,
+    task_id int,
+    tasktype_id int,
+    foreign key (task_id) references tasks(id),
+    foreign key (tasktype_id) references task_types(id)
 );
 
 --* FUTURE: sensors and sensor history
