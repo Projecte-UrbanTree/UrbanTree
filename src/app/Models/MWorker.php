@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use App\Core\BaseModel;
-use App\Core\Database;
 
-class Worker extends BaseModel
+class MWorker extends BaseModel
 {
 
     public string $company;
@@ -22,7 +21,7 @@ class Worker extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $user = new Worker();
+        $user = new MWorker();
         $user->id = $data['id'];
         $user->company = $data['company'];
         $user->name = $data['name'];
@@ -30,12 +29,13 @@ class Worker extends BaseModel
         $user->password = $data['password'];
         $user->email = $data['email'];
         $user->role_id = $data['role_id'];
+        $user->created_at = $data['created_at'];
         return $user;
     }
 
     // Fetch the user's role
     public function role()
     {
-        return $this->belongsTo(Role::class, 'role_id', 'id');
+        return $this->belongsTo(MRole::class, 'role_id');
     }
 }

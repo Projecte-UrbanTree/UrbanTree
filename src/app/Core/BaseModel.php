@@ -5,8 +5,9 @@ namespace App\Core;
 abstract class BaseModel
 {
     protected int $id;
+    protected $created_at;
 
-    // Get the related model in a one-to-one relationship
+    // One-to-one relationship
     public function belongsTo($relatedModel, $foreignKey, $ownerKey = 'id')
     {
         $relatedTable = $relatedModel::getTableName();
@@ -16,6 +17,25 @@ abstract class BaseModel
         $results = Database::prepareAndExecute($query, ['foreignKeyValue' => $foreignKeyValue]);
 
         return !empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
+    }
+
+
+    // Many-to-Many relationship
+    public function belongsToMany($relatedModel, $pivotTable, $foreignKey, $relatedKey, $ownerKey = 'id', $relatedOwnerKey = 'id')
+    {
+        $relatedTable = $relatedModel::getTableName();
+        $localKeyValue = $this->{$ownerKey};
+
+        $query = "
+            SELECT $relatedTable.*
+            FROM $relatedTable
+            INNER JOIN $pivotTable ON $pivotTable.$relatedKey = $relatedTable.$relatedOwnerKey
+            WHERE $pivotTable.$foreignKey = :localKeyValue
+        ";
+
+        $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
+
+        return array_map(fn($row) => $relatedModel::mapDataToModel($row), $results);
     }
 
     public function delete()
@@ -147,5 +167,10 @@ abstract class BaseModel
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->created_at;
     }
 }

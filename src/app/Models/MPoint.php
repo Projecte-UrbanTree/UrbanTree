@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Core\BaseModel;
 
-class Point extends BaseModel
+class MPoint extends BaseModel
 {
     public $latitude;
     public $longitude;
@@ -16,10 +16,11 @@ class Point extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $point = new Point();
+        $point = new MPoint();
         $point->id = $data['id'];
         $point->latitude = $data['latitude'];
         $point->longitude = $data['longitude'];
+        $point->created_at = $data['created_at'];
         return $point;
     }
 }
