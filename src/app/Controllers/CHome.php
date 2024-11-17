@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Models\Worker;
+use App\Models\MWorker;
 
-class HomeController
+class CHome
 {
     public function index()
     {
-        $workers = Worker::findAll();
+        $workers = MWorker::findAll();
         View::render([
             "view" => "Home",
             "title" => "Home Page",

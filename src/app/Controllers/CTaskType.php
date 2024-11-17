@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Models\TaskType;
+use App\Models\MTaskType;
 
-class TaskTypeController
+class CTaskType
 {
     public function index()
     {
-        $task_types = TaskType::findAll();
+        $task_types = MTaskType::findAll();
         View::render([
             "view" => "TaskTypes/index",
             "title" => "Task Types",

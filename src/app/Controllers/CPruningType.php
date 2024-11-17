@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Models\PruningType;
+use App\Models\MPruningType;
 
-class PruningTypeController
+class CPruningType
 {
     public function index()
     {
-        $pruning_types = PruningType::findAll();
+        $pruning_types = MPruningType::findAll();
         View::render([
             "view" => "PruningType",
             "title" => "Pruning Types",

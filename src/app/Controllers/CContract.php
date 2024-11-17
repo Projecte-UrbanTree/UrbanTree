@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Models\Contract;
+use App\Models\MContract;
 
-class ContractController
+class CContract
 {
     public function index()
     {
-        $contracts = Contract::findAll();
+        $contracts = MContract::findAll();
         View::render([
             "view" => "Contracts",
             "title" => "Contracts",

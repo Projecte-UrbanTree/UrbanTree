@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Models\Incidence;
+use App\Models\MIncidence;
 
-class IncidenceController
+class CIncidence
 {
     public function index()
     {
-        $incidences = Incidence::findAll();
+        $incidences = MIncidence::findAll();
         View::render([
             "view" => "Incidence",
             "title" => "Incidences",

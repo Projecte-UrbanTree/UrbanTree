@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Models\TreeType;
+use App\Models\MTreeType;
 
-class TreeTypeController
+class CTreeType
 {
     public function index()
     {
-        $tree_types = TreeType::findAll();
+        $tree_types = MTreeType::findAll();
         View::render([
             "view" => "TreeType",
             "title" => "Tree Types",

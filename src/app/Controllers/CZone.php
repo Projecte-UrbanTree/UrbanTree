@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Models\Zone;
+use App\Models\MZone;
 
-class ZoneController
+class CZone
 {
     public function index()
     {
-        $zones = Zone::findAll();
+        $zones = MZone::findAll();
         View::render([
             "view" => "Zone",
             "title" => "Zones",

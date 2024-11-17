@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Models\Element;
+use App\Models\MElement;
 
-class ElementController
+class CElement
 {
     public function index()
     {
-        $elements = Element::findAll();
+        $elements = MElement::findAll();
         View::render([
             "view" => "Element",
             "title" => "Element",

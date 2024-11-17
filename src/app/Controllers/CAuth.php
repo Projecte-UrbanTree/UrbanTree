@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Core\View;
 
-class AuthController
+class CAuth
 {
     public function index()
     {

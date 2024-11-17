@@ -13,17 +13,17 @@
  *
  **/
 
-use App\Controllers\HomeController;
-use App\Controllers\AuthController;
+use App\Controllers\CHome;
+use App\Controllers\CAuth;
 
 return $routes = [
     "GET" => [
         "/" => [
-            "controller" => HomeController::class,
+            "controller" => CHome::class,
             "method" => "index"
         ],
         "/login" => [
-            "controller" => AuthController::class,
+            "controller" => CAuth::class,
             "method" => "index"
         ]
     ],

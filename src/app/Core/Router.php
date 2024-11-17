@@ -44,10 +44,10 @@ class Router
     {
         $controller = new $routeInfo['controller']();
         $method = $routeInfo['method'];
-        
+
         // Combine route parameters and POST data
         $arguments = array_merge(array_values($params), [$postData]);
-        
+
         // Unpack the combined array into the method call
         $controller->$method(...$arguments);
     }
