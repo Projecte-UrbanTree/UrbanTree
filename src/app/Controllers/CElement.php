@@ -2,13 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
 use App\Core\View;
 use App\Models\MElement;
 
-class CElement implements BaseController
+class CElement
 {
-    public function get()
+    public function index()
     {
         $elements = MElement::findAll();
         View::render([
@@ -18,8 +17,4 @@ class CElement implements BaseController
             "data" => ["elements" => $elements]
         ]);
     }
-
-    public function post() {}
-    public function put() {}
-    public function delete() {}
 }

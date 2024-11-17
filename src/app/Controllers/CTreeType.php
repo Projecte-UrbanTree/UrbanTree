@@ -2,13 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
 use App\Core\View;
 use App\Models\MTreeType;
 
-class CTreeType implements BaseController
+class CTreeType
 {
-    public function get()
+    public function index()
     {
         $tree_types = MTreeType::findAll();
         View::render([
@@ -18,8 +17,4 @@ class CTreeType implements BaseController
             "data" => ["tree_types" => $tree_types]
         ]);
     }
-
-    public function post() {}
-    public function put() {}
-    public function delete() {}
 }

@@ -2,13 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
 use App\Core\View;
 use App\Models\MZone;
 
-class CZone implements BaseController
+class CZone
 {
-    public function get()
+    public function index()
     {
         $zones = MZone::findAll();
         View::render([
@@ -18,8 +17,4 @@ class CZone implements BaseController
             "data" => ["zones" => $zones]
         ]);
     }
-
-    public function post() {}
-    public function put() {}
-    public function delete() {}
 }

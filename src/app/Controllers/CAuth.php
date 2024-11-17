@@ -2,12 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
 use App\Core\View;
 
-class CAuth implements BaseController
+class CAuth
 {
-    public function get()
+    public function index()
     {
         View::render([
             "view" => "Auth/Login",
@@ -16,8 +15,4 @@ class CAuth implements BaseController
             "data" => []
         ]);
     }
-
-    public function post() {}
-    public function put() {}
-    public function delete() {}
 }

@@ -2,13 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
 use App\Core\View;
 use App\Models\MIncidence;
 
-class CIncidence implements BaseController
+class CIncidence
 {
-    public function get()
+    public function index()
     {
         $incidences = MIncidence::findAll();
         View::render([
@@ -18,8 +17,4 @@ class CIncidence implements BaseController
             "data" => ["incidences" => $incidences]
         ]);
     }
-
-    public function post() {}
-    public function put() {}
-    public function delete() {}
 }
