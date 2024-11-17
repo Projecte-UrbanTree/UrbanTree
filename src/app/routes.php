@@ -12,8 +12,11 @@
 
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
+use App\Controllers\OrderController;
 
 return $routes = [
     "/" => HomeController::class,
     "/login" => AuthController::class,
+    "/order" => OrderController::class,
+    "/order/create" => OrderController::class,
 ];

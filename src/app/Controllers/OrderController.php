@@ -17,7 +17,9 @@ class OrderController implements BaseController
         ]);
     }
 
-    public function post() {}
+    public function post() {
+        
+    }
     public function put() {}
     public function delete() {}
 

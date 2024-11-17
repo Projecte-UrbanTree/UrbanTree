@@ -2,13 +2,10 @@
 namespace App\Models;
 
 use App\Core\BaseModel;
-use App\Core\Database;
 
 class Order extends BaseModel
 {   
-    public string $name;
     public int $contract_id;
-    public string $notes;
     protected $created_at;
 
     protected static function getTableName()
@@ -20,9 +17,7 @@ class Order extends BaseModel
     {
         $order = new Order();
         $order->id = $data['id'];
-        $order->name = $data['name'];
         $order->contract_id = $data['contract_id'];
-        $order->notes = $data['notes'];
         $order->created_at = $data['created_at'];
 
         return $order;
@@ -34,5 +29,9 @@ class Order extends BaseModel
 
     public function contract(){
         return $this->belongsTo(Contract::class, 'contract_id', 'id');
+    }
+
+    public function tasks(){
+        return $this->hasMany(Task::class, 'work_order_id', 'id');
     }
 }

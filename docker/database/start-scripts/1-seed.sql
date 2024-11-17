@@ -60,3 +60,19 @@ INSERT INTO incidences (name, element_id, description) VALUES
 ('Árbol enfermo', 1, 'Árbol con signos de enfermedad'),
 ('Banco pintado', 2, 'Banco pintado con grafitis'),
 ('Fuente con fuga', 3, 'Fuente con fuga de agua');
+
+INSERT INTO work_orders (contract_id) VALUES 
+(1),
+(2),
+(3);
+
+INSERT INTO tasks (work_order_id, notes) VALUES
+(1, 'Poda de mantenimiento en árbol tipo A, caduco, de p.c. entre 41/80 cm.'),
+(2, 'Poda de mantenimiento en árbol tipo B, caduco, de p.c. entre 50/100 cm.'),
+(3, 'Poda de mantenimiento en árbol tipo C, caduco, de p.c. entre 60/120 cm.');
+
+
+
+
+
+
