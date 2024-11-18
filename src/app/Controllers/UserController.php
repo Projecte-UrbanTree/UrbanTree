@@ -33,14 +33,14 @@ class UserController
 
     public function store($postData)
     {
-        $user = new User();
+        $user = new User;
         $user->company = $postData['company'];
         $user->name = $postData['name'];
         $user->dni = $postData['dni'];
         $user->email = $postData['email'];
 
         // Check if password is not empty before updating
-        if (!empty($postData['password'])) {
+        if (! empty($postData['password'])) {
             $user->password = $postData['password'];
         }
 

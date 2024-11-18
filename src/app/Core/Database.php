@@ -12,19 +12,19 @@ class Database
 
     public static function connect()
     {
-        if (!self::$instance) {
+        if (! self::$instance) {
             try {
                 // Read the password from the file
                 $db_pass = trim(file_get_contents(getenv('DB_PASS_FILE_PATH')));
 
                 self::$instance = new PDO(
-                    'mysql:host=' . getenv('DB_HOST') . ';dbname=' . getenv('DB_NAME'),
+                    'mysql:host='.getenv('DB_HOST').';dbname='.getenv('DB_NAME'),
                     getenv('DB_USER'),
                     $db_pass
                 );
                 self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
-                Logger::log('Database connection error: ' . $e->getMessage());
+                Logger::log('Database connection error: '.$e->getMessage());
                 throw new Exception('Database connection failed.');
             }
         }

@@ -5,13 +5,16 @@ namespace App\Models;
 class Incidence extends BaseModel
 {
     public int $element_id;
+
     public string $name;
+
     public string $description;
+
     public ?string $photo;
 
     public static function mapDataToModel($data)
     {
-        $incidence = new Incidence();
+        $incidence = new Incidence;
         $incidence->id = $data['id'];
         $incidence->element_id = $data['element_id'];
         $incidence->name = $data['name'];

@@ -5,6 +5,7 @@ namespace App\Models;
 class Point extends BaseModel
 {
     public $latitude;
+
     public $longitude;
 
     protected static function getTableName()
@@ -14,7 +15,7 @@ class Point extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $point = new Point();
+        $point = new Point;
         $point->id = $data['id'];
         $point->latitude = $data['latitude'];
         $point->longitude = $data['longitude'];

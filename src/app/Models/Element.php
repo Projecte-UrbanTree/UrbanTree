@@ -5,8 +5,11 @@ namespace App\Models;
 class Element extends BaseModel
 {
     public string $name;
+
     public int $zone_id;
+
     public int $point_id;
+
     public int $tree_type_id;
 
     public function zone()
@@ -36,7 +39,7 @@ class Element extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $element = new Element();
+        $element = new Element;
         $element->id = $data['id'];
         $element->name = $data['name'];
         $element->zone_id = $data['zone_id'];

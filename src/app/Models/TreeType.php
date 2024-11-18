@@ -5,7 +5,9 @@ namespace App\Models;
 class TreeType extends BaseModel
 {
     public string $family;
+
     public string $genus;
+
     public string $species;
 
     protected static function getTableName()
@@ -15,7 +17,7 @@ class TreeType extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $tree_type = new TreeType();
+        $tree_type = new TreeType;
         $tree_type->id = $data['id'];
         $tree_type->family = $data['family'];
         $tree_type->genus = $data['genus'];

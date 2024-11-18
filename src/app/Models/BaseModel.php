@@ -7,6 +7,7 @@ use App\Core\Database;
 abstract class BaseModel
 {
     protected ?int $id = null;
+
     protected $created_at;
 
     // Get the related model in a one-to-one relationship
@@ -18,7 +19,7 @@ abstract class BaseModel
         $query = "SELECT * FROM {$relatedTable} WHERE {$ownerKey} = :foreignKeyValue LIMIT 1";
         $results = Database::prepareAndExecute($query, ['foreignKeyValue' => $foreignKeyValue]);
 
-        return !empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
+        return ! empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
 
     public function delete()
@@ -47,7 +48,7 @@ abstract class BaseModel
         $query .= ' LIMIT 1';
         $results = Database::prepareAndExecute($query, ['id' => $id]);
 
-        if (!empty($results)) {
+        if (! empty($results)) {
             return static::mapDataToModel($results[0]);
         }
 
@@ -77,7 +78,7 @@ abstract class BaseModel
         $results = Database::prepareAndExecute($query, $parameters);
 
         if ($single) {
-            return !empty($results) ? static::mapDataToModel($results[0]) : null;
+            return ! empty($results) ? static::mapDataToModel($results[0]) : null;
         }
 
         if (empty($results)) {
@@ -94,13 +95,13 @@ abstract class BaseModel
         $params = [];
 
         // Add conditions for WHERE clause
-        if (!empty($conditions)) {
+        if (! empty($conditions)) {
             $clauses = [];
             foreach ($conditions as $key => $value) {
                 $clauses[] = "{$key} = :{$key}";
                 $params[$key] = $value;
             }
-            $query .= ' WHERE ' . implode(' AND ', $clauses);
+            $query .= ' WHERE '.implode(' AND ', $clauses);
         }
 
         // Check if the table supports soft deletes and exclude soft-deleted records
@@ -117,7 +118,7 @@ abstract class BaseModel
     // Fetch all soft deleted records
     public static function findSoftDeleted()
     {
-        if (!static::hasSoftDelete()) {
+        if (! static::hasSoftDelete()) {
             return [];
         }
 
@@ -161,18 +162,18 @@ abstract class BaseModel
             foreach ($properties as $key => $value) {
                 $fields[] = "{$key} = :{$key}";
             }
-            $query = "UPDATE {$table} SET " . implode(', ', $fields) . ' WHERE id = :id';
+            $query = "UPDATE {$table} SET ".implode(', ', $fields).' WHERE id = :id';
             $properties['id'] = $this->id;
         } else {
             // Insert logic
             $fields = array_keys($properties);
             $placeholders = array_map(fn ($field) => ":{$field}", $fields);
-            $query = "INSERT INTO {$table} (" . implode(', ', $fields) . ') VALUES (' . implode(', ', $placeholders) . ')';
+            $query = "INSERT INTO {$table} (".implode(', ', $fields).') VALUES ('.implode(', ', $placeholders).')';
         }
 
         Database::prepareAndExecute($query, $properties);
 
-        if (!$this->id) {
+        if (! $this->id) {
             $this->id = Database::connect()->lastInsertId();
         }
     }
@@ -194,10 +195,10 @@ abstract class BaseModel
         static $softDeleteCache = [];
         $table = static::getTableName();
 
-        if (!isset($softDeleteCache[$table])) {
+        if (! isset($softDeleteCache[$table])) {
             $query = "SHOW COLUMNS FROM {$table} LIKE 'deleted_at'";
             $result = Database::prepareAndExecute($query);
-            $softDeleteCache[$table] = !empty($result); // Cache the result
+            $softDeleteCache[$table] = ! empty($result); // Cache the result
         }
 
         return $softDeleteCache[$table];

@@ -28,7 +28,7 @@ class AuthController
         $email = $postData['email'] ?? null;
         $password = $postData['password'] ?? null;
 
-        if (!$email || !$password) {
+        if (! $email || ! $password) {
             // Redirect back with error if fields are missing
             Session::set('error', 'Email and password are required.');
             header('Location: /auth/login');
@@ -38,7 +38,7 @@ class AuthController
         // Check if the user exists and password matches
         $user = User::findBy(['email' => $email, 'password' => $password], true);
 
-        if (!$user || strcmp($user->password, $password) !== 0) { // TODO: Verify hashed password not raw password
+        if (! $user || strcmp($user->password, $password) !== 0) { // TODO: Verify hashed password not raw password
             echo 'Invalid email or password.';
             // Redirect back with error if authentication fails
             Session::set('error', 'Invalid email or password.');

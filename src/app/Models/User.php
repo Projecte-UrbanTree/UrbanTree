@@ -5,10 +5,15 @@ namespace App\Models;
 class User extends BaseModel
 {
     public string $company;
+
     public string $name;
+
     public string $dni;
+
     public string $password;
+
     public string $email;
+
     public int $role_id;
 
     // Fetch the user's role
@@ -24,7 +29,7 @@ class User extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $user = new User();
+        $user = new User;
         $user->id = $data['id'];
         $user->company = $data['company'];
         $user->name = $data['name'];
