@@ -31,6 +31,11 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
+        <div>
+            <label for="point_id" class="block text-sm font-medium text-gray-700 mb-1">Points</label>
+            <p>Editor not implemented</p>
+        </div>
+
         <!-- Submit Button -->
         <div class="flex items-center">
             <button type="submit"

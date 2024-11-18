@@ -23,7 +23,7 @@ class WorkOrder extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $order = new WorkOrder();
+        $order = new WorkOrder;
         $order->id = $data['id'];
         $order->contract_id = $data['contract_id'];
         $order->created_at = $data['created_at'];

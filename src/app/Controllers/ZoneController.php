@@ -30,7 +30,7 @@ class ZoneController
 
     public function store($postData)
     {
-        $zone = new Zone();
+        $zone = new Zone;
         $zone->name = $postData['name'];
         $zone->postal_code = $postData['postal_code'];
         $zone->point_id = $postData['point_id'];

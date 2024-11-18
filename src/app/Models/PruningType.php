@@ -15,7 +15,7 @@ class PruningType extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $pruning_type = new PruningType();
+        $pruning_type = new PruningType;
         $pruning_type->id = $data['id'];
         $pruning_type->name = $data['name'];
         $pruning_type->description = $data['description'];

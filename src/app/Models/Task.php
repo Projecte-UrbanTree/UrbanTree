@@ -5,6 +5,7 @@ namespace App\Models;
 class Task extends BaseModel
 {
     public ?string $notes;
+
     public $work_order_id;
 
     public function Order()
@@ -35,7 +36,7 @@ class Task extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $task = new Task();
+        $task = new Task;
         $task->id = $data['id'];
         $task->notes = $data['notes'];
         $task->work_order_id = $data['work_order_id'];

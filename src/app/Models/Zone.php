@@ -23,7 +23,7 @@ class Zone extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $zone = new Zone();
+        $zone = new Zone;
         $zone->id = $data['id'];
         $zone->name = $data['name'];
         $zone->postal_code = $data['postal_code'];
