@@ -1,30 +1,65 @@
 <?php
 
-/***
- * Web Routes are defined here in this file and are loaded in the Router class
- * All routes are defined in the following format:
- *
- * METHOD => [
- *     "URI" => [
- *        "controller" => "ControllerName",
- *        "method" => "methodName"
- *    ]
- * ]
- *
- **/
+use App\Controllers\AuthController;
+use App\Controllers\DashboardController;
+use App\Controllers\UserController;
+use App\Middlewares\AuthMiddleware;
+use App\Middlewares\GuestMiddleware;
 
-use App\Controllers\CHome;
-use App\Controllers\CAuth;
-
-return $routes = [
-    "GET" => [
-        "/" => [
-            "controller" => CHome::class,
-            "method" => "index"
+// Define routes in a grouped and structured way
+return [
+    'GET' => [
+        '/auth/login' => [
+            'controller' => AuthController::class,
+            'method' => 'index',
+            'middleware' => [GuestMiddleware::class],
         ],
-        "/login" => [
-            "controller" => CAuth::class,
-            "method" => "index"
-        ]
+        '/logout' => [
+            'controller' => AuthController::class,
+            'method' => 'logout',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/' => [
+            'controller' => DashboardController::class,
+            'method' => 'index',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/users' => [
+            'controller' => UserController::class,
+            'method' => 'index',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/user/create' => [
+            'controller' => UserController::class,
+            'method' => 'create',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/user/:id/edit' => [
+            'controller' => UserController::class,
+            'method' => 'edit',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/user/:id/delete' => [
+            'controller' => UserController::class,
+            'method' => 'destroy',
+            'middleware' => [AuthMiddleware::class],
+        ],
+    ],
+    'POST' => [
+        '/auth/login' => [
+            'controller' => AuthController::class,
+            'method' => 'login',
+            'middleware' => [GuestMiddleware::class],
+        ],
+        '/user/store' => [
+            'controller' => UserController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/user/:id/update' => [
+            'controller' => UserController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
     ],
 ];

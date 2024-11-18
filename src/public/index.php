@@ -7,4 +7,4 @@ use App\Core\Router;
 
 $router = new Router();
 $router->load('../app/routes.php');
-$router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+$router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], $_POST);
