@@ -63,7 +63,7 @@ create table pruning_types (
     created_at timestamp default current_timestamp
 );
 
---* Points and zones
+--* Points, zones and routes
 create table points (
     id int auto_increment primary key,
     latitude decimal(10, 7) not null,
@@ -80,6 +80,15 @@ create table zones (
     created_at timestamp default current_timestamp,
     foreign key (point_id) references points(id),
     constraint UC_Zone unique (name, postal_code)
+);
+
+create table routes (
+    id int auto_increment primary key,
+    distance float,
+    point_id int,
+    travel_time int,
+    created_at timestamp default current_timestamp,
+    foreign key (point_id) references points(id)
 );
 
 --* Elements and incidences
@@ -109,79 +118,76 @@ create table incidences (
     foreign key (element_id) references elements(id)
 );
 
---TODO: tasks, routes and works
+--* Work orders, tasks and reports
 create table work_orders (
     id int auto_increment primary key,
-    name varchar(255),
+    contract_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
-    deleted_at timestamp
-);
-
-create table parts (
-    id int auto_increment primary key,
-    observation varchar(255),
-    quantity int,
-    fuel decimal,
-    picture varchar(255)
-);
-
-create table routes (
-    id int auto_increment primary key,
-    distance float,
-    point_id int,
-    travel_time int,
-    created_at timestamp default current_timestamp,
-    foreign key (point_id) references points(id)
+    deleted_at timestamp,
+    foreign key (contract_id) references contracts(id)
 );
 
 create table tasks (
     id int auto_increment primary key,
-    task_name varchar(255),
-    work_order_id int,
-    description varchar(255),
-    element_id int,
-    machine_id int,
-    route_id int,
-    part_id int,
-    history_id int,
+    work_order_id int not null,
+    notes varchar(255),
     created_at timestamp default current_timestamp,
-    updated_at timestamp,
     deleted_at timestamp,
-    foreign key (work_order_id) references work_orders(id),
-    foreign key (element_id) references elements(id),
-    foreign key (machine_id) references machines(id),
-    foreign key (route_id) references routes(id),
-    foreign key (part_id) references parts(id)
+    foreign key (work_order_id) references work_orders(id)
 );
 
-create table task_workers (
+create table tasks_workers (
     id int auto_increment primary key,
     task_id int,
     worker_id int,
-    created_at timestamp default current_timestamp,
     foreign key (task_id) references tasks(id),
     foreign key (worker_id) references workers(id)
 );
 
---* FUTURE: sensors and sensor history
--- create table sensors (
---     id int auto_increment primary key,
---     entidad_vegetal int,
---     element_id int,
---     model varchar(255),
---     operative boolean,
---     class varchar(255),
---     created_at timestamp default current_timestamp,
---     foreign key (element_id) references elements(id)
--- );
--- 
--- create table sensor_history (
---     id int auto_increment primary key,
---     sensor_id int,
---     temperature float,
---     humedad float,
---     inclination float,
---     created_at timestamp default current_timestamp,
---     foreign key (sensor_id) references sensors(id)
--- );
+create table tasks_zones (
+    id int auto_increment primary key,
+    task_id int,
+    zone_id int,
+    foreign key (task_id) references tasks(id),
+    foreign key (zone_id) references zones(id)
+);
+
+create table tasks_tasktypes (
+    id int auto_increment primary key,
+    task_id int,
+    tasktype_id int,
+    foreign key (task_id) references tasks(id),
+    foreign key (tasktype_id) references task_types(id)
+);
+
+create table work_reports (
+    id int primary key,
+    observation varchar(255),
+    spent_fuel decimal,
+    photo varchar(255),
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    foreign key (id) references work_orders(id)
+);
+
+--* Sensors and sensor history
+create table sensors (
+    id int auto_increment primary key,
+    zone_id int not null,
+    model varchar(255),
+    class varchar(255),
+    is_active boolean,
+    created_at timestamp default current_timestamp,
+    foreign key (zone_id) references zones(id)
+);
+
+create table sensor_history (
+    id int auto_increment primary key,
+    sensor_id int not null,
+    temperature float,
+    humidity float,
+    inclination float,
+    created_at timestamp default current_timestamp,
+    foreign key (sensor_id) references sensors(id)
+);

@@ -2,26 +2,24 @@
 
 namespace App\Models;
 
-use App\Core\BaseModel;
-
 class MWorker extends BaseModel
 {
 
-    public string $company;
-    public string $name;
+    public ?string $company;
+    public ?string $name;
     public string $dni;
-    public string $password;
-    public string $email;
-    public int $role_id;
+    public ?string $password;
+    public ?string $email;
+    public ?int $role_id;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'workers';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): MWorker
     {
-        $user = new MWorker();
+        $user = new self();
         $user->id = $data['id'];
         $user->company = $data['company'];
         $user->name = $data['name'];
@@ -33,8 +31,7 @@ class MWorker extends BaseModel
         return $user;
     }
 
-    // Fetch the user's role
-    public function role()
+    public function role(): MRole
     {
         return $this->belongsTo(MRole::class, 'role_id');
     }

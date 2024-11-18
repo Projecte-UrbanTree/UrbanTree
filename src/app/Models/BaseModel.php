@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Core;
+namespace App\Models;
+
+use App\Core\Database;
+
+use function PHPSTORM_META\type;
 
 abstract class BaseModel
 {
     protected int $id;
-    protected $created_at;
+    protected ?string $created_at;
 
-    // Get the related model in a one-to-one relationship
+    // One-to-one relationship
     public function belongsTo($relatedModel, $foreignKey, $ownerKey = 'id')
     {
         $relatedTable = $relatedModel::getTableName();
@@ -19,7 +23,26 @@ abstract class BaseModel
         return !empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
 
-    public function delete()
+
+    // Many-to-Many relationship
+    public function belongsToMany($relatedModel, $pivotTable, $foreignKey, $relatedKey, $ownerKey = 'id', $relatedOwnerKey = 'id')
+    {
+        $relatedTable = $relatedModel::getTableName();
+        $localKeyValue = $this->{$ownerKey};
+
+        $query = "
+            SELECT $relatedTable.*
+            FROM $relatedTable
+            INNER JOIN $pivotTable ON $pivotTable.$relatedKey = $relatedTable.$relatedOwnerKey
+            WHERE $pivotTable.$foreignKey = :localKeyValue
+        ";
+
+        $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
+
+        return array_map(fn($row) => $relatedModel::mapDataToModel($row), $results);
+    }
+
+    public function delete(): void
     {
         $table = static::getTableName();
 
@@ -90,7 +113,7 @@ abstract class BaseModel
     }
 
     // Dynamically check if a table has the deleted_at column
-    protected static function hasSoftDelete()
+    protected static function hasSoftDelete(): bool
     {
         static $softDeleteCache = [];
         $table = static::getTableName();
@@ -104,7 +127,7 @@ abstract class BaseModel
         return $softDeleteCache[$table];
     }
 
-    public function restore()
+    public function restore(): void
     {
         if (static::hasSoftDelete()) {
             $table = static::getTableName();
@@ -113,7 +136,7 @@ abstract class BaseModel
         }
     }
 
-    public function save()
+    public function save(): void
     {
         $table = static::getTableName();
         $properties = get_object_vars($this);
@@ -145,12 +168,12 @@ abstract class BaseModel
     abstract protected static function mapDataToModel($data);
 
     //* Getters and Setters
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->created_at;
     }
