@@ -49,6 +49,15 @@ return [
             "controller" => IncidenceController::class,
             "method"=> "index"
         ],
+        "/incidence/create" => [
+            "controller" => IncidenceController::class,
+            "method"=> "get"
+        ],
+        "/incidence/all" => [
+            "controller" => IncidenceController::class,
+            "method"=> "findall"
+        ]
+
     ],
     'POST' => [
         '/auth/login' => [

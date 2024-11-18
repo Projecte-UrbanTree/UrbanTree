@@ -20,7 +20,6 @@ class IncidenceController
     public function findall()
     {
         $incidences = Incidence::findAll();
-
         View::render([
             "view" => "Incidence/SeeAllIncidences",
             "title" => "Incidences",
@@ -32,7 +31,7 @@ class IncidenceController
     public function get()
     {
         $elements = Element::findAll();
-
+        
         View::render([
             "view" => "Incidence/Create",
             "title" => "Create Incidence",
