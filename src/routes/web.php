@@ -3,6 +3,7 @@
 // Import controller classes
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
+use App\Controllers\ElementController;
 use App\Controllers\TreeTypeController;
 use App\Controllers\UserController;
 use App\Controllers\WorkOrderController;
@@ -97,6 +98,12 @@ return [
         // === TreeTypes GET Routes
         '/tree-types' => [
             'controller' => TreeTypeController::class,
+            'method' => 'index',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === Elements GET Routes
+        '/elements' => [
+            'controller' => ElementController::class,
             'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],

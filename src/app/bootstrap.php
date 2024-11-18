@@ -6,7 +6,7 @@ use App\Core\Session;
 
 // Load environment variables if exists
 if (file_exists('../.env')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
     $dotenv->load();
 }
 
@@ -18,5 +18,5 @@ Database::connect();
 
 // Set up global error handler (optional)
 set_error_handler(function ($severity, $message, $file, $line) {
-    Logger::log("Error: $message in $file on line $line");
+    // Logger::log("Error: $message in $file on line $line"); TODO: Fix Logger
 });

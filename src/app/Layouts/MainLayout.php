@@ -42,7 +42,11 @@
                 </a>
                 <a href="/tree-types"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/tree-types' ? 'bg-gray-700' : ''; ?>">
-                    Tree Types
+                    Manage Tree Types
+                </a>
+                <a href="/elements"
+                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/elements' ? 'bg-gray-700' : ''; ?>">
+                    Manage Elements
                 </a>
             </nav>
         </aside>
