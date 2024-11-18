@@ -6,17 +6,12 @@ class Session
 {
     public static function start()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_set_cookie_params([
-                'lifetime' => 0,
-                'path' => '/',
-                'domain' => $_SERVER['HTTP_HOST'],
-                'secure' => isset($_SERVER['HTTPS']),
-                'httponly' => true,
-                'samesite' => 'Strict'
-            ]);
-            session_start();
-        }
+        session_start();
+    }
+
+    public static function has($key)
+    {
+        return isset($_SESSION[$key]);
     }
 
     public static function set($key, $value)

@@ -1,8 +1,8 @@
 <?php
 
-use App\Core\Session;
 use App\Core\Database;
 use App\Core\Logger;
+use App\Core\Session;
 
 // Load environment variables if exists
 if (file_exists('../.env')) {
@@ -18,5 +18,5 @@ Database::connect();
 
 // Set up global error handler (optional)
 set_error_handler(function ($severity, $message, $file, $line) {
-    Logger::log("Error: $message in $file on line $line");
+    // Logger::log("Error: $message in $file on line $line"); TODO: Fix Logger
 });
