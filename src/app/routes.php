@@ -2,6 +2,7 @@
 
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
+use App\Controllers\IncidenceController;
 use App\Controllers\UserController;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\GuestMiddleware;
@@ -43,6 +44,10 @@ return [
             'controller' => UserController::class,
             'method' => 'destroy',
             'middleware' => [AuthMiddleware::class],
+        ],
+        '/incidence' => [
+            "controller" => IncidenceController::class,
+            "method"=> "index"
         ],
     ],
     'POST' => [
