@@ -19,9 +19,9 @@ use App\Core\Session;
 </div>
 
 <div class="overflow-x-auto">
-    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+    <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
         <thead>
-            <tr class="bg-gray-700 text-white text-left">
+            <tr class="bg-gray-700 text-white text-left h-14">
                 <th class="py-2 px-4 border-b">ID</th>
                 <th class="py-2 px-4 border-b">Contracte</th>
                 <th class="py-2 px-4 border-b">Data</th>

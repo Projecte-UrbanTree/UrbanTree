@@ -13,7 +13,7 @@ class Zone extends BaseModel
     // Fetch the zone's point
     public function point()
     {
-        return $this->belongsTo(Point::class, 'point_id');
+        return $this->hasMany(Point::class, 'point_id');
     }
 
     protected static function getTableName()
