@@ -1,26 +1,13 @@
-<div class="overflow-x-auto">
-    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead>
-            <tr class="bg-gray-100 text-left">
-                <th class="px-4 py-2 border-b">ID</th>
-                <th class="px-4 py-2 border-b">Element Name</th>
-                <th class="px-4 py-2 border-b">Name</th>
-                <th class="px-4 py-2 border-b">Description</th>
-                <th class="px-4 py-2 border-b">Photo</th>
-                <th class="px-4 py-2 border-b">Incident Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($incidences as $incidence): ?>
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2 border-b"><?php echo $incidence->getId(); ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $incidence->name; ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $incidence->element()->name; ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $incidence->description; ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $incidence->photo; ?></td>
-                    <td class="px-4 py-2 border-b"><?php echo $incidence->getCreatedAt(); ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+<div class="overflow-x-auto px-8 py-6 bg-gray-50 rounded-lg shadow-lg">
+    <h1 class="text-5xl font-extrabold text-center text-gray-800">Incidencias</h1>
+    <h3 class="text-lg mt-2 text-slate-600 font-semibold text-center">Here you can see your incidences 😁</h3>
+    <div class="mt-8 flex justify-center space-x-6">
+        <button onclick="window.location.href='/incidence/all'" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-lg px-6 py-3 transition-transform transform hover:scale-110 duration-200">
+            Ver Incidencias
+        </button>
+
+        <button onclick="window.location.href='/incidence/create'" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-lg px-6 py-3 transition-transform transform hover:scale-110 duration-200">
+            Crear Incidencia
+        </button>
+    </div>
 </div>

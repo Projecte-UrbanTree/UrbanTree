@@ -15,6 +15,7 @@
 
 use App\Controllers\CHome;
 use App\Controllers\CAuth;
+use App\Controllers\CIncidence;
 
 return $routes = [
     "GET" => [
@@ -25,6 +26,18 @@ return $routes = [
         "/login" => [
             "controller" => CAuth::class,
             "method" => "index"
+        ],
+        "/incidence" => [
+            "controller" => CIncidence::class,
+            "method"=> "index"
+        ],
+        "/incidence/create" => [
+            "controller" => CIncidence::class,
+            "method"=> "get"
+        ],
+        "/incidence/all" => [
+            "controller" => CIncidence::class,
+            "method"=> "findall"
         ]
     ],
 ];
