@@ -25,8 +25,14 @@ abstract class BaseModel
         return !empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
 
-    public function belongsToMany(string $relatedModel, string $pivotTable, string $foreignKey, string $relatedKey, string $ownerKey = 'id', string $relatedOwnerKey = 'id'): array
-    {
+    public function belongsToMany(
+        string $relatedModel,
+        string $pivotTable,
+        string $foreignKey,
+        string $relatedKey,
+        string $ownerKey = 'id',
+        string $relatedOwnerKey = 'id'
+    ): array {
         $relatedTable = $relatedModel::getTableName();
         $localKeyValue = $this->{$ownerKey};
 
@@ -39,6 +45,11 @@ abstract class BaseModel
 
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
 
+        // Ensure results are a valid array
+        if (!is_array($results)) {
+            $results = [];
+        }
+
         return array_map(fn ($row) => $relatedModel::mapDataToModel($row), $results);
     }
 
@@ -49,6 +60,11 @@ abstract class BaseModel
 
         $query = "SELECT * FROM {$relatedTable} WHERE {$foreignKey} = :localKeyValue";
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
+
+        // Ensure $results is an array
+        if (!is_array($results)) {
+            $results = [];
+        }
 
         return array_map(fn ($row) => $relatedModel::mapDataToModel($row), $results);
     }
