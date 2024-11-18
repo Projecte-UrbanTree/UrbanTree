@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Core\BaseModel;
-
 class Zone extends BaseModel
 {
     public $name;
+
     public $postal_code;
+
     public $point_id;
 
     // Fetch the zone's point
