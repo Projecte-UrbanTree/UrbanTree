@@ -8,14 +8,14 @@ class PruningType extends BaseModel
 
     public ?string $description;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'pruning_types';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): PruningType
     {
-        $pruning_type = new PruningType;
+        $pruning_type = new self();
         $pruning_type->id = $data['id'];
         $pruning_type->name = $data['name'];
         $pruning_type->description = $data['description'];

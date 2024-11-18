@@ -4,26 +4,26 @@ namespace App\Models;
 
 class Contract extends BaseModel
 {
-    public $name;
+    public string $name;
 
-    public $start_date;
+    public string $start_date;
 
-    public $end_date;
+    public ?string $end_date;
 
-    public $invoice_proposed;
+    public ?float $invoice_proposed;
 
-    public $invoice_agreed;
+    public ?float $invoice_agreed;
 
-    public $invoice_paid;
+    public ?float $invoice_paid;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'contracts';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): Contract
     {
-        $contract = new Contract;
+        $contract = new self();
         $contract->id = $data['id'];
         $contract->name = $data['name'];
         $contract->start_date = $data['start_date'];

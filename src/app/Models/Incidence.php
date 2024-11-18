@@ -8,13 +8,18 @@ class Incidence extends BaseModel
 
     public string $name;
 
-    public string $description;
+    public ?string $description;
 
     public ?string $photo;
 
-    public static function mapDataToModel($data)
+    protected static function getTableName(): string
     {
-        $incidence = new Incidence;
+        return 'incidences';
+    }
+
+    public static function mapDataToModel($data): Incidence
+    {
+        $incidence = new self();
         $incidence->id = $data['id'];
         $incidence->element_id = $data['element_id'];
         $incidence->name = $data['name'];
@@ -26,18 +31,8 @@ class Incidence extends BaseModel
     }
 
     // Fetch the element of the incidence
-    public function element()
+    public function element(): Element
     {
         return $this->belongsTo(Element::class, 'element_id');
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->created_at;
-    }
-
-    protected static function getTableName()
-    {
-        return 'incidences';
     }
 }

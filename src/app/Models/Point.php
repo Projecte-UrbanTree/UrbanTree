@@ -8,14 +8,14 @@ class Point extends BaseModel
 
     public $longitude;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'points';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): Point
     {
-        $point = new Point;
+        $point = new self();
         $point->id = $data['id'];
         $point->latitude = $data['latitude'];
         $point->longitude = $data['longitude'];

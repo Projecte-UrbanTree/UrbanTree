@@ -16,20 +16,14 @@ class User extends BaseModel
 
     public int $role_id;
 
-    // Fetch the user's role
-    public function role()
-    {
-        return $this->belongsTo(Role::class, 'role_id');
-    }
-
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'workers';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): User
     {
-        $user = new User;
+        $user = new self();
         $user->id = $data['id'];
         $user->company = $data['company'];
         $user->name = $data['name'];
@@ -40,5 +34,11 @@ class User extends BaseModel
         $user->created_at = $data['created_at'];
 
         return $user;
+    }
+
+    // Fetch the user's role
+    public function role(): Role
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }

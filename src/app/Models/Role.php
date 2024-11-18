@@ -4,16 +4,16 @@ namespace App\Models;
 
 class Role extends BaseModel
 {
-    public $name;
+    public string $name;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'roles';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): Role
     {
-        $role = new Role;
+        $role = new self();
         $role->id = $data['id'];
         $role->name = $data['name'];
         $role->created_at = $data['created_at'];

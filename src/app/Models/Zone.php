@@ -4,26 +4,20 @@ namespace App\Models;
 
 class Zone extends BaseModel
 {
-    public $name;
+    public string $name;
 
-    public $postal_code;
+    public int $postal_code;
 
-    public $point_id;
+    public int $point_id;
 
-    // Fetch the zone's point
-    public function point()
-    {
-        return $this->hasMany(Point::class, 'point_id');
-    }
-
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'zones';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): Zone
     {
-        $zone = new Zone;
+        $zone = new self();
         $zone->id = $data['id'];
         $zone->name = $data['name'];
         $zone->postal_code = $data['postal_code'];
@@ -31,5 +25,11 @@ class Zone extends BaseModel
         $zone->created_at = $data['created_at'];
 
         return $zone;
+    }
+
+    // Fetch the zone's point
+    public function point()
+    {
+        return $this->belongsTo(Point::class, 'point_id');
     }
 }
