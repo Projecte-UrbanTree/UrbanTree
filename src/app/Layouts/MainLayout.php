@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?php echo $title.' - '.getenv('APP_NAME'); ?>
+        <?php echo $title . ' - ' . getenv('APP_NAME'); ?>
     </title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -52,7 +52,9 @@
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-600">Welcome,
                         <?php echo $_SESSION['user']['name']; ?></span>
-                    <a href="/logout" class="px-3 py-1 bg-blue-600 text-white rounded">Logout</a>
+                    <a href="/logout"
+                        class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
+                        Logout</a>
                 </div>
             </header>
 

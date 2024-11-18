@@ -5,7 +5,7 @@ use App\Core\Session;
 ?>
 
 <?php if (Session::has('success')) { ?>
-<div id="alert-msg" class="bg-green-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
+<div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
     <strong class="font-bold">Success: </strong>
     <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
 </div>
@@ -13,7 +13,7 @@ use App\Core\Session;
 
 <div class="mb-4 flex justify-end">
     <a href="/zone/create"
-        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
+        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
         Create Zone
     </a>
 </div>
