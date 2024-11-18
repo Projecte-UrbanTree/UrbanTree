@@ -11,7 +11,7 @@ class CTaskType
     {
         $task_types = MTaskType::findAll();
         View::render([
-            "view" => "TaskTypes/index",
+            "view" => "TaskType",
             "title" => "Task Types",
             "layout" => "MainLayout",
             "data" => ["task_types" => $task_types]
