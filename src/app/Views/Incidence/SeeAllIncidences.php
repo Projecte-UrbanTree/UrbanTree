@@ -18,7 +18,7 @@
                     <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->name; ?></td>
                     <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->element()->name; ?></td>
                     <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->description; ?></td>
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->photo ? $incidence->photo : 'No photo'; ?></td>
+                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->photo ?? 'No photo'; ?></td>
                     <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->getCreatedAt(); ?></td>
                 </tr>
             <?php endforeach; ?>
