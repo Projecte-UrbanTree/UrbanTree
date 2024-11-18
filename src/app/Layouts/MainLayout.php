@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?php echo $title.' - '.getenv('APP_NAME'); ?>
+        <?php echo $title . ' - ' . getenv('APP_NAME'); ?>
     </title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -32,6 +32,14 @@
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/users' ? 'bg-gray-700' : ''; ?>">
                     Manage Users
                 </a>
+                <a href="/work-orders"
+                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/work-orders' ? 'bg-gray-700' : ''; ?>">
+                    Manage Work Orders
+                </a>
+                <a href="/zones"
+                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/zones' ? 'bg-gray-700' : ''; ?>">
+                    Manage Zones
+                </a>
             </nav>
         </aside>
 
@@ -55,16 +63,16 @@
         </div>
     </div>
 
-<!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
-<script>
-    setTimeout(() => {
-        console.log('Hide alert message');
-        const alertMsg = document.getElementById('alert-msg');
-        if (alertMsg) {
-            alertMsg.classList.add('hidden');
-        }
-    }, 3500);
-</script>
+    <!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
+    <script>
+        setTimeout(() => {
+            console.log('Hide alert message');
+            const alertMsg = document.getElementById('alert-msg');
+            if (alertMsg) {
+                alertMsg.classList.add('hidden');
+            }
+        }, 3500);
+    </script>
 
 </body>
 
