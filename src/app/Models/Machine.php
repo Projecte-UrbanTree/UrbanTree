@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class MMachine extends BaseModel
+class Machine extends BaseModel
 {
     public ?string $name;
     public float $max_basket_size;
@@ -12,13 +12,14 @@ class MMachine extends BaseModel
         return 'machines';
     }
 
-    protected static function mapDataToModel($data): MMachine
+    protected static function mapDataToModel($data): Machine
     {
         $machine = new self();
         $machine->id = $data['id'];
         $machine->name = $data['name'];
         $machine->max_basket_size = $data['max_basket_size'];
         $machine->created_at = $data['created_at'];
+
         return $machine;
     }
 }

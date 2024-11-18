@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class MSensorHistory extends BaseModel
+class SensorHistory extends BaseModel
 {
     public int $sensor_id;
     public ?float $temperature;
@@ -14,7 +14,7 @@ class MSensorHistory extends BaseModel
         return 'sensor_history';
     }
 
-    protected static function mapDataToModel($data): MSensorHistory
+    protected static function mapDataToModel($data): SensorHistory
     {
         $sensor_history = new self();
         $sensor_history->sensor_id = $data['sensor_id'];
@@ -22,11 +22,12 @@ class MSensorHistory extends BaseModel
         $sensor_history->humidity = $data['humidity'];
         $sensor_history->inclination = $data['inclination'];
         $sensor_history->created_at = $data['created_at'];
+
         return $sensor_history;
     }
 
-    public function sensor(): MSensor
+    public function sensor(): Sensor
     {
-        return $this->belongsTo(MSensor::class, 'sensor_id');
+        return $this->belongsTo(Sensor::class, 'sensor_id');
     }
 }

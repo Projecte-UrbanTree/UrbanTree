@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class MSensor extends BaseModel
+class Sensor extends BaseModel
 {
     public int $zone_id;
     public ?string $model;
@@ -14,7 +14,7 @@ class MSensor extends BaseModel
         return "sensors";
     }
 
-    protected static function mapDataToModel($data): MSensor
+    protected static function mapDataToModel($data): Sensor
     {
         $sensor = new self();
         $sensor->zone_id = $data["zone_id"];
@@ -22,11 +22,12 @@ class MSensor extends BaseModel
         $sensor->class = $data["class"];
         $sensor->is_active = $data["is_active"];
         $sensor->created_at = $data["created_at"];
+
         return $sensor;
     }
 
-    public function zone(): MZone
+    public function zone(): Zone
     {
-        return $this->belongsTo(MZone::class, "zone_id", "id");
+        return $this->belongsTo(Zone::class, "zone_id", "id");
     }
 }

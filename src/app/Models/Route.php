@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class MRoute extends BaseModel
+class Route extends BaseModel
 {
     public ?float $distance;
     public ?int $point_id;
@@ -13,7 +13,7 @@ class MRoute extends BaseModel
         return 'routes';
     }
 
-    protected static function mapDataToModel($data): MRoute
+    protected static function mapDataToModel($data): Route
     {
         $role = new self();
         $role->id = $data['id'];
@@ -21,11 +21,12 @@ class MRoute extends BaseModel
         $role->point_id = $data['point_id'];
         $role->travel_time = $data['travel_time'];
         $role->created_at = $data['created_at'];
+
         return $role;
     }
 
-    public function point(): MPoint
+    public function point(): Point
     {
-        return $this->belongsTo(MPoint::class, 'point_id');
+        return $this->belongsTo(Point::class, 'point_id');
     }
 }

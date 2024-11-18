@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class MWorkReport extends BaseModel
+class WorkReport extends BaseModel
 {
     public ?string $observation;
     public ?float $spent_fuel;
@@ -13,7 +13,7 @@ class MWorkReport extends BaseModel
         return 'work_reports';
     }
 
-    protected static function mapDataToModel($data): MWorkReport
+    protected static function mapDataToModel($data): WorkReport
     {
         $workReport = new self();
         $workReport->id = $data['id'];
@@ -21,11 +21,12 @@ class MWorkReport extends BaseModel
         $workReport->spent_fuel = $data['spent_fuel'];
         $workReport->photo = $data['photo'];
         $workReport->created_at = $data['created_at'];
+
         return $workReport;
     }
 
-    public function workOrder(): MWorkOrder
+    public function workOrder(): WorkOrder
     {
-        return $this->belongsTo(MWorkOrder::class, 'id');
+        return $this->belongsTo(WorkOrder::class, 'id');
     }
 }
