@@ -3,7 +3,7 @@
     <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
         <thead>
             <tr class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
-                
+
                 <th class="px-6 py-4 text-left font-semibold">Element Name</th>
                 <th class="px-6 py-4 text-left font-semibold">Name</th>
                 <th class="px-6 py-4 text-left font-semibold">Description</th>
@@ -14,7 +14,7 @@
         <tbody>
             <?php foreach ($incidences as $incidence): ?>
                 <tr class="hover:bg-gray-50 transition-all duration-200 ease-in-out">
-                    
+
                     <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->name; ?></td>
                     <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->element()->name; ?></td>
                     <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->description; ?></td>

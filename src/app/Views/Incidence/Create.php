@@ -15,7 +15,7 @@
             <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nombre de la incidencia</label>
             <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" placeholder="Ejemplo: Rama caída" required>
         </div>
-  
+
         <div class="mb-6">
             <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
             <textarea id="description" name="description" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" placeholder="Describe la incidencia" rows="6" required></textarea>

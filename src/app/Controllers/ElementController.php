@@ -11,7 +11,7 @@ class ElementController
     {
         $elements = Element::findAll();
         View::render([
-            'view' => 'Element',
+            'view' => 'Elements',
             'title' => 'Element',
             'layout' => 'MainLayout',
             'data' => ['elements' => $elements],
