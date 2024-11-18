@@ -4,6 +4,7 @@
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
 use App\Controllers\ElementController;
+use App\Controllers\IncidenceController;
 use App\Controllers\TreeTypeController;
 use App\Controllers\UserController;
 use App\Controllers\WorkOrderController;
@@ -100,6 +101,19 @@ return [
             'controller' => TreeTypeController::class,
             'method' => 'index',
             'middleware' => [AuthMiddleware::class],
+        ],
+        // === Incidence GET Routes
+        '/incidence' => [
+            'controller' => IncidenceController::class,
+            'method' => 'index',
+        ],
+        '/incidence/create' => [
+            'controller' => IncidenceController::class,
+            'method' => 'get',
+        ],
+        '/incidence/all' => [
+            'controller' => IncidenceController::class,
+            'method' => 'findall',
         ],
         // === Elements GET Routes
         '/elements' => [
