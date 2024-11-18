@@ -11,9 +11,9 @@ class IncidenceController
     public function index()
     {
         View::render([
-            "view" => "Incidence",
-            "title" => "Incidences",
-            "layout" => "MainLayout",
+            'view' => 'Incidence',
+            'title' => 'Incidences',
+            'layout' => 'MainLayout',
         ]);
     }
 
@@ -21,24 +21,24 @@ class IncidenceController
     {
         $incidences = Incidence::findAll();
         View::render([
-            "view" => "Incidence/SeeAllIncidences",
-            "title" => "Incidences",
-            "layout" => "MainLayout",
-            "data" => ["incidences" => $incidences]
+            'view' => 'Incidence/SeeAllIncidences',
+            'title' => 'Incidences',
+            'layout' => 'MainLayout',
+            'data' => ['incidences' => $incidences],
         ]);
     }
 
     public function get()
     {
         $elements = Element::findAll();
-        
+
         View::render([
-            "view" => "Incidence/Create",
-            "title" => "Create Incidence",
-            "layout" => "MainLayout",
-            "data" => [
-                "elements" => $elements,
-            ]
+            'view' => 'Incidence/Create',
+            'title' => 'Create Incidence',
+            'layout' => 'MainLayout',
+            'data' => [
+                'elements' => $elements,
+            ],
         ]);
     }
 }

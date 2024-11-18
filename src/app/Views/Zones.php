@@ -5,16 +5,16 @@ use App\Core\Session;
 ?>
 
 <?php if (Session::has('success')) { ?>
-    <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-        <strong class="font-bold">Success: </strong>
-        <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
-    </div>
+<div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
+    <strong class="font-bold">Success: </strong>
+    <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
+</div>
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/user/create"
+    <a href="/zone/create"
         class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-        Create User
+        Create Zone
     </a>
 </div>
 
@@ -22,46 +22,32 @@ use App\Core\Session;
     <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
         <thead>
             <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="px-4 py-3 border-b">ID</th>
-                <th class="px-4 py-3 border-b">Company</th>
+                <th class="px-4 py-3 border-b">Zone ID</th>
                 <th class="px-4 py-3 border-b">Name</th>
-                <th class="px-4 py-3 border-b">DNI</th>
-                <th class="px-4 py-3 border-b">Email</th>
-                <th class="px-4 py-3 border-b">Role Name</th>
-                <th class="px-4 py-3 border-b text-center">Actions</th>
+                <th class="px-4 py-3 border-b">Postal Code</th>
+                <th class="px-4 py-3 border-b">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($users as $user) { ?>
-                <tr class="hover:bg-blue-50">
-                    <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->getId()); ?>
-                    </td>
-                    <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->company); ?>
-                    </td>
-                    <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->name); ?>
-                    </td>
-                    <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->dni); ?>
-                    </td>
-                    <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->email); ?>
-                    </td>
-                    <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->role()->name); ?>
-                    </td>
-                    <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
+            <?php foreach ($zones as $zone) { ?>
+            <tr class="hover:bg-blue-50">
+                <td class="px-4 py-3 border-b">
+                    <?php echo htmlspecialchars($zone->getId()); ?></td>
+                <td class="px-4 py-3 border-b">
+                    <?php echo htmlspecialchars($zone->name); ?></td>
+                <td class="px-4 py-3 border-b">
+                    <?php echo htmlspecialchars($zone->postal_code); ?>
+                </td>
+                <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
-                        <a href="/user/<?php echo htmlspecialchars($user->getId()); ?>/edit"
+                        <a href="/zone/<?php echo htmlspecialchars($zone->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                             </svg>
                         </a>
                         <!-- Delete Button (Trash Icon) -->
-                        <a href="/user/<?php echo htmlspecialchars($user->getId()); ?>/delete"
+                        <a href="/zone/<?php echo htmlspecialchars($zone->getId()); ?>/delete"
                             onclick="return confirm('Are you sure you want to delete this user?');"
                             class="text-red-500 hover:text-red-700" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -69,7 +55,7 @@ use App\Core\Session;
                             </svg>
                         </a>
                     </td>
-                </tr>
+            </tr>
             <?php } ?>
         </tbody>
     </table>

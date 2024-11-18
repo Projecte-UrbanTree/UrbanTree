@@ -3,13 +3,13 @@ use App\Core\Session;
 
 ?>
 
-<?php $title = 'Login'; ?>
+<?php $title = getenv('APP_NAME'); ?>
 
 <?php if (Session::has('error')) { ?>
-    <div class="bg-red-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-        <strong class="font-bold">Error: </strong>
-        <span><?php echo htmlspecialchars(Session::get('error')); ?></span>
-    </div>
+<div class="bg-red-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
+    <strong class="font-bold">Error: </strong>
+    <span><?php echo htmlspecialchars(Session::get('error')); ?></span>
+</div>
 <?php } ?>
 
 <form action="/auth/login" method="POST" class="space-y-6">
@@ -33,15 +33,11 @@ use App\Core\Session;
                 class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
             <label for="remember_me" class="ml-2 text-sm text-gray-900">Remember me</label>
         </div>
-
-        <div class="text-sm">
-            <a href="/forgot-password" class="font-medium text-blue-600 hover:text-blue-500">Forgot your password?</a>
-        </div>
     </div>
 
     <div>
         <button type="submit"
-            class="w-full py-2 px-4 rounded-lg shadow-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            class="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
             Sign in
         </button>
     </div>
