@@ -40,6 +40,10 @@
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/zones' ? 'bg-gray-700' : ''; ?>">
                     Manage Zones
                 </a>
+                <a href="/tree-types"
+                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/tree-types' ? 'bg-gray-700' : ''; ?>">
+                    Tree Types
+                </a>
             </nav>
         </aside>
 

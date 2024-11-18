@@ -3,6 +3,7 @@
 // Import controller classes
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
+use App\Controllers\TreeTypeController;
 use App\Controllers\UserController;
 use App\Controllers\WorkOrderController;
 use App\Controllers\ZoneController;
@@ -91,6 +92,12 @@ return [
         '/zone/:id/delete' => [
             'controller' => ZoneController::class,
             'method' => 'destroy',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === TreeTypes GET Routes
+        '/tree-types' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],
     ],
