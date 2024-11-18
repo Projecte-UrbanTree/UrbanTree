@@ -2,6 +2,7 @@
 
 // Import controller classes
 use App\Controllers\AuthController;
+use App\Controllers\ContractController;
 use App\Controllers\DashboardController;
 use App\Controllers\ElementController;
 use App\Controllers\IncidenceController;
@@ -118,6 +119,12 @@ return [
         // === Elements GET Routes
         '/elements' => [
             'controller' => ElementController::class,
+            'method' => 'index',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === Contracts GET Routes
+        '/contracts' => [
+            'controller' => ContractController::class,
             'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],
