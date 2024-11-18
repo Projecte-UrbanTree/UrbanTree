@@ -10,11 +10,14 @@ abstract class BaseModel
 
     protected $created_at;
 
-    // Get the related model in a one-to-one relationship
-    public function belongsTo($relatedModel, $foreignKey, $ownerKey = 'id')
+    public function belongsTo(string $relatedModel, string $foreignKey, string $ownerKey = 'id'): ?object
     {
         $relatedTable = $relatedModel::getTableName();
         $foreignKeyValue = $this->{$foreignKey};
+
+        if (is_null($foreignKeyValue)) {
+            return null;
+        }
 
         $query = "SELECT * FROM {$relatedTable} WHERE {$ownerKey} = :foreignKeyValue LIMIT 1";
         $results = Database::prepareAndExecute($query, ['foreignKeyValue' => $foreignKeyValue]);
@@ -22,19 +25,29 @@ abstract class BaseModel
         return !empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
 
-    // Many to Many relationship
-    public function belongsToMany($relatedModel, $pivotTable, $foreignKey, $relatedKey, $ownerKey = 'id', $relatedOwnerKey = 'id')
+    public function belongsToMany(string $relatedModel, string $pivotTable, string $foreignKey, string $relatedKey, string $ownerKey = 'id', string $relatedOwnerKey = 'id'): array
     {
         $relatedTable = $relatedModel::getTableName();
         $localKeyValue = $this->{$ownerKey};
 
         $query = "
-            SELECT {$relatedTable}.*
-            FROM {$relatedTable}
-            INNER JOIN {$pivotTable} ON {$pivotTable}.{$relatedKey} = {$relatedTable}.{$relatedOwnerKey}
-            WHERE {$pivotTable}.{$foreignKey} = :localKeyValue
-        ";
+        SELECT {$relatedTable}.*
+        FROM {$relatedTable}
+        INNER JOIN {$pivotTable} ON {$pivotTable}.{$relatedKey} = {$relatedTable}.{$relatedOwnerKey}
+        WHERE {$pivotTable}.{$foreignKey} = :localKeyValue
+    ";
 
+        $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
+
+        return array_map(fn ($row) => $relatedModel::mapDataToModel($row), $results);
+    }
+
+    public function hasMany(string $relatedModel, string $foreignKey, string $localKey = 'id'): array
+    {
+        $relatedTable = $relatedModel::getTableName();
+        $localKeyValue = $this->{$localKey};
+
+        $query = "SELECT * FROM {$relatedTable} WHERE {$foreignKey} = :localKeyValue";
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
 
         return array_map(fn ($row) => $relatedModel::mapDataToModel($row), $results);
@@ -145,18 +158,6 @@ abstract class BaseModel
         $results = Database::prepareAndExecute($query);
 
         return array_map(fn ($row) => static::mapDataToModel($row), $results);
-    }
-
-    // Dynamically relationship fetching
-    public function hasMany($relatedModel, $foreignKey, $localKey = 'id')
-    {
-        $relatedTable = $relatedModel::getTableName();
-        $localKeyValue = $this->{$localKey};
-
-        $query = "SELECT * FROM {$relatedTable} WHERE {$foreignKey} = :localKeyValue";
-        $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
-
-        return array_map(fn ($row) => $relatedModel::mapDataToModel($row), $results);
     }
 
     public function restore()
