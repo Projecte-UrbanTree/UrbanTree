@@ -1,28 +1,31 @@
 <?php
-namespace App\Models;
 
-use App\Core\BaseModel;
+namespace App\Models;
 
 class MWorkOrder extends BaseModel
 {
-    public int $contract_id;
+    public ?int $contract_id;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'work_orders';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): MWorkOrder
     {
-        $order = new MWorkOrder();
+        $order = new self();
         $order->id = $data['id'];
         $order->contract_id = $data['contract_id'];
         $order->created_at = $data['created_at'];
-
         return $order;
     }
 
-    public function contract()
+    public function report(): MWorkReport
+    {
+        return $this->hasMany(MWorkReport::class, 'id')[0];
+    }
+
+    public function contract(): MContract
     {
         return $this->belongsTo(MContract::class, 'contract_id', 'id');
     }

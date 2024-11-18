@@ -2,22 +2,20 @@
 
 namespace App\Models;
 
-use App\Core\BaseModel;
-
 class MZone extends BaseModel
 {
-    public $name;
-    public $postal_code;
-    public $point_id;
+    public string $name;
+    public int $postal_code;
+    public int $point_id;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'zones';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): MZone
     {
-        $zone = new MZone();
+        $zone = new self();
         $zone->id = $data['id'];
         $zone->name = $data['name'];
         $zone->postal_code = $data['postal_code'];
@@ -26,8 +24,7 @@ class MZone extends BaseModel
         return $zone;
     }
 
-    // Fetch the zone's point
-    public function point()
+    public function point(): MPoint
     {
         return $this->belongsTo(MPoint::class, 'point_id');
     }

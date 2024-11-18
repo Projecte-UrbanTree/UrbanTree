@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Core;
+namespace App\Models;
+
+use App\Core\Database;
+
+use function PHPSTORM_META\type;
 
 abstract class BaseModel
 {
     protected int $id;
-    protected $created_at;
+    protected ?string $created_at;
 
     // One-to-one relationship
     public function belongsTo($relatedModel, $foreignKey, $ownerKey = 'id')
@@ -38,7 +42,7 @@ abstract class BaseModel
         return array_map(fn($row) => $relatedModel::mapDataToModel($row), $results);
     }
 
-    public function delete()
+    public function delete(): void
     {
         $table = static::getTableName();
 
@@ -109,7 +113,7 @@ abstract class BaseModel
     }
 
     // Dynamically check if a table has the deleted_at column
-    protected static function hasSoftDelete()
+    protected static function hasSoftDelete(): bool
     {
         static $softDeleteCache = [];
         $table = static::getTableName();
@@ -123,7 +127,7 @@ abstract class BaseModel
         return $softDeleteCache[$table];
     }
 
-    public function restore()
+    public function restore(): void
     {
         if (static::hasSoftDelete()) {
             $table = static::getTableName();
@@ -132,7 +136,7 @@ abstract class BaseModel
         }
     }
 
-    public function save()
+    public function save(): void
     {
         $table = static::getTableName();
         $properties = get_object_vars($this);
@@ -164,12 +168,12 @@ abstract class BaseModel
     abstract protected static function mapDataToModel($data);
 
     //* Getters and Setters
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->created_at;
     }
