@@ -2,21 +2,19 @@
 
 namespace App\Models;
 
-use App\Core\BaseModel;
-
 class MPruningType extends BaseModel
 {
     public string $name;
     public ?string $description;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'pruning_types';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): MPruningType
     {
-        $pruning_type = new MPruningType();
+        $pruning_type = new self();
         $pruning_type->id = $data['id'];
         $pruning_type->name = $data['name'];
         $pruning_type->description = $data['description'];

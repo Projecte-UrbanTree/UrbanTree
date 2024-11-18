@@ -2,22 +2,21 @@
 
 namespace App\Models;
 
-use App\Core\BaseModel;
 use App\Models\MWorkOrder;
 
 class MTask extends BaseModel
-{    
+{
+    public int $work_order_id;
     public ?string $notes;
-    public $work_order_id;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'tasks';
     }
 
-    protected static function mapDataToModel($data)
+    protected static function mapDataToModel($data): MTask
     {
-        $task = new MTask();
+        $task = new self();
         $task->id = $data['id'];
         $task->notes = $data['notes'];
         $task->work_order_id = $data['work_order_id'];
@@ -25,11 +24,11 @@ class MTask extends BaseModel
         return $task;
     }
 
-    public function Order() {
+    public function order(): MWorkOrder
+    {
         return $this->belongsTo(MWorkOrder::class, 'work_order_id', 'id');
     }
 
-    // Many-to-Many relationship with Post
     public function zones()
     {
         return $this->belongsToMany(MZone::class, 'tasks_zones', 'task_id', 'zone_id');

@@ -2,23 +2,21 @@
 
 namespace App\Models;
 
-use App\Core\BaseModel;
-
 class MIncidence extends BaseModel
 {
     public int $element_id;
     public string $name;
-    public string $description;
+    public ?string $description;
     public ?string $photo;
 
-    protected static function getTableName()
+    protected static function getTableName(): string
     {
         return 'incidences';
     }
 
-    public static function mapDataToModel($data)
+    public static function mapDataToModel($data): MIncidence
     {
-        $incidence = new MIncidence();
+        $incidence = new self();
         $incidence->id = $data['id'];
         $incidence->element_id = $data['element_id'];
         $incidence->name = $data['name'];
@@ -29,13 +27,8 @@ class MIncidence extends BaseModel
     }
 
     // Fetch the element of the incidence
-    public function element()
+    public function element(): MElement
     {
         return $this->belongsTo(MElement::class, 'element_id');
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->created_at;
     }
 }
