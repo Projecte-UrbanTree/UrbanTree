@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Core\BaseModel;
-
-class MContract extends BaseModel
+class Contract extends BaseModel
 {
     public $name;
     public $start_date;
@@ -20,7 +18,7 @@ class MContract extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $contract = new MContract();
+        $contract = new Contract();
         $contract->id = $data['id'];
         $contract->name = $data['name'];
         $contract->start_date = $data['start_date'];
@@ -29,6 +27,7 @@ class MContract extends BaseModel
         $contract->invoice_agreed = $data['invoice_agreed'];
         $contract->invoice_paid = $data['invoice_paid'];
         $contract->created_at = $data['created_at'];
+
         return $contract;
     }
 }

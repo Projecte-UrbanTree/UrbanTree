@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title . ' - ' . getenv('APP_NAME'); ?></title>
+    <title>
+        <?php echo $title . ' - ' . getenv('APP_NAME'); ?>
+    </title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
@@ -17,9 +19,19 @@
                 <?php echo getenv('APP_NAME'); ?>
             </div>
             <nav class="mt-4">
-                <a href="/" class="block py-2 px-4 text-white hover:bg-gray-700">Home</a>
-                <a href="#" class="block py-2 px-4 text-white hover:bg-gray-700">Example 1</a>
-                <a href="#" class="block py-2 px-4 text-white hover:bg-gray-700">Example 2</a>
+                <?php
+                // Get the current path
+                $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        ?>
+
+                <a href="/"
+                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/' ? 'bg-gray-700' : ''; ?>">
+                    Dashboard
+                </a>
+                <a href="/users"
+                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/users' ? 'bg-gray-700' : ''; ?>">
+                    Manage Users
+                </a>
             </nav>
         </aside>
 
@@ -27,19 +39,32 @@
         <div class="flex-1 flex flex-col">
             <!-- Top bar -->
             <header class="bg-white shadow p-4 flex justify-between items-center">
-                <div class="text-xl font-bold"><?php echo $title; ?></div>
+                <div class="text-xl font-bold"><?php echo $title; ?>
+                </div>
                 <div class="flex items-center space-x-4">
-                    <span class="text-gray-600">Welcome, User</span>
-                    <button class="px-3 py-1 bg-blue-600 text-white rounded">Logout</button>
+                    <span class="text-gray-600">Welcome,
+                        <?php echo $_SESSION['user']['name']; ?></span>
+                    <a href="/logout" class="px-3 py-1 bg-blue-600 text-white rounded">Logout</a>
                 </div>
             </header>
 
             <!-- Content area -->
-            <main class="flex-grow p-6">
-                <?= $content ?>
+            <main class="flex-grow p-6 overflow-auto">
+                <?php echo $content; ?>
             </main>
         </div>
     </div>
+
+<!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
+<script>
+    setTimeout(() => {
+        console.log('Hide alert message');
+        const alertMsg = document.getElementById('alert-msg');
+        if (alertMsg) {
+            alertMsg.classList.add('hidden');
+        }
+    }, 3500);
+</script>
 
 </body>
 

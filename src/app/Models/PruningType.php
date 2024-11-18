@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Core\BaseModel;
-
 class MPruningType extends BaseModel
 {
     public string $name;
@@ -21,6 +19,7 @@ class MPruningType extends BaseModel
         $pruning_type->name = $data['name'];
         $pruning_type->description = $data['description'];
         $pruning_type->created_at = $data['created_at'];
+
         return $pruning_type;
     }
 }

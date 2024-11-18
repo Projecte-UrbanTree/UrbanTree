@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Core\BaseModel;
-
-class MTaskType extends BaseModel
+class TaskType extends BaseModel
 {
     public string $name;
 
@@ -15,10 +13,11 @@ class MTaskType extends BaseModel
 
     protected static function mapDataToModel($data)
     {
-        $task = new MTaskType();
+        $task = new TaskType();
         $task->id = $data['id'];
         $task->name = $data['name'];
         $task->created_at = $data['created_at'];
+
         return $task;
     }
 }
