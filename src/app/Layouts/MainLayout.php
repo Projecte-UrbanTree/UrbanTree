@@ -84,7 +84,7 @@
                     Manage Elements
                 </a>
                 <a href="/task-types"
-                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/elements' ? 'bg-gray-700' : ''; ?>">
+                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/task-types' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
                         <path stroke-linecap="round" stroke-linejoin="round"
