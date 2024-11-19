@@ -28,7 +28,7 @@ INSERT INTO pruning_types (name, description) VALUES
 ('A', 'Poda de mantenimiento en árbol tipo A, caduco, de p.c. entre 41/80 cm.'),
 ('B', 'Poda de mantenimiento en árbol tipo B, caduco, de p.c. mayor de 81 cm.'),
 ('C', 'Poda de mantenimiento en árbol tipo C, perenne, de p.c. entre 41/60 cm.');
---* Points and zones
+--* Points, zones and routes
 INSERT INTO points (latitude, longitude) VALUES
 (40.416775, -3.703790),
 (40.416776, -3.703795),
@@ -71,7 +71,7 @@ INSERT INTO tasks_workers (task_id, worker_id) VALUES
 (2, 2),
 (3, 3);
 --* Sensors and sensor history
-INSERT INTO sensors (zone_id, model, is_active) VALUES
-(1, 'Sensor 1', 1),
-(2, 'Sensor 2', 1),
-(3, 'Sensor 3', 1);
+INSERT INTO sensors (zone_id, point_id, model, is_active) VALUES
+(1, 1, 'Sensor 1', 1),
+(2, 2, 'Sensor 2', 1),
+(3, 3, 'Sensor 3', 1);
