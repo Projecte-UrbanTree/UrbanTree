@@ -2,6 +2,7 @@
 
 // Import controller classes
 use App\Controllers\AuthController;
+use App\Controllers\ContractController;
 use App\Controllers\DashboardController;
 use App\Controllers\ElementController;
 use App\Controllers\IncidenceController;
@@ -9,6 +10,7 @@ use App\Controllers\TreeTypeController;
 use App\Controllers\UserController;
 use App\Controllers\WorkOrderController;
 use App\Controllers\ZoneController;
+use App\Controllers\TaskTypeController;
 // Import middleware classes
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\GuestMiddleware;
@@ -121,6 +123,35 @@ return [
             'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],
+        // === TaskTypes GET Routes
+        '/task-types' => [
+            'controller' => TaskTypeController::class,
+            'method' => 'index',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/task-types/create' => [
+            'controller' => TaskTypeController::class,
+            'method' => 'create',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/task-types/:id/edit' => [
+            'controller' => TaskTypeController::class,
+            'method' => 'edit',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/task-types/:id/delete' => [
+            'controller' => TaskTypeController::class,
+            'method' => 'destroy',
+            'middleware' => [
+                AuthMiddleware::class
+            ],
+        ],
+        // === Contracts GET Routes
+        '/contracts' => [
+            'controller' => ContractController::class,
+            'method' => 'index',
+            'middleware' => [AuthMiddleware::class],
+        ],
     ],
     'POST' => [
         // == Auth POST Routes
@@ -158,6 +189,17 @@ return [
         ],
         '/zone/:id/update' => [
             'controller' => ZoneController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === TaskTypes POST Routes
+        '/task-types/store' => [
+            'controller' => TaskTypeController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/task-types/:id/update' => [
+            'controller' => TaskTypeController::class,
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
