@@ -2,6 +2,7 @@
 
 // Import controller classes
 use App\Controllers\AuthController;
+use App\Controllers\ContractController;
 use App\Controllers\DashboardController;
 use App\Controllers\ElementController;
 use App\Controllers\IncidenceController;
@@ -123,12 +124,11 @@ return [
             'middleware' => [AuthMiddleware::class],
         ],
         // === TaskTypes GET Routes
-        '/task-types' =>
-            [
-                'controller' => TaskTypeController::class,
-                'method' => 'index',
-                'middleware' => [AuthMiddleware::class],
-            ],
+        '/task-types' => [
+            'controller' => TaskTypeController::class,
+            'method' => 'index',
+            'middleware' => [AuthMiddleware::class],
+        ],
         '/task-types/create' => [
             'controller' => TaskTypeController::class,
             'method' => 'create',
@@ -142,58 +142,66 @@ return [
         '/task-types/:id/delete' => [
             'controller' => TaskTypeController::class,
             'method' => 'destroy',
+            'middleware' => [
+                AuthMiddleware::class
+            ],
+        ],
+        // === Contracts GET Routes
+        '/contracts' => [
+            'controller' => ContractController::class,
+            'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],
-        'POST' => [
-            // == Auth POST Routes
-            '/auth/login' => [
-                'controller' => AuthController::class,
-                'method' => 'login',
-                'middleware' => [GuestMiddleware::class],
-            ],
-            '/user/store' => [
-                'controller' => UserController::class,
-                'method' => 'store',
-                'middleware' => [AuthMiddleware::class],
-            ],
-            '/user/:id/update' => [
-                'controller' => UserController::class,
-                'method' => 'update',
-                'middleware' => [AuthMiddleware::class],
-            ],
-            // === WorkOrders POST Routes
-            '/work-order/store' => [
-                'controller' => WorkOrderController::class,
-                'method' => 'store',
-                'middleware' => [AuthMiddleware::class],
-            ],
-            '/work-order/:id/update' => [
-                'controller' => WorkOrderController::class,
-                'method' => 'update',
-                'middleware' => [AuthMiddleware::class],
-            ],
-            // === Zones POST Routes
-            '/zone/store' => [
-                'controller' => ZoneController::class,
-                'method' => 'store',
-                'middleware' => [AuthMiddleware::class],
-            ],
-            '/zone/:id/update' => [
-                'controller' => ZoneController::class,
-                'method' => 'update',
-                'middleware' => [AuthMiddleware::class],
-            ],
-            // === TaskTypes POST Routes
-            '/task-types/store' => [
-                'controller' => TaskTypeController::class,
-                'method' => 'store',
-                'middleware' => [AuthMiddleware::class],
-            ],
-            '/task-types/:id/update' => [
-                'controller' => TaskTypeController::class,
-                'method' => 'update',
-                'middleware' => [AuthMiddleware::class],
-            ],
+    ],
+    'POST' => [
+        // == Auth POST Routes
+        '/auth/login' => [
+            'controller' => AuthController::class,
+            'method' => 'login',
+            'middleware' => [GuestMiddleware::class],
         ],
-    ]
+        '/user/store' => [
+            'controller' => UserController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/user/:id/update' => [
+            'controller' => UserController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === WorkOrders POST Routes
+        '/work-order/store' => [
+            'controller' => WorkOrderController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/work-order/:id/update' => [
+            'controller' => WorkOrderController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === Zones POST Routes
+        '/zone/store' => [
+            'controller' => ZoneController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/zone/:id/update' => [
+            'controller' => ZoneController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === TaskTypes POST Routes
+        '/task-types/store' => [
+            'controller' => TaskTypeController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/task-types/:id/update' => [
+            'controller' => TaskTypeController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
+    ],
 ];
