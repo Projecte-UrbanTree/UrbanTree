@@ -17,16 +17,16 @@
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
             <input type="text" id="name" name="name"
-                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                   required>
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                required>
         </div>
 
         <!-- Postal Code -->
         <div>
             <label for="postal_code" class="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
             <input type="text" id="postal_code" name="postal_code"
-                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                   required>
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                required>
         </div>
 
         <!-- Point ID -->
@@ -38,7 +38,7 @@
         <!-- Submit Button -->
         <div class="flex items-center">
             <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-blue-500">
+                class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-blue-500">
                 Create Zone
             </button>
         </div>

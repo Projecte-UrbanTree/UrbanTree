@@ -12,8 +12,8 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="#"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
+    <a href="/work-order/create"
+        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
         Create Work Order
     </a>
 </div>
@@ -37,11 +37,14 @@ use App\Core\Session;
                 <?php foreach ($workOrder->tasks() as $task) { ?>
                     <tr class="border-b hover:bg-gray-100">
                         <td class="py-2 px-4">
-                            <?php echo $workOrder->getId(); ?></td>
+                            <?php echo $workOrder->getId(); ?>
+                        </td>
                         <td class="py-2 px-4">
-                            <?php echo $workOrder->contract()->name; ?></td>
+                            <?php echo $workOrder->contract()->name; ?>
+                        </td>
                         <td class="py-2 px-4">
-                            <?php echo $workOrder->getCreatedAt(); ?></td>
+                            <?php echo $workOrder->getCreatedAt(); ?>
+                        </td>
                         <td class="py-2 px-4">
                             <?php foreach ($task->zones() as $zone) { ?>
                                 <?php echo $zone->name; ?>,
