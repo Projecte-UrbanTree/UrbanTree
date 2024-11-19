@@ -183,12 +183,13 @@ return [
                 'method' => 'update',
                 'middleware' => [AuthMiddleware::class],
             ],
-            '/task-type/store' => [
+            // === TaskTypes POST Routes
+            '/task-types/store' => [
                 'controller' => TaskTypeController::class,
                 'method' => 'store',
                 'middleware' => [AuthMiddleware::class],
             ],
-            '/task-type/:id/update' => [
+            '/task-types/:id/update' => [
                 'controller' => TaskTypeController::class,
                 'method' => 'update',
                 'middleware' => [AuthMiddleware::class],

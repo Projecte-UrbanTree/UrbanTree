@@ -42,10 +42,10 @@ class TaskTypeController
     {
         $tasktype = TaskType::find($id);
         View::render([
-            'view' => 'tasktype/Edit',
-            'title' => 'Edit tasktype',
+            'view' => 'task-types/Edit',
+            'title' => 'Edit Task Type',
             'layout' => 'MainLayout',
-            'data' => ['task_types' => $tasktype],
+            'data' => ['task_type' => $tasktype],
         ]);
     }
 
@@ -54,9 +54,6 @@ class TaskTypeController
         $tasktype = tasktype::find($id);
 
         $tasktype->name = $postData['name'];
-        $tasktype->postal_code = $postData['postal_code'];
-        $tasktype->point_id = $postData['point_id'];
-
         $tasktype->save();
 
         header('Location: /task-types');
