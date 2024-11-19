@@ -102,6 +102,13 @@ class Router
 
     protected function abort(int $statusCode, string $message): void
     {
+
+        if ($statusCode === 404) {
+            View::render([
+                'view' => 'Error/404',
+                'title' => 'Error 404',
+            ]);
+        }
         http_response_code($statusCode);
         echo json_encode(['error' => $message]);
         exit;
