@@ -20,7 +20,7 @@ class TaskTypeController
     public function create()
     {
         View::render([
-            'view' => 'task-types/Create',
+            'view' => 'TaskType/Create',
             'title' => 'Add Task Type',
             'layout' => 'MainLayout',
             'data' => [],
@@ -42,7 +42,7 @@ class TaskTypeController
     {
         $tasktype = TaskType::find($id);
         View::render([
-            'view' => 'task-types/Edit',
+            'view' => 'TaskType/Edit',
             'title' => 'Edit Task Type',
             'layout' => 'MainLayout',
             'data' => ['task_type' => $tasktype],
