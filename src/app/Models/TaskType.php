@@ -16,7 +16,7 @@ class TaskType extends BaseModel
         $task = new self();
         $task->id = $data['id'];
         $task->name = $data['name'];
-        $task->created_at = $data['created_at'];
+        // $task->created_at = $data['created_at'];
 
         return $task;
     }
