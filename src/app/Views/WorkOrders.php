@@ -74,8 +74,8 @@ use App\Core\Session;
                                 </svg>
                             </a>
                             <!-- Delete Button (Trash Icon) -->
-                            <a href="/user/<?php echo htmlspecialchars($workOrder->getId()); ?>/delete"
-                                onclick="return confirm('Are you sure you want to delete this user?');"
+                            <a href="/work-order/<?php echo htmlspecialchars($workOrder->getId()); ?>/delete"
+                                onclick="return confirm('Are you sure you want to delete this work order?');"
                                 class="text-red-500 hover:text-red-700" title="Delete">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-5 h-5">
