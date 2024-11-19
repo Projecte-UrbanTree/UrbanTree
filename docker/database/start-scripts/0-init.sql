@@ -175,11 +175,12 @@ create table work_reports (
 create table sensors (
     id int auto_increment primary key,
     zone_id int not null,
+    point_id int unique,
     model varchar(255),
-    class varchar(255),
     is_active boolean,
     created_at timestamp default current_timestamp,
-    foreign key (zone_id) references zones(id)
+    foreign key (zone_id) references zones(id),
+    foreign key (point_id) references points(id)
 );
 
 create table sensor_history (
