@@ -8,6 +8,8 @@ class User extends BaseModel
 
     public string $name;
 
+    public string $surname;
+
     public string $dni;
 
     public string $password;
@@ -16,9 +18,11 @@ class User extends BaseModel
 
     public int $role_id;
 
+    public ?int $photo_id;
+
     protected static function getTableName(): string
     {
-        return 'workers';
+        return 'users';
     }
 
     protected static function mapDataToModel($data): User
@@ -27,18 +31,24 @@ class User extends BaseModel
         $user->id = $data['id'];
         $user->company = $data['company'];
         $user->name = $data['name'];
+        $user->surname = $data['surname'];
         $user->dni = $data['dni'];
         $user->password = $data['password'];
         $user->email = $data['email'];
         $user->role_id = $data['role_id'];
+        $user->photo_id = $data['photo_id'];
         $user->created_at = $data['created_at'];
 
         return $user;
     }
 
-    // Fetch the user's role
     public function role(): Role
     {
         return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function photo(): Photo
+    {
+        return $this->belongsTo(Photo::class, 'photo_id');
     }
 }

@@ -204,12 +204,13 @@ create table tasks_zones (
 );
 
 create table work_reports (
-    id int primary key,
+    id int auto_increment primary key,
+    work_order_id int unique,
     observation varchar(255),
     spent_fuel decimal,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
-    foreign key (id) references work_orders(id)
+    foreign key (work_order_id) references work_orders(id)
 );
 
 create table work_report_photos (

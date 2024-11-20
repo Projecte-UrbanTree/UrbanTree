@@ -5,7 +5,10 @@ namespace App\Models;
 class Machine extends BaseModel
 {
     public ?string $name;
+
     public float $max_basket_size;
+
+    public ?int $photo_id;
 
     protected static function getTableName(): string
     {
@@ -18,8 +21,15 @@ class Machine extends BaseModel
         $machine->id = $data['id'];
         $machine->name = $data['name'];
         $machine->max_basket_size = $data['max_basket_size'];
+        $machine->photo_id = $data['photo_id'];
         $machine->created_at = $data['created_at'];
 
         return $machine;
+    }
+
+    public function photo(): ?Photo
+    {
+        if ($this->photo_id)
+            return $this->belongsTo(Photo::class, 'photo_id');
     }
 }
