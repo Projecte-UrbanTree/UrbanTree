@@ -28,7 +28,7 @@ body:
     id: behavior-expected
     attributes:
       label: Expected Behavior
-      description: Explain what you expected to happen when performing the steps above. 
+      description: Explain what you expected to happen when performing the steps above.
     validations:
       required: true
   - type: textarea
@@ -94,11 +94,12 @@ body:
     id: possible-solutions
     attributes:
       label: Possible Solution
-      description: Contribute any possible solutions that you think will solve this problem.<- type: checkboxes
+      description: Contribute any possible solutions that you think will solve this problem.
+  - type: checkboxes
     id: terms
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Projecte-UrbanTree/UrbanTree?tab=coc-ov-file#readme). 
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Projecte-UrbanTree/UrbanTree?tab=coc-ov-file#readme).
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
