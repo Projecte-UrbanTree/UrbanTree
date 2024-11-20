@@ -21,15 +21,12 @@ abstract class BaseModel
         $query .= implode(", ", array_fill(0, count($records), "(" . implode(", ", $placeholders) . ")"));
 
         $params = [];
-        foreach ($records as $index => $record) {
-            foreach ($record as $key => $value) {
+        foreach ($records as $index => $record)
+            foreach ($record as $key => $value)
                 $params["{$key}_{$index}"] = $value;
-            }
-        }
 
         Database::prepareAndExecute($query, $params);
     }
-
 
     // One-to-one relationship
     public function belongsTo(string $relatedModel, string $foreignKey, string $ownerKey = 'id'): ?object
@@ -45,7 +42,6 @@ abstract class BaseModel
 
         return ! empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
-
 
     // Many-to-Many relationship
     public function belongsToMany(
@@ -89,14 +85,13 @@ abstract class BaseModel
             if ($withPivot) {
                 // Attach pivot data as a property
                 $relatedInstance->pivot = array_filter($row, function ($key) use ($relatedModel) {
-                    return !property_exists($relatedModel, $key);
+                    return ! property_exists($relatedModel, $key);
                 }, ARRAY_FILTER_USE_KEY);
             }
 
             return $relatedInstance;
         }, $results);
     }
-
 
     // Count the number of records in the table
     public static function count($conditions = [])
@@ -122,13 +117,12 @@ abstract class BaseModel
     {
         $table = static::getTableName();
 
-        if (static::hasSoftDelete()) {
+        if (static::hasSoftDelete())
             $query = "UPDATE {$table} SET deleted_at = NOW() WHERE id = :id";
-            Database::prepareAndExecute($query, ['id' => $this->id]);
-        } else {
+        else
             $query = "DELETE FROM {$table} WHERE id = :id";
-            Database::prepareAndExecute($query, ['id' => $this->id]);
-        }
+
+        Database::prepareAndExecute($query, ['id' => $this->id]);
     }
 
     // Check if a record exists in the table
