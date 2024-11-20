@@ -62,8 +62,8 @@ body:
     attributes:
       label: Do you reliably reproduce the issue?
       options:
-        - label: Yes
-        - label: No
+        - label: 'Yes'
+        - label: 'No'
   - type: textarea
     id: input
     attributes:
