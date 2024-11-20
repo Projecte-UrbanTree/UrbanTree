@@ -10,7 +10,7 @@ class Incidence extends BaseModel
 
     public ?string $description;
 
-    public ?string $photo_id;
+    public ?int $photo_id;
 
     protected static function getTableName(): string
     {

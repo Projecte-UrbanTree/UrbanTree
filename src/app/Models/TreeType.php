@@ -30,8 +30,9 @@ class TreeType extends BaseModel
         return $tree_type;
     }
 
-    public function photo(): Photo
+    public function photo(): ?Photo
     {
-        return $this->belongsTo(Photo::class, 'photo_id');
+        if ($this->photo_id)
+            return $this->belongsTo(Photo::class, 'photo_id');
     }
 }

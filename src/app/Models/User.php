@@ -47,8 +47,9 @@ class User extends BaseModel
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public function photo(): Photo
+    public function photo(): ?Photo
     {
-        return $this->belongsTo(Photo::class, 'photo_id');
+        if ($this->photo_id)
+            return $this->belongsTo(Photo::class, 'photo_id');
     }
 }
