@@ -185,7 +185,7 @@ abstract class BaseModel
 
         $results = Database::prepareAndExecute($query, $params);
 
-        return array_map(fn ($row) => static::mapDataToModel($row), $results);
+        return array_map(fn($row) => static::mapDataToModel($row), $results);
     }
 
     // Find a record by a specific column
@@ -332,7 +332,7 @@ abstract class BaseModel
 
         Database::prepareAndExecute($query, $properties);
 
-        if (! $this->id)
+        if (! isset($this->id))
             $this->id = Database::connect()->lastInsertId();
     }
 
@@ -341,17 +341,6 @@ abstract class BaseModel
     abstract protected static function mapDataToModel($data);
 
     //* Getters and Setters
-    public function __get($key)
-    {
-        if (property_exists($this, $key))
-            return $this->{$key};
-
-        if (isset($this->pivot) && array_key_exists($key, $this->pivot))
-            return $this->pivot[$key];
-
-        throw new \Exception("Property {$key} does not exist.");
-    }
-
     public function getId(): int
     {
         return $this->id;

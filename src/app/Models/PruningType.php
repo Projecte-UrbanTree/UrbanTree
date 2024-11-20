@@ -29,7 +29,6 @@ class PruningType extends BaseModel
 
     public function photo(): ?Photo
     {
-        if ($this->photo_id)
-            return $this->belongsTo(Photo::class, 'photo_id');
+        return $this->photo_id ? $this->belongsTo(Photo::class, 'photo_id') : null;
     }
 }
