@@ -11,7 +11,7 @@
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Create Element</h2>
-    <form action="/zone/store" method="POST" class="space-y-6">
+    <form action="/element/store" method="POST" class="space-y-6">
 
         <!-- Name -->
         <div>
