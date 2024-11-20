@@ -57,7 +57,7 @@ body:
         - **Browser (if applicable):** [e.g., Chrome 127, Safari 16]
     validations:
       required: true
-  - tpye: checkboxes
+  - type: checkboxes
     id: reliably-reproduce
     attributes:
       label: Do you reliably reproduce the issue?
