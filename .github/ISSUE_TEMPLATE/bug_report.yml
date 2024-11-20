@@ -11,7 +11,7 @@ body:
     attributes:
       label: Describe the Bug
       description: Provide a clear and concise description of the issue, including any symptoms or error messages.
-    validation:
+    validations:
       required: true
   - type: textarea
     id: steps-to-reproduce
@@ -22,21 +22,21 @@ body:
         1. Go to '...'
         2. Perform the action '...'
         3. Observe the behavior '...'
-    validation:
+    validations:
       required: true
   - type: textarea
     id: behavior-expected
     attributes:
       label: Expected Behavior
       description: Explain what you expected to happen when performing the steps above. 
-    validation:
+    validations:
       required: true
   - type: textarea
     id: behavior-actual
     attributes:
       label: Actual Behavior
       description: Describe the actual outcome of the steps above, including any errors or unexpected results.
-    validation:
+    validations:
       required: true
   - type: textarea
     id: stack-trace
@@ -55,7 +55,7 @@ body:
         - **Interpreter/Compiler/SDK/Runtime Environment:** [e.g., Python 3.10, Node.js 18, GCC 12.2]
         - **Relevant Tooling Versions:** [e.g., npm 9.8.1, pip 23.0.1]
         - **Browser (if applicable):** [e.g., Chrome 127, Safari 16]
-    validation:
+    validations:
       required: true
   - tpye: checkboxes
     id: reliably-reproduce
