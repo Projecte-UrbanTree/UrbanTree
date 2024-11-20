@@ -35,7 +35,7 @@ class IncidenceController
         $elements = Element::findAll();
 
         View::render([
-            'view' => 'Incidence/Create1',
+            'view' => 'Incidence/Create',
             'title' => 'Create Incidence',
             'layout' => 'MainLayout',
             'data' => [
