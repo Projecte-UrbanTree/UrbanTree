@@ -185,6 +185,17 @@ return [
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
+        // === Elements POST Routes
+        '/element/store' => [
+            'controller' => ElementController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/element/:id/update' => [
+            'controller' => ElementController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
         // === WorkOrders POST Routes
         '/work-order/store' => [
             'controller' => WorkOrderController::class,

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\View;
 use App\Models\Element;
+use App\Core\Session;
 
 class ElementController
 {
@@ -42,7 +43,7 @@ class ElementController
 
     public function edit($id)
     {
-        $user = User::find($id);
+        $element = Element::find($id);
         View::render([
             'view' => 'Element/Edit',
             'title' => 'Edit Element',
