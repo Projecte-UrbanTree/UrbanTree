@@ -1,6 +1,6 @@
 <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-3xl mx-auto">
     <h1 class="text-3xl font-bold mb-6 text-center text-gray-700">Crear Incidencia</h1>
-    <form action="/path/to/your/controller" method="POST" enctype="multipart/form-data">
+    <form action="/incidence/store" method="POST" enctype="multipart/form-data">
         <div class="mb-6">
             <label for="element_id" class="block text-gray-700 text-sm font-bold mb-2">Elemento</label>
             <select id="element_id" name="element_id" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" required>
