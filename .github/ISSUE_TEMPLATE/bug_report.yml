@@ -1,5 +1,5 @@
 name: Bug report
-about: Use this template to provide detailed information about the bug so others can
+description: Use this template to provide detailed information about the bug so others can
   easily reproduce and understand the issue.
 title: "[Bug]: "
 labels: ["kind/bug", "needs-triage"]
