@@ -203,5 +203,10 @@ return [
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
+        '/incidence/store' => [
+            'controller' => IncidenceController::class,
+            'method' => 'create_incidence',
+            'middleware' => [AuthMiddleware::class],
+        ]
     ],
 ];
