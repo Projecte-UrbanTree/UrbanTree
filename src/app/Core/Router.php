@@ -110,7 +110,6 @@ class Router
             ]);
         }
         http_response_code($statusCode);
-        echo json_encode(['error' => $message]);
         exit;
     }
 }
