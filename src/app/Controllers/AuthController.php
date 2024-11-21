@@ -49,6 +49,7 @@ class AuthController
         Session::set('user', [
             'id' => $user->getId(),
             'name' => $user->name,
+            'surname' => substr($user->surname, 0, 1),
             'email' => $user->email,
             'role_id' => $user->role_id,
         ]);

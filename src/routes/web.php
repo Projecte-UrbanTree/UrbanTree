@@ -157,9 +157,7 @@ return [
         '/task-types/:id/delete' => [
             'controller' => TaskTypeController::class,
             'method' => 'destroy',
-            'middleware' => [
-                AuthMiddleware::class
-            ],
+            'middleware' => [AuthMiddleware::class],
         ],
         // === Contracts GET Routes
         '/contracts' => [

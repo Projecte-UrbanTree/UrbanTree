@@ -22,7 +22,7 @@ services:
     volumes:
       - storage-data:/var/www/html/storage
     environment:
-      - APP_NAME=UrbanTree
+      - APP_NAME=Urban Tree 5.0
       - DB_HOST=database
       - DB_NAME=urbantree
       - DB_USER=root

@@ -35,4 +35,19 @@ class Contract extends BaseModel
 
         return $contract;
     }
+
+    public function elements()
+    {
+        return $this->hasMany(Element::class, 'contract_id');
+    }
+
+    public function workOrders()
+    {
+        return $this->hasMany(WorkOrder::class, 'contract_id');
+    }
+
+    public function sensors()
+    {
+        return $this->hasMany(Sensor::class, 'contract_id');
+    }
 }
