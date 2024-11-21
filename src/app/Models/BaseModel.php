@@ -335,12 +335,12 @@ abstract class BaseModel
     abstract protected static function mapDataToModel($data);
 
     //* Getters and Setters
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->created_at;
     }
