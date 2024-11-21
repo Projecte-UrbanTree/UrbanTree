@@ -94,7 +94,7 @@ abstract class BaseModel
     }
 
     // Count the number of records in the table
-    public static function count($conditions = [])
+    public static function count($conditions = []): ?int
     {
         $query = "SELECT COUNT(*) as count FROM " . static::getTableName();
         $params = [];
@@ -160,7 +160,7 @@ abstract class BaseModel
     }
 
     // Fetch all records from the table
-    public static function findAll($filters = [], $includeDeleted = false)
+    public static function findAll($filters = [], $includeDeleted = false): array
     {
         $query = "SELECT * FROM " . static::getTableName();
         $params = [];
@@ -183,7 +183,7 @@ abstract class BaseModel
     }
 
     // Find a record by a specific column
-    public static function findBy($conditions, $single = false)
+    public static function findBy($conditions, $single = false): array
     {
         $table = static::getTableName();
 
@@ -215,7 +215,7 @@ abstract class BaseModel
     }
 
     // Fetch all soft deleted records
-    public static function findSoftDeleted()
+    public static function findSoftDeleted(): array
     {
         if (! static::hasSoftDelete())
             return [];
@@ -271,7 +271,7 @@ abstract class BaseModel
     }
 
     // Paginate the records in the table
-    public static function paginate($page = 1, $perPage = 10, $conditions = [])
+    public static function paginate($page = 1, $perPage = 10, $conditions = []): ?array
     {
         $offset = ($page - 1) * $perPage;
         $query = "SELECT * FROM " . static::getTableName();
@@ -331,7 +331,7 @@ abstract class BaseModel
     }
 
     //* Abstract methods to enforce subclass implementation
-    abstract protected static function getTableName();
+    abstract protected static function getTableName(): string;
     abstract protected static function mapDataToModel($data);
 
     //* Getters and Setters
