@@ -34,24 +34,24 @@ use App\Core\Session;
         </thead>
         <tbody>
             <?php foreach ($elements as $element) { ?>
-            <tr class="hover:bg-gray-50">
-                <td class="px-4 py-2 border-b">
-                    <?php echo $element->getId(); ?></td>
-                <td class="px-4 py-2 border-b">
-                    <?php echo $element->name; ?></td>
-                <td class="px-4 py-2 border-b">
-                    <?php echo $element->zone()->name; ?></td>
-                <td class="px-4 py-2 border-b">
-                    <?php echo $element->zone()->postal_code; ?></td>
-                <td class="px-4 py-2 border-b">
-                    <?php echo $element->treeType()->species; ?></td>
-                <td class="px-4 py-2 border-b">
-                    <?php echo $element->point()->latitude; ?></td>
-                <td class="px-4 py-2 border-b">
-                    <?php echo $element->point()->longitude; ?></td>
-                <td class="px-4 py-2 border-b">
-                    <?php echo $element->getCreatedAt(); ?></td>
-            </tr>
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 border-b">
+                        <?php echo $element->getId(); ?></td>
+                    <td class="px-4 py-2 border-b">
+                        <?php echo $element->name; ?></td>
+                    <td class="px-4 py-2 border-b">
+                        <?php echo $element->zone()->predefined()->name ?? 'Not on a predefined zone'; ?></td>
+                    <td class="px-4 py-2 border-b">
+                        <?php echo $element->zone()->postal_code ?? 'Not on a predefined zone'; ?></td>
+                    <td class="px-4 py-2 border-b">
+                        <?php echo $element->treeType()->species; ?></td>
+                    <td class="px-4 py-2 border-b">
+                        <?php echo $element->point()->latitude; ?></td>
+                    <td class="px-4 py-2 border-b">
+                        <?php echo $element->point()->longitude; ?></td>
+                    <td class="px-4 py-2 border-b">
+                        <?php echo $element->getCreatedAt(); ?></td>
+                </tr>
             <?php } ?>
         </tbody>
     </table>
