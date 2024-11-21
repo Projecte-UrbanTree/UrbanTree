@@ -123,6 +123,21 @@ return [
             'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],
+        '/element/create' => [
+            'controller' => ElementController::class,
+            'method' => 'create',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/element/:id/edit' => [
+            'controller' => ElementController::class,
+            'method' => 'edit',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/element/:id/delete' => [
+            'controller' => ElementController::class,
+            'method' => 'destroy',
+            'middleware' => [AuthMiddleware::class],
+        ],
         // === TaskTypes GET Routes
         '/task-types' => [
             'controller' => TaskTypeController::class,
@@ -165,6 +180,17 @@ return [
         ],
         '/user/:id/update' => [
             'controller' => UserController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === Elements POST Routes
+        '/element/store' => [
+            'controller' => ElementController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/element/:id/update' => [
+            'controller' => ElementController::class,
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
