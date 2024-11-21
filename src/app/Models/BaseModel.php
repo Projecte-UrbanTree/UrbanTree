@@ -94,7 +94,7 @@ abstract class BaseModel
     }
 
     // Count the number of records in the table
-    public static function count($conditions = []): ?int
+    public static function count(array $conditions = []): ?int
     {
         $query = "SELECT COUNT(*) as count FROM " . static::getTableName();
         $params = [];
@@ -126,7 +126,7 @@ abstract class BaseModel
     }
 
     // Check if a record exists in the table
-    public static function exists($conditions = []): bool
+    public static function exists(array $conditions = []): bool
     {
         $query = "SELECT COUNT(*) as count FROM " . static::getTableName();
         $params = [];
@@ -145,7 +145,7 @@ abstract class BaseModel
     }
 
     // Find a record by its ID
-    public static function find($id)
+    public static function find(string $id): ?object
     {
         $table = static::getTableName();
 
@@ -160,7 +160,7 @@ abstract class BaseModel
     }
 
     // Fetch all records from the table
-    public static function findAll($filters = [], $includeDeleted = false): array
+    public static function findAll(array $filters = [], bool $includeDeleted = false): array
     {
         $query = "SELECT * FROM " . static::getTableName();
         $params = [];
@@ -183,7 +183,7 @@ abstract class BaseModel
     }
 
     // Find a record by a specific column
-    public static function findBy($conditions, $single = false): ?array
+    public static function findBy(array $conditions, bool $single = false): ?array
     {
         $table = static::getTableName();
 
@@ -228,7 +228,7 @@ abstract class BaseModel
     }
 
     // One-to-One relationship
-    public function hasOne($relatedModel, $foreignKey, $localKey = 'id'): ?object
+    public function hasOne(string $relatedModel, string $foreignKey, string $localKey = 'id'): ?object
     {
         $relatedTable = $relatedModel::getTableName();
         $localKeyValue = $this->{$localKey};
@@ -271,7 +271,7 @@ abstract class BaseModel
     }
 
     // Paginate the records in the table
-    public static function paginate($page = 1, $perPage = 10, $conditions = []): ?array
+    public static function paginate(int $page = 1, int $perPage = 10, array $conditions = []): ?array
     {
         $offset = ($page - 1) * $perPage;
         $query = "SELECT * FROM " . static::getTableName();
@@ -332,7 +332,7 @@ abstract class BaseModel
 
     //* Abstract methods to enforce subclass implementation
     abstract protected static function getTableName(): string;
-    abstract protected static function mapDataToModel($data): object;
+    abstract protected static function mapDataToModel(array $data): object;
 
     //* Getters and Setters
     public function getId(): ?int
