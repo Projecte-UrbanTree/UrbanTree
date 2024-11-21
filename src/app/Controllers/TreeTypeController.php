@@ -28,6 +28,19 @@ class TreeTypeController
         ]);
     }
 
+    public function store($postData)
+    {
+        $tree_types = new TreeType;
+        $tree_types->family = $postData['Family'];
+        $tree_types->genus = $postData['Genus'];
+        $tree_types->species = $postData['Species'];
+        $tree_types->save();
+
+
+        header(header:'Location: /tree-types');
+        exit;
+    }
+
 
 
 }

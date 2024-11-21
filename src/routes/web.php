@@ -223,6 +223,20 @@ return [
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
+
+        // === TreeTypes POST Routes
+        '/tree-types/store' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/tree-types/:id/update' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
+
+
         // === TaskTypes POST Routes
         '/task-types/store' => [
             'controller' => TaskTypeController::class,
