@@ -63,4 +63,28 @@ class IncidenceController
         Session::set('success', 'Incidence created successfully');
         header('Location: /incidence');
     }
+
+
+    public function edit_incidence($id)
+    {
+        $incidence = Incidence::find($id);
+        $element = Element::find($incidence->element_id);
+        if ($incidence && $element)
+        {
+            View::render([
+                'view' => '../Shared/Modals/IncidenceModal',
+                'title' => 'Edit Incidence',
+                'data' => [
+                    'incidence' => $incidence,
+                    'element' => $element,
+                ],
+            ]);
+        } else {
+            Session::set('error', 'Incidence not found');
+            header('Location: /incidence');
+        }
+    }
+
+
+
 }
