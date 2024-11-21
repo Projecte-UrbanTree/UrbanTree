@@ -183,7 +183,7 @@ abstract class BaseModel
     }
 
     // Find a record by a specific column
-    public static function findBy($conditions, $single = false): array
+    public static function findBy($conditions, $single = false): ?array
     {
         $table = static::getTableName();
 
@@ -228,7 +228,7 @@ abstract class BaseModel
     }
 
     // One-to-One relationship
-    public function hasOne($relatedModel, $foreignKey, $localKey = 'id')
+    public function hasOne($relatedModel, $foreignKey, $localKey = 'id'): ?object
     {
         $relatedTable = $relatedModel::getTableName();
         $localKeyValue = $this->{$localKey};
@@ -332,7 +332,7 @@ abstract class BaseModel
 
     //* Abstract methods to enforce subclass implementation
     abstract protected static function getTableName(): string;
-    abstract protected static function mapDataToModel($data);
+    abstract protected static function mapDataToModel($data): object;
 
     //* Getters and Setters
     public function getId(): ?int
