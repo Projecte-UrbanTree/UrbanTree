@@ -117,6 +117,11 @@ return [
             'controller' => IncidenceController::class,
             'method' => 'findall',
         ],
+        '/incidence/:id/edit' => [
+            'controller' => IncidenceController::class,
+            'method' => 'edit_incidence',
+            'middleware' => [AuthMiddleware::class],
+        ],
         // === Elements GET Routes
         '/elements' => [
             'controller' => ElementController::class,

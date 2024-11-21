@@ -3,7 +3,6 @@
     <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
         <thead>
             <tr class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
-
                 <th class="px-6 py-4 text-left font-semibold">Element Name</th>
                 <th class="px-6 py-4 text-left font-semibold">Name</th>
                 <th class="px-6 py-4 text-left font-semibold">Description</th>
@@ -13,15 +12,33 @@
         </thead>
         <tbody>
             <?php foreach ($incidences as $incidence): ?>
-                <tr class="hover:bg-gray-50 transition-all duration-200 ease-in-out">
-
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->name; ?></td>
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->element()->name; ?></td>
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->description; ?></td>
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->photo ?? 'No photo'; ?></td>
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->getCreatedAt(); ?></td>
+                <tr class="hover:bg-gray-100 transition-all duration-200 ease-in-out hover:scale-105">
+                    <td class="px-6 py-4 border border-transparent">
+                        <div class="transition-all duration-200">
+                            <a href="#" class="text-blue-600" data-id="<?= $incidence->getId(); ?>" onclick="openModal(<?= $incidence->getId(); ?>)">
+                                <?= $incidence->name; ?>
+                            </a>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 border border-transparent"><?php echo $incidence->element()->name; ?></td>
+                    <td class="px-6 py-4 border border-transparent"><?php echo $incidence->description; ?></td>
+                    <td class="px-6 py-4 border border-transparent"><?php echo $incidence->photo ?? 'No photo'; ?></td>
+                    <td class="px-6 py-4 border border-transparent"><?php echo $incidence->getCreatedAt(); ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
+
+<!-- Modal (escondido inicialmente) -->
+<div id="incidenceModal" class="fixed inset-0 flex items-center justify-center z-50 hidden bg-black bg-opacity-50">
+    <div class="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full">
+        <h2 class="text-xl font-semibold mb-4">Incidencia Detalles</h2>
+        <div id="modalContent">
+
+        </div>
+        <div class="flex justify-end mt-4">
+            <button onclick="closeModal()" class="bg-blue-500 hover:bg-blue-600 hover:scale-105 duration-200 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">Cerrar</button>
+        </div>
+    </div>
 </div>
