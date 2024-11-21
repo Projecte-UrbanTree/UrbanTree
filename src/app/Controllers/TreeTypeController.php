@@ -31,16 +31,50 @@ class TreeTypeController
     public function store($postData)
     {
         $tree_types = new TreeType;
-        $tree_types->family = $postData['Family'];
-        $tree_types->genus = $postData['Genus'];
-        $tree_types->species = $postData['Species'];
+        $tree_types->family = $postData['family'];
+        $tree_types->genus = $postData['fenus'];
+        $tree_types->species = $postData['species'];
         $tree_types->save();
 
 
         header(header:'Location: /tree-types');
         exit;
     }
+    public function edit($id)
+    {
+        $tree_type = TreeType::find($id);
+        View::render([
+            'view' => 'TreeTypes/Edit',
+            'title' => 'Edit Tree Type',
+            'layout' => 'MainLayout',
+            'data' => ['tree_type' => $tree_type],
+        ]);
+    }
+
+    public function update($id, $postData)
+    {
+    // Cerca el tipus d'arbre a la base de dades pel seu ID
+        $treetypes = TreeType::find($id);
+
+        if ($TreeTypes) {
+            $tree_types->family = $postData['family'];
+            $tree_types->genus = $postData['genus'];
+            $tree_types->species = $postData['species'];
+
+            $tree_types->save();
 
 
+        header('Location: /tree-types');
 
+    }
+
+}
+    public function destroy($id)
+    {
+        $treetypes = TreeType::find($id);
+        $treetypes->delete();
+
+
+        header('Location: /tree-types');
+    }
 }

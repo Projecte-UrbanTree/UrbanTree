@@ -111,6 +111,22 @@ return [
             'middleware' => [AuthMiddleware::class],
         ],
 
+
+        '/tree-types/:id/edit' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'edit',
+            'middleware' => [AuthMiddleware::class],
+        ],
+
+
+        '/treetypes/:id/delete' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'destroy',
+            'middleware' => [AuthMiddleware::class],
+        ],
+
+
+
         // === Incidence GET Routes
         '/incidence' => [
             'controller' => IncidenceController::class,
@@ -235,6 +251,8 @@ return [
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
+
+
 
 
         // === TaskTypes POST Routes
