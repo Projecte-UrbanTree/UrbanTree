@@ -12,9 +12,9 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="#"
+    <a href="/contract/create"
         class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-        Create Tree Type
+        Create Contract
     </a>
 </div>
 

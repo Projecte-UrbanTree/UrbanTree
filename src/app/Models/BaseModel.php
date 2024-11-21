@@ -200,7 +200,8 @@ abstract class BaseModel
         $properties = get_object_vars($this);
         unset($properties['id']); // Avoid saving the id in the data fields
 
-        if ($this->id) {
+        if ((isset($this->id) && $this->id) 
+) {
             // Update logic
             $fields = [];
             foreach ($properties as $key => $value) {
@@ -217,7 +218,8 @@ abstract class BaseModel
 
         Database::prepareAndExecute($query, $properties);
 
-        if (! $this->id)
+        if (!isset($this->id))
+
             $this->id = Database::connect()->lastInsertId();
     }
 
