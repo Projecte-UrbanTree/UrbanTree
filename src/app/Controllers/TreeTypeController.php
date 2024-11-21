@@ -17,4 +17,17 @@ class TreeTypeController
             'data' => ['tree_types' => $tree_types],
         ]);
     }
+
+    public function create()
+    {
+        View::render([
+            'view' => 'TreeTypes/Create',
+            'title' => 'Create TreeTypes',
+            'layout' => 'MainLayout',
+            'data' => [],
+        ]);
+    }
+
+
+
 }

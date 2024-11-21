@@ -104,6 +104,13 @@ return [
             'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],
+
+        '/treetypes/create' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'create',
+            'middleware' => [AuthMiddleware::class],
+        ],
+
         // === Incidence GET Routes
         '/incidence' => [
             'controller' => IncidenceController::class,
