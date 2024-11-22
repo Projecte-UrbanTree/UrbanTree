@@ -15,24 +15,24 @@
 
         <!-- Family -->
         <div>
-            <label for="Family" class="block text-sm font-medium text-gray-700 mb-1">Family</label>
-            <input type="text" id="Family" name="Family"
+            <label for="family" class="block text-sm font-medium text-gray-700 mb-1">Family</label>
+            <input type="text" id="family" name="family"
                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                    required>
         </div>
 
         <!-- Genus -->
         <div>
-            <label for="Genus" class="block text-sm font-medium text-gray-700 mb-1">Genus</label>
-            <input type="text" id="Genus" name="Genus"
+            <label for="genus" class="block text-sm font-medium text-gray-700 mb-1">Genus</label>
+            <input type="text" id="genus" name="genus"
                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                    required>
         </div>
 
         <!-- Species -->
         <div>
-            <label for="Species" class="block text-sm font-medium text-gray-700 mb-1">Species</label>
-            <input type="text" id="Species" name="Species"
+            <label for="species" class="block text-sm font-medium text-gray-700 mb-1">Species</label>
+            <input type="text" id="species" name="species"
                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                    required>
         </div>

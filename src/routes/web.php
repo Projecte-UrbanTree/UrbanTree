@@ -119,7 +119,7 @@ return [
         ],
 
 
-        '/treetypes/:id/delete' => [
+        '/treetype/:id/delete' => [
             'controller' => TreeTypeController::class,
             'method' => 'destroy',
             'middleware' => [AuthMiddleware::class],

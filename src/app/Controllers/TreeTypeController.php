@@ -30,11 +30,11 @@ class TreeTypeController
 
     public function store($postData)
     {
-        $tree_types = new TreeType;
-        $tree_types->family = $postData['family'];
-        $tree_types->genus = $postData['fenus'];
-        $tree_types->species = $postData['species'];
-        $tree_types->save();
+        $tree_type = new TreeType;
+        $tree_type->family = $postData['family'];
+        $tree_type->genus = $postData['genus'];
+        $tree_type->species = $postData['species'];
+        $tree_type->save();
 
 
         header(header:'Location: /tree-types');

@@ -51,7 +51,7 @@ use App\Core\Session;
                         </svg>
                     </a>
                     <!-- Delete Button (Trash Icon) -->
-                    <a href="/treetypes/<?php echo htmlspecialchars($tree_type->getId()); ?>/delete"
+                    <a href="/treetype/<?php echo htmlspecialchars($tree_type->getId()); ?>/delete"
                         onclick="return confirm('Are you sure you want to delete this tree type?');"
                         class="text-red-500 hover:text-red-700" title="Delete">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
