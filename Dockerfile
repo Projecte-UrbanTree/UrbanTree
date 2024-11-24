@@ -35,7 +35,7 @@ FROM base AS development
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 COPY --from=dev-deps app/vendor/ /var/www/html/vendor
 COPY ./tests /var/www/html/tests
-COPY ./phpunit.xml /var/www/html/phpunit.xml
+COPY ./phpunit.xml.dist /var/www/html/phpunit.xml.dist
 
 #* Run tests when building
 FROM development AS test
