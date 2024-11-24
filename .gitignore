@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/git,visualstudiocode,composer
-# Edit at https://www.toptal.com/developers/gitignore?templates=git,visualstudiocode,composer
+# Created by https://www.toptal.com/developers/gitignore/api/git,phpunit,composer,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=git,phpunit,composer,visualstudiocode
 
 ### Composer ###
 composer.phar
@@ -24,6 +24,21 @@ composer.phar
 *_LOCAL_*.txt
 *_REMOTE_*.txt
 
+### PHPUnit ###
+# Covers PHPUnit
+# Reference: https://phpunit.de/
+
+# Generated files
+.phpunit.result.cache
+.phpunit.cache
+
+# PHPUnit
+/app/phpunit.xml
+/phpunit.xml
+
+# Build data
+/build/
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -43,4 +58,4 @@ composer.phar
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/git,visualstudiocode,composer
+# End of https://www.toptal.com/developers/gitignore/api/git,phpunit,composer,visualstudiocode

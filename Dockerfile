@@ -34,12 +34,13 @@ FROM base AS development
 #     && docker-php-ext-enable xdebug
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 COPY --from=dev-deps app/vendor/ /var/www/html/vendor
+COPY ./tests /var/www/html/tests
+COPY ./phpunit.xml /var/www/html/phpunit.xml
 
 #* Run tests when building
-# FROM development AS test
-# COPY ./tests /var/www/html/tests
-# WORKDIR /var/www/html
-# RUN ./vendor/bin/phpunit tests/HelloWorldTest.php
+FROM development AS test
+WORKDIR /var/www/html
+RUN ./vendor/bin/phpunit
 
 #* Create a production stage.
 FROM base AS final
