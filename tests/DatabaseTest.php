@@ -7,27 +7,31 @@ use PHPUnit\Framework\TestCase;
 #[RequiresPhpExtension('pdo_mysql')]
 final class DatabaseTest extends TestCase
 {
-	public function testConnection()
-	{
-		$connection = Database::connect();
-		$this->assertInstanceOf(PDO::class, $connection);
-	}
+    protected function setUp(): void
+    {
+        getenv('CI') && $this->markTestSkipped('Database tests are not supported on CI');
+    }
+    public function testConnection()
+    {
+        $connection = Database::connect();
+        $this->assertInstanceOf(PDO::class, $connection);
+    }
 
-	public function testPrepareAndExecute()
-	{
-		$query = 'SELECT 1';
-		$result = Database::prepareAndExecute($query);
-		$this->assertIsArray($result);
-		$this->assertNotEmpty($result);
-	}
+    public function testPrepareAndExecute()
+    {
+        $query = 'SELECT 1';
+        $result = Database::prepareAndExecute($query);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+    }
 
-	public function testPrepareAndExecuteWithParams()
-	{
-		$query = 'SELECT :value';
-		$params = ['value' => 1];
-		$result = Database::prepareAndExecute($query, $params);
-		$this->assertIsArray($result);
-		$this->assertNotEmpty($result);
-		$this->assertEquals(1, $result[0]['1']);
-	}
+    public function testPrepareAndExecuteWithParams()
+    {
+        $query = 'SELECT :value';
+        $params = ['value' => 1];
+        $result = Database::prepareAndExecute($query, $params);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(1, $result[0]['1']);
+    }
 }
