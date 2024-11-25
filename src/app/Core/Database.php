@@ -15,7 +15,8 @@ class Database
         if (! self::$instance) {
             try {
                 // Read the password from the file
-                $db_pass = trim(file_get_contents(getenv('DB_PASS_FILE_PATH')));
+                $db_pass = getenv('DB_PASS') ?:
+                    trim(file_get_contents(getenv('DB_PASS_FILE_PATH')));
 
                 self::$instance = new PDO(
                     'mysql:host='.getenv('DB_HOST').';dbname='.getenv('DB_NAME'),
