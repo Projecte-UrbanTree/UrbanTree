@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Core\View;
 use App\Models\TreeType;
-
+use App\Core\Session;
 class TreeTypeController
 {
     public function index()
@@ -56,23 +56,31 @@ class TreeTypeController
     // Cerca el tipus d'arbre a la base de dades pel seu ID
         $treetypes = TreeType::find($id);
 
-        if ($TreeTypes) {
-            $tree_types->family = $postData['family'];
-            $tree_types->genus = $postData['genus'];
-            $tree_types->species = $postData['species'];
 
-            $tree_types->save();
+        if ($treetypes) {
+            $treetypes->family = $postData['family'];
+            $treetypes->genus = $postData['genus'];
+            $treetypes->species = $postData['species'];
+            try {
+                //code...
+                $treetypes->save();
+            } catch (\Throwable $th) {
+                throw $th;
+                //throw $th;
+            }
 
+        }
 
         header('Location: /tree-types');
 
-    }
 
 }
     public function destroy($id)
     {
         $treetypes = TreeType::find($id);
         $treetypes->delete();
+
+
 
 
         header('Location: /tree-types');
