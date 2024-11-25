@@ -24,7 +24,7 @@ class Route extends BaseModel
         return $route;
     }
 
-    public function points()
+    public function points(): ?array
     {
         return $this->belongsToMany(Point::class, 'route_points', 'route_id', 'point_id', 'id', 'id', true);
     }
