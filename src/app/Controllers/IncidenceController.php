@@ -74,6 +74,7 @@ class IncidenceController
             View::render([
                 'view' => '../Shared/Modals/IncidenceModal',
                 'title' => 'Edit Incidence',
+                'layout' => 'BlankLayout',
                 'data' => [
                     'incidence' => $incidence,
                     'element' => $element,
