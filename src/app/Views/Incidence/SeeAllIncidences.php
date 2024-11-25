@@ -33,7 +33,7 @@
 <!-- Modal (escondido inicialmente) -->
 <div id="incidenceModal" class="fixed inset-0 flex items-center justify-center z-50 hidden bg-black bg-opacity-50">
     <div class="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full">
-        <h2 class="text-xl font-semibold mb-4">Incidencia Detalles</h2>
+        <h2 class="text-xl font-semibold mb-4"></h2>
         <div id="modalContent">
 
         </div>

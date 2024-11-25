@@ -183,7 +183,7 @@ abstract class BaseModel
     }
 
     // Find a record by a specific column
-    public static function findBy(array $conditions, bool $single = false): ?array
+    public static function findBy(array $conditions, bool $single = false)
     {
         $table = static::getTableName();
 
