@@ -9,7 +9,8 @@ final class DatabaseTest extends TestCase
 {
     protected function setUp(): void
     {
-        getenv('CI') && $this->markTestSkipped('Database tests are not supported on CI');
+        // TODO: Conditionally skip the test if the environment is CI
+        $this->markTestSkipped('Database tests are not supported on CI');
     }
     public function testConnection()
     {
