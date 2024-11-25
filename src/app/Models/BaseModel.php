@@ -183,7 +183,7 @@ abstract class BaseModel
     }
 
     // Find a record by a specific column
-    public static function findBy(array $conditions, bool $single = false)
+    public static function findBy(array $conditions, bool $single = false): array|object|null
     {
         $table = static::getTableName();
 
@@ -308,7 +308,6 @@ abstract class BaseModel
         $table = static::getTableName();
         $properties = get_object_vars($this);
         unset($properties['id']); // Avoid saving the id in the data fields
-
 
         if (isset($this->id)) {
             // Update logic
