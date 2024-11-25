@@ -4,15 +4,16 @@ namespace App\Controllers;
 
 use App\Core\View;
 use App\Models\Zone;
+use App\Models\ZonePredefined;
 
 class ZoneController
 {
     public function index()
     {
-        $zones = Zone::findAll();
+        $zones = Zone::getPredefinedZonesWithElements();
         View::render([
             'view' => 'Zones',
-            'title' => 'Zones',
+            'title' => 'Predefined Zones',
             'layout' => 'MainLayout',
             'data' => ['zones' => $zones],
         ]);
@@ -30,10 +31,8 @@ class ZoneController
 
     public function store($postData)
     {
-        $zone = new Zone;
+        $zone = new ZonePredefined;
         $zone->name = $postData['name'];
-        $zone->postal_code = $postData['postal_code'];
-        $zone->point_id = $postData['point_id'];
 
         $zone->save();
 
@@ -55,8 +54,8 @@ class ZoneController
     {
         $zone = Zone::find($id);
 
-        $zone->name = $postData['name'];
-        $zone->postal_code = $postData['postal_code'];
+        $zone->predefined()->name = $postData['name'];
+        $zone->predefined()->save();
         $zone->point_id = $postData['point_id'];
 
         $zone->save();

@@ -10,12 +10,12 @@ class UserController
 {
     public function index()
     {
-        $elements = User::findAll();
+        $users = User::findAll();
         View::render([
             'view' => 'Users',
             'title' => 'Manage Users',
             'layout' => 'MainLayout',
-            'data' => ['users' => $elements],
+            'data' => ['users' => $users],
         ]);
 
         Session::remove('success');

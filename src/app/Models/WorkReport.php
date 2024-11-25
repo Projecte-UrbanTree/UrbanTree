@@ -4,9 +4,11 @@ namespace App\Models;
 
 class WorkReport extends BaseModel
 {
+    public int $work_order_id;
+
     public ?string $observation;
+
     public ?float $spent_fuel;
-    public ?string $photo;
 
     protected static function getTableName(): string
     {
@@ -17,9 +19,9 @@ class WorkReport extends BaseModel
     {
         $workReport = new self();
         $workReport->id = $data['id'];
+        $workReport->work_order_id = $data['work_order_id'];
         $workReport->observation = $data['observation'];
         $workReport->spent_fuel = $data['spent_fuel'];
-        $workReport->photo = $data['photo'];
         $workReport->created_at = $data['created_at'];
 
         return $workReport;
@@ -27,6 +29,11 @@ class WorkReport extends BaseModel
 
     public function workOrder(): WorkOrder
     {
-        return $this->belongsTo(WorkOrder::class, 'id');
+        return $this->belongsTo(WorkOrder::class, 'work_order_id');
+    }
+
+    public function photos()
+    {
+        return $this->belongsToMany(Photo::class, 'work_report_photos', 'work_report_id', 'photo_id');
     }
 }

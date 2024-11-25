@@ -41,7 +41,7 @@ use App\Core\Session;
                         <?php echo htmlspecialchars($user->company); ?>
                     </td>
                     <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->name); ?>
+                        <?php echo htmlspecialchars($user->name . ' ' . $user->surname); ?>
                     </td>
                     <td class="px-4 py-3 border-b">
                         <?php echo htmlspecialchars($user->dni); ?>

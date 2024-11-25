@@ -86,7 +86,7 @@
                     Manage Elements
                 </a>
                 <a href="/task-types"
-                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/elements' ? 'bg-gray-700' : ''; ?>">
+                    class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/task-types' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -126,7 +126,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-600">Welcome,
-                        <?php echo $_SESSION['user']['name']; ?></span>
+                        <?php echo $_SESSION['user']['name'] . " " . $_SESSION['user']['surname']; ?></span>
                     <a href="/logout"
                         class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
                         Logout</a>
