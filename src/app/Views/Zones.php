@@ -5,10 +5,10 @@ use App\Core\Session;
 ?>
 
 <?php if (Session::has('success')) { ?>
-<div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-    <strong class="font-bold">Success: </strong>
-    <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
-</div>
+    <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
+        <strong class="font-bold">Success: </strong>
+        <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
+    </div>
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
@@ -24,21 +24,21 @@ use App\Core\Session;
             <tr class="bg-gray-700 text-white text-left h-14">
                 <th class="px-4 py-3 border-b">Zone ID</th>
                 <th class="px-4 py-3 border-b">Name</th>
-                <th class="px-4 py-3 border-b">Postal Code</th>
+                <th class="px-4 py-3 border-b">Photo</th>
                 <th class="px-4 py-3 border-b">Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($zones as $zone) { ?>
-            <tr class="hover:bg-blue-50">
-                <td class="px-4 py-3 border-b">
-                    <?php echo htmlspecialchars($zone->getId()); ?></td>
-                <td class="px-4 py-3 border-b">
-                    <?php echo htmlspecialchars($zone->name); ?></td>
-                <td class="px-4 py-3 border-b">
-                    <?php echo htmlspecialchars($zone->postal_code); ?>
-                </td>
-                <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
+                <tr class="hover:bg-blue-50">
+                    <td class="px-4 py-3 border-b">
+                        <?php echo htmlspecialchars($zone->getId()); ?></td>
+                    <td class="px-4 py-3 border-b">
+                        <?php echo htmlspecialchars($zone->predefined->name); ?></td>
+                    <td class="px-4 py-3 border-b">
+                        <?php echo htmlspecialchars($zone->predefined->photo()->name); ?>
+                    </td>
+                    <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
                         <a href="/zone/<?php echo htmlspecialchars($zone->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
@@ -55,7 +55,7 @@ use App\Core\Session;
                             </svg>
                         </a>
                     </td>
-            </tr>
+                </tr>
             <?php } ?>
         </tbody>
     </table>

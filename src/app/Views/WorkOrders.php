@@ -26,7 +26,7 @@ use App\Core\Session;
                 <th class="py-2 px-4 border-b">Contracte</th>
                 <th class="py-2 px-4 border-b">Data</th>
                 <th class="py-2 px-4 border-b">Zones</th>
-                <th class="py-2 px-4 border-b">Tasques</th>
+                <th class="py-2 px-4 border-b">Tasca</th>
                 <th class="py-2 px-4 border-b">Operaris</th>
                 <th class="py-2 px-4 border-b">Notes</th>
                 <th class="py-2 px-4 border-b">Accions</th>
@@ -46,19 +46,23 @@ use App\Core\Session;
                             <?php echo $workOrder->getCreatedAt(); ?>
                         </td>
                         <td class="py-2 px-4">
-                            <?php foreach ($task->zones() as $zone) { ?>
-                                <?php echo $zone->name; ?>,
-                            <?php } ?>
+                            <?php
+                            $zoneNames = [];
+                            foreach ($task->zones() as $zone)
+                                $zoneNames[] = $zone->predefined()->name ?? 'Not on a predefined zone';
+                            echo implode(', ', $zoneNames);
+                            ?>
                         </td>
                         <td class="py-2 px-4">
-                            <?php foreach ($task->taskTypes() as $task_type) { ?>
-                                <?php echo $task_type->name; ?>,
-                            <?php } ?>
+                            <?= $task->taskType()->name; ?>
                         </td>
                         <td class="py-2 px-4">
-                            <?php foreach ($task->workers() as $worker) { ?>
-                                <?php echo $worker->name; ?>,
-                            <?php } ?>
+                            <?php
+                            $users = [];
+                            foreach ($task->users() as $user)
+                                $users[] = $user->name . " " . substr($user->surname, 0, 1);
+                            echo implode(', ', $users);
+                            ?>
                         </td>
                         <td class="py-2 px-4"><?php echo $task->notes; ?>
                         </td>

@@ -10,7 +10,7 @@ class Incidence extends BaseModel
 
     public ?string $description;
 
-    public ?string $photo;
+    public ?int $photo_id;
 
     protected static function getTableName(): string
     {
@@ -24,15 +24,19 @@ class Incidence extends BaseModel
         $incidence->element_id = $data['element_id'];
         $incidence->name = $data['name'];
         $incidence->description = $data['description'];
-        $incidence->photo = $data['photo'];
+        $incidence->photo_id = $data['photo_id'];
         $incidence->created_at = $data['created_at'];
 
         return $incidence;
     }
 
-    // Fetch the element of the incidence
     public function element(): Element
     {
         return $this->belongsTo(Element::class, 'element_id');
+    }
+
+    public function photo(): ?Photo
+    {
+        return $this->photo_id ? $this->belongsTo(Photo::class, 'photo_id') : null;
     }
 }
