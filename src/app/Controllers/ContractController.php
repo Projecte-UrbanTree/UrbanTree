@@ -41,7 +41,6 @@ class ContractController
         // Guarda el contracte a la base de dades
         $contract->save();
 
-        // Missatge de confirmació
 
         // Redirigeix a la llista de contractes
         header('Location: /contracts');
@@ -79,5 +78,13 @@ class ContractController
         // Redirigeix a la llista de contractes
         header('Location: /contracts');
         exit;
+    }
+    public function destroy($id)
+    {
+        $contract = Contract::find($id);
+        $contract->delete();
+
+
+        header('Location: /contracts');
     }
 }

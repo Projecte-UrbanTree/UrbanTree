@@ -53,7 +53,7 @@
 
         <div>
             <label for="invoice_agreed" class="block text-sm font-medium text-gray-700 mb-1">Invoice agreed</label>
-            <input type="text" id="invoice_agreed" name="invoice_agreed"
+            <input type="number" id="invoice_agreed" name="invoice_agreed"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
         </div>
@@ -62,19 +62,14 @@
 
         <div>
             <label for="invoice_paid" class="block text-sm font-medium text-gray-700 mb-1">Invoice paid</label>
-            <input type="text" id="invoice_paid" name="invoice_paid"
+            <input type="number" id="invoice_paid" name="invoice_paid"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
         </div>
 
 
 
-        <div>
-            <label for="created_ad" class="block text-sm font-medium text-gray-700 mb-1">Created ad</label>
-            <input type="text" id="created_ad" name="created_ad"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                required>
-        </div>
+        
 
 
         <!-- Submit Button -->
