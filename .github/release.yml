@@ -2,7 +2,7 @@ changelog:
   categories:
     - title: Exciting New Features 🎉
       labels:
-        - "kind/features"
+        - "kind/feature"
     - title: Fixed Bugs 🐞
       labels:
         - "kind/bug"
