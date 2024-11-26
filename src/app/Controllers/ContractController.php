@@ -30,7 +30,7 @@ class ContractController
 
     public function store($postData)
     {
-        $contract = new Contract;
+        $contract = new Contract();
         $contract->name = $postData['name'];
         $contract->start_date = $postData['start_date'];
         $contract->end_date = $postData['end_date'];
@@ -38,13 +38,9 @@ class ContractController
         $contract->invoice_agreed = $postData['invoice_agreed'];
         $contract->invoice_paid = $postData['invoice_paid'];
 
-        // Guarda el contracte a la base de dades
         $contract->save();
 
-
-        // Redirigeix a la llista de contractes
         header('Location: /contracts');
-        exit;
     }
 
     public function edit($id)
@@ -70,20 +66,16 @@ class ContractController
             $contract->invoice_agreed = $postData['invoice_agreed'];
             $contract->invoice_paid = $postData['invoice_paid'];
 
-            // Guarda els canvis
             $contract->save();
-
         }
 
-        // Redirigeix a la llista de contractes
         header('Location: /contracts');
-        exit;
     }
+
     public function destroy($id)
     {
         $contract = Contract::find($id);
         $contract->delete();
-
 
         header('Location: /contracts');
     }

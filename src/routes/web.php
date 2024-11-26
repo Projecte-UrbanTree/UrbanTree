@@ -185,21 +185,16 @@ return [
             'method' => 'create',
             'middleware' => [AuthMiddleware::class],
         ],
-
         '/contract/:id/edit' => [
             'controller' => ContractController::class,
             'method' => 'edit',
             'middleware' => [AuthMiddleware::class],
-            ],
-
+        ],
         '/contract/:id/delete' => [
             'controller' => ContractController::class,
             'method' => 'destroy',
             'middleware' => [AuthMiddleware::class],
         ],
-
-
-
     ],
     'POST' => [
         // == Auth POST Routes
@@ -273,20 +268,16 @@ return [
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
-
         // === Contracts POST Routes
-        '/contracts/store' => [
+        '/contract/store' => [
             'controller' => ContractController::class,
             'method' => 'store',
             'middleware' => [AuthMiddleware::class],
         ],
-        '/contracts/:id/update' => [
+        '/contract/:id/update' => [
             'controller' => ContractController::class,
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
-
-
-
     ],
 ];
