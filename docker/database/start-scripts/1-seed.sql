@@ -38,10 +38,10 @@ INSERT INTO zones (name, postal_code, point_id) VALUES
 ('Zona 2', '46002', 2),
 ('Zona 3', '46003', 3);
 --* Elements and incidences
-INSERT INTO elements (name, zone_id, point_id, tree_type_id) VALUES
-('Árbol 1', 1, 1, 1),
-('Árbol 2', 2, 2, 2),
-('Árbol 3', 3, 3, 3);
+INSERT INTO elements (name, zone_id, tree_type_id) VALUES
+('Árbol 1', 1, 1),
+('Árbol 2', 2, 2),
+('Árbol 3', 3, 3);
 INSERT INTO incidences (name, element_id, description) VALUES
 ('Rama caída', 1, 'Rama caída en el suelo'),
 ('Banco roto', 2, 'Banco roto en el parque'),

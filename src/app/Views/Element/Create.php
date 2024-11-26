@@ -27,7 +27,9 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                     required>
                 <option value="" disabled selected>Select Tree Type</option>
-                <?php echo $optionsTree; ?>
+                <?php foreach ($types as $type): ?>
+                    <?php echo '<option value="' . $type->getId() . '">' . $type->species . '</option>'; ?>
+                <?php endforeach; ?>
             </select>
         </div>
         
@@ -38,12 +40,14 @@
                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                    required>
                 <option value=""disabled selected>Select Zone</option>
-                <?php echo $optionsZone; ?>
+                <?php foreach ($zones as $zone): ?>
+                    <?php echo '<option value="' . $zone->getId() . '">' . $zone->name . '</option>'; ?>
+                <?php endforeach; ?>
             </select>
         </div>
 
         <!-- Point ID -->
-        <div>
+        <!-- <div>
             <label for="point_id" class="block text-sm font-medium text-gray-700 mb-1">Point</label>
             <select id="point_id" name="point_id"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
@@ -53,7 +57,7 @@
                 <option value="2">Point 2</option>
                 <option value="3">Point 3</option>
             </select>
-        </div>
+        </div> -->
 
         <!-- Submit Button -->
         <div class="flex items-center">
