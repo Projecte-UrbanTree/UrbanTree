@@ -37,8 +37,6 @@
         <div id="modalContent">
 
         </div>
-        <div class="flex justify-end mt-4">
-            <button onclick="closeModal()" class="bg-blue-500 hover:bg-blue-600 hover:scale-105 duration-200 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">Cerrar</button>
-        </div>
+        
     </div>
 </div>
