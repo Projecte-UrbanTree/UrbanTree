@@ -84,5 +84,17 @@ class IncidenceController
     }
 
 
-
+    public function delete_incidence($id) : void
+    {
+        
+        $incidence = Incidence::find($id);
+        if ($incidence) {
+            $incidence->delete();
+            Session::set('success', 'Incidence deleted successfully');
+            header('Location: /incidences');
+        } else {
+            Session::set('error', 'Incidence not found');
+            header('Location: /incidence');
+        }
+    }
 }
