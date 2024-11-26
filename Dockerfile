@@ -21,7 +21,7 @@ RUN --mount=type=bind,source=./composer.json,target=composer.json \
     composer install --no-interaction
 
 #* Create a base stage for building the app image.
-FROM php:8.2-apache AS base
+FROM php:8.4-apache AS base
 RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod rewrite
 COPY ./src /var/www/html

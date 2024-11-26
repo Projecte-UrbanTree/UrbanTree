@@ -6,11 +6,11 @@ use App\Controllers\ContractController;
 use App\Controllers\DashboardController;
 use App\Controllers\ElementController;
 use App\Controllers\IncidenceController;
+use App\Controllers\TaskTypeController;
 use App\Controllers\TreeTypeController;
 use App\Controllers\UserController;
 use App\Controllers\WorkOrderController;
 use App\Controllers\ZoneController;
-use App\Controllers\TaskTypeController;
 // Import middleware classes
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\GuestMiddleware;
@@ -102,6 +102,21 @@ return [
         '/tree-types' => [
             'controller' => TreeTypeController::class,
             'method' => 'index',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/tree-type/create' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'create',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/tree-type/:id/edit' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'edit',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/tree-type/:id/delete' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'destroy',
             'middleware' => [AuthMiddleware::class],
         ],
         // === Incidence GET Routes
@@ -233,6 +248,17 @@ return [
         ],
         '/zone/:id/update' => [
             'controller' => ZoneController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === TreeTypes POST Routes
+        '/tree-type/store' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/tree-type/:id/update' => [
+            'controller' => TreeTypeController::class,
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
