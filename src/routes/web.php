@@ -137,6 +137,11 @@ return [
             'method' => 'edit_incidence',
             'middleware' => [AuthMiddleware::class],
         ],
+        '/incidence/delete/:id' => [
+            'controller' => IncidenceController::class,
+            'method' => 'delete_incidence',
+            'middleware' => [AuthMiddleware::class],
+        ],
         // === Elements GET Routes
         '/elements' => [
             'controller' => ElementController::class,

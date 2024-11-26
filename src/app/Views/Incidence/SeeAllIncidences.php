@@ -11,6 +11,13 @@
             </tr>
         </thead>
         <tbody>
+            
+            <?php
+            // si no tiene incidencias mostrar mensaje
+            if (empty($incidences)) {
+                echo '<tr><td class="px-6 py-4 border border-transparent font-medium text-2xl" colspan="5">No hay incidencias 😀</td></tr>';
+            }
+            ?>
             <?php foreach ($incidences as $incidence): ?>
                 <tr class="hover:bg-gray-100 transition-all duration-200 ease-in-out hover:scale-105">
                     <td class="px-6 py-4 border border-transparent">
@@ -36,12 +43,7 @@
     <div class="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full">
         <h2 class="text-xl font-semibold mb-4"></h2>
         <div id="modalContent">
-
+            
         </div>
-        <div class="flex justify-end mt-4">
-            <button onclick="closeModal()"
-                class="bg-blue-500 hover:bg-blue-600 hover:scale-105 duration-200 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">Cerrar</button>
-        </div>
-        
     </div>
 </div>
