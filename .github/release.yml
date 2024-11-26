@@ -1,0 +1,14 @@
+changelog:
+  categories:
+    - title: Exciting New Features 🎉
+      labels:
+        - "kind/features"
+    - title: Fixed Bugs 🐞
+      labels:
+        - "kind/bug"
+    - title: Updated Dependencies 📦
+      labels:
+        - "kind/dependencies"
+    - title: Other Changes 📖
+      labels:
+        - "*"
