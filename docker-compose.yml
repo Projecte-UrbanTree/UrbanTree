@@ -2,7 +2,7 @@
 # This file defines the services that make up the application
 # Each service is a container that runs a single process
 # Each container is built from an image, according to the Dockerfile specified in the build section
-# For more information, see: https://docs.docker.com/compose/compose-file/
+# For more information, see: https://docs.docker.com/reference/compose-file/
 #
 
 services:
@@ -22,10 +22,10 @@ services:
     volumes:
       - storage-data:/var/www/html/storage
     environment:
-      - APP_NAME=Urban Tree 5.0
-      - DB_HOST=database
-      - DB_NAME=urbantree
-      - DB_USER=root
+      - APP_NAME=${APP_NAME}
+      - DB_HOST=${DB_HOST:-database}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER:-root}
       - DB_PASS_FILE_PATH=/run/secrets/database-password
       - LOG_FILE_PATH=/var/www/html/storage/logs/app.log
     develop:
@@ -44,19 +44,12 @@ services:
       - database-password
     networks:
       - app-network
-    #! Necessary for production ↓
-    # volumes:
-    #  - database-data:/var/lib/mysql
-    #! Necessary for development, remove in production ↓
-    #* This will store the database in memory, so it will be lost when the container is stopped
-    #* Allows start-scripts to be run on each container start
+    # This will store the database in memory, so it will be lost when the container is stopped
     tmpfs:
       - /var/lib/mysql
-    ports:
-      - 3306:3306
     environment:
+      MYSQL_DATABASE: ${DB_NAME}
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/database-password
-      MYSQL_DATABASE: urbantree
     healthcheck:
       test:
         [
@@ -96,4 +89,4 @@ volumes:
 
 secrets:
   database-password:
-    file: docker/secrets/database-password.txt
+    environment: DB_PASS
