@@ -16,6 +16,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v3
 
+      - name: 📦 Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: tmp-cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+
+      - name: 📦 Load cache
+        uses: reproducible-containers/buildkit-cache-dance@4b2444fec0c0fb9dbf175a96c094720a692ef810
+        with:
+          cache-source: tmp-cache
+          cache-target: /tmp/cache
+          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
+
       - name: 🏗️ Build test stage
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
