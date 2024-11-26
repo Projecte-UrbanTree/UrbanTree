@@ -32,7 +32,7 @@ class ElementController
         $element->name = $postData['name'];
         $element->zone_id = $postData['zone_id'];
         $element->point_id = $postData['point_id'];
-        $element->treeType_id = $postData['treeType_id'];
+        $element->treeType_id = $postData['tree_type_id'];
 
         $element->save();
 

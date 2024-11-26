@@ -32,16 +32,16 @@ class Element extends BaseModel
 
     public function zone()
     {
-        return $this->belongsTo(Zone::class, 'zone_id');
+        return $this->belongsTo(Zone::class, 'zone_id', 'id');
     }
 
     public function point()
     {
-        return $this->belongsTo(Point::class, 'point_id');
+        return $this->belongsTo(Point::class, 'point_id', 'id');
     }
 
     public function treeType()
     {
-        return $this->belongsTo(TreeType::class, 'tree_type_id');
+        return $this->belongsTo(TreeType::class, 'tree_type_id', 'id');
     }
 }

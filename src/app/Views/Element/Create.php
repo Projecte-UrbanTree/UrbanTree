@@ -22,14 +22,12 @@
         </div>
         <!-- Tree Type ID-->
         <div>
-            <label for="treeType_id" class="block text-sm font-medium text-gray-700 mb-1">TreeType</label>
-            <select id="treeType_id" name="treeType_id"
+            <label for="tree_type_id" class="block text-sm font-medium text-gray-700 mb-1">TreeType</label>
+            <select id="tree_type_id" name="tree_type_id"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                     required>
                 <option value="" disabled selected>Select Tree Type</option>
-                <option value="1">TreeType 1</option>
-                <option value="2">TreeType 2</option>
-                <option value="3">TreeType 3</option>
+                <?php echo $optionsTree; ?>
             </select>
         </div>
         
@@ -40,9 +38,7 @@
                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                    required>
                 <option value=""disabled selected>Select Zone</option>
-                <option value="1">Point 1</option>
-                <option value="2">Point 2</option>
-                <option value="3">Point 3</option>
+                <?php echo $optionsZone; ?>
             </select>
         </div>
 
