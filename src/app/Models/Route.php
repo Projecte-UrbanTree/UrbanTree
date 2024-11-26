@@ -5,7 +5,7 @@ namespace App\Models;
 class Route extends BaseModel
 {
     public ?float $distance;
-    public ?int $point_id;
+
     public ?int $travel_time;
 
     protected static function getTableName(): string
@@ -15,18 +15,17 @@ class Route extends BaseModel
 
     protected static function mapDataToModel($data): Route
     {
-        $role = new self();
-        $role->id = $data['id'];
-        $role->distance = $data['distance'];
-        $role->point_id = $data['point_id'];
-        $role->travel_time = $data['travel_time'];
-        $role->created_at = $data['created_at'];
+        $route = new self();
+        $route->id = $data['id'];
+        $route->distance = $data['distance'];
+        $route->travel_time = $data['travel_time'];
+        $route->created_at = $data['created_at'];
 
-        return $role;
+        return $route;
     }
 
-    public function point(): Point
+    public function points(): ?array
     {
-        return $this->belongsTo(Point::class, 'point_id');
+        return $this->belongsToMany(Point::class, 'route_points', 'route_id', 'point_id', 'id', 'id', true);
     }
 }

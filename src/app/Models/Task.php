@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\MWorkOrder;
-
 class Task extends BaseModel
 {
     public int $work_order_id;
+
+    public int $task_type_id;
+
     public ?string $notes;
+
+    public ?int $route_id;
 
     protected static function getTableName(): string
     {
@@ -18,8 +21,10 @@ class Task extends BaseModel
     {
         $task = new self();
         $task->id = $data['id'];
-        $task->notes = $data['notes'];
         $task->work_order_id = $data['work_order_id'];
+        $task->task_type_id = $data['task_type_id'];
+        $task->notes = $data['notes'];
+        $task->route_id = $data['route_id'];
         $task->created_at = $data['created_at'];
 
         return $task;
@@ -27,7 +32,12 @@ class Task extends BaseModel
 
     public function order(): WorkOrder
     {
-        return $this->belongsTo(WorkOrder::class, 'work_order_id', 'id');
+        return $this->belongsTo(WorkOrder::class, 'work_order_id');
+    }
+
+    public function taskType(): TaskType
+    {
+        return $this->belongsTo(TaskType::class, 'task_type_id');
     }
 
     public function zones()
@@ -35,13 +45,8 @@ class Task extends BaseModel
         return $this->belongsToMany(Zone::class, 'tasks_zones', 'task_id', 'zone_id');
     }
 
-    public function workers()
+    public function users()
     {
-        return $this->belongsToMany(User::class, 'tasks_workers', 'task_id', 'worker_id');
-    }
-
-    public function taskTypes()
-    {
-        return $this->belongsToMany(TaskType::class, 'tasks_tasktypes', 'task_id', 'tasktype_id');
+        return $this->belongsToMany(User::class, 'tasks_users', 'task_id', 'user_id');
     }
 }

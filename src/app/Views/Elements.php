@@ -42,7 +42,7 @@ use App\Core\Session;
                 <td class="px-4 py-2 border-b">
                     <?php echo $element->treeType()->species; ?></td>
                 <td class="px-4 py-2 border-b">
-                    <?php echo $element->zone()->name; ?></td>
+                    <?php echo $element->zone()->predefined()->name ?? 'Not on a predefined zone'; ?></td>
                 <td class="px-4 py-2 border-b">
                     <?php echo $element->zone()->postal_code; ?></td>
                 <!-- <td class="px-4 py-2 border-b">

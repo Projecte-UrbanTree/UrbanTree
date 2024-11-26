@@ -6,9 +6,27 @@ use App\Core\Database;
 
 abstract class BaseModel
 {
-    protected int $id;
+    protected ?int $id;
 
     protected ?string $created_at;
+
+    // Insert multiple records into the table
+    public static function bulkInsert(array $records): void
+    {
+        $table = static::getTableName();
+        $fields = array_keys($records[0]);
+        $placeholders = array_map(fn($field) => ":{$field}", $fields);
+
+        $query = "INSERT INTO {$table} (" . implode(", ", $fields) . ") VALUES ";
+        $query .= implode(", ", array_fill(0, count($records), "(" . implode(", ", $placeholders) . ")"));
+
+        $params = [];
+        foreach ($records as $index => $record)
+            foreach ($record as $key => $value)
+                $params["{$key}_{$index}"] = $value;
+
+        Database::prepareAndExecute($query, $params);
+    }
 
     // One-to-one relationship
     public function belongsTo(string $relatedModel, string $foreignKey, string $ownerKey = 'id'): ?object
@@ -25,7 +43,6 @@ abstract class BaseModel
         return ! empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
 
-
     // Many-to-Many relationship
     public function belongsToMany(
         string $relatedModel,
@@ -33,89 +50,143 @@ abstract class BaseModel
         string $foreignKey,
         string $relatedKey,
         string $ownerKey = 'id',
-        string $relatedOwnerKey = 'id'
+        string $relatedOwnerKey = 'id',
+        bool $withPivot = false, // Enables returning pivot data
+        bool $applySoftDelete = false // Enables soft delete checks
     ): array {
         $relatedTable = $relatedModel::getTableName();
         $localKeyValue = $this->{$ownerKey};
 
+        // Start query construction
+        $selectColumns = $withPivot
+            ? "{$relatedTable}.*, {$pivotTable}.*"
+            : "{$relatedTable}.*";
+
         $query = "
-            SELECT {$relatedTable}.*
+            SELECT {$selectColumns}
             FROM {$relatedTable}
             INNER JOIN {$pivotTable} ON {$pivotTable}.{$relatedKey} = {$relatedTable}.{$relatedOwnerKey}
             WHERE {$pivotTable}.{$foreignKey} = :localKeyValue
         ";
+
+        // Add soft delete condition if enabled
+        if ($applySoftDelete && method_exists($relatedModel, 'hasSoftDelete') && $relatedModel::hasSoftDelete())
+            $query .= " AND {$relatedTable}.deleted_at IS NULL";
 
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
 
         if (! is_array($results))
             $results = [];
 
-        return array_map(fn($row) => $relatedModel::mapDataToModel($row), $results);
+        // Process results
+        return array_map(function ($row) use ($relatedModel, $withPivot) {
+            $relatedInstance = $relatedModel::mapDataToModel($row);
+
+            if ($withPivot) {
+                // Attach pivot data as a property
+                $relatedInstance->pivot = array_filter($row, function ($key) use ($relatedModel) {
+                    return ! property_exists($relatedModel, $key);
+                }, ARRAY_FILTER_USE_KEY);
+            }
+
+            return $relatedInstance;
+        }, $results);
     }
 
+    // Count the number of records in the table
+    public static function count(array $conditions = []): ?int
+    {
+        $query = "SELECT COUNT(*) as count FROM " . static::getTableName();
+        $params = [];
+
+        if (! empty($conditions)) {
+            $query .= " WHERE ";
+            $query .= implode(' AND ', array_map(function ($key) {
+                return "$key = :$key";
+            }, array_keys($conditions)));
+
+            $params = $conditions;
+        }
+
+        $result = Database::prepareAndExecute($query, $params);
+        return $result[0]['count'];
+    }
+
+    // Delete a record from the table
     public function delete(): void
     {
         $table = static::getTableName();
 
-        if (static::hasSoftDelete()) {
-            $query = "UPDATE {$table} SET deleted_at = NOW() WHERE id = :id";
-            Database::prepareAndExecute($query, ['id' => $this->id]);
-        } else {
-            $query = "DELETE FROM {$table} WHERE id = :id";
-            Database::prepareAndExecute($query, ['id' => $this->id]);
-        }
-    }
-
-    public static function find($id)
-    {
-        $table = static::getTableName();
-
-        // Check if the table supports soft deletes
-        $query = "SELECT * FROM {$table} WHERE id = :id";
         if (static::hasSoftDelete())
-            $query .= ' AND deleted_at IS NULL'; // Only fetch records that are not soft deleted
+            $query = "UPDATE {$table} SET deleted_at = NOW() WHERE id = :id";
+        else
+            $query = "DELETE FROM {$table} WHERE id = :id";
 
-        $query .= ' LIMIT 1';
-        $results = Database::prepareAndExecute($query, ['id' => $id]);
-
-        if (! empty($results))
-            return static::mapDataToModel($results[0]);
-
-        return null;
+        Database::prepareAndExecute($query, ['id' => $this->id]);
     }
 
-    public static function findAll($conditions = [])
+    // Check if a record exists in the table
+    public static function exists(array $conditions = []): bool
     {
-        $table = static::getTableName();
-        $query = "SELECT * FROM {$table}";
+        $query = "SELECT COUNT(*) as count FROM " . static::getTableName();
         $params = [];
 
-        // Add conditions for WHERE clause
-        if (! empty($conditions)) {
-            $clauses = [];
-            foreach ($conditions as $key => $value) {
-                $clauses[] = "{$key} = :{$key}";
-                $params[$key] = $value;
-            }
-            $query .= ' WHERE '.implode(' AND ', $clauses);
+        if (!empty($conditions)) {
+            $query .= " WHERE ";
+            $query .= implode(' AND ', array_map(function ($key) {
+                return "$key = :$key";
+            }, array_keys($conditions)));
+
+            $params = $conditions;
         }
 
-        // Check if the table supports soft deletes and exclude soft-deleted records
-        if (static::hasSoftDelete()) {
-            $query .= empty($conditions) ? ' WHERE' : ' AND';
-            $query .= ' deleted_at IS NULL'; // Exclude soft-deleted records by default
+        $result = Database::prepareAndExecute($query, $params);
+        return $result[0]['count'] > 0;
+    }
+
+    // Find a record by its ID
+    public static function find(string $id): ?object
+    {
+        $table = static::getTableName();
+
+        $query = "SELECT * FROM {$table} WHERE id = :id";
+        if (static::hasSoftDelete())
+            $query .= ' AND deleted_at IS NULL';
+        $query .= ' LIMIT 1';
+
+        $results = Database::prepareAndExecute($query, ['id' => $id]);
+
+        return ! empty($results) ? static::mapDataToModel($results[0]) : null;
+    }
+
+    // Fetch all records from the table
+    public static function findAll(array $filters = [], bool $includeDeleted = false): array
+    {
+        $query = "SELECT * FROM " . static::getTableName();
+        $params = [];
+
+        if (!empty($filters)) {
+            $conditions = [];
+            foreach ($filters as $key => $value) {
+                $conditions[] = "{$key} = :{$key}";
+                $params[$key] = $value;
+            }
+            $query .= " WHERE " . implode(' AND ', $conditions);
         }
+
+        if (method_exists(static::class, 'hasSoftDelete') && static::hasSoftDelete() && !$includeDeleted)
+            $query .= (empty($filters) ? " WHERE" : " AND") . " deleted_at IS NULL";
 
         $results = Database::prepareAndExecute($query, $params);
 
-        return array_map(fn ($row) => static::mapDataToModel($row), $results);
+        return array_map(fn($row) => static::mapDataToModel($row), $results);
     }
 
-    public static function findBy($conditions, $single = false)
+    // Find a record by a specific column
+    public static function findBy(array $conditions, bool $single = false): array|object|null
     {
         $table = static::getTableName();
 
-        // Build the WHERE clause dynamically
         $whereClauses = [];
         $parameters = [];
         foreach ($conditions as $column => $value) {
@@ -124,8 +195,10 @@ abstract class BaseModel
         }
         $whereClause = implode(' AND ', $whereClauses);
 
-        // Construct the SQL query
         $query = "SELECT * FROM {$table} WHERE {$whereClause}";
+
+        if (static::hasSoftDelete())
+            $query .= " AND deleted_at IS NULL";
 
         if ($single)
             $query .= ' LIMIT 1';
@@ -138,11 +211,11 @@ abstract class BaseModel
         if (empty($results))
             return [];
 
-        return array_map(fn ($row) => static::mapDataToModel($row), $results);
+        return array_map(fn($row) => static::mapDataToModel($row), $results);
     }
 
     // Fetch all soft deleted records
-    public static function findSoftDeleted()
+    public static function findSoftDeleted(): array
     {
         if (! static::hasSoftDelete())
             return [];
@@ -154,7 +227,19 @@ abstract class BaseModel
         return array_map(fn($row) => static::mapDataToModel($row), $results);
     }
 
-    // Dynamically relationship fetching
+    // One-to-One relationship
+    public function hasOne(string $relatedModel, string $foreignKey, string $localKey = 'id'): ?object
+    {
+        $relatedTable = $relatedModel::getTableName();
+        $localKeyValue = $this->{$localKey};
+
+        $query = "SELECT * FROM $relatedTable WHERE $foreignKey = :localKeyValue LIMIT 1";
+        $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
+
+        return ! empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
+    }
+
+    // One-to-Many relationship
     public function hasMany(string $relatedModel, string $foreignKey, string $localKey = 'id'): array
     {
         $relatedTable = $relatedModel::getTableName();
@@ -167,10 +252,10 @@ abstract class BaseModel
         if (! is_array($results))
             $results = [];
 
-        return array_map(fn ($row) => $relatedModel::mapDataToModel($row), $results);
+        return array_map(fn($row) => $relatedModel::mapDataToModel($row), $results);
     }
 
-    // Dynamically check if a table has the deleted_at column
+    // Check if the table has a deleted_at column
     protected static function hasSoftDelete(): bool
     {
         static $softDeleteCache = [];
@@ -185,6 +270,29 @@ abstract class BaseModel
         return $softDeleteCache[$table];
     }
 
+    // Paginate the records in the table
+    public static function paginate(int $page = 1, int $perPage = 10, array $conditions = []): ?array
+    {
+        $offset = ($page - 1) * $perPage;
+        $query = "SELECT * FROM " . static::getTableName();
+        $params = [];
+
+        if (! empty($conditions)) {
+            $query .= " WHERE " . implode(' AND ', array_map(fn($key) => "{$key} = :{$key}", array_keys($conditions)));
+            $params = $conditions;
+        }
+
+        if (static::hasSoftDelete())
+            $query .= (empty($conditions) ? " WHERE" : " AND") . " deleted_at IS NULL";
+
+        $query .= " LIMIT :limit OFFSET :offset";
+        $params['limit'] = $perPage;
+        $params['offset'] = $offset;
+
+        return Database::prepareAndExecute($query, $params);
+    }
+
+    // Restore a soft deleted record
     public function restore(): void
     {
         if (static::hasSoftDelete()) {
@@ -194,44 +302,45 @@ abstract class BaseModel
         }
     }
 
+    // Create or update the record to the database
     public function save(): void
     {
         $table = static::getTableName();
         $properties = get_object_vars($this);
         unset($properties['id']); // Avoid saving the id in the data fields
 
-        if (isset($this->id) && $this->id) {
+        if (isset($this->id)) {
             // Update logic
             $fields = [];
-            foreach ($properties as $key => $value) {
+            foreach ($properties as $key => $value)
                 $fields[] = "{$key} = :{$key}";
-            }
-            $query = "UPDATE {$table} SET ".implode(", ", $fields)." WHERE id = :id";
+            $fields[] = "updated_at = NOW()";
+            $query = "UPDATE {$table} SET " . implode(", ", $fields) . " WHERE id = :id";
             $properties['id'] = $this->id;
         } else {
             // Insert logic
             $fields = array_keys($properties);
             $placeholders = array_map(fn($field) => ":{$field}", $fields);
-            $query = "INSERT INTO {$table} (".implode(", ", $fields).") VALUES (".implode(", ", $placeholders).")";
+            $query = "INSERT INTO {$table} (" . implode(", ", $fields) . ") VALUES (" . implode(", ", $placeholders) . ")";
         }
 
         Database::prepareAndExecute($query, $properties);
 
-        if (!isset( $this->id)) 
+        if (! isset($this->id))
             $this->id = Database::connect()->lastInsertId();
     }
 
     //* Abstract methods to enforce subclass implementation
-    abstract protected static function getTableName();
-    abstract protected static function mapDataToModel($data);
+    abstract protected static function getTableName(): string;
+    abstract protected static function mapDataToModel(array $data): object;
 
     //* Getters and Setters
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->created_at;
     }

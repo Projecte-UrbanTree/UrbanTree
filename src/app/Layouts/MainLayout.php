@@ -7,7 +7,9 @@
     <title>
         <?php echo $title . ' - ' . getenv('APP_NAME'); ?>
     </title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/js/app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
@@ -115,7 +117,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-600">Welcome,
-                        <?php echo $_SESSION['user']['name']; ?></span>
+                        <?php echo $_SESSION['user']['name'] . " " . $_SESSION['user']['surname']; ?></span>
                     <a href="/logout"
                         class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
                         Logout</a>

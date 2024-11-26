@@ -1,0 +1,105 @@
+name: Bug report
+description: Use this template to provide detailed information about the bug so others can
+  easily reproduce and understand the issue.
+title: "[Bug]: "
+labels: ["kind/bug", "needs-triage"]
+projects: ["Projecte-UrbanTree/1"]
+assignees: []
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the Bug
+      description: Provide a clear and concise description of the issue, including any symptoms or error messages.
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Provide a step-by-step guide to reproduce the issue. Be specific so someone else can recreate the problem.
+      value: |
+        1. Go to '...'
+        2. Perform the action '...'
+        3. Observe the behavior '...'
+    validations:
+      required: true
+  - type: textarea
+    id: behavior-expected
+    attributes:
+      label: Expected Behavior
+      description: Explain what you expected to happen when performing the steps above.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior-actual
+    attributes:
+      label: Actual Behavior
+      description: Describe the actual outcome of the steps above, including any errors or unexpected results.
+    validations:
+      required: true
+  - type: textarea
+    id: stack-trace
+    attributes:
+      label: Stack Trace
+      placeholder: Paste any stack traces, error logs, or traceback here. If they’re lengthy, consider using a code block (```) or attaching a file.
+      render: bash
+  - type: textarea
+    id: env-info
+    attributes:
+      label: Environment Information
+      description: Please complete as applicable.
+      value: |
+        - **OS:** [e.g., Windows 11, Ubuntu 22.04, macOS Ventura]
+        - **Platform and Architecture:** [e.g., x86, ARM, etc.]
+        - **Interpreter/Compiler/SDK/Runtime Environment:** [e.g., Python 3.10, Node.js 18, GCC 12.2]
+        - **Relevant Tooling Versions:** [e.g., npm 9.8.1, pip 23.0.1]
+        - **Browser (if applicable):** [e.g., Chrome 127, Safari 16]
+    validations:
+      required: true
+  - type: checkboxes
+    id: reliably-reproduce
+    attributes:
+      label: Do you reliably reproduce the issue?
+      options:
+        - label: 'Yes'
+        - label: 'No'
+  - type: textarea
+    id: input
+    attributes:
+      label: Input
+      description: Provide your input (e.g., code snippet, configuration).
+      placeholder: Your code or steps here
+      render: bash
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: Provide the corresponding output or behavior.
+      placeholder: Relevant logs, console output, or results
+      render: bash
+  - type: textarea
+    id: screenshots-media
+    attributes:
+      label: Screenshots or Media
+      description: If applicable, attach screenshots, GIFs, or videos that demonstrate the issue.
+      placeholder: |
+        Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Provide any additional context that might be helpful to diagnose the issue. If possible, describe a **reduced test case** that isolates the problem and makes it easier for others to debug.
+  - type: textarea
+    id: possible-solutions
+    attributes:
+      label: Possible Solution
+      description: Contribute any possible solutions that you think will solve this problem.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Projecte-UrbanTree/UrbanTree?tab=coc-ov-file#readme).
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

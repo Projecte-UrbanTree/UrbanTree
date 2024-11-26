@@ -31,8 +31,6 @@ class TaskTypeController
     {
         $tasktype = new TaskType;
         $tasktype->name = $postData['name'];
-
-
         $tasktype->save();
 
         header('Location: /task-types');
@@ -51,7 +49,7 @@ class TaskTypeController
 
     public function update($id, $postData)
     {
-        $tasktype = tasktype::find($id);
+        $tasktype = TaskType::find($id);
 
         $tasktype->name = $postData['name'];
         $tasktype->save();
@@ -61,8 +59,7 @@ class TaskTypeController
 
     public function destroy($id)
     {
-        $tasktype = tasktype::find($id);
-        $tasktype->delete();
+        TaskType::find($id)->delete();
 
         header('Location: /task-types');
     }
