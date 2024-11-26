@@ -6,11 +6,11 @@ use App\Controllers\ContractController;
 use App\Controllers\DashboardController;
 use App\Controllers\ElementController;
 use App\Controllers\IncidenceController;
+use App\Controllers\TaskTypeController;
 use App\Controllers\TreeTypeController;
 use App\Controllers\UserController;
 use App\Controllers\WorkOrderController;
 use App\Controllers\ZoneController;
-use App\Controllers\TaskTypeController;
 // Import middleware classes
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\GuestMiddleware;
@@ -104,8 +104,23 @@ return [
             'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],
+        '/tree-type/create' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'create',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/tree-type/:id/edit' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'edit',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/tree-type/:id/delete' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'destroy',
+            'middleware' => [AuthMiddleware::class],
+        ],
         // === Incidence GET Routes
-        '/incidence' => [
+        '/incidences' => [
             'controller' => IncidenceController::class,
             'method' => 'index',
         ],
@@ -170,6 +185,21 @@ return [
             'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],
+        '/contract/create' => [
+            'controller' => ContractController::class,
+            'method' => 'create',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/contract/:id/edit' => [
+            'controller' => ContractController::class,
+            'method' => 'edit',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/contract/:id/delete' => [
+            'controller' => ContractController::class,
+            'method' => 'destroy',
+            'middleware' => [AuthMiddleware::class],
+        ],
     ],
     'POST' => [
         // == Auth POST Routes
@@ -221,6 +251,17 @@ return [
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
+        // === TreeTypes POST Routes
+        '/tree-type/store' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/tree-type/:id/update' => [
+            'controller' => TreeTypeController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
         // === TaskTypes POST Routes
         '/task-types/store' => [
             'controller' => TaskTypeController::class,
@@ -232,6 +273,18 @@ return [
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
+        // === Contracts POST Routes
+        '/contract/store' => [
+            'controller' => ContractController::class,
+            'method' => 'store',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        '/contract/:id/update' => [
+            'controller' => ContractController::class,
+            'method' => 'update',
+            'middleware' => [AuthMiddleware::class],
+        ],
+        // === Incidences POST Routes
         '/incidence/store' => [
             'controller' => IncidenceController::class,
             'method' => 'create_incidence',
