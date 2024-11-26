@@ -1,3 +1,6 @@
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
+
 class Modal {
     constructor(modalId) {
         this.modal = document.getElementById(modalId);
@@ -37,23 +40,38 @@ class Modal {
             this.open('<p>Error al cargar el contenido del modal.</p>');
         }
     }
+    // Define la función global modifyIncidence
+    async modifyIncidence() {
+        const nameInput = document.getElementById('incidenceName');
+        const descriptionTextarea = document.getElementById('incidenceDescription');
+
+        if (nameInput) nameInput.disabled = false;
+        if (descriptionTextarea) descriptionTextarea.disabled = false;
+
+        if (nameInput) nameInput.classList.add('editable');
+        if (descriptionTextarea) descriptionTextarea.classList.add('editable');
+    }
 }
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializa el modal solo una vez después de que el DOM se haya cargado completamente
     const modal = new Modal('incidenceModal');
 
     // Define la función global para abrir el modal
-    window.openModal = function(id) {
+    window.openModal = function (id) {
         // Cambia la URL para que coincida con la ruta del enrutador
         const url = `/incidence/${id}/edit`; // Ajusta la URL a tu ruta definida en el enrutador
         modal.loadContent(url); // Carga el contenido dinámicamente
     };
-    
 
     // Define la función global para cerrar el modal
     window.closeModal = function () {
         modal.close();
     };
-});
 
+    window.modifyIncidence = function () {
+        modal.modifyIncidence();
+    };
+});
