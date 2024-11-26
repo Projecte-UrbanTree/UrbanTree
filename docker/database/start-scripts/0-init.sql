@@ -61,6 +61,8 @@ create table tree_types (
     species varchar(255) unique,
     photo_id int,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (photo_id) references photos(id),
     constraint UC_TreeType unique (family, genus, species)
 );
