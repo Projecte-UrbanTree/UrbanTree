@@ -13,7 +13,7 @@ class IncidenceController
     public function index()
     {
         View::render([
-            'view' => 'Incidence',
+            'view' => 'Incidences',
             'title' => 'Incidences',
             'layout' => 'MainLayout',
         ]);
@@ -38,9 +38,7 @@ class IncidenceController
             'view' => 'Incidence/Create',
             'title' => 'Create Incidence',
             'layout' => 'MainLayout',
-            'data' => [
-                'elements' => $elements,
-            ],
+            'data' => ['elements' => $elements],
         ]);
     }
 
@@ -69,8 +67,7 @@ class IncidenceController
     {
         $incidence = Incidence::find($id);
         $element = Element::find($incidence->element_id);
-        if ($incidence && $element)
-        {
+        if ($incidence && $element) {
             View::render([
                 'view' => '../Shared/Modals/IncidenceModal',
                 'title' => 'Edit Incidence',

@@ -120,7 +120,7 @@ return [
             'middleware' => [AuthMiddleware::class],
         ],
         // === Incidence GET Routes
-        '/incidence' => [
+        '/incidences' => [
             'controller' => IncidenceController::class,
             'method' => 'index',
         ],
@@ -284,7 +284,7 @@ return [
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
-        // === Incidence POST Routes
+        // === Incidences POST Routes
         '/incidence/store' => [
             'controller' => IncidenceController::class,
             'method' => 'create_incidence',
