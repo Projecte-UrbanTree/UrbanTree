@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349
 
       - name: 📦 Cache Docker layers
-        uses: actions/cache@v4
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
         with:
           path: tmp-cache
           key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
@@ -25,8 +25,10 @@ jobs:
       - name: 📦 Load cache
         uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de
         with:
-          cache-source: tmp-cache
-          cache-target: /tmp/cache
+          cache-map: |
+            {
+              "tmp-cache": "/tmp/cache"
+            }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
       - name: 🏗️ Build test stage
@@ -48,8 +50,8 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349
       - uses: docker/metadata-action@b53be03109c4ef6f6cc7aa545b84b17a7fe51c1e
         id: meta
         with:
@@ -63,7 +65,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 📦 Cache Docker layers
-        uses: actions/cache@v4
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
         with:
           path: tmp-cache
           key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
@@ -71,8 +73,10 @@ jobs:
       - name: 📦 Load cache
         uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de
         with:
-          cache-source: tmp-cache
-          cache-target: /tmp/cache
+          cache-map: |
+            {
+              "tmp-cache": "/tmp/cache"
+            }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
       - name: 🏗️ Build final stage and release it!
