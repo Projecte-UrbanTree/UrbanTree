@@ -6,11 +6,11 @@ use App\Controllers\ContractController;
 use App\Controllers\DashboardController;
 use App\Controllers\ElementController;
 use App\Controllers\IncidenceController;
+use App\Controllers\TaskTypeController;
 use App\Controllers\TreeTypeController;
 use App\Controllers\UserController;
 use App\Controllers\WorkOrderController;
 use App\Controllers\ZoneController;
-use App\Controllers\TaskTypeController;
 // Import middleware classes
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\GuestMiddleware;
@@ -104,29 +104,21 @@ return [
             'method' => 'index',
             'middleware' => [AuthMiddleware::class],
         ],
-
-        '/treetypes/create' => [
+        '/tree-type/create' => [
             'controller' => TreeTypeController::class,
             'method' => 'create',
             'middleware' => [AuthMiddleware::class],
         ],
-
-
-        '/tree-types/:id/edit' => [
+        '/tree-type/:id/edit' => [
             'controller' => TreeTypeController::class,
             'method' => 'edit',
             'middleware' => [AuthMiddleware::class],
         ],
-
-
-        '/treetype/:id/delete' => [
+        '/tree-type/:id/delete' => [
             'controller' => TreeTypeController::class,
             'method' => 'destroy',
             'middleware' => [AuthMiddleware::class],
         ],
-
-
-
         // === Incidence GET Routes
         '/incidence' => [
             'controller' => IncidenceController::class,
@@ -239,22 +231,17 @@ return [
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
-
         // === TreeTypes POST Routes
-        '/tree-types/store' => [
+        '/tree-type/store' => [
             'controller' => TreeTypeController::class,
             'method' => 'store',
             'middleware' => [AuthMiddleware::class],
         ],
-        '/tree-types/:id/update' => [
+        '/tree-type/:id/update' => [
             'controller' => TreeTypeController::class,
             'method' => 'update',
             'middleware' => [AuthMiddleware::class],
         ],
-
-
-
-
         // === TaskTypes POST Routes
         '/task-types/store' => [
             'controller' => TaskTypeController::class,
