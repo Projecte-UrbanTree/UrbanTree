@@ -10,7 +10,7 @@ use App\Models\WorkOrder;
 
 class DashboardController
 {
-    public function index()
+    public function index($queryParams)
     {
         $users = User::count();
         $contracts = Contract::count();
