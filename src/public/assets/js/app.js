@@ -45,49 +45,21 @@ class Modal {
         if (nameInput) nameInput.disabled = false;
         if (descriptionTextarea) descriptionTextarea.disabled = false;
 
-
         if (nameInput) nameInput.classList.add('editable');
         if (descriptionTextarea) descriptionTextarea.classList.add('editable');
 
 
         const modifyButton = document.getElementById('btn-modify');
 
-        modifyButton.addEventListener('click', () => {
-            console.log('Button clicked');
-            modifyButton.innerText = 'Guardar';
-        });
-    }
-
-
-    async saveChanges(button) {
-        const nameInput = document.getElementById('incidenceName');
-        const descriptionTextarea = document.getElementById('incidenceDescription');
-
-        const updatedData = {
-            name: nameInput.value,
-            description: descriptionTextarea.value
+        // Asigna el evento directamente para evitar duplicados
+        modifyButton.onclick = () => {
+            if (modifyButton.innerText === 'Modificar') {
+                modifyButton.innerText = 'Guardar';
+                modifyButton.type = 'submit';
+            }
         };
-
-        const response = await fetch(`/incidence/${incidenceId}/update`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedData)
-        });
-
-        if (response.ok) {
-            button.textContent = 'Modificar';
-            button.onclick = () => modifyIncidence(button);
-            alert('Incidencia actualizada');
-        } else {
-            alert('Error al actualizar la incidencia');
-        }
     }
-
 }
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializa el modal solo una vez después de que el DOM se haya cargado completamente
@@ -105,8 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.close();
     };
 
-    window.modifyIncidence = function () {
-        modal.modifyIncidence();
+    window.modifyIncidence = function (id) {
+        modal.modifyIncidence(id);
     };
 
     window.saveChanges = function () {
