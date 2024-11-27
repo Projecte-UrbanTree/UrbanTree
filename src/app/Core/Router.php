@@ -151,6 +151,7 @@ class Router
             View::render([
                 'view' => 'Error/404',
                 'title' => 'Error 404',
+                'layout' => 'BlankLayout'
             ]);
         }
         http_response_code($statusCode);
