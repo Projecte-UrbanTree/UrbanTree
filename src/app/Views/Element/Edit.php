@@ -22,7 +22,13 @@
                 value="<?php echo htmlspecialchars($element->name); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
-
+        <!-- Contract -->
+        <div>
+            <label for="contract_id" class="block text-sm font-medium text-gray-700 mb-1">Zone</label>
+            <input type="text" id="contract_id" name="contract_id"
+                value="<?php echo htmlspecialchars($element->contract_id); ?>"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+        </div>
         <!-- Zone Name -->
         <div>
             <label for="zone_id" class="block text-sm font-medium text-gray-700 mb-1">Zone</label>
@@ -39,21 +45,21 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
-        <!-- Latitude -->
+        <!-- Latitude
         <div>
             <label for="latitude" class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
             <input type="latitude" id="latitude" name="latitude"
-                value="<?php echo htmlspecialchars($element->latitude); ?>"
+                value="<?php //echo htmlspecialchars($element->latitude); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
-        </div>
+        </div> -->
 
-        <!-- Longitude -->
+        <!-- Longitude
         <div>
             <label for="longitude" class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
             <input type="longitude" id="longitude" name="longitude"
-                value="<?php echo htmlspecialchars($element->longitude); ?>"
+                value="<?php //echo htmlspecialchars($element->longitude); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
-        </div>
+        </div> -->
 
         <!-- Submit Button -->
         <div class="flex items-center">
