@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Core\View;
 use App\Models\Element;
 use App\Core\Session;
+use App\Models\TreeType;
+use App\Models\Zone;
 
 class ElementController
 {
@@ -19,11 +21,16 @@ class ElementController
         ]);
     }
     public function create(){
+        $zones = Zone::findAll(); 
+        $types = TreeType::findAll();
         View::render([
             'view' => 'Element/Create',
             'title' => 'Add Element',
             'layout' => 'MainLayout',
-            'data' => [],
+            'data' => [
+                'zones' => $zones,
+                'types' => $types
+            ],
         ]);
     }
     public function store($postData)
@@ -31,8 +38,8 @@ class ElementController
         $element = new Element;
         $element->name = $postData['name'];
         $element->zone_id = $postData['zone_id'];
-        $element->point_id = $postData['point_id'];
-        $element->treeType_id = $postData['treeType_id'];
+        // $element->point_id = $postData['point_id'];
+        $element->tree_type_id = $postData['tree_type_id'];
 
         $element->save();
 
@@ -57,7 +64,7 @@ class ElementController
         $element = Element::find($id);
         $element->name = $postData['name'];
         $element->zone_id = $postData['zone_id'];
-        $element->point_id = $postData['point_id'];
+        // $element->point_id = $postData['point_id'];
         $element->tree_type_id = $postData['tree_type_id'];
         $element->save();
 

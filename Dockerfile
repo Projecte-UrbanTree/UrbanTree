@@ -2,7 +2,7 @@
 
 #* Create a database stage for setting up the database.
 FROM mariadb:lts AS database
-COPY ./docker/database/start-scripts/ /docker-entrypoint-initdb.d/
+COPY ./database/start-scripts/ /docker-entrypoint-initdb.d/
 
 #* Create a prod stage for installing app dependencies defined in Composer.
 FROM composer:lts AS prod-deps

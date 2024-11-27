@@ -10,7 +10,7 @@ class Element extends BaseModel
 
     public int $zone_id;
 
-    public int $point_id;
+    // public int $point_id;
 
     public int $tree_type_id;
 
@@ -26,7 +26,7 @@ class Element extends BaseModel
         $element->name = $data['name'];
         $element->contract_id = $data['contract_id'];
         $element->zone_id = $data['zone_id'];
-        $element->point_id = $data['point_id'];
+        // $element->point_id = $data['point_id'];
         $element->tree_type_id = $data['tree_type_id'];
         $element->created_at = $data['created_at'];
 
@@ -40,16 +40,16 @@ class Element extends BaseModel
 
     public function zone(): Zone
     {
-        return $this->belongsTo(Zone::class, 'zone_id');
+        return $this->belongsTo(Zone::class, 'zone_id', 'id');
     }
 
-    public function point(): Point
-    {
-        return $this->belongsTo(Point::class, 'point_id');
-    }
+    // public function point()
+    // {
+    //     return $this->belongsTo(Point::class, 'point_id', 'id');
+    // }
 
     public function treeType(): TreeType
     {
-        return $this->belongsTo(TreeType::class, 'tree_type_id');
+        return $this->belongsTo(TreeType::class, 'tree_type_id', 'id');
     }
 }
