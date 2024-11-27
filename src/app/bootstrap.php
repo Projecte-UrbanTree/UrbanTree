@@ -16,7 +16,7 @@ Session::start();
 // Connect to the database
 Database::connect();
 
-// Set up global error handler (optional)
-set_error_handler(function ($severity, $message, $file, $line) {
-    // Logger::log("Error: $message in $file on line $line"); TODO: Fix Logger
-});
+// TODO: Set up global error handler
+// set_error_handler(function ($severity, $message, $file, $line) {
+//     Logger::log("Error: {$message} in {$file} on line {$line}");
+// });
