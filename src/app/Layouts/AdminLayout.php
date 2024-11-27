@@ -9,7 +9,7 @@
     </title>
     <script src="/assets/js/app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/admin/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
@@ -21,10 +21,7 @@
                 <?php echo getenv('APP_NAME'); ?>
             </div>
             <nav class="mt-4">
-                <?php
-                // Get the current path
-                $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        ?>
+                <?php $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
                 <a href="/admin/dashboard"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -134,7 +131,6 @@
     <!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
     <script>
         setTimeout(() => {
-            console.log('Hide alert message');
             const alertMsg = document.getElementById('alert-msg');
             if (alertMsg) {
                 alertMsg.classList.add('hidden');
