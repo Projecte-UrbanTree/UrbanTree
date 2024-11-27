@@ -9,7 +9,7 @@ use App\Models\WorkOrder;
 
 class WorkOrderController
 {
-    public function index()
+    public function index($queryParams)
     {
         $workOrders = WorkOrder::findAll();
         View::render([
@@ -21,7 +21,7 @@ class WorkOrderController
         Session::remove('success');
     }
 
-    public function create()
+    public function create($queryParams)
     {
         $workOrders = WorkOrder::findAll();
         View::render([
@@ -36,7 +36,7 @@ class WorkOrderController
     {
     }
 
-    public function edit($id)
+    public function edit($id, $queryParams)
     {
         $order = WorkOrder::find($id);
         View::render([
@@ -58,7 +58,7 @@ class WorkOrderController
         header('Location: /orders');
     }
 
-    public function destroy($id)
+    public function destroy($id, $queryParams)
     {
         $order = WorkOrder::find($id);
         $order->delete();

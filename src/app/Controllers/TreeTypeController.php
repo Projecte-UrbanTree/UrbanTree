@@ -7,7 +7,7 @@ use App\Models\TreeType;
 
 class TreeTypeController
 {
-    public function index()
+    public function index($queryParams)
     {
         $tree_types = TreeType::findAll();
         View::render([
@@ -18,7 +18,7 @@ class TreeTypeController
         ]);
     }
 
-    public function create()
+    public function create($queryParams)
     {
         View::render([
             'view' => 'TreeType/Create',
@@ -39,7 +39,7 @@ class TreeTypeController
 
         header('Location: /tree-types');
     }
-    public function edit($id)
+    public function edit($id, $queryParams)
     {
         $tree_type = TreeType::find($id);
 
@@ -66,7 +66,7 @@ class TreeTypeController
 
 
     }
-    public function destroy($id)
+    public function destroy($id, $queryParams)
     {
         $treetypes = TreeType::find($id);
         $treetypes->delete();

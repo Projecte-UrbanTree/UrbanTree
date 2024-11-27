@@ -8,7 +8,7 @@ use App\Models\ZonePredefined;
 
 class ZoneController
 {
-    public function index()
+    public function index($queryParams)
     {
         $zones = Zone::getPredefinedZonesWithElements();
         View::render([
@@ -19,7 +19,7 @@ class ZoneController
         ]);
     }
 
-    public function create()
+    public function create($queryParams)
     {
         View::render([
             'view' => 'Zone/Create',
@@ -39,7 +39,7 @@ class ZoneController
         header('Location: /zones');
     }
 
-    public function edit($id)
+    public function edit($id, $queryParams)
     {
         $zone = Zone::find($id);
         View::render([
@@ -63,7 +63,7 @@ class ZoneController
         header('Location: /zones');
     }
 
-    public function destroy($id)
+    public function destroy($id, $queryParams)
     {
         $zone = Zone::find($id);
         $zone->delete();
