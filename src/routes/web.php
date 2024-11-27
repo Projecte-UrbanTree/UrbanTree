@@ -2,7 +2,7 @@
 
 use App\Controllers\DashboardController;
 use App\Controllers\HomeController;
-use App\Middlewares\AdminMiddleware;
+use App\Middlewares\WorkerMiddleware;
 
 return [
     'GET' => [
@@ -13,7 +13,7 @@ return [
         '/dashboard' => [
             'controller' => DashboardController::class,
             'method' => 'index',
-            'middleware' => [AdminMiddleware::class],
+            'middleware' => [WorkerMiddleware::class],
         ],
     ],
 ];
