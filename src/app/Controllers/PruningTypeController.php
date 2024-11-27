@@ -7,7 +7,7 @@ use App\Models\PruningType;
 
 class PruningTypeController
 {
-    public function index()
+    public function index($queryParams)
     {
         $pruning_types = PruningType::findAll();
         View::render([

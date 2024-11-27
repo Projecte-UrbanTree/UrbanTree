@@ -7,7 +7,7 @@ use App\Models\TaskType;
 
 class TaskTypeController
 {
-    public function index()
+    public function index($queryParams)
     {
         $task_types = TaskType::findAll();
         View::render([
@@ -17,7 +17,7 @@ class TaskTypeController
             'data' => ['task_types' => $task_types],
         ]);
     }
-    public function create()
+    public function create($queryParams)
     {
         View::render([
             'view' => 'TaskType/Create',
@@ -36,7 +36,7 @@ class TaskTypeController
         header('Location: /task-types');
     }
 
-    public function edit($id)
+    public function edit($id, $queryParams)
     {
         $tasktype = TaskType::find($id);
         View::render([
@@ -57,7 +57,7 @@ class TaskTypeController
         header('Location: /task-types');
     }
 
-    public function destroy($id)
+    public function destroy($id, $queryParams)
     {
         TaskType::find($id)->delete();
 
