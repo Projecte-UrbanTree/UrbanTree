@@ -46,6 +46,3 @@ kind/design:
 
 kind/feature:
   - head-branch: feat/"
-
-needs-kind:
-  - head-branch: "!feat/"
