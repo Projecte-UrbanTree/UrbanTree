@@ -8,8 +8,8 @@ class GuestMiddleware implements MiddlewareInterface
 {
     public function handle($request, $next)
     {
-        if (Session::get('user')) {
-            $user = Session::get('user');
+        $user = Session::get('user');
+        if ($user) {
             switch ($user['role']) {
                 case 1:
                     header('Location: /admin/dashboard');
