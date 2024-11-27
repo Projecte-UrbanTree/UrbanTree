@@ -1,11 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+namespace Tests\Unit;
 
 use App\Core\Database;
+use PDO;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
 
 #[RequiresPhpExtension('pdo_mysql')]
-final class DatabaseTest extends TestCase
+class DatabaseTest extends TestCase
 {
     protected function setUp(): void
     {
