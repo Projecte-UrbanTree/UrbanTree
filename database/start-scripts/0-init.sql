@@ -134,14 +134,14 @@ create table elements (
     name varchar(255) not null,
     contract_id int not null,
     zone_id int not null,
-    point_id int unique,
+    -- point_id int unique,
     tree_type_id int not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
     foreign key (contract_id) references contracts(id),
     foreign key (zone_id) references zones(id),
-    foreign key (point_id) references points(id),
+    -- foreign key (point_id) references points(id),
     foreign key (tree_type_id) references tree_types(id)
 );
 

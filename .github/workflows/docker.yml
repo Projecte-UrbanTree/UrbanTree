@@ -1,69 +1,59 @@
-name: 🐳 Docker CI/CD
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
 
-on: [push]
+name: 🐳 Docker CI/CD
+on:
+  push:
+    branches: ["main"]
+    tags: ["v*.*.*"]
+  pull_request:
+    branches: ["main"]
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  # Build and test the Docker image
-  tests:
-    name: 🧪 Tests
+  build:
+    name: 🏗️ Build and push Docker image
     runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349
-
-      - name: 📦 Cache Docker layers
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
-        with:
-          path: tmp-cache
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
-
-      - name: 📦 Load cache
-        uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de
-        with:
-          cache-map: |
-            {
-              "tmp-cache": "/tmp/cache"
-            }
-          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
-
-      - name: 🏗️ Build test stage
-        uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75
-        with:
-          target: test
-          load: true
-
-  # Build and push the final image
-  push:
-    name: 🚀 Publish image
-    runs-on: ubuntu-latest
-    needs: tests
-    if: startsWith(github.ref, 'refs/tags/')
     permissions:
       contents: read
       packages: write
       attestations: write
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
       id-token: write
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349
-      - uses: docker/metadata-action@b53be03109c4ef6f6cc7aa545b84b17a7fe51c1e
-        id: meta
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: 🪪 Log in to the Container registry
+      # https://github.com/sigstore/cosign-installer
+      - uses: sigstore/cosign-installer@59acb6260d9c0ba8f4a2f9d9b48431a222b68e20
+        if: github.event_name != 'pull_request'
+        with:
+          cosign-release: "v2.2.4"
+
+      # https://github.com/docker/setup-buildx-action
+      - uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349
+
+      # https://github.com/docker/login-action
+      - name: 🪪 Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@7ca345011ac4304463197fac0e56eab1bc7e6af0
+        if: github.event_name != 'pull_request'
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # https://github.com/docker/metadata-action
+      - uses: docker/metadata-action@b53be03109c4ef6f6cc7aa545b84b17a7fe51c1e
+        id: meta
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
       - name: 📦 Cache Docker layers
         uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
         with:
@@ -79,21 +69,49 @@ jobs:
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
-      - name: 🏗️ Build final stage and release it!
-        id: push
+      # https://github.com/docker/build-push-action
+      - name: 🧪 Tests
         uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75
         with:
-          target: final
-          push: true
-          annotations: ${{ steps.meta.outputs.annotations }}
-          labels: ${{ steps.meta.outputs.labels }}
-          tags: ${{ steps.meta.outputs.tags }}
+          context: .
+          target: test
+          load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: 📎 Generate artifact attestation
+      # https://github.com/docker/build-push-action
+      - name: 🚀 Build final stage and push it!
+        id: build-and-push
+        uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          target: final
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Sign the resulting Docker image digest except on PRs.
+      # This will only write to the public Rekor transparency log when the Docker
+      # repository is public to avoid leaking data.  If you would like to publish
+      # transparency data even for private images, pass --force to cosign below.
+      # https://github.com/sigstore/cosign
+      - name: 🖋️ Sign the published Docker image
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+          TAGS: ${{ steps.meta.outputs.tags }}
+          DIGEST: ${{ steps.build-and-push.outputs.digest }}
+        # This step uses the identity token to provision an ephemeral certificate
+        # against the sigstore community Fulcio instance.
+        run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
+      - name: 📝 Attest the build provenance
         uses: actions/attest-build-provenance@v1
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          subject-digest: ${{ steps.push.outputs.digest }}
+          subject-digest: ${{ steps.build-and-push.outputs.digest }}
           push-to-registry: true
