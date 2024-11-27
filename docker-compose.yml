@@ -65,7 +65,7 @@ services:
     develop:
       watch:
         - action: rebuild
-          path: ./docker/database
+          path: ./database
 
   phpmyadmin:
     image: phpmyadmin:latest
