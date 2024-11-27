@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Models\TreeType;
@@ -11,9 +11,9 @@ class TreeTypeController
     {
         $tree_types = TreeType::findAll();
         View::render([
-            'view' => 'TreeTypes',
+            'view' => 'Admin/TreeTypes',
             'title' => 'Tree Types',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['tree_types' => $tree_types],
         ]);
     }
@@ -21,9 +21,9 @@ class TreeTypeController
     public function create($queryParams)
     {
         View::render([
-            'view' => 'TreeType/Create',
+            'view' => 'Admin/TreeType/Create',
             'title' => 'Create TreeTypes',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => [],
         ]);
     }
@@ -37,16 +37,17 @@ class TreeTypeController
         $tree_type->species = $postData['species'];
         $tree_type->save();
 
-        header('Location: /tree-types');
+        header('Location: /admin/tree-types');
     }
+
     public function edit($id, $queryParams)
     {
         $tree_type = TreeType::find($id);
 
         View::render([
-            'view' => 'TreeType/Edit',
+            'view' => 'Admin/TreeType/Edit',
             'title' => 'Edit Tree Type',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['tree_type' => $tree_type],
         ]);
     }
@@ -62,15 +63,14 @@ class TreeTypeController
             $treetypes->save();
         }
 
-        header('Location: /tree-types');
-
-
+        header('Location: /admin/tree-types');
     }
+
     public function destroy($id, $queryParams)
     {
         $treetypes = TreeType::find($id);
         $treetypes->delete();
 
-        header('Location: /tree-types');
+        header('Location: /admin/tree-types');
     }
 }

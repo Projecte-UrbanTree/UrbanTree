@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Models\PruningType;
@@ -11,9 +11,9 @@ class PruningTypeController
     {
         $pruning_types = PruningType::findAll();
         View::render([
-            'view' => 'PruningType',
+            'view' => 'Admin/PruningType',
             'title' => 'Pruning Types',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['pruning_types' => $pruning_types],
         ]);
     }

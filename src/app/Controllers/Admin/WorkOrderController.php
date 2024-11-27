@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Core\Session;
 use App\Core\View;
 use App\Models\WorkOrder;
-
 
 class WorkOrderController
 {
@@ -13,9 +12,9 @@ class WorkOrderController
     {
         $workOrders = WorkOrder::findAll();
         View::render([
-            'view' => 'WorkOrders',
+            'view' => 'Admin/WorkOrders',
             'title' => 'Manage Orders',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['workOrders' => $workOrders],
         ]);
         Session::remove('success');
@@ -25,24 +24,22 @@ class WorkOrderController
     {
         $workOrders = WorkOrder::findAll();
         View::render([
-            'view' => 'WorkOrder/Create',
+            'view' => 'Admin/WorkOrder/Create',
             'title' => 'Add Order',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['workOrders' => $workOrders],
         ]);
     }
 
-    public function store($postData)
-    {
-    }
+    public function store($postData) {}
 
     public function edit($id, $queryParams)
     {
         $order = WorkOrder::find($id);
         View::render([
-            'view' => 'Order/Edit',
+            'view' => 'Admin/Order/Edit',
             'title' => 'Edit Order',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['order' => $order],
         ]);
     }
@@ -55,7 +52,7 @@ class WorkOrderController
 
         Session::set('success', 'Order updated successfully');
 
-        header('Location: /orders');
+        header('Location: /admin/orders');
     }
 
     public function destroy($id, $queryParams)
@@ -65,6 +62,6 @@ class WorkOrderController
 
         Session::set('success', 'Order deleted successfully');
 
-        header('Location: /orders');
+        header('Location: /admin/orders');
     }
 }

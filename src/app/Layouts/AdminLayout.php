@@ -9,7 +9,7 @@
     </title>
     <script src="/assets/js/app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/admin/assets/css/app.css">
 </head>
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
@@ -24,8 +24,8 @@
                 <?php
                 // Get the current path
                 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                ?>
-                <a href="/"
+        ?>
+                <a href="/admin/dashboard"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
@@ -35,7 +35,7 @@
 
                     Dashboard
                 </a>
-                <a href="/users"
+                <a href="/admin/users"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/users' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
@@ -45,7 +45,7 @@
 
                     Manage Users
                 </a>
-                <a href="/work-orders"
+                <a href="/admin/work-orders"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/work-orders' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
@@ -55,7 +55,7 @@
 
                     Manage Work Orders
                 </a>
-                <a href="/zones"
+                <a href="/admin/zones"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/zones' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
@@ -65,7 +65,7 @@
 
                     Manage Zones
                 </a>
-                <a href="/tree-types"
+                <a href="/admin/tree-types"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/tree-types' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
@@ -75,7 +75,7 @@
 
                     Manage Tree Types
                 </a>
-                <a href="/elements"
+                <a href="/admin/elements"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/elements' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
@@ -85,7 +85,7 @@
 
                     Manage Elements
                 </a>
-                <a href="/task-types"
+                <a href="/admin/task-types"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/task-types' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
@@ -95,7 +95,7 @@
 
                     Manage Task Types
                 </a>
-                <a href="/contracts"
+                <a href="/admin/contracts"
                     class="block py-2 px-4 text-white hover:bg-gray-700 <?php echo $currentPath === '/contracts' ? 'bg-gray-700' : ''; ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 inline">
@@ -117,7 +117,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-600">Welcome,
-                        <?php echo $_SESSION['user']['name'] . " " . $_SESSION['user']['surname']; ?></span>
+                        <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['surname']; ?></span>
                     <a href="/logout"
                         class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
                         Logout</a>

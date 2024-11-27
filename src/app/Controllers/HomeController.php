@@ -4,14 +4,14 @@ namespace App\Controllers;
 
 use App\Core\View;
 
-class DashboardController
+class HomeController
 {
     public function index($queryParams)
     {
         View::render([
-            'view' => 'Dashboard',
-            'title' => 'Worker Dashboard',
-            'layout' => 'WorkerLayout',
+            'view' => 'Home',
+            'title' => 'Map',
+            'layout' => 'MapLayout',
         ]);
     }
 }

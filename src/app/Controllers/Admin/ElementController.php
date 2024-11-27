@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
+use App\Core\Session;
 use App\Core\View;
 use App\Models\Element;
-use App\Core\Session;
 use App\Models\TreeType;
 use App\Models\Zone;
 
@@ -14,29 +14,31 @@ class ElementController
     {
         $elements = Element::findAll();
         View::render([
-            'view' => 'Elements',
+            'view' => 'Admin/Elements',
             'title' => 'Manage Elements',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['elements' => $elements],
         ]);
     }
+
     public function create($queryParams)
     {
         $zones = Zone::findAll();
         $types = TreeType::findAll();
         View::render([
-            'view' => 'Element/Create',
+            'view' => 'Admin/Element/Create',
             'title' => 'Add Element',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => [
                 'zones' => $zones,
-                'types' => $types
+                'types' => $types,
             ],
         ]);
     }
+
     public function store($postData)
     {
-        $element = new Element;
+        $element = new Element();
         $element->name = $postData['name'];
         $element->zone_id = $postData['zone_id'];
         // $element->point_id = $postData['point_id'];
@@ -46,16 +48,16 @@ class ElementController
 
         Session::set('success', 'Element created successfully');
 
-        header('Location: /elements');
+        header('Location: /admin/elements');
     }
 
     public function edit($id, $queryParams)
     {
         $element = Element::find($id);
         View::render([
-            'view' => 'Element/Edit',
+            'view' => 'Admin/Element/Edit',
             'title' => 'Edit Element',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['element' => $element],
         ]);
     }
@@ -71,7 +73,7 @@ class ElementController
 
         Session::set('success', 'Element updated successfully');
 
-        header('Location: /elements');
+        header('Location: /admin/elements');
     }
 
     public function destroy($id, $queryParams)
@@ -81,6 +83,6 @@ class ElementController
 
         Session::set('success', 'Element deleted successfully');
 
-        header('Location: /elements');
+        header('Location: /admin/elements');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Models\Contract;
@@ -11,9 +11,9 @@ class ContractController
     {
         $contracts = Contract::findAll();
         View::render([
-            'view' => 'Contracts',
+            'view' => 'Admin/Contracts',
             'title' => 'Contracts',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['contracts' => $contracts],
         ]);
     }
@@ -21,9 +21,9 @@ class ContractController
     public function create($queryParams)
     {
         View::render([
-            'view' => 'Contract/Create',
+            'view' => 'Admin/Contract/Create',
             'title' => 'Create Contract',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => [],
         ]);
     }
@@ -40,16 +40,16 @@ class ContractController
 
         $contract->save();
 
-        header('Location: /contracts');
+        header('Location: /admin/contracts');
     }
 
     public function edit($id, $queryParams)
     {
         $contract = Contract::find($id);
         View::render([
-            'view' => 'Contract/Edit',
+            'view' => 'Admin/Contract/Edit',
             'title' => 'Edit Contract',
-            'layout' => 'MainLayout',
+            'layout' => 'AdminLayout',
             'data' => ['contract' => $contract],
         ]);
     }
@@ -69,7 +69,7 @@ class ContractController
             $contract->save();
         }
 
-        header('Location: /contracts');
+        header('Location: /admin/contracts');
     }
 
     public function destroy($id, $queryParams)
@@ -77,6 +77,6 @@ class ContractController
         $contract = Contract::find($id);
         $contract->delete();
 
-        header('Location: /contracts');
+        header('Location: /admin/contracts');
     }
 }

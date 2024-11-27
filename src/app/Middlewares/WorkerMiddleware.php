@@ -4,7 +4,7 @@ namespace App\Middlewares;
 
 use App\Core\Session;
 
-class UserMiddleware implements MiddlewareInterface
+class WorkerMiddleware implements MiddlewareInterface
 {
     public function handle($request, $next)
     {
