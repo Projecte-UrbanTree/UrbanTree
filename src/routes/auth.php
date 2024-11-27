@@ -8,7 +8,7 @@ return [
         '/auth/login' => [
             'controller' => AuthController::class,
             'method' => 'index',
-            'middleware' => [GuestMiddleware::class],
+            'middlewares' => [GuestMiddleware::class],
         ],
         '/logout' => [
             'controller' => AuthController::class,
@@ -19,7 +19,7 @@ return [
         '/auth/login' => [
             'controller' => AuthController::class,
             'method' => 'login',
-            'middleware' => [GuestMiddleware::class],
+            'middlewares' => [GuestMiddleware::class],
         ],
     ],
 ];

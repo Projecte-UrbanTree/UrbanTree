@@ -13,7 +13,7 @@ return [
         '/dashboard' => [
             'controller' => DashboardController::class,
             'method' => 'index',
-            'middleware' => [WorkerMiddleware::class],
+            'middlewares' => [WorkerMiddleware::class],
         ],
     ],
 ];
