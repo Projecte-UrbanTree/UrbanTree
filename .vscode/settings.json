@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/pull-request-labeler-5.json": "file:///p%3A/source/Projecte-UrbanTree/UrbanTree/.github/labeler.yml"
+    }
+}
