@@ -3,14 +3,18 @@ create table photos (
     id int auto_increment primary key,
     name varchar(255) not null,
     path varchar(255) not null,
-    created_at timestamp default current_timestamp
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp
 );
 
 --* Roles, users, contracts and machines
 create table roles (
     id int auto_increment primary key,
     name varchar(255) unique,
-    created_at timestamp default current_timestamp
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp
 );
 
 create table users (
@@ -49,6 +53,8 @@ create table machines (
     max_basket_size float not null,
     photo_id int,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (photo_id) references photos(id),
     constraint UC_MachineType unique (name, max_basket_size)
 );
@@ -72,6 +78,8 @@ create table task_types (
     name varchar(255) unique,
     photo_id int,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (photo_id) references photos(id)
 );
 
@@ -81,6 +89,8 @@ create table pruning_types (
     description varchar(255),
     photo_id int,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (photo_id) references photos(id)
 );
 
@@ -90,6 +100,8 @@ create table points (
     latitude decimal(10, 7) not null,
     longitude decimal(10, 7) not null,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     constraint UC_Point unique (latitude, longitude)
 );
 
@@ -97,6 +109,8 @@ create table zones (
     id int auto_increment primary key,
     point_id int,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (point_id) references points(id)
 );
 
@@ -106,6 +120,8 @@ create table zones_predefined (
     name varchar(255) not null,
     photo_id int,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (zone_id) references zones(id),
     foreign key (photo_id) references photos(id),
     constraint UC_ZonePredefined unique (zone_id, name)
@@ -115,7 +131,9 @@ create table routes (
     id int auto_increment primary key,
     distance float,
     travel_time int,
-    created_at timestamp default current_timestamp
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp
 );
 
 create table route_points (
@@ -183,6 +201,7 @@ create table tasks (
     notes varchar(255),
     route_id int,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
     deleted_at timestamp,
     foreign key (work_order_id) references work_orders(id),
     foreign key (task_type_id) references task_types(id),
@@ -193,6 +212,7 @@ create table tasks_users (
     id int auto_increment primary key,
     task_id int,
     user_id int,
+    created_at timestamp default current_timestamp,
     foreign key (task_id) references tasks(id),
     foreign key (user_id) references users(id)
 );
@@ -201,6 +221,7 @@ create table tasks_zones (
     id int auto_increment primary key,
     task_id int,
     zone_id int,
+    created_at timestamp default current_timestamp,
     foreign key (task_id) references tasks(id),
     foreign key (zone_id) references zones(id)
 );
