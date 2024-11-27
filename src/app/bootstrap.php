@@ -4,12 +4,6 @@ use App\Core\Database;
 use App\Core\Logger;
 use App\Core\Session;
 
-// Load environment variables if exists
-if (file_exists('../.env')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-    $dotenv->load();
-}
-
 // Start session
 Session::start();
 
