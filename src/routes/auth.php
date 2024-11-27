@@ -1,7 +1,6 @@
 <?php
 
-use App\Controllers\AuthController;
-use App\Middlewares\AuthMiddleware;
+use App\Controllers\Auth\AuthController;
 use App\Middlewares\GuestMiddleware;
 
 return [
@@ -14,7 +13,6 @@ return [
         '/logout' => [
             'controller' => AuthController::class,
             'method' => 'logout',
-            'middleware' => [AuthMiddleware::class],
         ],
     ],
     'POST' => [
