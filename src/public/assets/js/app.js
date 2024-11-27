@@ -1,6 +1,3 @@
-const $ = (selector) => document.querySelector(selector);
-const $$ = (selector) => document.querySelectorAll(selector);
-
 class Modal {
     constructor(modalId) {
         this.modal = document.getElementById(modalId);
@@ -40,7 +37,7 @@ class Modal {
             this.open('<p>Error al cargar el contenido del modal.</p>');
         }
     }
-    // Define la función global modifyIncidence
+
     async modifyIncidence() {
         const nameInput = document.getElementById('incidenceName');
         const descriptionTextarea = document.getElementById('incidenceDescription');
@@ -48,9 +45,46 @@ class Modal {
         if (nameInput) nameInput.disabled = false;
         if (descriptionTextarea) descriptionTextarea.disabled = false;
 
+
         if (nameInput) nameInput.classList.add('editable');
         if (descriptionTextarea) descriptionTextarea.classList.add('editable');
+
+
+        const modifyButton = document.getElementById('btn-modify');
+
+        modifyButton.addEventListener('click', () => {
+            console.log('Button clicked');
+            modifyButton.innerText = 'Guardar';
+        });
     }
+
+
+    async saveChanges(button) {
+        const nameInput = document.getElementById('incidenceName');
+        const descriptionTextarea = document.getElementById('incidenceDescription');
+
+        const updatedData = {
+            name: nameInput.value,
+            description: descriptionTextarea.value
+        };
+
+        const response = await fetch(`/incidence/${incidenceId}/update`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        });
+
+        if (response.ok) {
+            button.textContent = 'Modificar';
+            button.onclick = () => modifyIncidence(button);
+            alert('Incidencia actualizada');
+        } else {
+            alert('Error al actualizar la incidencia');
+        }
+    }
+
 }
 
 
@@ -74,4 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.modifyIncidence = function () {
         modal.modifyIncidence();
     };
+
+    window.saveChanges = function () {
+        modal.saveChanges();
+    };
+
 });

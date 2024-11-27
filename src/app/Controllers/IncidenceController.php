@@ -97,4 +97,15 @@ class IncidenceController
             header('Location: /incidence');
         }
     }
+
+
+    public function update_incidence($id ,$postData) :void  
+    {
+        $incidence = Incidence::find($id);
+        $incidence->name = $postData['name'];
+        $incidence->description = $postData['description'];
+        $incidence->save();
+        Session::set('success', 'Incidence updated successfully');
+        header('Location: /incidence');
+    }
 }
