@@ -7,7 +7,7 @@ use App\Models\Contract;
 
 class ContractController
 {
-    public function index()
+    public function index($queryParams)
     {
         $contracts = Contract::findAll();
         View::render([
@@ -18,7 +18,7 @@ class ContractController
         ]);
     }
 
-    public function create()
+    public function create($queryParams)
     {
         View::render([
             'view' => 'Contract/Create',
@@ -43,7 +43,7 @@ class ContractController
         header('Location: /contracts');
     }
 
-    public function edit($id)
+    public function edit($id, $queryParams)
     {
         $contract = Contract::find($id);
         View::render([
@@ -72,7 +72,7 @@ class ContractController
         header('Location: /contracts');
     }
 
-    public function destroy($id)
+    public function destroy($id, $queryParams)
     {
         $contract = Contract::find($id);
         $contract->delete();

@@ -10,7 +10,7 @@ use App\Models\Zone;
 
 class ElementController
 {
-    public function index()
+    public function index($queryParams)
     {
         $elements = Element::findAll();
         View::render([
@@ -20,8 +20,9 @@ class ElementController
             'data' => ['elements' => $elements],
         ]);
     }
-    public function create(){
-        $zones = Zone::findAll(); 
+    public function create($queryParams)
+    {
+        $zones = Zone::findAll();
         $types = TreeType::findAll();
         View::render([
             'view' => 'Element/Create',
@@ -48,7 +49,7 @@ class ElementController
         header('Location: /elements');
     }
 
-    public function edit($id)
+    public function edit($id, $queryParams)
     {
         $element = Element::find($id);
         View::render([
@@ -73,7 +74,7 @@ class ElementController
         header('Location: /elements');
     }
 
-    public function destroy($id)
+    public function destroy($id, $queryParams)
     {
         $element = Element::find($id);
         $element->delete();

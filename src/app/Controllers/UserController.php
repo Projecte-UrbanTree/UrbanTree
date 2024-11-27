@@ -8,7 +8,7 @@ use App\Models\User;
 
 class UserController
 {
-    public function index()
+    public function index($queryParams)
     {
         $users = User::findAll();
         View::render([
@@ -21,7 +21,7 @@ class UserController
         Session::remove('success');
     }
 
-    public function create()
+    public function create($queryParams)
     {
         View::render([
             'view' => 'User/Create',
@@ -40,7 +40,7 @@ class UserController
         $user->email = $postData['email'];
 
         // Check if password is not empty before updating
-        if (! empty($postData['password'])) {
+        if (!empty($postData['password'])) {
             $user->password = $postData['password'];
         }
 
@@ -52,7 +52,7 @@ class UserController
         header('Location: /users');
     }
 
-    public function edit($id)
+    public function edit($id, $queryParams)
     {
         $user = User::find($id);
         View::render([
@@ -78,7 +78,7 @@ class UserController
         header('Location: /users');
     }
 
-    public function destroy($id)
+    public function destroy($id, $queryParams)
     {
         $user = User::find($id);
         $user->delete();
