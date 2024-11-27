@@ -9,7 +9,7 @@ class WorkerMiddleware implements MiddlewareInterface
     public function handle($request, $next)
     {
         if (!Session::get('user')) {
-            header('Location: /login');
+            header('Location: /auth/login');
             exit;
         }
 
