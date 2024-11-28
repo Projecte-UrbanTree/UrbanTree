@@ -141,6 +141,4 @@ jobs:
             docker compose -f docker-compose.prod.yml up -d --no-deps
 
       - name: 🕵️ Check the deployment
-        run: |
-          sleep 20
-          curl -sSf http://${{ secrets.PRODUCTION_SERVER }}/ || exit 1
+        run: curl -sSf http://${{ secrets.PRODUCTION_SERVER }}/
