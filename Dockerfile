@@ -2,7 +2,7 @@
 
 #* Create a database stage for setting up the database.
 FROM mariadb:lts AS database
-COPY ./docker/database/start-scripts/ /docker-entrypoint-initdb.d/
+COPY ./database/start-scripts/ /docker-entrypoint-initdb.d/
 
 #* Create a prod stage for installing app dependencies defined in Composer.
 FROM composer:lts AS prod-deps
@@ -21,7 +21,7 @@ RUN --mount=type=bind,source=./composer.json,target=composer.json \
     composer install --no-interaction
 
 #* Create a base stage for building the app image.
-FROM php:8.2-apache AS base
+FROM php:8.4-apache AS base
 RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod rewrite
 COPY ./src /var/www/html
@@ -34,12 +34,13 @@ FROM base AS development
 #     && docker-php-ext-enable xdebug
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 COPY --from=dev-deps app/vendor/ /var/www/html/vendor
+COPY ./tests /var/www/html/tests
+COPY ./phpunit.xml** /var/www/html
 
 #* Run tests when building
-# FROM development AS test
-# COPY ./tests /var/www/html/tests
-# WORKDIR /var/www/html
-# RUN ./vendor/bin/phpunit tests/HelloWorldTest.php
+FROM development AS test
+WORKDIR /var/www/html
+RUN ./vendor/bin/phpunit
 
 #* Create a production stage.
 FROM base AS final

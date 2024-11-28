@@ -1,0 +1,48 @@
+area/app/controllers:
+  - changed-files:
+      - any-glob-to-any-file: src/app/Controllers/**
+
+area/app/models:
+  - changed-files:
+      - any-glob-to-any-file: src/app/Models/**
+
+area/app/views:
+  - changed-files:
+      - any-glob-to-any-file: src/app/Views/**
+
+area/database:
+  - changed-files:
+      - any-glob-to-any-file: database/**
+
+area/docker:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .dockerignore
+          - docker-compose.yml
+          - Dockerfile
+
+area/routes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/app/Core/Router.php
+          - src/routes/**
+
+area/tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - phpunit.xml.dist
+          - tests/**
+
+kind/dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - composer.json
+          - composer.lock
+
+kind/design:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .editorconfig
+
+kind/feature:
+  - head-branch: feat/"

@@ -72,7 +72,7 @@
         if (errorMessagesDiv.innerHTML.trim() !== '') {
             errorMessagesDiv.classList.remove('hidden');
         } else {
-            errorMessagesDiv.classList.add('hidden'); 
+            errorMessagesDiv.classList.add('hidden');
         }
     });
 </script>

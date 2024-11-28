@@ -27,8 +27,8 @@ use App\Core\Session;
                 <th class="px-4 py-2 border-b">Species</th>
                 <th class="px-4 py-2 border-b">Zone Name</th>
                 <th class="px-4 py-2 border-b">Zone Postal Code</th>
-                <th class="px-4 py-2 border-b">Latitude</th>
-                <th class="px-4 py-2 border-b">Longitude</th>
+                <!-- <th class="px-4 py-2 border-b">Latitude</th> -->
+                <!-- <th class="px-4 py-2 border-b">Longitude</th> -->
                 <th class="px-4 py-2 border-b">Actions</th>
             </tr>
         </thead>
@@ -44,11 +44,11 @@ use App\Core\Session;
                 <td class="px-4 py-2 border-b">
                     <?php echo $element->zone()->predefined()->name ?? 'Not on a predefined zone'; ?></td>
                 <td class="px-4 py-2 border-b">
-                    <?php echo $element->zone()->postal_code ?? 'Not on a predefined zone'; ?></td>
+                    <?php echo $element->zone()->postal_code; ?></td>
+                <!-- <td class="px-4 py-2 border-b">
+                    <?php //echo $element->point()->latitude; ?></td>
                 <td class="px-4 py-2 border-b">
-                    <?php echo $element->point()->latitude; ?></td>
-                <td class="px-4 py-2 border-b">
-                    <?php echo $element->point()->longitude; ?></td>
+                    <?php //echo $element->point()->longitude; ?></td> -->
                 <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                     <!-- Edit Button (Pencil Icon) -->
                     <a href="/element/<?php echo htmlspecialchars($element->getId()); ?>/edit"

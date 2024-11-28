@@ -5,10 +5,12 @@ namespace App\Controllers;
 use App\Core\View;
 use App\Models\Element;
 use App\Core\Session;
+use App\Models\TreeType;
+use App\Models\Zone;
 
 class ElementController
 {
-    public function index()
+    public function index($queryParams)
     {
         $elements = Element::findAll();
         View::render([
@@ -18,12 +20,18 @@ class ElementController
             'data' => ['elements' => $elements],
         ]);
     }
-    public function create(){
+    public function create($queryParams)
+    {
+        $zones = Zone::findAll();
+        $types = TreeType::findAll();
         View::render([
             'view' => 'Element/Create',
             'title' => 'Add Element',
             'layout' => 'MainLayout',
-            'data' => [],
+            'data' => [
+                'zones' => $zones,
+                'types' => $types
+            ],
         ]);
     }
     public function store($postData)
@@ -31,8 +39,8 @@ class ElementController
         $element = new Element;
         $element->name = $postData['name'];
         $element->zone_id = $postData['zone_id'];
-        $element->point_id = $postData['point_id'];
-        $element->treeType_id = $postData['treeType_id'];
+        // $element->point_id = $postData['point_id'];
+        $element->tree_type_id = $postData['tree_type_id'];
 
         $element->save();
 
@@ -41,7 +49,7 @@ class ElementController
         header('Location: /elements');
     }
 
-    public function edit($id)
+    public function edit($id, $queryParams)
     {
         $element = Element::find($id);
         View::render([
@@ -57,7 +65,7 @@ class ElementController
         $element = Element::find($id);
         $element->name = $postData['name'];
         $element->zone_id = $postData['zone_id'];
-        $element->point_id = $postData['point_id'];
+        // $element->point_id = $postData['point_id'];
         $element->tree_type_id = $postData['tree_type_id'];
         $element->save();
 
@@ -66,7 +74,7 @@ class ElementController
         header('Location: /elements');
     }
 
-    public function destroy($id)
+    public function destroy($id, $queryParams)
     {
         $element = Element::find($id);
         $element->delete();

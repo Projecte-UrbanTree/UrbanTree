@@ -1,19 +1,20 @@
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Edit Contract</h2>
 
-    
-    <div id="errorMessages" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6 hidden"></div>
 
-    <form id="contractForm" action="/contracts/<?php echo htmlspecialchars($contract->getId()); ?>/update" method="POST" class="space-y-6">
-    
+    <div id="errorMessages"
+        class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6 hidden"></div>
+
+    <form id="contractForm" action="/contracts/<?php echo htmlspecialchars($contract->getId()); ?>/update" method="POST"
+        class="space-y-6">
+
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-            <input type="text" id="name" name="name"
-                value="<?php echo htmlspecialchars($contract->name); ?>"
+            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($contract->name); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
-        
+
         <div>
             <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
             <input type="datetime-local" id="start_date" name="start_date"
@@ -21,7 +22,7 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
-       
+
         <div>
             <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
             <input type="datetime-local" id="end_date" name="end_date"
@@ -57,16 +58,16 @@
     </form>
 </div>
 
-<script src="/assets/js/app.js"></script> 
+<script src="/assets/js/app.js"></script>
 <script>
-    document.getElementById('submitBtn').addEventListener('click', function(event) {
+    document.getElementById('submitBtn').addEventListener('click', function (event) {
         const errorMessagesDiv = document.getElementById('errorMessages');
         validateForm(event);
 
         if (errorMessagesDiv.innerHTML.trim() !== '') {
             errorMessagesDiv.classList.remove('hidden');
         } else {
-            errorMessagesDiv.classList.add('hidden'); 
+            errorMessagesDiv.classList.add('hidden');
         }
     });
 </script>
