@@ -8,7 +8,7 @@ use App\Models\Incidence;
 
 class IncidenceController
 {
-    public function index()
+    public function index($queryParams)
     {
         View::render([
             'view' => 'Incidence',

@@ -25,38 +25,33 @@
 
         <!-- Zone Name -->
         <div>
-            <label for="zone_name" class="block text-sm font-medium text-gray-700 mb-1">Zone_id</label>
-            <input type="text" id="zone_name" name="zone_name"
-                value="<?php echo htmlspecialchars($element->dni); ?>"
+            <label for="zone_id" class="block text-sm font-medium text-gray-700 mb-1">Zone</label>
+            <input type="text" id="zone_id" name="zone_id"
+                value="<?php echo htmlspecialchars($element->zone_id); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
-        <!-- Tree Type id -->
+        <!-- Tree Type -->
         <div>
-            <label for="treeType_id" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input type="treeType_id" id="treeType_id" name="treeType_id"
-                value="<?php echo htmlspecialchars($element->email); ?>"
+            <label for="tree_type_id" class="block text-sm font-medium text-gray-700 mb-1">Tree Type</label>
+            <input type="tree_type_id" id="tree_type_id" name="tree_type_id"
+                value="<?php echo htmlspecialchars($element->tree_type_id); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
-        <!-- Role -->
+        <!-- Latitude -->
         <div>
-            <label for="role_id" class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-            <select id="role_id" name="role_id"
+            <label for="latitude" class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+            <input type="latitude" id="latitude" name="latitude"
+                value="<?php echo htmlspecialchars($element->latitude); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
-                <option value="1" <?php echo $user->role_id == 1 ? 'selected' : ''; ?>>Admin
-                </option>
-                <option value="2" <?php echo $user->role_id == 2 ? 'selected' : ''; ?>>User
-                </option>
-                <option value="3" <?php echo $user->role_id == 3 ? 'selected' : ''; ?>>Guest
-                </option>
-            </select>
         </div>
 
-        <!-- Password -->
+        <!-- Longitude -->
         <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input type="password" id="password" name="password" placeholder="Leave blank to keep current password"
+            <label for="longitude" class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+            <input type="longitude" id="longitude" name="longitude"
+                value="<?php echo htmlspecialchars($element->longitude); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 

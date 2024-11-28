@@ -4,10 +4,10 @@ namespace App\Controllers;
 
 use App\Core\View;
 use App\Models\TreeType;
-use App\Core\Session;
+
 class TreeTypeController
 {
-    public function index()
+    public function index($queryParams)
     {
         $tree_types = TreeType::findAll();
         View::render([
@@ -18,10 +18,10 @@ class TreeTypeController
         ]);
     }
 
-    public function create()
+    public function create($queryParams)
     {
         View::render([
-            'view' => 'TreeTypes/Create',
+            'view' => 'TreeType/Create',
             'title' => 'Create TreeTypes',
             'layout' => 'MainLayout',
             'data' => [],
@@ -30,21 +30,21 @@ class TreeTypeController
 
     public function store($postData)
     {
-        $tree_type = new TreeType;
+        $tree_type = new TreeType();
+
         $tree_type->family = $postData['family'];
         $tree_type->genus = $postData['genus'];
         $tree_type->species = $postData['species'];
         $tree_type->save();
 
-
-        header(header:'Location: /tree-types');
-        exit;
+        header('Location: /tree-types');
     }
-    public function edit($id)
+    public function edit($id, $queryParams)
     {
         $tree_type = TreeType::find($id);
+
         View::render([
-            'view' => 'TreeTypes/Edit',
+            'view' => 'TreeType/Edit',
             'title' => 'Edit Tree Type',
             'layout' => 'MainLayout',
             'data' => ['tree_type' => $tree_type],
@@ -53,35 +53,23 @@ class TreeTypeController
 
     public function update($id, $postData)
     {
-    // Cerca el tipus d'arbre a la base de dades pel seu ID
         $treetypes = TreeType::find($id);
-
 
         if ($treetypes) {
             $treetypes->family = $postData['family'];
             $treetypes->genus = $postData['genus'];
             $treetypes->species = $postData['species'];
-            try {
-                //code...
-                $treetypes->save();
-            } catch (\Throwable $th) {
-                throw $th;
-                //throw $th;
-            }
-
+            $treetypes->save();
         }
 
         header('Location: /tree-types');
 
 
-}
-    public function destroy($id)
+    }
+    public function destroy($id, $queryParams)
     {
         $treetypes = TreeType::find($id);
         $treetypes->delete();
-
-
-
 
         header('Location: /tree-types');
     }

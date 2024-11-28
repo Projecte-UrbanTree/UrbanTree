@@ -55,10 +55,10 @@ INSERT INTO route_points (route_id, point_id, point_order) VALUES
 (3, 3, 2),
 (3, 2, 3);
 --* Elements and incidences
-INSERT INTO elements (name, contract_id, zone_id, point_id, tree_type_id) VALUES
-('Árbol 1', 1, 1, 1, 1),
-('Árbol 2', 2, 2, 2, 2),
-('Árbol 3', 3, 3, 3, 3);
+INSERT INTO elements (name, contract_id, zone_id, tree_type_id) VALUES
+('Árbol 1', 1, 1, 1),
+('Árbol 2', 2, 2, 2),
+('Árbol 3', 3, 3, 3);
 INSERT INTO incidences (name, element_id, description) VALUES
 ('Rama caída', 1, 'Rama caída en el suelo'),
 ('Banco roto', 2, 'Banco roto en el parque'),
