@@ -1,0 +1,28 @@
+## Dependency licenses
+
+| Dependency                         | License      |
+| ---------------------------------- | ------------ |
+| phpunit/phpunit                    | BSD-3-Clause |
+| myclabs/deep-copy                  | MIT          |
+| nikic/php-parser                   | BSD-3-Clause |
+| phar-io/version                    | BSD-3-Clause |
+| phpunit/php-code-coverage          | BSD-3-Clause |
+| phpunit/php-file-iterator          | BSD-3-Clause |
+| phpunit/php-invoker                | BSD-3-Clause |
+| phpunit/php-text-template          | BSD-3-Clause |
+| sebastian/cli-parser               | BSD-3-Clause |
+| sebastian/code-unit                | BSD-3-Clause |
+| sebastian/code-unit-reverse-lookup | BSD-3-Clause |
+| sebastian/comparator               | BSD-3-Clause |
+| sebastian/complexity               | BSD-3-Clause |
+| sebastian/diff                     | BSD-3-Clause |
+| sebastian/environment              | BSD-3-Clause |
+| sebastian/exporter                 | BSD-3-Clause |
+| sebastian/global-state             | BSD-3-Clause |
+| sebastian/lines-of-code            | BSD-3-Clause |
+| sebastian/object-enumerator        | BSD-3-Clause |
+| sebastian/object-reflector         | BSD-3-Clause |
+| sebastian/recursion-context        | BSD-3-Clause |
+| sebastian/type                     | BSD-3-Clause |
+| sebastian/version                  | BSD-3-Clause |
+| theseer/tokenizer                  | BSD-3-Clause |
