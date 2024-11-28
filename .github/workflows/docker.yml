@@ -53,6 +53,8 @@ jobs:
         id: meta
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
       - name: 📦 Cache Docker layers
         uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
