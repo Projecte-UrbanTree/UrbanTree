@@ -6,6 +6,9 @@ changelog:
     - title: Fixed Bugs 🐞
       labels:
         - "kind/bug"
+    - title: Improvements 🌟
+      labels:
+        - "kind/improvement"
     - title: Updated Dependencies 📦
       labels:
         - "kind/dependencies"

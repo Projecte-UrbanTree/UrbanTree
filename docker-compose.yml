@@ -42,6 +42,8 @@ services:
     user: root
     secrets:
       - database-password
+    ports:
+      - 1000:3306
     networks:
       - app-network
     # This will store the database in memory, so it will be lost when the container is stopped
@@ -65,7 +67,7 @@ services:
     develop:
       watch:
         - action: rebuild
-          path: ./docker/database
+          path: ./database
 
   phpmyadmin:
     image: phpmyadmin:latest
