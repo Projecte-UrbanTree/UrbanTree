@@ -1,0 +1,102 @@
+services:
+  database:
+    image: mariadb:lts
+    restart: always
+    user: root
+    volumes:
+      - database-data:/var/lib/mysql
+    secrets:
+      - db_pass
+      - db_root_pass
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD_FILE: /run/secrets/db_pass
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "/usr/local/bin/healthcheck.sh",
+          "--su-mysql",
+          "--connect",
+          "--innodb_initialized",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type=database
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+  web:
+    image: ghcr.io/projecte-urbantree/urbantree:main
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - 8000:80
+    volumes:
+      - storage-data:/var/www/html/storage
+    secrets:
+      - db_pass
+    environment:
+      - APP_NAME=${APP_NAME}
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS_FILE_PATH=/run/secrets/db_pass
+      - LOG_FILE_PATH=/var/www/html/storage/logs/app.log
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type=web
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+  api:
+    image: ghcr.io/projecte-urbantree/api:main
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - 8000:8000
+    secrets:
+      - db_pass
+    environment:
+      - APP_NAME=${APP_NAME}
+      - APP_ENV=${APP_ENV}
+      - MARIADB_SERVER=database
+      - MARIADB_PORT=3306
+      - MARIADB_DB=${DB_NAME}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD_FILE=/run/secrets/db_pass
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type=api
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+volumes:
+  database-data:
+  storage-data:
+
+secrets:
+  db_pass:
+    external: true
+  db_root_pass:
+    external: true

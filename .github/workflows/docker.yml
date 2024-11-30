@@ -7,17 +7,23 @@ name: 🐳 Docker CI/CD
 on:
   push:
     branches: ["main"]
-    tags: ["v*.*.*"]
+    tags: ["v*"]
   pull_request:
-    branches: ["main"]
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build:
     name: 🏗️ Build and push Docker image
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: urbantree
+            context: .
+          - image: api
+            context: ./api
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -52,7 +58,7 @@ jobs:
       - uses: docker/metadata-action@b53be03109c4ef6f6cc7aa545b84b17a7fe51c1e
         id: meta
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -64,7 +70,9 @@ jobs:
       - name: 📦 Cache Docker layers
         uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
         with:
-          path: tmp-cache
+          path: |
+            composer-cache
+            python-cache
           key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
 
       - name: 📦 Load cache
@@ -72,7 +80,8 @@ jobs:
         with:
           cache-map: |
             {
-              "tmp-cache": "/tmp/cache"
+              "composer-cache": "/tmp/cache",
+              "python-cache": "/root/.cache/pip"
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
@@ -80,7 +89,7 @@ jobs:
       - name: 🧪 Tests
         uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
         with:
-          context: .
+          context: ${{ matrix.context }}
           target: test
           load: true
           cache-from: type=gha
@@ -91,7 +100,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
         with:
-          context: .
+          context: ${{ matrix.context }}
           push: ${{ github.event_name != 'pull_request' }}
           target: final
           tags: ${{ steps.meta.outputs.tags }}
@@ -119,7 +128,7 @@ jobs:
         uses: actions/attest-build-provenance@v1
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
           subject-digest: ${{ steps.build-and-push.outputs.digest }}
           push-to-registry: true
 
@@ -133,12 +142,14 @@ jobs:
       - name: 🚚 SSH into production server
         uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a17
         with:
-          host: ${{ secrets.PRODUCTION_SERVER }}
-          username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
-          password: ${{ secrets.PRODUCTION_SERVER_KEY }}
-          port: ${{ secrets.PRODUCTION_SERVER_PORT }}
+          host: ${{ secrets.SSH_MANAGER_HOST }}
+          username: ${{ secrets.SSH_MANAGER_USER }}
+          password: ${{ secrets.SSH_MANAGER_PASS }}
+          port: ${{ secrets.SSH_MANAGER_PORT }}
           script: |
-            docker compose -f docker-compose.prod.yml up -d --no-deps
+            docker compose -f compose.prod.yml up -d --no-deps
 
       - name: 🕵️ Check the deployment
-        run: curl -sSf http://${{ secrets.PRODUCTION_SERVER }}/
+        run: |
+          # curl -sSf http://${{ env.WEB_URL }}/
+          curl -sSf http://${{ env.API_URL }}/

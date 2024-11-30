@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "sensor_id": 101,
+        "temperature": 23.5,
+        "humedad": 45.2,
+        "inclination": 0.15,
+        "created_at": "2024-11-17T10:30:00"
+    },
+    {
+        "id": 2,
+        "sensor_id": 102,
+        "temperature": 25.3,
+        "humedad": 40.8,
+        "inclination": 0.30,
+        "created_at": "2024-11-17T11:00:00"
+    }
+]
