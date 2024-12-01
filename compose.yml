@@ -12,12 +12,12 @@ services:
       target: database
     restart: always
     user: root
-    secrets:
-      - db_pass
-      - db_root_pass
     # This will store the database in memory, so it will be lost when the container is stopped
     tmpfs:
       - /var/lib/mysql
+    secrets:
+      - db_pass
+      - db_root_pass
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
       MYSQL_DATABASE: ${DB_NAME}
@@ -76,6 +76,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    secrets:
+      - db_pass
     environment:
       - APP_NAME=${APP_NAME}
       - APP_ENV=${APP_ENV}
@@ -84,8 +86,6 @@ services:
       - MARIADB_DB=${DB_NAME}
       - MARIADB_USER=${DB_USER}
       - MARIADB_PASSWORD_FILE=/run/secrets/db_pass
-    secrets:
-      - db_pass
     develop:
       watch:
         - action: rebuild
