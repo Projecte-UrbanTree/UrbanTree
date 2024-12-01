@@ -30,7 +30,7 @@ CMD ["python3", "-m", "uvicorn", "src.app:app", "--host=0.0.0.0", "--port=8000"]
 
 FROM development AS test
 WORKDIR /app
-CMD ["pytest", "tests", "-v"]
+CMD ["pytest", "tests", "--cov=./src", "--cov-report=xml", "--junitxml=./coverage/api.xml"]
 
 FROM prod-deps AS final
 # Prevents Python from writing pyc files.
