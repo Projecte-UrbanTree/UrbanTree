@@ -1,0 +1,27 @@
+services:
+  web:
+    build:
+      context: .
+      target: test
+    ports:
+      - 8000:80
+    volumes:
+      - ./coverage:/var/www/html/coverage
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /var/www/html
+  api:
+    build:
+      context: ./api
+      target: test
+    ports:
+      - 8001:8000
+    volumes:
+      - ./coverage:/app/coverage
+    develop:
+      watch:
+        - action: rebuild
+          path: ./api
+
