@@ -30,8 +30,9 @@ COPY ./src /var/www/html
 FROM base AS development
 # Add PECL extensions, and enable Xdebug.
 # See https://github.com/docker-library/docs/tree/master/php#pecl-extensions
-# RUN pecl install xdebug-3.2.1 \
+# RUN pecl install xdebug \
 #     && docker-php-ext-enable xdebug
+# COPY ./.docker/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 COPY --from=dev-deps app/vendor/ /var/www/html/vendor
 COPY ./tests /var/www/html/tests
@@ -40,7 +41,9 @@ COPY ./phpunit.xml** /var/www/html
 #* Run tests when building
 FROM development AS test
 WORKDIR /var/www/html
-RUN ./vendor/bin/phpunit
+# ENV XDEBUG_MODE coverage
+# CMD ["./vendor/bin/phpunit", "--log-junit", "junit.xml", "--coverage-clover=coverage.xml"]
+CMD ["./vendor/bin/phpunit"]
 
 #* Create a production stage.
 FROM base AS final
