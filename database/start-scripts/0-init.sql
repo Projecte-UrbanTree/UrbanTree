@@ -210,7 +210,7 @@ create table work_orders_blocks (
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (work_order_id) references work_orders(id),
+    foreign key (work_order_id) references work_orders(id)
 );
 
 create table work_orders_blocks_zones (
@@ -218,7 +218,7 @@ create table work_orders_blocks_zones (
     work_orders_block_id int not null,
     zone_id int not null,
     created_at timestamp default current_timestamp,
-    foreign key (work_orders_block_id) references work_orders_block(id),
+    foreign key (work_orders_block_id) references work_orders_blocks(id),
     foreign key (zone_id) references zones(id),
     constraint UC_WorkOrderBlockZone unique (work_orders_block_id, zone_id)
 );
@@ -234,10 +234,10 @@ create table work_orders_blocks_tasks (
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (work_orders_block_id) references work_orders_block(id),
+    foreign key (work_orders_block_id) references work_orders_blocks(id),
     foreign key (task_type_id) references task_types(id),
     foreign key (tree_type_id) references tree_types(id),
-    foreign key (route_id) references routes(id),
+    foreign key (route_id) references routes(id)
 );
 
 create table work_reports (
