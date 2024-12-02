@@ -9,7 +9,7 @@ on:
 
 jobs:
   urbantree:
-    name: 🧪 Test UrbanTree
+    name: 🧪 UrbanTree
     runs-on: ubuntu-latest
     if: ${{ contains(fromJSON(inputs.images), 'urbantree') }}
     steps:
@@ -56,7 +56,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   api:
-    name: 🧪 Test API
+    name: 🧪 API
     runs-on: ubuntu-latest
     if: ${{ contains(fromJSON(inputs.images), 'api') }}
     steps:
@@ -67,7 +67,7 @@ jobs:
         uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
         with:
           path: /root/.cache/pip
-          key: ${{ runner.os }}-${{ hashFiles('**/requirements-dev.txt') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/requirements.txt', '**/requirements-dev.txt') }}
 
       # https://github.com/actions/setup-python/tree/0b93645e9fea7318ecaed2b359559ac225c90a2b
       - name: 🐍 Setup Python
