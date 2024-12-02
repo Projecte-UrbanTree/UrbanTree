@@ -34,6 +34,15 @@ create table users (
     foreign key (photo_id) references photos(id)
 );
 
+create table work_orders_users(
+    id int auto_increment primary key,
+    work_order_id int not null,
+    user_id int not null,
+    created_at timestamp default current_timestamp,
+    foreign key (work_order_id) references work_orders(id),
+    foreign key (user_id) references users(id)
+);
+
 create table contracts (
     id int auto_increment primary key,
     name varchar(255) not null,
@@ -194,36 +203,36 @@ create table work_orders (
     foreign key (contract_id) references contracts(id)
 );
 
-create table tasks (
+create table block_WO(
     id int auto_increment primary key,
     work_order_id int not null,
+    created_at timestamp default current_timestamp,
+    foreign key (work_order_id) references work_orders(id),
+);
+
+create table block_WO_zones(
+    id int auto_increment primary key,
+    block_WO_id int not null,
+    zone_id int not null,
+    created_at timestamp default current_timestamp,
+    foreign key (block_WO_id) references block_WO(id),
+    foreign key (zone_id) references zones(id)
+);
+
+create table tasks (
+    id int auto_increment primary key,
     task_type_id int not null,
     notes varchar(255),
+    species varchar(255),
+    status int,
     route_id int,
+    block_wo_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (work_order_id) references work_orders(id),
     foreign key (task_type_id) references task_types(id),
-    foreign key (route_id) references routes(id)
-);
-
-create table tasks_users (
-    id int auto_increment primary key,
-    task_id int,
-    user_id int,
-    created_at timestamp default current_timestamp,
-    foreign key (task_id) references tasks(id),
-    foreign key (user_id) references users(id)
-);
-
-create table tasks_zones (
-    id int auto_increment primary key,
-    task_id int,
-    zone_id int,
-    created_at timestamp default current_timestamp,
-    foreign key (task_id) references tasks(id),
-    foreign key (zone_id) references zones(id)
+    foreign key (route_id) references routes(id),
+    foreign key (block_wo_id) references block_WO(id)
 );
 
 create table work_reports (
