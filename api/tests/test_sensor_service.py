@@ -29,8 +29,8 @@ def db_session():
 # test to insert data
 def test_insert_data(db_session):
     # insert sensors into the database before inserting history
-    sensor_1 = Sensor(id=101, entidad_vegetal=1, element_id=None, model="Model1", operative=True, class_type="ClassA")
-    sensor_2 = Sensor(id=102, entidad_vegetal=2, element_id=None, model="Model2", operative=True, class_type="ClassB")
+    sensor_1 = Sensor(id=101, model="Model1", is_active=True)
+    sensor_2 = Sensor(id=102, model="Model2", is_active=True)
 
     db_session.add(sensor_1)
     db_session.add(sensor_2)
@@ -42,8 +42,8 @@ def test_insert_data(db_session):
 
     # mock data including 'sensor_id' and other fields
     mock_data = [
-        ModelItem(id=1, sensor_id=101, temperature=23.5, humedad=45.2, inclination=0.15, created_at="2024-11-17T10:30:00"),
-        ModelItem(id=2, sensor_id=102, temperature=25.3, humedad=40.8, inclination=0.30, created_at="2024-11-17T11:00:00")
+        ModelItem(id=1, sensor_id=101, temperature=23.5, humidity=45.2, inclination=0.15, created_at="2024-11-17T10:30:00"),
+        ModelItem(id=2, sensor_id=102, temperature=25.3, humidity=40.8, inclination=0.30, created_at="2024-11-17T11:00:00")
     ]
 
     # call the data insertion function passing the database session

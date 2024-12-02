@@ -5,7 +5,6 @@ from typing import Any
 from pydantic import (
     MariaDBDsn,
     computed_field,
-    validator,
     field_validator,
     model_validator,
 )
@@ -14,7 +13,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(secrets_dir='/run/secrets')
+    if os.path.exists('/run/secrets'):
+        model_config = SettingsConfigDict(secrets_dir='/run/secrets')
 
     MARIADB_SERVER: str
     MARIADB_PORT: int = 3306

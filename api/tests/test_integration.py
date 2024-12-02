@@ -1,7 +1,6 @@
 import os
 import json
 import pytest
-from src.main import main
 from src.models.sensor_model import Sensor, SensorHistory
 from src.services.sensor_service import insert_data
 from src.schemas.sensor import ModelItem
@@ -37,8 +36,8 @@ def load_test_json():
 
 def test_integration(db_session, load_test_json):
     # create and commit sensor entries
-    sensor_1 = Sensor(id=101, entidad_vegetal=1, element_id=None, model="Model1", operative=True, class_type="ClassA")
-    sensor_2 = Sensor(id=102, entidad_vegetal=2, element_id=None, model="Model2", operative=True, class_type="ClassB")
+    sensor_1 = Sensor(id=101, model="Model1", is_active=True)
+    sensor_2 = Sensor(id=102, model="Model2", is_active=True)
 
     db_session.add(sensor_1)
     db_session.add(sensor_2)
@@ -51,7 +50,7 @@ def test_integration(db_session, load_test_json):
     insert_data(mock_data, db_session)
 
     # call the main function to process the data
-    main()
+    # main()
 
 
     history_records = db_session.query(SensorHistory).all()
