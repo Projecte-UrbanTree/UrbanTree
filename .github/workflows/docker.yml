@@ -15,20 +15,33 @@ env:
 
 jobs:
   changes:
+    name: 🔄 Detect image changes
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
     outputs:
       images: ${{ steps.filter.outputs.changes }}
     steps:
+      # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       # https://github.com/dorny/paths-filter/tree/de90cc6fb38fc0963ad72b210f1f284cd68cea36
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36
         id: filter
         with:
           filters: .github/file-filters.yml
 
+  tests:
+    name: 🧪 Tests
+    needs: changes
+    uses: ./.github/workflows/tests.yml
+    with:
+      images: ${{ needs.changes.outputs.images }}
+    secrets: inherit
+
   build:
     name: 🏗️ Build and push Docker image
+    runs-on: ubuntu-latest
+    needs: [changes, tests]
     strategy:
       fail-fast: false
       # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
@@ -37,11 +50,8 @@ jobs:
         include:
           - image: urbantree
             context: .
-            coverage-file: ./coverage/web.xml
           - image: api
             context: ./api
-            coverage-file: ./coverage/api.xml
-    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -105,29 +115,19 @@ jobs:
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
+      # - name: 🧪 Test ${{  matrix.image }}
+      #   uses: ${{ matrix.action }}
+
       # https://github.com/docker/build-push-action/tree/48aba3b46d1b1fec4febb7c5d0c644b249a11355
-      - name: 🧪 Test UrbanTree
-        uses: ./.github/test-urbantree/action.yml
-        if: ${{ matrix.image == 'urbantree' }}
-
-      - name: 🧪 Test API
-        uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
-        if: ${{ matrix.image == 'api' }}
-        with:
-          context: ${{ matrix.context }}
-          target: test
-          load: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      # https://github.com/codecov/test-results-action/tree/9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
-      - name: 📊 Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
-        with:
-          files: ${{ matrix.coverage-file }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      # - name: 🧪 Test ${{  matrix.image }}
+      #   uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
+      #   if: ${{ matrix.image == 'api' }}
+      #   with:
+      #     context: ${{ matrix.context }}
+      #     target: test
+      #     load: true
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
 
       # https://github.com/docker/build-push-action/tree/48aba3b46d1b1fec4febb7c5d0c644b249a11355
       - name: 🏗️ Build final stage and push to ${{ env.REGISTRY }}
