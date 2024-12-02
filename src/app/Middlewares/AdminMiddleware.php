@@ -14,8 +14,14 @@ class AdminMiddleware implements MiddlewareInterface
         }
 
         if (Session::get('user')['role'] !== 2) {
-            header('Location: /');
-            exit;
+            if (Session::get('user')['role'] == 0) {
+                header('Location: /customer');
+                exit;
+            }
+            if (Session::get('user')['role'] == 1) {
+                header('Location: /worker');
+                exit;
+            }
         }
 
         return $next($request);

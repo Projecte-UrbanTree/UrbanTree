@@ -54,11 +54,12 @@ class AuthController
             'email' => $user->email,
             'role' => $user->role,
         ]);
-
-        if ($user->role === 1) {
-            header('Location: /dashboard');
-        } else {
-            header('Location: /admin/dashboard');
+        if ($user->role === 0) {
+            header('Location: /customer');
+        } elseif ($user->role === 1) {
+            header('Location: /worker');
+        } elseif ($user->role === 2) {
+            header('Location: /admin');
         }
         exit;
     }

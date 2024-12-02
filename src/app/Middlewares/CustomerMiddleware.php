@@ -4,7 +4,7 @@ namespace App\Middlewares;
 
 use App\Core\Session;
 
-class WorkerMiddleware implements MiddlewareInterface
+class CustomerMiddleware implements MiddlewareInterface
 {
     public function handle($request, $next)
     {
@@ -13,9 +13,9 @@ class WorkerMiddleware implements MiddlewareInterface
             exit;
         }
 
-        if (Session::get('user')['role'] !== 1) {
-            if (Session::get('user')['role'] == 0) {
-                header('Location: /customer');
+        if (Session::get('user')['role'] !== 0) {
+            if (Session::get('user')['role'] == 1) {
+                header('Location: /worker');
                 exit;
             }
             if (Session::get('user')['role'] == 2) {

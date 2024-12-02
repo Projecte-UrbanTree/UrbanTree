@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Worker;
 
 use App\Core\View;
 
@@ -9,7 +9,7 @@ class DashboardController
     public function index($queryParams)
     {
         View::render([
-            'view' => 'Dashboard',
+            'view' => 'Worker/Dashboard',
             'title' => 'Worker Dashboard',
             'layout' => 'WorkerLayout',
         ]);

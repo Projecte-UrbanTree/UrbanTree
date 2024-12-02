@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Customer;
 
 use App\Core\View;
 
@@ -9,9 +9,9 @@ class HomeController
     public function index($queryParams)
     {
         View::render([
-            'view' => 'Home',
+            'view' => 'Customer/Home',
             'title' => 'Map',
-            'layout' => 'MapLayout',
+            'layout' => 'CustomerLayout',
         ]);
     }
 }
