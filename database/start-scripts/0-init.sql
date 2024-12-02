@@ -34,15 +34,6 @@ create table users (
     foreign key (photo_id) references photos(id)
 );
 
-create table work_orders_users(
-    id int auto_increment primary key,
-    work_order_id int not null,
-    user_id int not null,
-    created_at timestamp default current_timestamp,
-    foreign key (work_order_id) references work_orders(id),
-    foreign key (user_id) references users(id)
-);
-
 create table contracts (
     id int auto_increment primary key,
     name varchar(255) not null,
@@ -203,36 +194,50 @@ create table work_orders (
     foreign key (contract_id) references contracts(id)
 );
 
-create table block_WO(
+create table work_orders_users (
+    id int auto_increment primary key,
+    work_order_id int not null,
+    user_id int not null,
+    created_at timestamp default current_timestamp,
+    foreign key (work_order_id) references work_orders(id),
+    foreign key (user_id) references users(id),
+    constraint UC_WorkOrderUser unique (work_order_id, user_id)
+);
+
+create table work_orders_blocks (
     id int auto_increment primary key,
     work_order_id int not null,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (work_order_id) references work_orders(id),
 );
 
-create table block_WO_zones(
+create table work_orders_blocks_zones (
     id int auto_increment primary key,
-    block_WO_id int not null,
+    work_orders_block_id int not null,
     zone_id int not null,
     created_at timestamp default current_timestamp,
-    foreign key (block_WO_id) references block_WO(id),
-    foreign key (zone_id) references zones(id)
+    foreign key (work_orders_block_id) references work_orders_block(id),
+    foreign key (zone_id) references zones(id),
+    constraint UC_WorkOrderBlockZone unique (work_orders_block_id, zone_id)
 );
 
-create table tasks (
+create table work_orders_blocks_tasks (
     id int auto_increment primary key,
+    work_orders_block_id int not null,
     task_type_id int not null,
+    tree_type_id int,
     notes varchar(255),
-    species varchar(255),
-    status int,
+    status int default 0,
     route_id int,
-    block_wo_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
+    foreign key (work_orders_block_id) references work_orders_block(id),
     foreign key (task_type_id) references task_types(id),
+    foreign key (tree_type_id) references tree_types(id),
     foreign key (route_id) references routes(id),
-    foreign key (block_wo_id) references block_WO(id)
 );
 
 create table work_reports (
