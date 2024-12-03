@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: ./app
+      target: test
+    ports:
+      - 8000:80
+    develop:
+      watch:
+        - action: rebuild
+          path: ./app
+  api:
+    build:
+      context: ./api
+      target: test
+    ports:
+      - 8001:8000
+    develop:
+      watch:
+        - action: rebuild
+          path: ./api
