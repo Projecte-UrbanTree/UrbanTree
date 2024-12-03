@@ -40,7 +40,9 @@ services:
     depends_on:
       - database
     ports:
-      - 8000:80
+      - target: 8000
+        published: 8000
+        mode: host
     volumes:
       - storage-data:/var/www/html/storage
     secrets:
@@ -67,7 +69,9 @@ services:
     depends_on:
       - database
     ports:
-      - 8000:8000
+      - target: 8000
+        published: 8000
+        mode: host
     secrets:
       - db_pass
     environment:
