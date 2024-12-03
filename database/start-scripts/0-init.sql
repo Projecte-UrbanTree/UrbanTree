@@ -95,18 +95,13 @@ create table points (
 
 create table zones (
     id int auto_increment primary key,
-    name varchar(255) not null,
-    point_id int,
-    contract_id int,
-    city varchar(255),
-    element_type_id int,
-    amount int,
+    contract_id int not null,
+    name varchar(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (point_id) references points(id),
     foreign key (contract_id) references contracts(id),
-    foreign key (element_type_id) references element_types(id)
+    constraint UC_Zone unique (contract_id, name)
 );
 
 --* Elements and incidences
