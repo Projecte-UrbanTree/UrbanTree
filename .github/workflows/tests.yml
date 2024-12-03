@@ -2,11 +2,16 @@ name: 🧪 Tests
 
 on:
   workflow_call:
+    inputs:
+      images:
+        required: true
+        type: string
 
 jobs:
   urbantree:
     name: 🧪 UrbanTree
     runs-on: ubuntu-latest
+    if: ${{ contains(fromJSON(inputs.images), 'urbantree') }}
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -30,10 +35,58 @@ jobs:
       # https://github.com/php-actions/composer/tree/8a65f0d3c6a1d17ca4800491a40b5756a4c164f3
       - name: 📦 Install Composer dependencies
         uses: php-actions/composer@8a65f0d3c6a1d17ca4800491a40b5756a4c164f3
+        with:
+          working_dir: app
 
       - name: 🧪 Run PHPUnit tests with coverage
         shell: bash
+        working-directory: app
         run: ./vendor/bin/phpunit --log-junit junit.xml --coverage-clover=coverage.xml
+
+      # https://github.com/codecov/test-results-action/tree/9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
+      - name: 📊 Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      # https://github.com/codecov/codecov-action/tree/015f24e6818733317a2da2edd6290ab26238649a
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@015f24e6818733317a2da2edd6290ab26238649a
+        with:
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  api:
+    name: 🧪 API
+    runs-on: ubuntu-latest
+    if: ${{ contains(fromJSON(inputs.images), 'api') }}
+    steps:
+      # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      # https://github.com/actions/cache/tree/6849a6489940f00c2f30c0fb92c6274307ccb58a
+      - name: 📦 Cache Python dependencies
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
+        with:
+          path: /root/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('**/requirements.txt', '**/requirements-dev.txt') }}
+
+      # https://github.com/actions/setup-python/tree/0b93645e9fea7318ecaed2b359559ac225c90a2b
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+        with:
+          python-version: "3.13.0"
+
+      - name: 📦 Install Python dependencies
+        shell: bash
+        working-directory: api
+        run: pip install -r requirements-dev.txt
+
+      - name: 🧪 Run Python tests with coverage
+        shell: bash
+        working-directory: api
+        run: pytest tests --cov=./src --cov-report=xml --junitxml=junit.xml
 
       # https://github.com/codecov/test-results-action/tree/9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
       - name: 📊 Upload test results to Codecov
