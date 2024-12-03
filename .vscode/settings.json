@@ -1,5 +1,6 @@
 {
     "yaml.schemas": {
-        "https://json.schemastore.org/pull-request-labeler-5.json": ".github/labeler.yml"
+        "https://json.schemastore.org/pull-request-labeler-5.json": ".github/labeler.yml",
+        "https://raw.githubusercontent.com/compose-spec/compose-spec/refs/heads/main/schema/compose-spec.json": "compose.test.yml"
     }
 }

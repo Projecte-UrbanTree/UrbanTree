@@ -12,7 +12,7 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/tree-type/create"
+    <a href="/admin/tree-type/create"
         class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
         Create Tree Type
     </a>
@@ -46,7 +46,7 @@ use App\Core\Session;
                     </td>
                     <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
-                        <a href="/tree-type/<?php echo htmlspecialchars($tree_type->getId()); ?>/edit"
+                        <a href="/admin/tree-type/<?php echo htmlspecialchars($tree_type->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -55,7 +55,7 @@ use App\Core\Session;
                             </svg>
                         </a>
                         <!-- Delete Button (Trash Icon) -->
-                        <a href="/tree-type/<?php echo htmlspecialchars($tree_type->getId()); ?>/delete"
+                        <a href="/admin/tree-type/<?php echo htmlspecialchars($tree_type->getId()); ?>/delete"
                             onclick="return confirm('Are you sure you want to delete this tree type?');"
                             class="text-red-500 hover:text-red-700" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
