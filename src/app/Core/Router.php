@@ -121,15 +121,15 @@ class Router
             return;
         }
 
-        if (isset($routeInfo['middleware'])) {
-            $this->handleMiddleware($routeInfo['middleware']);
+        if (isset($routeInfo['middlewares'])) {
+            $this->handleMiddlewares($routeInfo['middlewares']);
         }
 
         $controller = new $routeInfo['controller']();
         $controller->{$routeInfo['method']}(...$arguments);
     }
 
-    protected function handleMiddleware(array $middlewares): void
+    protected function handleMiddlewares(array $middlewares): void
     {
         foreach ($middlewares as $middlewareClass) {
             if (!class_exists($middlewareClass)) {
@@ -151,6 +151,7 @@ class Router
             View::render([
                 'view' => 'Error/404',
                 'title' => 'Error 404',
+                'layout' => 'BlankLayout'
             ]);
         }
         http_response_code($statusCode);
