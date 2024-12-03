@@ -11,10 +11,10 @@ INSERT INTO roles (name) VALUES
 ('Trabajador');
 
 --* Users
-INSERT INTO users (company, name, surname, dni, password, email, role_id, photo_id, status) VALUES
-('Projar', 'Carlos', 'García', '12345678A', 'hashedpassword1', 'carlos.garcia@example.com', 1, 1, 1),
-('Projar', 'Ana', 'Martínez', '23456789B', 'hashedpassword2', 'ana.martinez@example.com', 2, 2, 1),
-('Projar', 'José', 'Rodríguez', '34567890C', 'hashedpassword3', 'jose.rodriguez@example.com', 3, NULL, 1);
+INSERT INTO users (company, name, surname, dni, password, email, role_id, photo_id) VALUES
+('Projar', 'Carlos', 'García', '12345678A', 'hashedpassword1', 'carlos.garcia@example.com', 1, 1),
+('Projar', 'Ana', 'Martínez', '23456789B', 'hashedpassword2', 'ana.martinez@example.com', 2, 2),
+('Projar', 'José', 'Rodríguez', '34567890C', 'hashedpassword3', 'jose.rodriguez@example.com', 3, NULL);
 
 --* Contracts
 INSERT INTO contracts (name, start_date, end_date, invoice_proposed, invoice_agreed, invoice_paid) VALUES
@@ -41,9 +41,9 @@ INSERT INTO tree_types (family, genus, species) VALUES
 ('Sapindaceae', 'Acer', 'Acer campestre');
 
 --* Tasks
-INSERT INTO tasks (name, description, tree_type_id) VALUES
-('Podar árboles', 'Tarea de poda general', 1),
-('Riego de árboles', 'Riego programado', NULL),
+INSERT INTO tasks (name, description, require_tree_type) VALUES
+('Podar árboles', 'Tarea de poda general', TRUE),
+('Riego de árboles', 'Riego programado', FALSE),
 ('Fertilización', 'Fertilización básica', NULL);
 
 --* Points
@@ -57,20 +57,6 @@ INSERT INTO zones (name, point_id, contract_id, city, element_type_id, amount) V
 ('Zona Norte', 1, 1, 'Madrid', 1, 50),
 ('Zona Sur', 2, 2, 'Barcelona', 2, 30),
 ('Zona Este', 3, 3, 'Valencia', 3, 20);
-
---* Routes
-INSERT INTO routes (distance, travel_time) VALUES
-(1000, 60),
-(2000, 120),
-(3000, 180);
-
---* Route Points
-INSERT INTO route_points (route_id, point_id, point_order) VALUES
-(1, 1, 1),
-(1, 2, 2),
-(1, 3, 3),
-(2, 2, 1),
-(2, 3, 2);
 
 --* Elements
 INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type_id) VALUES
@@ -97,10 +83,10 @@ INSERT INTO work_orders_users (work_order_id, user_id) VALUES
 (3, 3);
 
 --* Work Reports
-INSERT INTO work_reports (work_order_id, observation, spent_fuel, photo_id) VALUES
-(1, 'Observación de la orden 1', 50.0, NULL),
-(2, 'Observación de la orden 2', 60.0, NULL),
-(3, 'Observación de la orden 3', 70.0, NULL);
+INSERT INTO work_reports (work_order_id, observation, spent_fuel) VALUES
+(1, 'Observación de la orden 1', 50.0),
+(2, 'Observación de la orden 2', 60.0),
+(3, 'Observación de la orden 3', 70.0);
 
 --* Sensors
 INSERT INTO sensors (zone_id, contract_id, point_id, model, is_active) VALUES
@@ -126,7 +112,7 @@ INSERT INTO work_orders_blocks_zones (work_orders_block_id, zone_id) VALUES
 (2, 2),
 (3, 3);
 
-INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_id, notes, status, route_id) VALUES
-(1, 1, 1, 'Podar árboles en zona 1', 0, 1),
-(2, 2, NULL, 'Riego de árboles en zona 2', 1, 2),
-(3, 3, NULL, 'Fertilización en zona 3', 1, 3);
+INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_id) VALUES
+(1, 1, 1),
+(2, 2, NULL),
+(3, 3, NULL);
