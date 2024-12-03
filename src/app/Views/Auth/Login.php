@@ -22,7 +22,7 @@ use App\Core\Session;
 
     <div>
         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" id="password" name="password" required value="hashedpassword3"
+        <input type="password" id="password" name="password" required value="demopass"
             class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             placeholder="••••••••">
     </div>

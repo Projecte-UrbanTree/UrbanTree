@@ -1,8 +1,8 @@
 --* Users, contracts and machines
 INSERT INTO users (company, name, surname, dni, password, email, role) VALUES
-('TechCorp', 'Carlos', 'García', '12345678A', 'hashedpassword1', 'carlos.garcia@example.com', 1),
-('InnovaTech', 'Ana', 'Martínez', '23456789B', 'hashedpassword2', 'ana.martinez@example.com', 1),
-('DesignWorks', 'José', 'Rodríguez', '34567890C', 'hashedpassword3', 'jose.rodriguez@example.com', 2);
+('TechCorp', 'Carlos', 'García', '12345678A', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'carlos.garcia@example.com', 1), -- Password: demopass
+('InnovaTech', 'Ana', 'Martínez', '23456789B', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'ana.martinez@example.com', 1), -- Password: demopass
+('DesignWorks', 'José', 'Rodríguez', '34567890C', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'jose.rodriguez@example.com', 2); -- Password: demopass
 INSERT INTO contracts (name, start_date, end_date, invoice_proposed, invoice_agreed, invoice_paid) VALUES
 ('Ayuntamiento de Valencia', '2021-01-01', '2021-12-31', 1000.00, 900.00, 900.00),
 ('Administración General del Estado', '2021-01-01', '2021-12-31', 2000.00, 1800.00, 1800.00),
