@@ -35,9 +35,12 @@ jobs:
       # https://github.com/php-actions/composer/tree/8a65f0d3c6a1d17ca4800491a40b5756a4c164f3
       - name: 📦 Install Composer dependencies
         uses: php-actions/composer@8a65f0d3c6a1d17ca4800491a40b5756a4c164f3
+        with:
+          working_dir: app
 
       - name: 🧪 Run PHPUnit tests with coverage
         shell: bash
+        working-directory: app
         run: ./vendor/bin/phpunit --log-junit junit.xml --coverage-clover=coverage.xml
 
       # https://github.com/codecov/test-results-action/tree/9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820

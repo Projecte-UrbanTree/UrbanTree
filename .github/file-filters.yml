@@ -1,4 +1,6 @@
-api: &api
+api:
   - "api/**"
+  - "database/**"
 urbantree:
-  - "!(*api)"
+  - "app/**"
+  - "database/**"

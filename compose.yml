@@ -8,8 +8,7 @@
 services:
   database:
     build:
-      context: .
-      target: database
+      context: ./database
     restart: always
     user: root
     # This will store the database in memory, so it will be lost when the container is stopped
@@ -40,9 +39,9 @@ services:
         - action: rebuild
           path: ./database
 
-  web:
+  app:
     build:
-      context: .
+      context: ./app
       target: development
     ports:
       - 8000:80
@@ -64,7 +63,7 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./src
+          path: ./app/src
           target: /var/www/html
 
   api:

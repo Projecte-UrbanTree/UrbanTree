@@ -49,7 +49,7 @@ jobs:
         image: ${{ fromJSON(needs.changes.outputs.images) }}
         include:
           - image: urbantree
-            context: .
+            context: ./app
           - image: api
             context: ./api
     permissions:

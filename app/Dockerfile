@@ -1,9 +1,5 @@
 # syntax=docker/dockerfile:1
 
-#* Create a database stage for setting up the database.
-FROM mariadb:lts AS database
-COPY ./database/start-scripts/ /docker-entrypoint-initdb.d/
-
 #* Create a prod stage for installing app dependencies defined in Composer.
 FROM composer:lts AS prod-deps
 WORKDIR /app
@@ -41,8 +37,6 @@ COPY ./phpunit.xml** /var/www/html
 #* Run tests when building
 FROM development AS test
 WORKDIR /var/www/html
-# ENV XDEBUG_MODE coverage
-# CMD ["./vendor/bin/phpunit", "--log-junit", "junit.xml", "--coverage-clover=coverage.xml"]
 CMD ["./vendor/bin/phpunit"]
 
 #* Create a production stage.

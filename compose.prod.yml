@@ -99,8 +99,6 @@ volumes:
   storage-data: {}
 secrets:
   db_pass:
-    name: db_pass
     external: true
   db_root_pass:
-    name: db_root_pass
     external: true
