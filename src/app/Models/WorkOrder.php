@@ -13,12 +13,12 @@ class WorkOrder extends BaseModel
 
     protected static function mapDataToModel($data): WorkOrder
     {
-        $order = new self();
-        $order->id = $data['id'];
-        $order->contract_id = $data['contract_id'];
-        $order->created_at = $data['created_at'];
+        $WorkOrder = new self();
+        $WorkOrder->id = $data['id'];
+        $WorkOrder->contract_id = $data['contract_id'];
+        $WorkOrder->created_at = $data['created_at'];
 
-        return $order;
+        return $WorkOrder;
     }
 
     public function report(): WorkReport

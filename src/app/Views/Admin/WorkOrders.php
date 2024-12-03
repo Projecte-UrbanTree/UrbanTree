@@ -69,7 +69,7 @@ use App\Core\Session;
 
                         <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                             <!-- Edit Button (Pencil Icon) -->
-                            <a href="/user/<?php echo htmlspecialchars($workOrder->getId()); ?>/edit"
+                            <a href="/work-order/<?php echo htmlspecialchars($workOrder->getId()); ?>/edit"
                                 class="text-blue-500 hover:text-blue-700" title="Edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-5 h-5">
