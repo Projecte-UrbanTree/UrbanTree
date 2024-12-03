@@ -73,10 +73,10 @@ INSERT INTO route_points (route_id, point_id, point_order) VALUES
 (2, 3, 2);
 
 --* Elements
-INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type_id, incidence_id) VALUES
-(1, 1, 1, 1, 1, NULL),
-(2, 2, 2, 2, NULL, NULL),
-(3, 3, 3, 3, NULL), NULL;
+INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type_id) VALUES
+(1, 1, 1, 1, 1),
+(2, 2, 2, 2, NULL),
+(3, 3, 3, 3, NULL);
 
 --* Incidences
 INSERT INTO incidences (element_id, name, description, photo_id) VALUES

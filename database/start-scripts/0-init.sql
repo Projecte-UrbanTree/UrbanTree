@@ -147,7 +147,6 @@ create table elements (
     zone_id int not null,
     point_id int unique,
     tree_type_id int null,
-    incidence_id int NULL,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
@@ -155,8 +154,7 @@ create table elements (
     foreign key (zone_id) references zones(id),
     foreign key (point_id) references points(id),
     foreign key (tree_type_id) references tree_types(id),
-    foreign key (element_type_id) references element_types(id),
-    forgein key (incidence_id) references incidences(id)
+    foreign key (element_type_id) references element_types(id)
 );
 
 create table incidences (
