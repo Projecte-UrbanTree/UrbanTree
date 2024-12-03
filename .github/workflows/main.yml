@@ -173,5 +173,5 @@ jobs:
 
       - name: 🕵️ Check the deployment
         run: |
-          # curl -sSf http://${{ env.WEB_URL }}/
-          curl -sSf http://${{ env.API_URL }}/
+          # curl -sSf http://${{ vars.WEB_URL }}/
+          curl -sSf http://${{ vars.API_URL }}/
