@@ -1,5 +1,5 @@
 <div class="mb-4 flex justify-end">
-    <a href="/contracts"
+    <a href="/contracts/"
         class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500 flex items-center space-x-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -13,7 +13,7 @@
 
     <div id="errorMessages" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6 hidden"></div>
 
-    <form id="contractForm" action="/contracts/store" method="POST" class="space-y-6">
+    <form id="contractForm" action="/admin/contract/store" method="POST" class="space-y-6">
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
             <input type="text" id="name" name="name"
