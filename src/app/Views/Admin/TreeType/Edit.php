@@ -11,7 +11,7 @@
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Edit Tree Type</h2>
-    <form action="/tree-type/<?php echo htmlspecialchars($tree_type->getId()); ?>/update" method="POST"
+    <form action="/admin/tree-type/<?php echo htmlspecialchars($tree_type->getId()); ?>/update" method="POST"
         class="space-y-6">
 
         <!-- Family -->
