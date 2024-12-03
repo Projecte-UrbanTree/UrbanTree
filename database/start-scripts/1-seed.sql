@@ -1,20 +1,8 @@
---* Photos
-INSERT INTO photos (name, path) VALUES
-('Foto Usuario 1', '/uploads/users/photo1.jpg'),
-('Foto Usuario 2', '/uploads/users/photo2.jpg'),
-('Foto Máquina 1', '/uploads/machines/photo1.jpg');
-
---* Roles
-INSERT INTO roles (name) VALUES
-('Administrador'),
-('Gerente'),
-('Trabajador');
-
 --* Users
-INSERT INTO users (company, name, surname, dni, password, email, role_id, photo_id) VALUES
-('Projar', 'Carlos', 'García', '12345678A', 'hashedpassword1', 'carlos.garcia@example.com', 1, 1),
-('Projar', 'Ana', 'Martínez', '23456789B', 'hashedpassword2', 'ana.martinez@example.com', 2, 2),
-('Projar', 'José', 'Rodríguez', '34567890C', 'hashedpassword3', 'jose.rodriguez@example.com', 3, NULL);
+INSERT INTO users (company, name, surname, dni, password, email, role) VALUES
+('TechCorp', 'Carlos', 'García', '12345678A', 'hashedpassword1', 'carlos.garcia@example.com', 1),
+('InnovaTech', 'Ana', 'Martínez', '23456789B', 'hashedpassword2', 'ana.martinez@example.com', 1),
+('DesignWorks', 'José', 'Rodríguez', '34567890C', 'hashedpassword3', 'jose.rodriguez@example.com', 2);
 
 --* Contracts
 INSERT INTO contracts (name, start_date, end_date, invoice_proposed, invoice_agreed, invoice_paid) VALUES
@@ -23,10 +11,10 @@ INSERT INTO contracts (name, start_date, end_date, invoice_proposed, invoice_agr
 ('Ayuntamiento de Carlet', '2021-01-01', '2021-12-31', 3000.00, 2700.00, 2700.00);
 
 --* Machines
-INSERT INTO machines (name, max_basket_size, photo_id) VALUES
-('Cesta elevadora', 200.00, 3),
-('Plataforma elevadora', 300.00, NULL),
-('Tijera elevadora', 400.00, NULL);
+INSERT INTO machines (name, max_basket_size) VALUES
+('Cesta elevadora', 200.00),
+('Plataforma elevadora', 300.00),
+('Tijera elevadora', 400.00);
 
 --* Element Types
 INSERT INTO element_types (name, description) VALUES
@@ -65,10 +53,10 @@ INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type
 (3, 3, 3, 3, NULL);
 
 --* Incidences
-INSERT INTO incidences (element_id, name, description, photo_id) VALUES
-(1, 'Rama caída', 'Rama caída en el suelo', NULL),
-(2, 'Banco roto', 'Banco roto en el parque', NULL),
-(3, 'Fuente sin agua', 'Fuente sin agua en el parque', NULL);
+INSERT INTO incidences (element_id, name, description) VALUES
+(1, 'Rama caída', 'Rama caída en el suelo'),
+(2, 'Banco roto', 'Banco roto en el parque'),
+(3, 'Fuente sin agua', 'Fuente sin agua en el parque');
 
 --* Work Orders
 INSERT INTO work_orders (contract_id) VALUES

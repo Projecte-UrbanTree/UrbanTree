@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Core\Session;
 use App\Core\View;
@@ -12,9 +12,9 @@ class UserController
     {
         $users = User::findAll();
         View::render([
-            'view' => 'Users',
+            'view' => 'Admin/Users',
             'title' => 'Manage Users',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['users' => $users],
         ]);
 
@@ -24,16 +24,16 @@ class UserController
     public function create($queryParams)
     {
         View::render([
-            'view' => 'User/Create',
+            'view' => 'Admin/User/Create',
             'title' => 'Add User',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [],
         ]);
     }
 
     public function store($postData)
     {
-        $user = new User;
+        $user = new User();
         $user->company = $postData['company'];
         $user->name = $postData['name'];
         $user->dni = $postData['dni'];
@@ -44,21 +44,21 @@ class UserController
             $user->password = $postData['password'];
         }
 
-        $user->role_id = $postData['role_id'];
+        $user->role = $postData['role'];
         $user->save();
 
         Session::set('success', 'User created successfully');
 
-        header('Location: /users');
+        header('Location: /admin/users');
     }
 
     public function edit($id, $queryParams)
     {
         $user = User::find($id);
         View::render([
-            'view' => 'User/Edit',
+            'view' => 'Admin/User/Edit',
             'title' => 'Edit User',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['user' => $user],
         ]);
     }
@@ -70,12 +70,12 @@ class UserController
         $user->name = $postData['name'];
         $user->dni = $postData['dni'];
         $user->email = $postData['email'];
-        $user->role_id = $postData['role_id'];
+        $user->role = $postData['role'];
         $user->save();
 
         Session::set('success', 'User updated successfully');
 
-        header('Location: /users');
+        header('Location: /admin/users');
     }
 
     public function destroy($id, $queryParams)
@@ -85,6 +85,6 @@ class UserController
 
         Session::set('success', 'User deleted successfully');
 
-        header('Location: /users');
+        header('Location: /admin/users');
     }
 }

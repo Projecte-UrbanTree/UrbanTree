@@ -19,7 +19,7 @@ class Database
                     trim(file_get_contents(getenv('DB_PASS_FILE_PATH')));
 
                 self::$instance = new PDO(
-                    'mysql:host='.getenv('DB_HOST').';dbname='.getenv('DB_NAME'),
+                    'mysql:host='.getenv('DB_HOST').';port='.getenv('DB_PORT').';dbname='.getenv('DB_NAME'),
                     getenv('DB_USER'),
                     $db_pass
                 );

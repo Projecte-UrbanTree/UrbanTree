@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Models\Zone;
@@ -12,9 +12,9 @@ class ZoneController
     {
         $zones = Zone::getPredefinedZonesWithElements();
         View::render([
-            'view' => 'Zones',
+            'view' => 'Admin/Zones',
             'title' => 'Predefined Zones',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['zones' => $zones],
         ]);
     }
@@ -22,30 +22,30 @@ class ZoneController
     public function create($queryParams)
     {
         View::render([
-            'view' => 'Zone/Create',
+            'view' => 'Admin/Zone/Create',
             'title' => 'Add Zone',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [],
         ]);
     }
 
     public function store($postData)
     {
-        $zone = new ZonePredefined;
+        $zone = new ZonePredefined();
         $zone->name = $postData['name'];
 
         $zone->save();
 
-        header('Location: /zones');
+        header('Location: /admin/zones');
     }
 
     public function edit($id, $queryParams)
     {
         $zone = Zone::find($id);
         View::render([
-            'view' => 'Zone/Edit',
+            'view' => 'Admin/Zone/Edit',
             'title' => 'Edit Zone',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['zone' => $zone],
         ]);
     }
@@ -60,7 +60,7 @@ class ZoneController
 
         $zone->save();
 
-        header('Location: /zones');
+        header('Location: /admin/zones');
     }
 
     public function destroy($id, $queryParams)
@@ -68,6 +68,6 @@ class ZoneController
         $zone = Zone::find($id);
         $zone->delete();
 
-        header('Location: /zones');
+        header('Location: /admin/zones');
     }
 }
