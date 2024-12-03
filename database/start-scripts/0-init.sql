@@ -8,14 +8,7 @@ create table photos (
     deleted_at timestamp
 );
 
---* Roles, users, contracts and machines
-create table roles (
-    id int auto_increment primary key,
-    name varchar(255) unique,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp,
-    deleted_at timestamp
-);
+--* Users, contracts and machines
 
 create table users (
     id int auto_increment primary key,
@@ -25,12 +18,11 @@ create table users (
     dni varchar(255) unique,
     password varchar(255) not null,
     email varchar(255) not null,
-    role_id int not null,
+    role int not null, -- 0: customer, 1: worker, 2: admin
     photo_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (role_id) references roles(id),
     foreign key (photo_id) references photos(id)
 );
 

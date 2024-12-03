@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Models\Contract;
@@ -17,14 +17,14 @@ class DashboardController
         $elements = Element::count();
         $workorders = WorkOrder::count();
         View::render([
-            'view' => 'Dashboard',
+            'view' => 'Admin/Dashboard',
             'title' => 'Dashboard',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [
-                "users" => $users,
-                "contracts" => $contracts,
-                "elements" => $elements,
-                "workorders" => $workorders
+                'users' => $users,
+                'contracts' => $contracts,
+                'elements' => $elements,
+                'workorders' => $workorders,
             ],
         ]);
     }
