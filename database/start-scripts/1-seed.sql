@@ -1,90 +1,132 @@
---* Roles, users, contracts and machines
+--* Photos
+INSERT INTO photos (name, path) VALUES
+('Foto Usuario 1', '/uploads/users/photo1.jpg'),
+('Foto Usuario 2', '/uploads/users/photo2.jpg'),
+('Foto Máquina 1', '/uploads/machines/photo1.jpg');
+
+--* Roles
 INSERT INTO roles (name) VALUES
 ('Administrador'),
 ('Gerente'),
 ('Trabajador');
-INSERT INTO users (company, name, surname, dni, password, email, role_id) VALUES
-('TechCorp', 'Carlos', 'García', '12345678A', 'hashedpassword1', 'carlos.garcia@example.com', 1),
-('InnovaTech', 'Ana', 'Martínez', '23456789B', 'hashedpassword2', 'ana.martinez@example.com', 2),
-('DesignWorks', 'José', 'Rodríguez', '34567890C', 'hashedpassword3', 'jose.rodriguez@example.com', 3);
+
+--* Users
+INSERT INTO users (company, name, surname, dni, password, email, role_id, photo_id, status) VALUES
+('Projar', 'Carlos', 'García', '12345678A', 'hashedpassword1', 'carlos.garcia@example.com', 1, 1, 1),
+('Projar', 'Ana', 'Martínez', '23456789B', 'hashedpassword2', 'ana.martinez@example.com', 2, 2, 1),
+('Projar', 'José', 'Rodríguez', '34567890C', 'hashedpassword3', 'jose.rodriguez@example.com', 3, NULL, 1);
+
+--* Contracts
 INSERT INTO contracts (name, start_date, end_date, invoice_proposed, invoice_agreed, invoice_paid) VALUES
 ('Ayuntamiento de Valencia', '2021-01-01', '2021-12-31', 1000.00, 900.00, 900.00),
 ('Administración General del Estado', '2021-01-01', '2021-12-31', 2000.00, 1800.00, 1800.00),
 ('Ayuntamiento de Carlet', '2021-01-01', '2021-12-31', 3000.00, 2700.00, 2700.00);
-INSERT INTO machines (name, max_basket_size) VALUES
-('Cesta elevadora', 200.00),
-('Plataforma elevadora', 300.00),
-('Tijera elevadora', 400.00);
---* Tree, task and pruning types
+
+--* Machines
+INSERT INTO machines (name, max_basket_size, photo_id) VALUES
+('Cesta elevadora', 200.00, 3),
+('Plataforma elevadora', 300.00, NULL),
+('Tijera elevadora', 400.00, NULL);
+
+--* Element Types
+INSERT INTO element_types (name, description) VALUES
+('Árbol', 'Elemento tipo árbol'),
+('Banco', 'Elemento tipo banco'),
+('Fuente', 'Elemento tipo fuente');
+
+--* Tree Types
 INSERT INTO tree_types (family, genus, species) VALUES
 ('Fagaceae', 'Quercus', 'Quercus robur'),
 ('Pinaceae', 'Pinus', 'Pinus sylvestris'),
 ('Sapindaceae', 'Acer', 'Acer campestre');
-INSERT INTO task_types (name) VALUES
-('Abono arbustos'),
-('Podar setos'),
-('Abono setos');
-INSERT INTO pruning_types (name, description) VALUES
-('A', 'Poda de mantenimiento en árbol tipo A, caduco, de p.c. entre 41/80 cm.'),
-('B', 'Poda de mantenimiento en árbol tipo B, caduco, de p.c. mayor de 81 cm.'),
-('C', 'Poda de mantenimiento en árbol tipo C, perenne, de p.c. entre 41/60 cm.');
---* Points, zones and routes
+
+--* Tasks
+INSERT INTO tasks (name, description, tree_type_id) VALUES
+('Podar árboles', 'Tarea de poda general', 1),
+('Riego de árboles', 'Riego programado', NULL),
+('Fertilización', 'Fertilización básica', NULL);
+
+--* Points
 INSERT INTO points (latitude, longitude) VALUES
 (40.416775, -3.703790),
 (40.416776, -3.703795),
 (40.416777, -3.703800);
-INSERT INTO zones (point_id) VALUES
-(1),
-(2),
-(3);
-INSERT INTO zones_predefined (zone_id, name) VALUES
-(1, 'Zona 1'),
-(3, 'Zona 3');
+
+--* Zones
+INSERT INTO zones (name, point_id, contract_id, city, element_type_id, amount) VALUES
+('Zona Norte', 1, 1, 'Madrid', 1, 50),
+('Zona Sur', 2, 2, 'Barcelona', 2, 30),
+('Zona Este', 3, 3, 'Valencia', 3, 20);
+
+--* Routes
 INSERT INTO routes (distance, travel_time) VALUES
 (1000, 60),
 (2000, 120),
 (3000, 180);
+
+--* Route Points
 INSERT INTO route_points (route_id, point_id, point_order) VALUES
 (1, 1, 1),
 (1, 2, 2),
 (1, 3, 3),
-(2, 3, 1),
-(2, 2, 2),
-(2, 1, 3),
-(3, 1, 1),
-(3, 3, 2),
-(3, 2, 3);
---* Elements and incidences
-INSERT INTO elements (name, contract_id, zone_id, tree_type_id) VALUES
-('Árbol 1', 1, 1, 1),
-('Árbol 2', 2, 2, 2),
-('Árbol 3', 3, 3, 3);
-INSERT INTO incidences (name, element_id, description) VALUES
-('Rama caída', 1, 'Rama caída en el suelo'),
-('Banco roto', 2, 'Banco roto en el parque'),
-('Fuente sin agua', 3, 'Fuente sin agua en el parque'),
-('Árbol enfermo', 1, 'Árbol con signos de enfermedad'),
-('Banco pintado', 2, 'Banco pintado con grafitis'),
-('Fuente con fuga', 3, 'Fuente con fuga de agua');
---* Work orders, tasks and reports
+(2, 2, 1),
+(2, 3, 2);
+
+--* Elements
+INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type_id) VALUES
+(1, 1, 1, 1, 1),
+(2, 2, 2, 2, NULL),
+(3, 3, 3, 3, NULL);
+
+--* Incidences
+INSERT INTO incidences (element_id, name, description, photo_id) VALUES
+(1, 'Rama caída', 'Rama caída en el suelo', NULL),
+(2, 'Banco roto', 'Banco roto en el parque', NULL),
+(3, 'Fuente sin agua', 'Fuente sin agua en el parque', NULL);
+
+--* Work Orders
 INSERT INTO work_orders (contract_id) VALUES
 (1),
 (2),
 (3);
-INSERT INTO tasks (work_order_id, task_type_id, notes) VALUES
-(1, 1, 'Poda de mantenimiento en árbol tipo A, caduco, de p.c. entre 41/80 cm.'),
-(2, 2, 'Poda de mantenimiento en árbol tipo B, caduco, de p.c. entre 50/100 cm.'),
-(3, 3, 'Poda de mantenimiento en árbol tipo C, caduco, de p.c. entre 60/120 cm.');
-INSERT INTO tasks_zones (task_id, zone_id) VALUES
+
+--* Work Orders Users
+INSERT INTO work_orders_users (work_order_id, user_id) VALUES
 (1, 1),
 (2, 2),
 (3, 3);
-INSERT INTO tasks_users (task_id, user_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3);
---* Sensors and sensor history
+
+--* Work Reports
+INSERT INTO work_reports (work_order_id, observation, spent_fuel, photo_id) VALUES
+(1, 'Observación de la orden 1', 50.0, NULL),
+(2, 'Observación de la orden 2', 60.0, NULL),
+(3, 'Observación de la orden 3', 70.0, NULL);
+
+--* Sensors
 INSERT INTO sensors (zone_id, contract_id, point_id, model, is_active) VALUES
-(1, 1, 1, 'Sensor 1', 1),
-(2, 2, 2, 'Sensor 2', 1),
-(3, 3, 3, 'Sensor 3', 1);
+(1, 1, 1, 'Sensor Modelo A', TRUE),
+(2, 2, 2, 'Sensor Modelo B', TRUE),
+(3, 3, 3, 'Sensor Modelo C', FALSE);
+
+--* Sensor History
+INSERT INTO sensor_history (sensor_id, temperature, humidity, inclination) VALUES
+(1, 22.5, 60.0, 15.0),
+(2, 21.0, 55.0, 10.0),
+(3, 19.0, 50.0, 12.0);
+
+--* Work Orders Blocks
+INSERT INTO work_orders_blocks (work_order_id) VALUES
+(1),
+(2),
+(3);
+
+--* Work Orders Blocks Zones
+INSERT INTO work_orders_blocks_zones (work_orders_block_id, zone_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
+
+INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_id, notes, status, route_id) VALUES
+(1, 1, 1, 'Podar árboles en zona 1', 0, 1),
+(2, 2, NULL, 'Riego de árboles en zona 2', 1, 2),
+(3, 3, NULL, 'Fertilización en zona 3', 1, 3);
