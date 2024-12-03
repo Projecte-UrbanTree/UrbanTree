@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Models\TaskType;
@@ -11,38 +11,39 @@ class TaskTypeController
     {
         $task_types = TaskType::findAll();
         View::render([
-            'view' => 'TaskTypes',
+            'view' => 'Admin/TaskTypes',
             'title' => 'Task Types',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['task_types' => $task_types],
         ]);
     }
+
     public function create($queryParams)
     {
         View::render([
-            'view' => 'TaskType/Create',
+            'view' => 'Admin/TaskType/Create',
             'title' => 'Add Task Type',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [],
         ]);
     }
 
     public function store($postData)
     {
-        $tasktype = new TaskType;
+        $tasktype = new TaskType();
         $tasktype->name = $postData['name'];
         $tasktype->save();
 
-        header('Location: /task-types');
+        header('Location: /admin/task-types');
     }
 
     public function edit($id, $queryParams)
     {
         $tasktype = TaskType::find($id);
         View::render([
-            'view' => 'TaskType/Edit',
+            'view' => 'Admin/TaskType/Edit',
             'title' => 'Edit Task Type',
-            'layout' => 'MainLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['task_type' => $tasktype],
         ]);
     }
@@ -54,13 +55,13 @@ class TaskTypeController
         $tasktype->name = $postData['name'];
         $tasktype->save();
 
-        header('Location: /task-types');
+        header('Location: /admin/task-types');
     }
 
     public function destroy($id, $queryParams)
     {
         TaskType::find($id)->delete();
 
-        header('Location: /task-types');
+        header('Location: /admin/task-types');
     }
 }
