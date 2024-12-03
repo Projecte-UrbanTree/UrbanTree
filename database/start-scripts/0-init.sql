@@ -18,7 +18,7 @@ create table users (
     dni varchar(255) unique,
     password varchar(255) not null,
     email varchar(255) not null,
-    role int not null, -- 1: worker, 2: admin
+    role int not null, -- 0: customer, 1: worker, 2: admin
     photo_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
