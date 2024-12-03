@@ -19,7 +19,7 @@ class DashboardController
         View::render([
             'view' => 'Admin/Dashboard',
             'title' => 'Dashboard',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [
                 'users' => $users,
                 'contracts' => $contracts,

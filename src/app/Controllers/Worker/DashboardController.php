@@ -11,7 +11,7 @@ class DashboardController
         View::render([
             'view' => 'Worker/Dashboard',
             'title' => 'Worker Dashboard',
-            'layout' => 'WorkerLayout',
+            'layout' => 'Worker/WorkerLayout',
         ]);
     }
 }

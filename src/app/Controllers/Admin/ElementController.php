@@ -16,7 +16,7 @@ class ElementController
         View::render([
             'view' => 'Admin/Elements',
             'title' => 'Manage Elements',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['elements' => $elements],
         ]);
     }
@@ -28,7 +28,7 @@ class ElementController
         View::render([
             'view' => 'Admin/Element/Create',
             'title' => 'Add Element',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [
                 'zones' => $zones,
                 'types' => $types,
@@ -57,7 +57,7 @@ class ElementController
         View::render([
             'view' => 'Admin/Element/Edit',
             'title' => 'Edit Element',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['element' => $element],
         ]);
     }

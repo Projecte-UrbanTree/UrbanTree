@@ -14,7 +14,7 @@ class ZoneController
         View::render([
             'view' => 'Admin/Zones',
             'title' => 'Predefined Zones',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['zones' => $zones],
         ]);
     }
@@ -24,7 +24,7 @@ class ZoneController
         View::render([
             'view' => 'Admin/Zone/Create',
             'title' => 'Add Zone',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [],
         ]);
     }
@@ -45,7 +45,7 @@ class ZoneController
         View::render([
             'view' => 'Admin/Zone/Edit',
             'title' => 'Edit Zone',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['zone' => $zone],
         ]);
     }

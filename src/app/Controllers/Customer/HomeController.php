@@ -11,7 +11,7 @@ class HomeController
         View::render([
             'view' => 'Customer/Home',
             'title' => 'Map',
-            'layout' => 'CustomerLayout',
+            'layout' => 'Customer/CustomerLayout',
         ]);
     }
 }

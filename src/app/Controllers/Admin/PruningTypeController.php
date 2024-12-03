@@ -13,7 +13,7 @@ class PruningTypeController
         View::render([
             'view' => 'Admin/PruningType',
             'title' => 'Pruning Types',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['pruning_types' => $pruning_types],
         ]);
     }

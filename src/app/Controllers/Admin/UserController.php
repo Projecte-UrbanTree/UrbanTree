@@ -14,7 +14,7 @@ class UserController
         View::render([
             'view' => 'Admin/Users',
             'title' => 'Manage Users',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['users' => $users],
         ]);
 
@@ -26,7 +26,7 @@ class UserController
         View::render([
             'view' => 'Admin/User/Create',
             'title' => 'Add User',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [],
         ]);
     }
@@ -58,7 +58,7 @@ class UserController
         View::render([
             'view' => 'Admin/User/Edit',
             'title' => 'Edit User',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['user' => $user],
         ]);
     }

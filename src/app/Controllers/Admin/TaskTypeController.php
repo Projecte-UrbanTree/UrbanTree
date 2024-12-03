@@ -13,7 +13,7 @@ class TaskTypeController
         View::render([
             'view' => 'Admin/TaskTypes',
             'title' => 'Task Types',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['task_types' => $task_types],
         ]);
     }
@@ -23,7 +23,7 @@ class TaskTypeController
         View::render([
             'view' => 'Admin/TaskType/Create',
             'title' => 'Add Task Type',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [],
         ]);
     }
@@ -43,7 +43,7 @@ class TaskTypeController
         View::render([
             'view' => 'Admin/TaskType/Edit',
             'title' => 'Edit Task Type',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['task_type' => $tasktype],
         ]);
     }

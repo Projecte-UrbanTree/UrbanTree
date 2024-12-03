@@ -13,7 +13,7 @@ class IncidenceController
         View::render([
             'view' => 'Admin/Incidence',
             'title' => 'Incidences',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
         ]);
     }
 
@@ -23,7 +23,7 @@ class IncidenceController
         View::render([
             'view' => 'Admin/Incidence/SeeAllIncidences',
             'title' => 'Incidences',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['incidences' => $incidences],
         ]);
     }
@@ -35,7 +35,7 @@ class IncidenceController
         View::render([
             'view' => 'Admin/Incidence/Create',
             'title' => 'Create Incidence',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [
                 'elements' => $elements,
             ],

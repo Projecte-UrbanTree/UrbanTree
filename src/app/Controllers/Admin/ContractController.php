@@ -13,7 +13,7 @@ class ContractController
         View::render([
             'view' => 'Admin/Contracts',
             'title' => 'Contracts',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['contracts' => $contracts],
         ]);
     }
@@ -23,7 +23,7 @@ class ContractController
         View::render([
             'view' => 'Admin/Contract/Create',
             'title' => 'Create Contract',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [],
         ]);
     }
@@ -49,7 +49,7 @@ class ContractController
         View::render([
             'view' => 'Admin/Contract/Edit',
             'title' => 'Edit Contract',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['contract' => $contract],
         ]);
     }

@@ -13,7 +13,7 @@ class TreeTypeController
         View::render([
             'view' => 'Admin/TreeTypes',
             'title' => 'Tree Types',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['tree_types' => $tree_types],
         ]);
     }
@@ -23,7 +23,7 @@ class TreeTypeController
         View::render([
             'view' => 'Admin/TreeType/Create',
             'title' => 'Create TreeTypes',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => [],
         ]);
     }
@@ -47,7 +47,7 @@ class TreeTypeController
         View::render([
             'view' => 'Admin/TreeType/Edit',
             'title' => 'Edit Tree Type',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['tree_type' => $tree_type],
         ]);
     }

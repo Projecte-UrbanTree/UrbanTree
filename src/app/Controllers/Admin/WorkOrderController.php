@@ -14,7 +14,7 @@ class WorkOrderController
         View::render([
             'view' => 'Admin/WorkOrders',
             'title' => 'Manage Orders',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['workOrders' => $workOrders],
         ]);
         Session::remove('success');
@@ -26,7 +26,7 @@ class WorkOrderController
         View::render([
             'view' => 'Admin/WorkOrder/Create',
             'title' => 'Add Order',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['workOrders' => $workOrders],
         ]);
     }
@@ -39,7 +39,7 @@ class WorkOrderController
         View::render([
             'view' => 'Admin/Order/Edit',
             'title' => 'Edit Order',
-            'layout' => 'AdminLayout',
+            'layout' => 'Admin/AdminLayout',
             'data' => ['order' => $order],
         ]);
     }
