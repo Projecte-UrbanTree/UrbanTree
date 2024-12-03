@@ -41,10 +41,10 @@ INSERT INTO points (latitude, longitude) VALUES
 (40.416777, -3.703800);
 
 --* Zones
-INSERT INTO zones (name, point_id, contract_id, city, element_type_id, amount) VALUES
-('Zona Norte', 1, 1, 'Madrid', 1, 50),
-('Zona Sur', 2, 2, 'Barcelona', 2, 30),
-('Zona Este', 3, 3, 'Valencia', 3, 20);
+INSERT INTO zones (name, contract_id) VALUES
+('Zona Norte', 1),
+(NULL, 2),
+(NULL, 3);
 
 --* Elements
 INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type_id) VALUES
