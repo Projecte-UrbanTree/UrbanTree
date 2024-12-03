@@ -1,7 +1,8 @@
+version: "3.7"
+
 services:
   database:
     image: mariadb:lts
-    restart: always
     user: root
     volumes:
       - database-data:/var/lib/mysql
@@ -28,7 +29,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.type=database
+          - node.labels.type==database
       restart_policy:
         condition: any
         delay: 5s
@@ -36,10 +37,8 @@ services:
         window: 120s
   web:
     image: ghcr.io/projecte-urbantree/urbantree:main
-    restart: always
     depends_on:
-      database:
-        condition: service_healthy
+      - database
     ports:
       - 8000:80
     volumes:
@@ -57,7 +56,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.type=web
+          - node.labels.type==web
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -65,10 +64,8 @@ services:
         window: 120s
   api:
     image: ghcr.io/projecte-urbantree/api:main
-    restart: always
     depends_on:
-      database:
-        condition: service_healthy
+      - database
     ports:
       - 8000:8000
     secrets:
@@ -84,7 +81,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.type=api
+          - node.labels.type==api
       restart_policy:
         condition: on-failure
         delay: 5s

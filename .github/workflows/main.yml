@@ -169,7 +169,7 @@ jobs:
           password: ${{ secrets.SSH_MANAGER_PASS }}
           port: ${{ secrets.SSH_MANAGER_PORT }}
           script: |
-            docker compose -f compose.prod.yml up -d --no-deps
+            docker stack deploy --with-registry-auth -c compose.prod.yml urbantree
 
       - name: 🕵️ Check the deployment
         run: |
