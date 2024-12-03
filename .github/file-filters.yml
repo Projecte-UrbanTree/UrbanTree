@@ -1,0 +1,6 @@
+api:
+  - "api/**"
+  - "database/**"
+urbantree:
+  - "app/**"
+  - "database/**"

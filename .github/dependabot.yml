@@ -12,6 +12,13 @@ updates:
     labels:
       - "kind/dependencies"
       - "needs-triage"
+  - package-ecosystem: "pip"
+    directory: "/api"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "kind/dependencies"
+      - "needs-triage"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
