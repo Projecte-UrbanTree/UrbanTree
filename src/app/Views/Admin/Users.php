@@ -50,7 +50,7 @@ use App\Core\Session;
                         <?php echo htmlspecialchars($user->email); ?>
                     </td>
                     <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->role()->name); ?>
+                        <?php echo htmlspecialchars($user->role); ?>
                     </td>
                     <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                         <!-- Edit Button (Pencil Icon) -->

@@ -16,9 +16,14 @@ class User extends BaseModel
 
     public string $email;
 
-    public int $role_id;
+    public int $role;
 
     public ?int $photo_id;
+
+    public function photo(): ?Photo
+    {
+        return $this->photo_id ? $this->belongsTo(Photo::class, 'photo_id') : null;
+    }
 
     protected static function getTableName(): string
     {
@@ -35,20 +40,10 @@ class User extends BaseModel
         $user->dni = $data['dni'];
         $user->password = $data['password'];
         $user->email = $data['email'];
-        $user->role_id = $data['role_id'];
+        $user->role = $data['role'];
         $user->photo_id = $data['photo_id'];
         $user->created_at = $data['created_at'];
 
         return $user;
-    }
-
-    public function role(): Role
-    {
-        return $this->belongsTo(Role::class, 'role_id');
-    }
-
-    public function photo(): ?Photo
-    {
-        return $this->photo_id ? $this->belongsTo(Photo::class, 'photo_id') : null;
     }
 }

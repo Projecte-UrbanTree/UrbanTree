@@ -1,261 +1,261 @@
 <?php
 
-use App\Controllers\ContractController;
-use App\Controllers\DashboardController;
-use App\Controllers\ElementController;
-use App\Controllers\IncidenceController;
-use App\Controllers\TaskTypeController;
-use App\Controllers\TreeTypeController;
-use App\Controllers\UserController;
-use App\Controllers\WorkOrderController;
-use App\Controllers\ZoneController;
-use App\Middlewares\AuthMiddleware;
+use App\Controllers\Admin\ContractController;
+use App\Controllers\Admin\DashboardController;
+use App\Controllers\Admin\ElementController;
+use App\Controllers\Admin\IncidenceController;
+use App\Controllers\Admin\TaskTypeController;
+use App\Controllers\Admin\TreeTypeController;
+use App\Controllers\Admin\UserController;
+use App\Controllers\Admin\WorkOrderController;
+use App\Controllers\Admin\ZoneController;
+use App\Middlewares\AdminMiddleware;
 
 return [
     'GET' => [
         // === App GET Routes
-        '/' => [
+        '/admin' => [
             'controller' => DashboardController::class,
             'method' => 'index',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === Users GET Routes
-        '/users' => [
+        '/admin/users' => [
             'controller' => UserController::class,
             'method' => 'index',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/user/create' => [
+        '/admin/user/create' => [
             'controller' => UserController::class,
             'method' => 'create',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/user/:id/edit' => [
+        '/admin/user/:id/edit' => [
             'controller' => UserController::class,
             'method' => 'edit',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/user/:id/delete' => [
+        '/admin/user/:id/delete' => [
             'controller' => UserController::class,
             'method' => 'destroy',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === WorkOrders GET Routes
-        '/work-orders' => [
+        '/admin/work-orders' => [
             'controller' => WorkOrderController::class,
             'method' => 'index',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/work-order/create' => [
+        '/admin/work-order/create' => [
             'controller' => WorkOrderController::class,
             'method' => 'create',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/work-order/:id/edit' => [
+        '/admin/work-order/:id/edit' => [
             'controller' => WorkOrderController::class,
             'method' => 'edit',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/work-order/:id/delete' => [
+        '/admin/work-order/:id/delete' => [
             'controller' => WorkOrderController::class,
             'method' => 'destroy',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === Zones GET Routes
-        '/zones' => [
+        '/admin/zones' => [
             'controller' => ZoneController::class,
             'method' => 'index',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/zone/create' => [
+        '/admin/zone/create' => [
             'controller' => ZoneController::class,
             'method' => 'create',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/zone/:id/edit' => [
+        '/admin/zone/:id/edit' => [
             'controller' => ZoneController::class,
             'method' => 'edit',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/zone/:id/delete' => [
+        '/admin/zone/:id/delete' => [
             'controller' => ZoneController::class,
             'method' => 'destroy',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === TreeTypes GET Routes
-        '/tree-types' => [
+        '/admin/tree-types' => [
             'controller' => TreeTypeController::class,
             'method' => 'index',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/tree-type/create' => [
+        '/admin/tree-type/create' => [
             'controller' => TreeTypeController::class,
             'method' => 'create',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/tree-type/:id/edit' => [
+        '/admin/tree-type/:id/edit' => [
             'controller' => TreeTypeController::class,
             'method' => 'edit',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/tree-type/:id/delete' => [
+        '/admin/tree-type/:id/delete' => [
             'controller' => TreeTypeController::class,
             'method' => 'destroy',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === Incidence GET Routes
-        '/incidence' => [
+        '/admin/incidence' => [
             'controller' => IncidenceController::class,
             'method' => 'index',
         ],
-        '/incidence/create' => [
+        '/admin/incidence/create' => [
             'controller' => IncidenceController::class,
             'method' => 'get',
         ],
-        '/incidence/all' => [
+        '/admin/incidence/all' => [
             'controller' => IncidenceController::class,
             'method' => 'findall',
         ],
         // === Elements GET Routes
-        '/elements' => [
+        '/admin/elements' => [
             'controller' => ElementController::class,
             'method' => 'index',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/element/create' => [
+        '/admin/element/create' => [
             'controller' => ElementController::class,
             'method' => 'create',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/element/:id/edit' => [
+        '/admin/element/:id/edit' => [
             'controller' => ElementController::class,
             'method' => 'edit',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/element/:id/delete' => [
+        '/admin/element/:id/delete' => [
             'controller' => ElementController::class,
             'method' => 'destroy',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === TaskTypes GET Routes
-        '/task-types' => [
+        '/admin/task-types' => [
             'controller' => TaskTypeController::class,
             'method' => 'index',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/task-types/create' => [
+        '/admin/task-types/create' => [
             'controller' => TaskTypeController::class,
             'method' => 'create',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/task-types/:id/edit' => [
+        '/admin/task-types/:id/edit' => [
             'controller' => TaskTypeController::class,
             'method' => 'edit',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/task-types/:id/delete' => [
+        '/admin/task-types/:id/delete' => [
             'controller' => TaskTypeController::class,
             'method' => 'destroy',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === Contracts GET Routes
-        '/contracts' => [
+        '/admin/contracts' => [
             'controller' => ContractController::class,
             'method' => 'index',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/contract/create' => [
+        '/admin/contract/create' => [
             'controller' => ContractController::class,
             'method' => 'create',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/contract/:id/edit' => [
+        '/admin/contract/:id/edit' => [
             'controller' => ContractController::class,
             'method' => 'edit',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/contract/:id/delete' => [
+        '/admin/contract/:id/delete' => [
             'controller' => ContractController::class,
             'method' => 'destroy',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
     ],
     'POST' => [
-        '/user/store' => [
+        '/admin/user/store' => [
             'controller' => UserController::class,
             'method' => 'store',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/user/:id/update' => [
+        '/admin/user/:id/update' => [
             'controller' => UserController::class,
             'method' => 'update',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === Elements POST Routes
-        '/element/store' => [
+        '/admin/element/store' => [
             'controller' => ElementController::class,
             'method' => 'store',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/element/:id/update' => [
+        '/admin/element/:id/update' => [
             'controller' => ElementController::class,
             'method' => 'update',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === WorkOrders POST Routes
-        '/work-order/store' => [
+        '/admin/work-order/store' => [
             'controller' => WorkOrderController::class,
             'method' => 'store',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/work-order/:id/update' => [
+        '/admin/work-order/:id/update' => [
             'controller' => WorkOrderController::class,
             'method' => 'update',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === Zones POST Routes
-        '/zone/store' => [
+        '/admin/zone/store' => [
             'controller' => ZoneController::class,
             'method' => 'store',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/zone/:id/update' => [
+        '/admin/zone/:id/update' => [
             'controller' => ZoneController::class,
             'method' => 'update',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === TreeTypes POST Routes
-        '/tree-type/store' => [
+        '/admin/tree-type/store' => [
             'controller' => TreeTypeController::class,
             'method' => 'store',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/tree-type/:id/update' => [
+        '/admin/tree-type/:id/update' => [
             'controller' => TreeTypeController::class,
             'method' => 'update',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === TaskTypes POST Routes
-        '/task-types/store' => [
+        '/admin/task-types/store' => [
             'controller' => TaskTypeController::class,
             'method' => 'store',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/task-types/:id/update' => [
+        '/admin/task-types/:id/update' => [
             'controller' => TaskTypeController::class,
             'method' => 'update',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === Contracts POST Routes
-        '/contract/store' => [
+        '/admin/contract/store' => [
             'controller' => ContractController::class,
             'method' => 'store',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
-        '/contract/:id/update' => [
+        '/admin/contract/:id/update' => [
             'controller' => ContractController::class,
             'method' => 'update',
-            'middleware' => [AuthMiddleware::class],
+            'middlewares' => [AdminMiddleware::class],
         ],
     ],
 ];

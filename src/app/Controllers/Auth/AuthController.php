@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Auth;
 
 use App\Core\Session;
 use App\Core\View;
@@ -38,7 +38,8 @@ class AuthController
         // Check if the user exists and password matches
         $user = User::findBy(['email' => $email, 'password' => $password], true);
 
-        if (!$user || strcmp($user->password, $password) !== 0) { // TODO: Verify hashed password not raw password
+        // TODO: Verify hashed password not raw password
+        if (!$user || strcmp($user->password, $password) !== 0) {
             echo 'Invalid email or password.';
             // Redirect back with error if authentication fails
             Session::set('error', 'Invalid email or password.');
@@ -49,12 +50,17 @@ class AuthController
         Session::set('user', [
             'id' => $user->getId(),
             'name' => $user->name,
-            'surname' => substr($user->surname, 0, 1),
+            'surname' => $user->surname[0],
             'email' => $user->email,
-            'role_id' => $user->role_id,
+            'role' => $user->role,
         ]);
-
-        header('Location: /');
+        if ($user->role === 0) {
+            header('Location: /customer');
+        } elseif ($user->role === 1) {
+            header('Location: /worker');
+        } elseif ($user->role === 2) {
+            header('Location: /admin');
+        }
         exit;
     }
 
