@@ -1,14 +1,20 @@
+area/api:
+  - changed-files:
+      - any-glob-to-any-file: api/**
+
 area/app/controllers:
   - changed-files:
-      - any-glob-to-any-file: src/app/Controllers/**
+      - any-glob-to-any-file: app/src/app/Controllers/**
 
 area/app/models:
   - changed-files:
-      - any-glob-to-any-file: src/app/Models/**
+      - any-glob-to-any-file: app/src/app/Models/**
 
 area/app/views:
   - changed-files:
-      - any-glob-to-any-file: src/app/Views/**
+      - any-glob-to-any-file:
+          - app/src/app/Views/**
+          - app/src/app/Layouts/**
 
 area/database:
   - changed-files:
@@ -17,27 +23,27 @@ area/database:
 area/docker:
   - changed-files:
       - any-glob-to-any-file:
-          - .dockerignore
-          - docker-compose.yml
-          - Dockerfile
+          - "**/.dockerignore"
+          - "compose+(.yml|.test|.prod)"
+          - "**/Dockerfile"
 
 area/routes:
   - changed-files:
       - any-glob-to-any-file:
-          - src/app/Core/Router.php
-          - src/routes/**
+          - app/src/app/Core/Router.php
+          - app/src/routes/**
 
 area/tests:
   - changed-files:
       - any-glob-to-any-file:
-          - phpunit.xml.dist
-          - tests/**
+          - app/phpunit.xml.dist
+          - "**/tests/**"
 
 kind/dependencies:
   - changed-files:
       - any-glob-to-any-file:
-          - composer.json
-          - composer.lock
+          - "**/requirements**.txt"
+          - "**/composer.+(json|lock)"
 
 kind/design:
   - changed-files:
@@ -45,4 +51,10 @@ kind/design:
           - .editorconfig
 
 kind/feature:
-  - head-branch: feat/"
+  - head-branch: '^feat\/'
+
+kind/bug:
+  - head-branch: '^fix\/'
+
+kind/improvement:
+  - head-branch: '^refactor\/'
