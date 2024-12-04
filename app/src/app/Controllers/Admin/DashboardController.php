@@ -28,4 +28,40 @@ class DashboardController
             ],
         ]);
     }
+    public function inventory($queryParams)
+    {
+        $users = User::count();
+        $contracts = Contract::count();
+        $elements = Element::count();
+        $workorders = WorkOrder::count();
+        View::render([
+            'view' => 'Admin/Dashboard',
+            'title' => 'Dashboard',
+            'layout' => 'Admin/AdminInventoryLayout',
+            'data' => [
+                'users' => $users,
+                'contracts' => $contracts,
+                'elements' => $elements,
+                'workorders' => $workorders,
+            ],
+        ]);
+    }
+    public function gestion($queryParams)
+    {
+        $users = User::count();
+        $contracts = Contract::count();
+        $elements = Element::count();
+        $workorders = WorkOrder::count();
+        View::render([
+            'view' => 'Admin/Dashboard',
+            'title' => 'Dashboard',
+            'layout' => 'Admin/AdminManagementLayout',
+            'data' => [
+                'users' => $users,
+                'contracts' => $contracts,
+                'elements' => $elements,
+                'workorders' => $workorders,
+            ],
+        ]);
+    }
 }

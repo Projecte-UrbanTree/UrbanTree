@@ -19,6 +19,16 @@ return [
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],
+        '/admin/inventory' => [
+            'controller' => DashboardController::class,
+            'method' => 'inventory',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/gestion' => [
+            'controller' => DashboardController::class,
+            'method' => 'gestion',
+            'middlewares' => [AdminMiddleware::class],
+        ],
         // === Users GET Routes
         '/admin/users' => [
             'controller' => UserController::class,
