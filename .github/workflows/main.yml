@@ -20,7 +20,7 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
-      images: ${{ steps.filter.outputs.changes }}
+      images: ${{ github.event_name == 'push' && '["all"]' || steps.filter.outputs.changes }}
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -47,6 +47,8 @@ jobs:
       # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
       matrix:
         image: ${{ fromJSON(needs.changes.outputs.images) }}
+        exclude:
+          - image: all
         include:
           - image: urbantree
             context: ./app
