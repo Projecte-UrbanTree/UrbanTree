@@ -14,23 +14,46 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
+  changes:
+    name: 🔄 Detect changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      images: ${{ github.event_name == 'push' && '["all"]' || steps.filter.outputs.changes }}
+    steps:
+      # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      # https://github.com/dorny/paths-filter/tree/de90cc6fb38fc0963ad72b210f1f284cd68cea36
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36
+        id: filter
+        with:
+          filters: .github/file-filters.yml
+
   tests:
     name: 🧪 Tests
+    needs: changes
     uses: ./.github/workflows/tests.yml
+    with:
+      images: ${{ needs.changes.outputs.images }}
     secrets: inherit
 
   build:
     name: 🐳 Docker
     runs-on: ubuntu-latest
-    needs: tests
+    needs: [changes, tests]
     strategy:
       fail-fast: false
       # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
       matrix:
-        image: [urbantree]
+        image: ${{ fromJSON(needs.changes.outputs.images) }}
+        exclude:
+          - image: all
         include:
           - image: urbantree
-            context: .
+            context: ./app
+          - image: api
+            context: ./api
     permissions:
       contents: read
       packages: write
@@ -80,6 +103,7 @@ jobs:
         with:
           path: |
             composer-cache
+            python-cache
           key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
 
       # https://github.com/reproducible-containers/buildkit-cache-dance/tree/5b6db76d1da5c8b307d5d2e0706d266521b710de
@@ -88,7 +112,8 @@ jobs:
         with:
           cache-map: |
             {
-              "composer-cache": "/tmp/cache"
+              "composer-cache": "/tmp/cache",
+              "python-cache": "/root/.cache/pip"
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
@@ -110,7 +135,7 @@ jobs:
       # This will only write to the public Rekor transparency log when the Docker
       # repository is public to avoid leaking data.  If you would like to publish
       # transparency data even for private images, pass --force to cosign below.
-      # https://github.com/sigstore/cosign
+      # https://github.com/sigstore/cosign/
       - name: 🖋️ Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
@@ -130,6 +155,17 @@ jobs:
           subject-digest: ${{ steps.build-and-push.outputs.digest }}
           push-to-registry: true
 
+      # https://github.com/getsentry/action-release/tree/e769183448303de84c5a06aaaddf9da7be26d6c7
+      - name: 📦 Release to Sentry
+        uses: getsentry/action-release@e769183448303de84c5a06aaaddf9da7be26d6c7
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        with:
+          projects: api
+          environment: production
+
   deploy:
     name: 🚀 Deploy to production
     runs-on: ubuntu-latest
@@ -141,12 +177,14 @@ jobs:
       - name: 🚚 SSH into production server
         uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a17
         with:
-          host: ${{ secrets.PRODUCTION_SERVER }}
-          username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
-          password: ${{ secrets.PRODUCTION_SERVER_KEY }}
-          port: ${{ secrets.PRODUCTION_SERVER_PORT }}
+          host: ${{ secrets.SSH_MANAGER_HOST }}
+          username: ${{ secrets.SSH_MANAGER_USER }}
+          password: ${{ secrets.SSH_MANAGER_PASS }}
+          port: ${{ secrets.SSH_MANAGER_PORT }}
           script: |
-            docker compose -f docker-compose.prod.yml up -d --no-deps
+            docker stack deploy --with-registry-auth -c compose.prod.yml urbantree
 
       - name: 🕵️ Check the deployment
-        run: curl -sSf http://${{ secrets.PRODUCTION_SERVER }}/
+        run: |
+          # curl -sSf http://${{ vars.WEB_URL }}/
+          curl -sSf http://${{ vars.API_URL }}/

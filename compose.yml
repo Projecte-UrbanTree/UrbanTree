@@ -1,0 +1,111 @@
+#
+# This file defines the services that make up the application
+# Each service is a container that runs a single process
+# Each container is built from an image, according to the Dockerfile specified in the build section
+# For more information, see: https://docs.docker.com/reference/compose-file/
+#
+
+services:
+  database:
+    build:
+      context: ./database
+    restart: always
+    user: root
+    # This will store the database in memory, so it will be lost when the container is stopped
+    tmpfs:
+      - /var/lib/mysql
+    secrets:
+      - db_pass
+      - db_root_pass
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_pass
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD_FILE: /run/secrets/db_pass
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "/usr/local/bin/healthcheck.sh",
+          "--su-mysql",
+          "--connect",
+          "--innodb_initialized",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    develop:
+      watch:
+        - action: rebuild
+          path: ./database
+
+  app:
+    build:
+      context: ./app
+      target: development
+    ports:
+      - 8000:80
+    depends_on:
+      database:
+        condition: service_healthy
+    secrets:
+      - db_pass
+    volumes:
+      - storage-data:/var/www/html/storage
+    environment:
+      - APP_NAME=${APP_NAME}
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS_FILE_PATH=/run/secrets/db_pass
+      - LOG_FILE_PATH=/var/www/html/storage/logs/app.log
+    develop:
+      watch:
+        - action: sync
+          path: ./app/src
+          target: /var/www/html
+
+  api:
+    build:
+      context: ./api
+      target: development
+    ports:
+      - 8001:8000
+    depends_on:
+      database:
+        condition: service_healthy
+    secrets:
+      - db_pass
+    environment:
+      - APP_NAME=${APP_NAME}
+      - MARIADB_SERVER=database
+      - MARIADB_PORT=3306
+      - MARIADB_DB=${DB_NAME}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD_FILE=/run/secrets/db_pass
+      - SENTRY_DSN=${SENTRY_DSN_API}
+    develop:
+      watch:
+        - action: rebuild
+          path: ./api
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 8080:80
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      PMA_HOST: database
+
+volumes:
+  database-data:
+  storage-data:
+
+secrets:
+  db_pass:
+    environment: DB_PASS
+  db_root_pass:
+    environment: DB_ROOT_PASS
