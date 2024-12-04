@@ -1,7 +1,5 @@
+from pydantic_settings import BaseSettings, SettingsConfigDict
 import os
-
-from typing import Any
-
 from pydantic import (
     MariaDBDsn,
     computed_field,
@@ -9,12 +7,13 @@ from pydantic import (
     model_validator,
 )
 from pydantic_core import MultiHostUrl
-from pydantic_settings import BaseSettings, SettingsConfigDict
-
+from typing import Any
 
 class Settings(BaseSettings):
     if os.path.exists('/run/secrets'):
         model_config = SettingsConfigDict(secrets_dir='/run/secrets')
+
+    APP_ENV: str = "development"
 
     MARIADB_SERVER: str
     MARIADB_PORT: int = 3306
@@ -22,6 +21,8 @@ class Settings(BaseSettings):
     MARIADB_PASSWORD: str | None = None
     MARIADB_PASSWORD_FILE: str | None = None
     MARIADB_DB: str
+
+    SENTRY_DSN: str
 
     @model_validator(mode="before")
     @classmethod
@@ -54,4 +55,6 @@ class Settings(BaseSettings):
             path=self.MARIADB_DB,
         )
 
-settings = Settings()
+# instantiate the settings object if APP_ENV is production
+if os.environ.get("APP_ENV") == "production":
+    settings = Settings()

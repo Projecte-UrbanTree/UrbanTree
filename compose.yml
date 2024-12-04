@@ -79,12 +79,12 @@ services:
       - db_pass
     environment:
       - APP_NAME=${APP_NAME}
-      - APP_ENV=${APP_ENV}
       - MARIADB_SERVER=database
       - MARIADB_PORT=3306
       - MARIADB_DB=${DB_NAME}
       - MARIADB_USER=${DB_USER}
       - MARIADB_PASSWORD_FILE=/run/secrets/db_pass
+      - SENTRY_DSN=${SENTRY_DSN_API}
     develop:
       watch:
         - action: rebuild
