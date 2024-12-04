@@ -14,7 +14,7 @@ use App\Middlewares\AdminMiddleware;
 return [
     'GET' => [
         // === App GET Routes
-        '/admin' => [
+        '/admin' => [ 
             'controller' => DashboardController::class,
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
@@ -24,7 +24,7 @@ return [
             'method' => 'inventory',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/gestion' => [
+        '/admin/management' => [
             'controller' => DashboardController::class,
             'method' => 'gestion',
             'middlewares' => [AdminMiddleware::class],

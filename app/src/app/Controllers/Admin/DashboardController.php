@@ -46,7 +46,10 @@ class DashboardController
             ],
         ]);
     }
-    public function gestion($queryParams)
+
+
+
+public function gestion($queryParams)
     {
         $users = User::count();
         $contracts = Contract::count();

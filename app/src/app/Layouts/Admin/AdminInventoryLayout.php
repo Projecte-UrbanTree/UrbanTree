@@ -38,11 +38,9 @@
         <div class="hidden md:flex gap-4 ml-20">
             <a href="http://localhost:8000/admin/inventory"
                 class="text-gray-700 font-bold hover:text-blue-600 text-lg">Inventario</a>
-            <a href="http://localhost:8000/admin/gestion"
+            <a href="http://localhost:8000/admin/management"
                 class="text-gray-300 font-bold hover:text-blue-600 text-lg">Gestión</a>
         </div>
-
-
 
         <!-- Icono de notificaciones y Avatar del usuario -->
         <div class="flex items-center gap-4">
