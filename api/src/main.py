@@ -51,3 +51,8 @@ app = FastAPI(lifespan=lifespan)
 @app.get("/")
 def hello():
     return "Hello, Docker!"
+
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
