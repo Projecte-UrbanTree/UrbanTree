@@ -1,6 +1,8 @@
-from pydantic import BaseModel, RootModel
 from datetime import datetime
 from typing import List, Optional
+
+from pydantic import BaseModel, RootModel
+
 
 class ModelItem(BaseModel):
     id: Optional[int]
