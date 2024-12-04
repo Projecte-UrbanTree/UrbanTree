@@ -27,8 +27,8 @@
             </button>
             <!-- Logo -->
             <a href="#">
-                <img class="h-10 md:block hidden" src="/assets/images/logotip-horizontal.png" alt="Logo">
-                <img class="h-10 md:hidden block" src="/assets/images/isotip.png" alt="Logo">
+                <img class="md:block hidden w-48" src="/assets/images/logotip-horizontal.png" alt="Logo">
+                <img class="md:hidden block" src="/assets/images/isotip.png" alt="Logo">
             </a>
             <!-- Navigation Links (Visible only on large screens) -->
             <div class="hidden md:flex gap-6 ml-20">
@@ -40,7 +40,7 @@
                 </a>
             </div>
             <!-- User Section -->
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 mx-2">
                 <!-- User Info Dropdown -->
                 <div class="relative inline-block text-left">
                     <button onclick="toggleSubmenu()" class="flex items-center gap-2 bg-white px-3 py-2 text-sm text-gray-900 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
@@ -58,13 +58,22 @@
                     </svg>
                 </a>
                 <!-- User Avatar -->
-                <div class="flex items-center gap-2">
-                    <img class="h-12 w-12 rounded-full" src="/assets/images/avatar.png" alt="User Avatar">
-                    <div class="hidden md:block text-sm">
+                <div class="relative flex items-center gap-2 cursor-pointer" onclick="profileDropdown.classList.toggle('hidden')">
+                    <img class="h-10 rounded-full" src="/assets/images/avatar.png" alt="User Avatar">
+                    <div class="hidden md:block text-sm relative">
                         <span class="block text-gray-700"><?php echo $_SESSION['user']['name']; ?></span>
                         <span class="block text-gray-500">
                             <?php echo ($_SESSION['user']['role'] == 2) ? 'ADMINISTRADOR' : 'USUARIO'; ?>
                         </span>
+                        <div id="profile-dropdown" class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            <div class="py-1" role="none">
+                                <!-- Active: "bg-gray-100 text-gray-900 outline-none", Not Active: "text-gray-700" -->
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">Support</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">License</a>
+                                <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800" role="menuitem" tabindex="-1" id="menu-item-3">Sign out</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,58 +83,60 @@
     <?php if ($currentPath !== '/admin/inventory') { ?>
         <div id="submenu" class="md:flex hidden justify-center items-center gap-6 p-6 border-b-2 md:border-b-0">
             <!-- Contratos -->
-            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200">
+            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center duration-200">
                 <a href="/admin/contracts" class="submenu-text <?php echo ($currentPath == '/admin/contracts') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>"><i class="fas fa-file-contract hidden md:block text-gray-700"></i>Contratos</a>
             </div>
             <!-- Orden de Trabajo -->
-            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200">
+            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center duration-200">
                 <i class="fas fa-briefcase hidden md:block text-gray-700"></i>
                 <a href="/admin/work-orders" class="submenu-text <?php echo ($currentPath == '/admin/work-orders') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Orden de Trabajo</a>
             </div>
             <!-- Zonas -->
-            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200">
+            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center duration-200">
                 <i class="fas fa-map-marker-alt hidden md:block text-gray-700"></i>
                 <a href="/admin/zones" class="submenu-text <?php echo ($currentPath == '/admin/zones') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Zonas</a>
             </div>
             <!-- Elementos -->
-            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200">
+            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center duration-200">
                 <i class="fas fa-cube hidden md:block text-gray-700"></i>
                 <a href="/admin/elements" class="submenu-text <?php echo ($currentPath == '/admin/elements') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Elementos</a>
             </div>
             <!-- Tipo Tarea -->
-            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200">
+            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center duration-200">
                 <i class="fas fa-tasks hidden md:block text-gray-700"></i>
                 <a href="/admin/task-types" class="submenu-text <?php echo ($currentPath == '/admin/task-types') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Tipo Tarea</a>
             </div>
             <!-- Usuarios -->
-            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200">
+            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center duration-200">
                 <i class="fas fa-users hidden md:block text-gray-700"></i>
                 <a href="/admin/users" class="submenu-text <?php echo ($currentPath == '/admin/users') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Usuarios</a>
             </div>
             <!-- Partes -->
-            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200">
+            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center duration-200">
                 <i class="fas fa-clipboard-list hidden md:block text-gray-700"></i>
                 <a href="/admin/work-reports" class="submenu-text <?php echo ($currentPath == '/admin/work-reports') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Partes</a>
             </div>
             <!-- Estadísticas -->
-            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200">
+            <div class="submenu-item py-2 flex flex-col md:items-center md:text-center duration-200">
                 <i class="fas fa-chart-bar hidden md:block text-gray-700"></i>
                 <a href="/admin/stats" class="submenu-text <?php echo ($currentPath == '/admin/stats') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Estadísticas</a>
             </div>
         </div>
     <?php } ?>
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto my-6">
+    <div class="max-w-7xl mx-auto px-6">
         <?php echo $content; ?>
     </div>
     <script>
         const menuButton = document.getElementById('menuButton');
         const submenu = document.getElementById('submenu');
         const submenuItems = document.querySelectorAll('.submenu-item');
+        const profileDropdown = document.getElementById('profile-dropdown');
 
         menuButton.addEventListener('click', () => {
             submenu.classList.toggle('hidden');
         });
+        
     </script>
 </body>
 
