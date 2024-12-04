@@ -117,9 +117,9 @@
         </div>
 
         <!-- Partes -->
-        <div class="hover:scale-105 duration-200 flex items-center gap-2 <?php echo ($currentPath == '/admin/work-orders') ? 'text-blue-600 font-bold' : ''; ?>">
-            <i class="fas fa-clipboard-list <?php echo ($currentPath == '/admin/work-orders') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
-            <a href="/admin/work-orders" class="<?php echo ($currentPath == '/admin/work-orders') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Partes</a>
+        <div class="hover:scale-105 duration-200 flex items-center gap-2 <?php echo ($currentPath == '/admin/work-reports') ? 'text-blue-600 font-bold' : ''; ?>">
+            <i class="fas fa-clipboard-list <?php echo ($currentPath == '/admin/work-reports') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
+            <a href="/admin/work-reports" class="<?php echo ($currentPath == '/admin/work-reports') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Partes</a>
         </div>
 
         <!-- Estadísticas -->
