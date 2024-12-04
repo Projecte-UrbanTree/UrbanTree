@@ -8,14 +8,7 @@ create table photos (
     deleted_at timestamp
 );
 
---* Roles, users, contracts and machines
-create table roles (
-    id int auto_increment primary key,
-    name varchar(255) unique,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp,
-    deleted_at timestamp
-);
+--* Users, contracts and machines
 
 create table users (
     id int auto_increment primary key,
@@ -25,12 +18,11 @@ create table users (
     dni varchar(255) unique,
     password varchar(255) not null,
     email varchar(255) not null,
-    role_id int not null,
+    role int not null, -- 0: customer, 1: worker, 2: admin
     photo_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (role_id) references roles(id),
     foreign key (photo_id) references photos(id)
 );
 
@@ -65,36 +57,32 @@ create table tree_types (
     family varchar(255) not null,
     genus varchar(255) not null,
     species varchar(255) unique,
-    photo_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (photo_id) references photos(id),
     constraint UC_TreeType unique (family, genus, species)
 );
 
-create table task_types (
+create table tasks (
     id int auto_increment primary key,
     name varchar(255) unique,
-    photo_id int,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp,
-    deleted_at timestamp,
-    foreign key (photo_id) references photos(id)
-);
-
-create table pruning_types (
-    id int auto_increment primary key,
-    name varchar(20) unique,
     description varchar(255),
-    photo_id int,
+    require_tree_type boolean default false,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
-    deleted_at timestamp,
-    foreign key (photo_id) references photos(id)
+    deleted_at timestamp
 );
 
---* Points, zones and routes
+create table element_types (
+    id int auto_increment primary key,
+    name varchar(255) not null,
+    description varchar(255),
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp
+);
+
+--* Points and zones
 create table points (
     id int auto_increment primary key,
     latitude decimal(10, 7) not null,
@@ -107,60 +95,31 @@ create table points (
 
 create table zones (
     id int auto_increment primary key,
-    point_id int,
+    contract_id int not null,
+    name varchar(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (point_id) references points(id)
-);
-
-create table zones_predefined (
-    id int auto_increment primary key,
-    zone_id int unique,
-    name varchar(255) not null,
-    photo_id int,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp,
-    deleted_at timestamp,
-    foreign key (zone_id) references zones(id),
-    foreign key (photo_id) references photos(id),
-    constraint UC_ZonePredefined unique (zone_id, name)
-);
-
-create table routes (
-    id int auto_increment primary key,
-    distance float,
-    travel_time int,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp,
-    deleted_at timestamp
-);
-
-create table route_points (
-    id int auto_increment primary key,
-    route_id int not null,
-    point_id int not null,
-    point_order int not null,
-    created_at timestamp default current_timestamp,
-    foreign key (route_id) references routes(id),
-    foreign key (point_id) references points(id)
+    foreign key (contract_id) references contracts(id),
+    constraint UC_Zone unique (contract_id, name)
 );
 
 --* Elements and incidences
 create table elements (
     id int auto_increment primary key,
-    name varchar(255) not null,
+    element_type_id int not null,
     contract_id int not null,
     zone_id int not null,
-    -- point_id int unique,
-    tree_type_id int not null,
+    point_id int unique,
+    tree_type_id int null,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
     foreign key (contract_id) references contracts(id),
     foreign key (zone_id) references zones(id),
-    -- foreign key (point_id) references points(id),
-    foreign key (tree_type_id) references tree_types(id)
+    foreign key (point_id) references points(id),
+    foreign key (tree_type_id) references tree_types(id),
+    foreign key (element_type_id) references element_types(id)
 );
 
 create table incidences (
@@ -168,62 +127,71 @@ create table incidences (
     element_id int not null,
     name varchar(255) not null,
     description varchar(255),
+    photo_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (element_id) references elements(id)
-);
-
-create table incidence_photos (
-    id int auto_increment primary key,
-    incidence_id int not null,
-    photo_id int not null,
-    created_at timestamp default current_timestamp,
-    foreign key (incidence_id) references incidences(id),
-    foreign key (photo_id) references photos(id),
-    constraint UC_IncidencePhoto unique (incidence_id, photo_id)
+    foreign key (element_id) references elements(id),
+    foreign key (photo_id) references photos(id)
 );
 
 --* Work orders, tasks and reports
 create table work_orders (
     id int auto_increment primary key,
     contract_id int,
+    date timestamp,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
     foreign key (contract_id) references contracts(id)
 );
 
-create table tasks (
+create table work_orders_users (
     id int auto_increment primary key,
     work_order_id int not null,
-    task_type_id int not null,
-    notes varchar(255),
-    route_id int,
+    user_id int not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
     foreign key (work_order_id) references work_orders(id),
-    foreign key (task_type_id) references task_types(id),
-    foreign key (route_id) references routes(id)
+    foreign key (user_id) references users(id),
+    constraint UC_WorkOrderUser unique (work_order_id, user_id)
 );
 
-create table tasks_users (
+create table work_orders_blocks (
     id int auto_increment primary key,
-    task_id int,
-    user_id int,
+    work_order_id int not null,
+    notes varchar(255),
     created_at timestamp default current_timestamp,
-    foreign key (task_id) references tasks(id),
-    foreign key (user_id) references users(id)
+    updated_at timestamp,
+    deleted_at timestamp,
+    foreign key (work_order_id) references work_orders(id)
 );
 
-create table tasks_zones (
+create table work_orders_blocks_zones (
     id int auto_increment primary key,
-    task_id int,
-    zone_id int,
+    work_orders_block_id int not null,
+    zone_id int not null,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
+    foreign key (work_orders_block_id) references work_orders_blocks(id),
+    foreign key (zone_id) references zones(id),
+    constraint UC_WorkOrderBlockZone unique (work_orders_block_id, zone_id)
+);
+
+create table work_orders_blocks_tasks (
+    id int auto_increment primary key,
+    work_orders_block_id int not null,
+    task_id int not null,
+    tree_type_id int,
+    status int default 0,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
+    foreign key (work_orders_block_id) references work_orders_blocks(id),
     foreign key (task_id) references tasks(id),
-    foreign key (zone_id) references zones(id)
+    foreign key (tree_type_id) references tree_types(id)
 );
 
 create table work_reports (
@@ -233,6 +201,7 @@ create table work_reports (
     spent_fuel decimal,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
+    deleted_at timestamp,
     foreign key (work_order_id) references work_orders(id)
 );
 
@@ -241,6 +210,8 @@ create table work_report_photos (
     work_report_id int not null,
     photo_id int not null,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (work_report_id) references work_reports(id),
     foreign key (photo_id) references photos(id),
     constraint UC_WorkReportPhoto unique (work_report_id, photo_id)
@@ -255,6 +226,8 @@ create table sensors (
     model varchar(255),
     is_active boolean,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (contract_id) references contracts(id),
     foreign key (zone_id) references zones(id),
     foreign key (point_id) references points(id),
@@ -268,6 +241,8 @@ create table sensor_history (
     humidity float,
     inclination float,
     created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (sensor_id) references sensors(id),
     constraint UC_SensorHistory unique (sensor_id, created_at)
 );
