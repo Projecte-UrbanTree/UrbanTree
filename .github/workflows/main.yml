@@ -146,9 +146,9 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
-      # https://github.com/actions/attest-build-provenance/tree/ef244123eb79f2f7a7e75d99086184180e6d0018
+      # https://github.com/actions/attest-build-provenance/tree/619dbb2e03e0189af0c55118e7d3c5e129e99726
       - name: 📝 Attest the build provenance
-        uses: actions/attest-build-provenance@ef244123eb79f2f7a7e75d99086184180e6d0018
+        uses: actions/attest-build-provenance@619dbb2e03e0189af0c55118e7d3c5e129e99726
         if: ${{ github.event_name != 'pull_request' }}
         with:
           subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
@@ -186,5 +186,6 @@ jobs:
 
       - name: 🕵️ Check the deployment
         run: |
+          sleep 10
           # curl -sSf http://${{ vars.WEB_URL }}/
           curl -sSf http://${{ vars.API_URL }}/

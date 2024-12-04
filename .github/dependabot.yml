@@ -20,6 +20,11 @@ updates:
       - "kind/dependencies"
       - "area/api"
       - "needs-triage"
+    groups:
+      pydantic:
+        dependency-type: production
+        patterns:
+          - "pydantic*"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
