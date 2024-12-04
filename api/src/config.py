@@ -55,6 +55,6 @@ class Settings(BaseSettings):
             path=self.MARIADB_DB,
         )
 
-# instantiate the settings object if APP_ENV is production
-if os.environ.get("APP_ENV") == "production":
+
+if os.getenv("APP_ENV") in ["production", "development"]:
     settings = Settings()
