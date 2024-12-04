@@ -60,5 +60,5 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 8000
 # Run the application.
-CMD ["python3", "-m", "uvicorn", "src.app:app", "--host=0.0.0.0", "--port=8000"]
+CMD ["python3", "-m", "uvicorn", "src.main:app", "--host=0.0.0.0", "--port=8000"]
 # CMD ["python", "src/main.py"]
