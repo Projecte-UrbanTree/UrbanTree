@@ -11,6 +11,9 @@ coverage:
         informational: true
         paths:
           - app
+    patch:
+      default:
+        informational: true
 
 comment:
   layout: "newheader, diff, flags, components, files"
