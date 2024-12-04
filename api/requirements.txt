@@ -1,6 +1,6 @@
 databases[mysql]
 fastapi[standard]==0.115.6
-pydantic_core==2.20.1
+pydantic_core==2.27.1
 pydantic-settings==2.6.1
 pydantic==2.8.2
 sentry-sdk[fastapi]==2.19.0
