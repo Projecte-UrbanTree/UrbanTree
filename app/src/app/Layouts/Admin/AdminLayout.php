@@ -75,51 +75,52 @@
     <!-- Submenu Section -->
     <?php if ($currentPath !== '/admin/inventory') { ?>
         <div id="submenu" class="md:hidden flex flex-col gap-4 hidden"> <!-- Initially hidden -->
-            <!-- Aquí van todos los elementos del submenu -->
-            <div class="hover:scale-105 duration-200 flex flex-col items-center gap-1 <?php echo ($currentPath == '/admin/contracts') ? 'text-blue-600 font-bold' : ''; ?>">
-                <i class="fas fa-file-contract <?php echo ($currentPath == '/admin/contracts') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
-                <a href="/admin/contracts" class="<?php echo ($currentPath == '/admin/contracts') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Contratos</a>
+            <!-- Contratos -->
+            <div class="submenu-item">
+                <i class="fas fa-file-contract text-gray-700"></i>
+                <a href="/admin/contracts" class="submenu-text <?php echo ($currentPath == '/admin/contracts') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Contratos</a>
             </div>
-            <!-- Orden Trabajo -->
-            <div class="hover:scale-105 duration-200 flex flex-col items-center gap-1 <?php echo ($currentPath == '/admin/work-orders') ? 'text-blue-600 font-bold' : ''; ?>">
-                <i class="fas fa-briefcase <?php echo ($currentPath == '/admin/work-orders') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
-                <a href="/admin/work-orders" class="<?php echo ($currentPath == '/admin/work-orders') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Orden de Trabajo</a>
+
+            <!-- Orden de Trabajo -->
+            <div class="submenu-item">
+                <i class="fas fa-briefcase text-gray-700"></i>
+                <a href="/admin/work-orders" class="submenu-text <?php echo ($currentPath == '/admin/work-orders') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Orden de Trabajo</a>
             </div>
 
             <!-- Zonas -->
-            <div class="hover:scale-105 duration-200 flex flex-col items-center gap-1 <?php echo ($currentPath == '/admin/zones') ? 'text-blue-600 font-bold' : ''; ?>">
-                <i class="fas fa-map-marker-alt <?php echo ($currentPath == '/admin/zones') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
-                <a href="/admin/zones" class="<?php echo ($currentPath == '/admin/zones') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Zonas</a>
+            <div class="submenu-item">
+                <i class="fas fa-map-marker-alt text-gray-700"></i>
+                <a href="/admin/zones" class="submenu-text <?php echo ($currentPath == '/admin/zones') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Zonas</a>
             </div>
 
             <!-- Elementos -->
-            <div class="hover:scale-105 duration-200 flex flex-col items-center gap-1 <?php echo ($currentPath == '/admin/elements') ? 'text-blue-600 font-bold' : ''; ?>">
-                <i class="fas fa-cube <?php echo ($currentPath == '/admin/elements') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
-                <a href="/admin/elements" class="<?php echo ($currentPath == '/admin/elements') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Elementos</a>
+            <div class="submenu-item">
+                <i class="fas fa-cube text-gray-700"></i>
+                <a href="/admin/elements" class="submenu-text <?php echo ($currentPath == '/admin/elements') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Elementos</a>
             </div>
 
             <!-- Tipo Tarea -->
-            <div class="hover:scale-105 duration-200 flex flex-col items-center gap-1 <?php echo ($currentPath == '/admin/task-types') ? 'text-blue-600 font-bold' : ''; ?>">
-                <i class="fas fa-tasks <?php echo ($currentPath == '/admin/task-types') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
-                <a href="/admin/task-types" class="<?php echo ($currentPath == '/admin/task-types') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Tipo Tarea</a>
+            <div class="submenu-item">
+                <i class="fas fa-tasks text-gray-700"></i>
+                <a href="/admin/task-types" class="submenu-text <?php echo ($currentPath == '/admin/task-types') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Tipo Tarea</a>
             </div>
 
             <!-- Usuarios -->
-            <div class="hover:scale-105 duration-200 flex flex-col items-center gap-1 <?php echo ($currentPath == '/admin/users') ? 'text-blue-600 font-bold' : ''; ?>">
-                <i class="fas fa-users <?php echo ($currentPath == '/admin/users') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
-                <a href="/admin/users" class="<?php echo ($currentPath == '/admin/users') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Usuarios</a>
+            <div class="submenu-item">
+                <i class="fas fa-users text-gray-700"></i>
+                <a href="/admin/users" class="submenu-text <?php echo ($currentPath == '/admin/users') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Usuarios</a>
             </div>
 
             <!-- Partes -->
-            <div class="hover:scale-105 duration-200 flex flex-col items-center gap-1 <?php echo ($currentPath == '/admin/work-reports') ? 'text-blue-600 font-bold' : ''; ?>">
-                <i class="fas fa-clipboard-list <?php echo ($currentPath == '/admin/work-reports') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
-                <a href="/admin/work-reports" class="<?php echo ($currentPath == '/admin/work-reports') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Partes</a>
+            <div class="submenu-item">
+                <i class="fas fa-clipboard-list text-gray-700"></i>
+                <a href="/admin/work-reports" class="submenu-text <?php echo ($currentPath == '/admin/work-reports') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Partes</a>
             </div>
 
             <!-- Estadísticas -->
-            <div class="hover:scale-105 duration-200 flex flex-col items-center gap-1 <?php echo ($currentPath == '/admin/stats') ? 'text-blue-600 font-bold' : ''; ?>">
-                <i class="fas fa-chart-bar <?php echo ($currentPath == '/admin/stats') ? 'text-blue-600' : 'text-gray-700'; ?>"></i>
-                <a href="/admin/stats" class="<?php echo ($currentPath == '/admin/stats') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Estadísticas</a>
+            <div class="submenu-item">
+                <i class="fas fa-chart-bar text-gray-700"></i>
+                <a href="/admin/stats" class="submenu-text <?php echo ($currentPath == '/admin/stats') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Estadísticas</a>
             </div>
         </div>
     <?php } ?>
@@ -132,9 +133,27 @@
     <script>
         const menuButton = document.getElementById('menuButton');
         const submenu = document.getElementById('submenu');
-
+        const submenuItems = document.querySelectorAll('.submenu-item');
+        
         menuButton.addEventListener('click', () => {
-            submenu.classList.toggle('hidden'); 
+            // Toggle visibility of submenu
+            submenu.classList.toggle('hidden');
+            
+            // Loop through each submenu item and toggle visibility of icons and text
+            submenuItems.forEach(item => {
+                const icon = item.querySelector('i');  // Get the icon
+                const text = item.querySelector('.submenu-text');  // Get the text
+                
+                if (submenu.classList.contains('hidden')) {
+                    // Menu is closed, show icon and hide text
+                    icon.style.display = 'inline-block';
+                    text.style.display = 'none';
+                } else {
+                    // Menu is open, hide icon and show text
+                    icon.style.display = 'none';
+                    text.style.display = 'inline-block';
+                }
+            });
         });
     </script>
 </body>
