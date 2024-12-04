@@ -27,12 +27,12 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 COPY . .
 EXPOSE 8000
-CMD ["python3", "-m", "uvicorn", "src.app:app", "--host=0.0.0.0", "--port=8000"]
+CMD ["python3", "-m", "uvicorn", "src.main:app", "--host=0.0.0.0", "--port=8000"]
 
 FROM development AS test
 ENV APP_ENV=test
 WORKDIR /app
-CMD ["pytest", "tests"]
+CMD ["pytest", "tests", "--cov=src"]
 
 FROM prod-deps AS final
 ENV APP_ENV=production

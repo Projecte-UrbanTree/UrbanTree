@@ -1,10 +1,20 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, TIMESTAMP, func
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy import (
+    TIMESTAMP,
+    Boolean,
+    Column,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    func,
+)
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
+
 class Sensor(Base):
-    __tablename__ = 'sensors'
+    __tablename__ = "sensors"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     model = Column(String(255), nullable=True)
@@ -14,15 +24,17 @@ class Sensor(Base):
     histories = relationship("SensorHistory", back_populates="sensor")
 
     def __repr__(self):
-        return (f"<Sensor(id={self.id}, model='{self.model}', "
-                f"is_active={self.is_active}, created_at={self.created_at})>")
+        return (
+            f"<Sensor(id={self.id}, model='{self.model}', "
+            f"is_active={self.is_active}, created_at={self.created_at})>"
+        )
 
 
 class SensorHistory(Base):
-    __tablename__ = 'sensor_history'
+    __tablename__ = "sensor_history"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    sensor_id = Column(Integer, ForeignKey('sensors.id'), nullable=False)
+    sensor_id = Column(Integer, ForeignKey("sensors.id"), nullable=False)
     temperature = Column(Float, nullable=True)
     humidity = Column(Float, nullable=True)
     inclination = Column(Float, nullable=True)
@@ -31,6 +43,8 @@ class SensorHistory(Base):
     sensor = relationship("Sensor", back_populates="histories")
 
     def __repr__(self):
-        return (f"<SensorHistory(id={self.id}, sensor_id={self.sensor_id}, "
-                f"temperature={self.temperature}, humidity={self.humidity}, "
-                f"inclination={self.inclination}, created_at={self.created_at})>")
+        return (
+            f"<SensorHistory(id={self.id}, sensor_id={self.sensor_id}, "
+            f"temperature={self.temperature}, humidity={self.humidity}, "
+            f"inclination={self.inclination}, created_at={self.created_at})>"
+        )
