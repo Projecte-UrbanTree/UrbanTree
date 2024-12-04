@@ -21,6 +21,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     python -m pip install -r requirements-dev.txt
 
 FROM dev-deps AS development
+ENV APP_ENV=development
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 WORKDIR /app
@@ -29,10 +30,12 @@ EXPOSE 8000
 CMD ["python3", "-m", "uvicorn", "src.app:app", "--host=0.0.0.0", "--port=8000"]
 
 FROM development AS test
+ENV APP_ENV=test
 WORKDIR /app
 CMD ["pytest", "tests"]
 
 FROM prod-deps AS final
+ENV APP_ENV=production
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
 # Keeps Python from buffering stdout and stderr to avoid situations where

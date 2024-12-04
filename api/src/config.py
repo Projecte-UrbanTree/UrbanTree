@@ -16,12 +16,16 @@ class Settings(BaseSettings):
     if os.path.exists('/run/secrets'):
         model_config = SettingsConfigDict(secrets_dir='/run/secrets')
 
+    APP_ENV: str = "development"
+
     MARIADB_SERVER: str
     MARIADB_PORT: int = 3306
     MARIADB_USER: str
     MARIADB_PASSWORD: str | None = None
     MARIADB_PASSWORD_FILE: str | None = None
     MARIADB_DB: str
+
+    SENTRY_DSN: str
 
     @model_validator(mode="before")
     @classmethod
