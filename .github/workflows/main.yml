@@ -186,5 +186,6 @@ jobs:
 
       - name: 🕵️ Check the deployment
         run: |
+          sleep 10
           # curl -sSf http://${{ vars.WEB_URL }}/
           curl -sSf http://${{ vars.API_URL }}/
