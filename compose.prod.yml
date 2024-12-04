@@ -20,6 +20,12 @@ services:
       MARIADB_DB: ${DB_NAME}
       MARIADB_USER: ${DB_USER}
       MARIADB_PASSWORD_FILE: /run/secrets/db_pass
+    healthcheck:
+      test:
+        ["CMD", "curl", "-f", "http://localhost:8000/health", "||", "exit", "1"]
+      timeout: 5s
+      interval: 5s
+      retries: 5
     image: ghcr.io/projecte-urbantree/api:main
     ports:
       - mode: host

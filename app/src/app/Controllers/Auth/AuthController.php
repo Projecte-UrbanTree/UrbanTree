@@ -36,10 +36,9 @@ class AuthController
         }
 
         // Check if the user exists and password matches
-        $user = User::findBy(['email' => $email, 'password' => $password], true);
+        $user = User::findBy(['email' => $email], true);
 
-        // TODO: Verify hashed password not raw password
-        if (!$user || strcmp($user->password, $password) !== 0) {
+        if (!$user || !password_verify($password, $user->password)) {
             echo 'Invalid email or password.';
             // Redirect back with error if authentication fails
             Session::set('error', 'Invalid email or password.');

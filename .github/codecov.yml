@@ -1,0 +1,18 @@
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 5%
+      api:
+        paths:
+          - api
+      app:
+        informational: true
+        paths:
+          - app
+
+comment:
+  layout: "newheader, diff, flags, components, files"
+  require_changes: true
+  hide_comment_details: true

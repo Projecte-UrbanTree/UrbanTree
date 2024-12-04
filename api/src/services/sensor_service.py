@@ -1,8 +1,8 @@
 from typing import List
-from src.schemas.sensor import ModelItem
-from src.models.sensor_model import Sensor, SensorHistory
+
 from sqlalchemy.orm import Session
-from datetime import datetime
+from src.models.sensor_model import Sensor, SensorHistory
+from src.schemas.sensor import ModelItem
 
 
 def insert_data(sensor_data: List[ModelItem], session: Session):
@@ -17,7 +17,7 @@ def insert_data(sensor_data: List[ModelItem], session: Session):
                     temperature=sensor.temperature,
                     humidity=sensor.humidity,
                     inclination=sensor.inclination,
-                    created_at=sensor.created_at
+                    created_at=sensor.created_at,
                 )
                 session.add(db_history)
 

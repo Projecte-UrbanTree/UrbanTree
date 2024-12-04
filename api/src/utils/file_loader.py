@@ -1,6 +1,8 @@
 import json
 from typing import List
+
 from src.schemas.sensor import ModelItem
+
 
 def load_sensor_data(file_path: str) -> List[ModelItem]:
     try:
@@ -10,5 +12,5 @@ def load_sensor_data(file_path: str) -> List[ModelItem]:
 
         return [ModelItem(**sensor) for sensor in raw_data]
     except Exception as e:
-        print('Error', e)
+        print("Error", e)
         return []

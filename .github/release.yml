@@ -1,4 +1,7 @@
 changelog:
+  exclude:
+    labels:
+      - "triage/invalid"
   categories:
     - title: Exciting New Features 🎉
       labels:
