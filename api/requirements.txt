@@ -4,4 +4,4 @@ pydantic_core==2.20.1
 pydantic-settings==2.6.1
 pydantic==2.8.2
 sentry-sdk[fastapi]==2.19.0
-sqlmodel==0.0.19
+sqlmodel==0.0.22
