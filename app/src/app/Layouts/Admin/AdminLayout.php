@@ -79,6 +79,7 @@
     </nav>
 
     <!-- Submenu Section -->
+     <?php if ($currentPath !== '/admin/inventory') { ?>
     <div class="md:flex justify-center mt-5 gap-5 hidden">
         <!-- Contratos -->
         <div class="hover:scale-105 duration-200 flex items-center gap-2 <?php echo ($currentPath == '/admin/contracts') ? 'text-blue-600 font-bold' : ''; ?>">
@@ -128,6 +129,8 @@
             <a href="/admin/stats" class="<?php echo ($currentPath == '/admin/stats') ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'; ?>">Estadísticas</a>
         </div>
     </div>
+
+    <?php } ?>
 
     <!-- Main Content -->
     <div class="max-w-6xl mx-auto my-16">
