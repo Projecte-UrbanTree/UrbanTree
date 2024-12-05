@@ -1,7 +1,5 @@
 # syntax=docker/dockerfile:1
 
-ARG IMAGE_VERSION
-
 #* Create a prod stage for installing app dependencies defined in Composer.
 FROM composer:lts AS prod-deps
 WORKDIR /app
@@ -20,6 +18,8 @@ RUN --mount=type=bind,source=./composer.json,target=composer.json \
 
 #* Create a base stage for building the app image.
 FROM php:8.4-apache AS base
+ARG IMAGE_VERSION=dev
+ENV IMAGE_VERSION=$IMAGE_VERSION
 RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod rewrite
 COPY ./src /var/www/html
@@ -46,7 +46,6 @@ CMD ["./vendor/bin/phpunit"]
 #* Create a production stage.
 FROM base AS final
 ENV APP_ENV=production
-ENV IMAGE_VERSION=$IMAGE_VERSION
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --from=prod-deps app/vendor/ /var/www/html/vendor
 # Switch to a non-privileged user (defined in the base image) that the app will run under.

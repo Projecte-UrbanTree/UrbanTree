@@ -17,6 +17,7 @@ jobs:
     if: ${{ contains(inputs.images, 'all') || contains(fromJSON(inputs.images), 'urbantree') }}
     defaults:
       run:
+        shell: bash
         working-directory: app
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
@@ -45,7 +46,6 @@ jobs:
           working_dir: app
 
       - name: 🧪 Run PHPUnit tests with coverage
-        shell: bash
         run: ./vendor/bin/phpunit --log-junit junit.xml --coverage-clover=coverage.xml
 
       # https://github.com/codecov/test-results-action/tree/9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
@@ -69,6 +69,7 @@ jobs:
     if: ${{ contains(inputs.images, 'all') || contains(fromJSON(inputs.images), 'api') }}
     defaults:
       run:
+        shell: bash
         working-directory: api
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
@@ -87,11 +88,9 @@ jobs:
           python-version: "3.13.0"
 
       - name: 📦 Install Python dependencies
-        shell: bash
         run: pip install -r requirements-dev.txt
 
       - name: 🧪 Run Python tests with coverage
-        shell: bash
         run: pytest tests --cov=./src --cov-report=xml --junitxml=junit.xml
 
       # https://github.com/codecov/test-results-action/tree/9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820

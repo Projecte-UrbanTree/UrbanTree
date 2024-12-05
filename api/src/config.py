@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     APP_PACKAGE: str = "api"
     APP_ENV: str = "development"
 
-    IMAGE_VERSION: str | None = None
+    IMAGE_VERSION: str = "dev"
 
     MARIADB_SERVER: str
     MARIADB_PORT: int = 3306
@@ -66,9 +66,8 @@ class Settings(BaseSettings):
 
     @computed_field
     @property
-    def SENTRY_RELEASE(self) -> str | None:
-        if self.IMAGE_VERSION:
-            return f"{self.APP_PACKAGE}@{self.IMAGE_VERSION}"
+    def SENTRY_RELEASE(self) -> str:
+        return f"{self.APP_PACKAGE}@{self.IMAGE_VERSION}"
 
 
 # If the APP_ENV environment variable is not set to test, the settings object is created.

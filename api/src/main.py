@@ -56,4 +56,4 @@ def hello():
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy"}
+    return {"status": "healthy", "version": settings.SENTRY_RELEASE}
