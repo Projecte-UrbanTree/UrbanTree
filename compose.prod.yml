@@ -14,7 +14,6 @@ services:
           - node.labels.type==api
     environment:
       APP_NAME: ${APP_NAME}
-      APP_ENV: ${APP_ENV}
       MARIADB_SERVER: database
       MARIADB_PORT: "3306"
       MARIADB_DB: ${DB_NAME}

@@ -1,5 +1,7 @@
 # syntax=docker/dockerfile:1
 
+ARG IMAGE_VERSION
+
 #* Create a prod stage for installing app dependencies defined in Composer.
 FROM composer:lts AS prod-deps
 WORKDIR /app
@@ -24,6 +26,7 @@ COPY ./src /var/www/html
 
 #* Create a development stage.
 FROM base AS development
+ENV APP_ENV=development
 # Add PECL extensions, and enable Xdebug.
 # See https://github.com/docker-library/docs/tree/master/php#pecl-extensions
 # RUN pecl install xdebug \
@@ -36,11 +39,14 @@ COPY ./phpunit.xml** /var/www/html
 
 #* Run tests when building
 FROM development AS test
+ENV APP_ENV=test
 WORKDIR /var/www/html
 CMD ["./vendor/bin/phpunit"]
 
 #* Create a production stage.
 FROM base AS final
+ENV APP_ENV=production
+ENV IMAGE_VERSION=$IMAGE_VERSION
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --from=prod-deps app/vendor/ /var/www/html/vendor
 # Switch to a non-privileged user (defined in the base image) that the app will run under.
