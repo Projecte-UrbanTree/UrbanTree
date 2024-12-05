@@ -10,7 +10,11 @@ class Settings(BaseSettings):
     if os.path.exists("/run/secrets"):
         model_config = SettingsConfigDict(secrets_dir="/run/secrets")
 
+    APP_NAME: str | None = None
+    APP_PACKAGE: str = "api"
     APP_ENV: str = "development"
+
+    IMAGE_VERSION: str | None = None
 
     MARIADB_SERVER: str
     MARIADB_PORT: int = 3306
@@ -19,7 +23,7 @@ class Settings(BaseSettings):
     MARIADB_PASSWORD_FILE: str | None = None
     MARIADB_DB: str
 
-    SENTRY_DSN: str
+    SENTRY_DSN: str | None = None
 
     @model_validator(mode="before")
     @classmethod
@@ -60,6 +64,13 @@ class Settings(BaseSettings):
             path=self.MARIADB_DB,
         )
 
+    @computed_field
+    @property
+    def SENTRY_RELEASE(self) -> str | None:
+        if self.IMAGE_VERSION:
+            return f"{self.APP_PACKAGE}@{self.IMAGE_VERSION}"
 
-if os.getenv("APP_ENV") in ["production", "development"]:
+
+# If the APP_ENV environment variable is not set to test, the settings object is created.
+if os.getenv("APP_ENV") != "test":
     settings = Settings()

@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 
+ARG IMAGE_VERSION
 ARG PYTHON_VERSION=3.13.0
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
@@ -36,6 +37,7 @@ CMD ["pytest", "tests", "--cov=src"]
 
 FROM prod-deps AS final
 ENV APP_ENV=production
+ENV IMAGE_VERSION=$IMAGE_VERSION
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
 # Keeps Python from buffering stdout and stderr to avoid situations where
