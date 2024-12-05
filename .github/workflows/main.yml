@@ -4,19 +4,56 @@
 # documentation.
 
 name: 🌳 CI/CD
+
 on:
   push:
     branches: ["main"]
     tags: ["v*"]
   pull_request:
+    types: [opened, synchronize, reopened, closed]
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
+  cleanup:
+    name: 🧹 Cleanup cache
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
+    permissions:
+      # `actions:write` permission is required to delete caches
+      #   See also: https://docs.github.com/en/rest/actions/cache?apiVersion=2022-11-28#delete-a-github-actions-cache-for-a-repository-using-a-cache-id
+      actions: write
+      contents: read
+    steps:
+      # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@v4
+
+      - name: 🗑️ Delete cache
+        run: |
+          gh extension install actions/gh-actions-cache
+
+          REPO=${{ github.repository }}
+          BRANCH=refs/pull/${{ github.event.pull_request.number }}/merge
+
+          echo "Fetching list of cache key"
+          cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 )
+
+          ## Setting this to not fail the workflow while deleting cache keys.
+          set +e
+          echo "Deleting caches..."
+          for cacheKey in $cacheKeysForPR
+          do
+              gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
+          done
+          echo "Done"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   changes:
     name: 🔄 Detect changes
     runs-on: ubuntu-latest
+    if: github.event.action != 'closed'
     permissions:
       pull-requests: read
     outputs:
@@ -135,7 +172,7 @@ jobs:
       # This will only write to the public Rekor transparency log when the Docker
       # repository is public to avoid leaking data.  If you would like to publish
       # transparency data even for private images, pass --force to cosign below.
-      # https://github.com/sigstore/cosign/
+      # https://github.com/sigstore/cosign
       - name: 🖋️ Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
@@ -159,12 +196,12 @@ jobs:
       - name: 📦 Release to Sentry
         uses: getsentry/action-release@e769183448303de84c5a06aaaddf9da7be26d6c7
         if: ${{ github.event_name != 'pull_request' }}
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
         with:
           projects: api
           environment: production
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
 
   deploy:
     name: 🚀 Deploy to production
@@ -184,8 +221,11 @@ jobs:
           script: |
             docker stack deploy --with-registry-auth -c compose.prod.yml urbantree
 
+      # https://github.com/jtalk/url-health-check-action/tree/b716ccb6645355dd9fcce8002ce460e5474f7f00
       - name: 🕵️ Check the deployment
-        run: |
-          sleep 10
-          # curl -sSf http://${{ vars.WEB_URL }}/
-          curl -sSf http://${{ vars.API_URL }}/
+        uses: jtalk/url-health-check-action@b716ccb6645355dd9fcce8002ce460e5474f7f00
+        with:
+          url: ${{ vars.API_URL }}|${{ vars.APP_URL }}
+          max-attempts: 3
+          retry-delay: 5s
+          retry-all: true
