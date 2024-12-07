@@ -78,7 +78,7 @@ jobs:
   report:
     name: 🗃️ Report
     needs: [tests]
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && needs.tests.result != 'skipped' }}
     uses: ./.github/workflows/report.yml
     with:
       environment: ${{ needs.tests.outputs.environment }}
