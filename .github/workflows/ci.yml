@@ -68,26 +68,9 @@ jobs:
         with:
           filters: .github/file-filters.yml
 
-  tests:
-    name: 🧪 Tests
-    needs: foundation
-    uses: ./.github/workflows/tests.yml
-    with:
-      images: ${{ needs.foundation.outputs.images }}
-
-  report:
-    name: 🗃️ Report
-    needs: [tests]
-    if: ${{ !cancelled() && needs.tests.result != 'skipped' }}
-    uses: ./.github/workflows/report.yml
-    with:
-      environment: ${{ needs.tests.outputs.environment }}
-      version: ${{ github.sha }}
-    secrets: inherit
-
   build:
     name: 🏗️ Build
-    needs: [foundation, tests]
+    needs: [foundation]
     uses: ./.github/workflows/build.yml
     permissions:
       contents: read
@@ -96,19 +79,15 @@ jobs:
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
-    strategy:
-      fail-fast: false
-      # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
-      matrix:
-        image: ${{ fromJSON(needs.foundation.outputs.images) }}
-        exclude:
-          - image: all
-        include:
-          - image: urbantree
-            context: ./app
-          - image: api
-            context: ./api
     with:
-      context: ${{ matrix.context }}
-      image: ${{ matrix.image }}
+      images: ${{ needs.foundation.outputs.images }}
+    secrets: inherit
+
+  report:
+    name: 🗃️ Report
+    needs: [build]
+    if: ${{ !cancelled() }}
+    uses: ./.github/workflows/report.yml
+    with:
+      version: ${{ github.sha }}
     secrets: inherit

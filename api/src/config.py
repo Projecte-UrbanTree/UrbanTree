@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     APP_PACKAGE: str = "api"
     APP_ENV: str = "development"
 
-    IMAGE_VERSION: str = "dev"
+    IMAGE_VERSION: str | None = None
 
     MARIADB_SERVER: str
     MARIADB_PORT: int = 3306
@@ -24,6 +24,12 @@ class Settings(BaseSettings):
     MARIADB_DB: str
 
     SENTRY_DSN: str | None = None
+
+    @field_validator("IMAGE_VERSION")
+    def check_image_version(cls, v):
+        if v == "":
+            return None
+        return v
 
     @model_validator(mode="before")
     @classmethod
@@ -66,8 +72,9 @@ class Settings(BaseSettings):
 
     @computed_field
     @property
-    def SENTRY_RELEASE(self) -> str:
-        return f"{self.APP_PACKAGE}@{self.IMAGE_VERSION}"
+    def SENTRY_RELEASE(self) -> str | None:
+        if self.APP_ENV == "production":
+            return f"{self.APP_PACKAGE}@{self.IMAGE_VERSION}"
 
 
 # If the APP_ENV environment variable is not set to test, the settings object is created.

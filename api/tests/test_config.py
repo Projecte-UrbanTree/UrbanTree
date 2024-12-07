@@ -13,7 +13,7 @@ def test_settings_defaults():
     assert settings.APP_NAME is None
     assert settings.APP_PACKAGE == "api"
     assert settings.APP_ENV == "test"
-    assert settings.IMAGE_VERSION == "dev"
+    assert settings.IMAGE_VERSION is None
     assert settings.MARIADB_SERVER == "localhost"
     assert settings.MARIADB_PORT == 3306
     assert settings.MARIADB_USER == "user"

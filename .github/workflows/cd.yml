@@ -15,6 +15,7 @@ jobs:
       pull-requests: read
     outputs:
       version: ${{ steps.release.outputs.tag_name }}
+
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -27,44 +28,29 @@ jobs:
           bump_version_scheme: patch
           tag_prefix: v
           use_github_release_notes: true
-          release_body: "\n"
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-  tests:
-    name: 🧪 Tests
-    uses: ./.github/workflows/tests.yml
-
-  report:
-    name: 🗃️ Report
-    needs: [foundation, tests]
-    if: ${{ !cancelled() }}
-    uses: ./.github/workflows/report.yml
-    with:
-      environment: production
-      version: ${{ needs.foundation.outputs.version }}
-    secrets: inherit
-
   build:
     name: 🏗️ Build
-    needs: [foundation, tests]
+    needs: [foundation]
     uses: ./.github/workflows/build.yml
     permissions:
       contents: read
       packages: write
       attestations: write
       id-token: write
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - image: urbantree
-            context: ./app
-          - image: api
-            context: ./api
     with:
-      context: ${{ matrix.context }}
-      image: ${{ matrix.image }}
+      version: ${{ needs.foundation.outputs.version }}
+    secrets: inherit
+
+  report:
+    name: 🗃️ Report
+    needs: [foundation, build]
+    if: ${{ !cancelled() }}
+    uses: ./.github/workflows/report.yml
+    with:
+      environment: production
       version: ${{ needs.foundation.outputs.version }}
     secrets: inherit
 

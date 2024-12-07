@@ -21,6 +21,7 @@ jobs:
       # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
       matrix:
         image: [urbantree, api]
+
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
