@@ -38,7 +38,7 @@ jobs:
 
   build:
     name: 🏗️ Build
-    needs: [foundation]
+    needs: foundation
     uses: ./.github/workflows/build.yml
     permissions:
       contents: read

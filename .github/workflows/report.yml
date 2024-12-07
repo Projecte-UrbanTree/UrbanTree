@@ -5,8 +5,6 @@
 
 name: 🗃️ Report
 
-run-name: 🗂️ Reporting coverage data to Codecov, and release to Sentry
-
 on:
   workflow_call:
     inputs:
