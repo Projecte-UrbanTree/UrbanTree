@@ -1,6 +1,9 @@
-name: 🗃️ Report
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
 
-run-name: 🗂️ Reporting coverage data to Codecov, and release to Sentry
+name: 🗃️ Report
 
 on:
   workflow_call:
@@ -21,6 +24,7 @@ jobs:
       # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
       matrix:
         image: [urbantree, api]
+
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683

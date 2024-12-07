@@ -43,7 +43,7 @@ CMD ["python3", "-m", "uvicorn", "src.main:app", "--host=0.0.0.0", "--port=8000"
 FROM development AS test
 ENV APP_ENV=test
 WORKDIR /app
-CMD ["python3", "-m", "pytest", "tests", "--cov=src", "--cov-report="]
+CMD ["python3", "-m", "pytest", "tests", "--junitxml=/reports/junit.xml", "--cov=src", "--cov-report=xml:/reports/coverage.xml"]
 
 FROM base AS final
 ENV APP_ENV=production
