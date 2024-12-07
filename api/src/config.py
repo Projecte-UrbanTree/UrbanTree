@@ -6,9 +6,12 @@ from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+def secrets_dir():
+    return "/run/secrets" if os.path.exists("/run/secrets") else None
+
+
 class Settings(BaseSettings):
-    if os.path.exists("/run/secrets"):
-        model_config = SettingsConfigDict(secrets_dir="/run/secrets")
+    model_config = SettingsConfigDict(secrets_dir=secrets_dir())
 
     APP_NAME: str | None = None
     APP_PACKAGE: str = "api"
@@ -77,6 +80,4 @@ class Settings(BaseSettings):
             return f"{self.APP_PACKAGE}@{self.IMAGE_VERSION}"
 
 
-# If the APP_ENV environment variable is not set to test, the settings object is created.
-if os.getenv("APP_ENV") != "test":
-    settings = Settings()
+settings = Settings()
