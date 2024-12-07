@@ -18,7 +18,7 @@ RUN --mount=type=bind,source=./composer.json,target=composer.json \
 
 #* Create a base stage for building the app image.
 FROM php:8.4-apache AS base
-ARG IMAGE_VERSION=dev
+ARG IMAGE_VERSION
 ENV IMAGE_VERSION=$IMAGE_VERSION
 RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod rewrite
@@ -29,6 +29,7 @@ FROM base AS development
 ENV APP_ENV=development
 # Add PECL extensions, and enable Xdebug.
 # See https://github.com/docker-library/docs/tree/master/php#pecl-extensions
+RUN pecl install excimer
 # RUN pecl install xdebug \
 #     && docker-php-ext-enable xdebug
 # COPY ./.docker/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini

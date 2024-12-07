@@ -21,7 +21,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     python -m pip install -r requirements-dev.txt
 
 FROM python:${PYTHON_VERSION}-slim AS base
-ARG IMAGE_VERSION=dev
+ARG IMAGE_VERSION
 ENV IMAGE_VERSION=$IMAGE_VERSION
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -43,7 +43,7 @@ CMD ["python3", "-m", "uvicorn", "src.main:app", "--host=0.0.0.0", "--port=8000"
 FROM development AS test
 ENV APP_ENV=test
 WORKDIR /app
-CMD ["python3", "-m", "pytest", "tests", "--cov=src"]
+CMD ["python3", "-m", "pytest", "tests", "--cov=src", "--cov-report="]
 
 FROM base AS final
 ENV APP_ENV=production
