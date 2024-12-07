@@ -1,14 +1,22 @@
 name: 🧪 Tests
 
+run-name: 🧪 Running tests for ${{ join(fromJSON(inputs.images), ', ') }}
+
 on:
   workflow_call:
     inputs:
-      images:
-        required: true
+      environment:
+        default: test
         type: string
+      images:
+        default: '["all"]'
+        type: string
+    outputs:
+      environment:
+        value: ${{ inputs.environment }}
 
 env:
-  APP_ENV: test
+  APP_ENV: ${{ inputs.environment }}
 
 jobs:
   urbantree:
@@ -22,6 +30,7 @@ jobs:
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
       # https://github.com/actions/cache/tree/6849a6489940f00c2f30c0fb92c6274307ccb58a
       - name: 📦 Cache Composer dependencies
         uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
@@ -46,22 +55,17 @@ jobs:
           working_dir: app
 
       - name: 🧪 Run PHPUnit tests with coverage
-        run: ./vendor/bin/phpunit --log-junit junit.xml --coverage-clover=coverage.xml
+        run: ./vendor/bin/phpunit --log-junit junit.xml --coverage-text=_coverage/coverage.txt --coverage-clover=_coverage/clover.xml
 
-      # https://github.com/codecov/test-results-action/tree/9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
-      - name: 📊 Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-      # https://github.com/codecov/codecov-action/tree/015f24e6818733317a2da2edd6290ab26238649a
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@015f24e6818733317a2da2edd6290ab26238649a
+      # https://github.com/actions/upload-artifact/tree/b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+      - name: 📤 Upload coverage data
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
         with:
-          verbose: true
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          name: urbantree-coverage
+          path: |
+            app/_coverage
+            app/junit.xml
+          retention-days: 1
 
   api:
     name: 🧪 API
@@ -74,6 +78,7 @@ jobs:
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
       # https://github.com/actions/cache/tree/6849a6489940f00c2f30c0fb92c6274307ccb58a
       - name: 📦 Cache Python dependencies
         uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
@@ -91,19 +96,14 @@ jobs:
         run: pip install -r requirements-dev.txt
 
       - name: 🧪 Run Python tests with coverage
-        run: pytest tests --cov=./src --cov-report=xml --junitxml=junit.xml
+        run: pytest tests --cov=./src --cov-report= --junitxml=junit.xml
 
-      # https://github.com/codecov/test-results-action/tree/9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
-      - name: 📊 Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-      # https://github.com/codecov/codecov-action/tree/015f24e6818733317a2da2edd6290ab26238649a
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@015f24e6818733317a2da2edd6290ab26238649a
+      # https://github.com/actions/upload-artifact/tree/b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+      - name: 📤 Upload coverage data
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
         with:
-          verbose: true
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          name: api-coverage
+          path: |
+            api/coverage.xml
+            api/junit.xml
+          retention-days: 1

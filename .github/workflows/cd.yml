@@ -1,0 +1,94 @@
+name: 🌳 Continuous Deployment
+
+run-name: 🚀 Deploying the app to production
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  foundation:
+    name: 🌱 Foundation setup
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    outputs:
+      version: ${{ steps.release.outputs.tag_name }}
+    steps:
+      # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      # https://github.com/rymndhng/release-on-push-action/tree/aebba2bbce07a9474bf95e8710e5ee8a9e922fe2
+      - name: 🏷️ Create tag and release notes
+        uses: rymndhng/release-on-push-action@aebba2bbce07a9474bf95e8710e5ee8a9e922fe2
+        id: release
+        with:
+          bump_version_scheme: patch
+          tag_prefix: v
+          use_github_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  tests:
+    name: 🧪 Tests
+    uses: ./.github/workflows/tests.yml
+
+  report:
+    name: 🗃️ Report
+    needs: [foundation, tests]
+    if: ${{ !cancelled() }}
+    uses: ./.github/workflows/report.yml
+    with:
+      environment: production
+      version: ${{ needs.foundation.outputs.version }}
+    secrets: inherit
+
+  build:
+    name: 🏗️ Build
+    needs: [foundation, tests]
+    uses: ./.github/workflows/build.yml
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: urbantree
+            context: ./app
+          - image: api
+            context: ./api
+    with:
+      context: ${{ matrix.context }}
+      image: ${{ matrix.image }}
+      version: ${{ needs.foundation.outputs.version }}
+    secrets: inherit
+
+  release:
+    name: 🚀 Release
+    needs: build
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      # https://github.com/appleboy/ssh-action/tree/7eaf76671a0d7eec5d98ee897acda4f968735a17
+      - name: 🚚 SSH into production server
+        uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a17
+        with:
+          host: ${{ secrets.SSH_MANAGER_HOST }}
+          username: ${{ secrets.SSH_MANAGER_USER }}
+          password: ${{ secrets.SSH_MANAGER_PASS }}
+          port: ${{ secrets.SSH_MANAGER_PORT }}
+          script: ${{ secrets.SSH_MANAGER_SCRIPT }}
+
+      # https://github.com/jtalk/url-health-check-action/tree/b716ccb6645355dd9fcce8002ce460e5474f7f00
+      - name: 🕵️ Check the deployment
+        uses: jtalk/url-health-check-action@b716ccb6645355dd9fcce8002ce460e5474f7f00
+        with:
+          url: ${{ vars.API_URL }}|${{ vars.APP_URL }}
+          max-attempts: 3
+          retry-delay: 5s
+          retry-all: true
