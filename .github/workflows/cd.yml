@@ -27,6 +27,7 @@ jobs:
           bump_version_scheme: patch
           tag_prefix: v
           use_github_release_notes: true
+          release_body: "\n"
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
@@ -89,6 +90,6 @@ jobs:
         uses: jtalk/url-health-check-action@b716ccb6645355dd9fcce8002ce460e5474f7f00
         with:
           url: ${{ vars.API_URL }}|${{ vars.APP_URL }}
-          max-attempts: 3
-          retry-delay: 5s
+          max-attempts: 5
+          retry-delay: 8s
           retry-all: true
