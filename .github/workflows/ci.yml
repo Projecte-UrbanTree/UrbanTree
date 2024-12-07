@@ -81,7 +81,6 @@ jobs:
       id-token: write
     with:
       images: ${{ needs.foundation.outputs.images }}
-    secrets: inherit
 
   report:
     name: 🗃️ Report

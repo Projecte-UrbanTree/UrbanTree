@@ -42,7 +42,6 @@ jobs:
       id-token: write
     with:
       version: ${{ needs.foundation.outputs.version }}
-    secrets: inherit
 
   report:
     name: 🗃️ Report
