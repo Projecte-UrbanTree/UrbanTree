@@ -32,6 +32,8 @@ class Settings(BaseSettings):
     def check_image_version(cls, v):
         if v == "":
             return None
+        if v.startswith("v"):
+            return v[1:]
         return v
 
     @model_validator(mode="before")
