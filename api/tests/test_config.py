@@ -30,7 +30,7 @@ def test_settings_with_custom_settings():
         APP_NAME="api",
         APP_PACKAGE="api2",
         APP_ENV="production",
-        IMAGE_VERSION="1.0.0",
+        IMAGE_VERSION="v1.0.0",
         MARIADB_SERVER="127.0.0.1",
         MARIADB_PORT=3307,
         MARIADB_USER="user2",
