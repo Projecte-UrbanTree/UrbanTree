@@ -1,12 +1,17 @@
 from contextlib import asynccontextmanager
 
 import sentry_sdk
+import sentry_sdk.crons
 from fastapi import FastAPI
-from sqlmodel import Session, SQLModel, create_engine
-from src.config import settings
-from src.services.sensor_service import insert_data
-from src.utils.file_loader import load_sensor_data
 
+from src.config import Settings
+from src.services.scheduler_service import scheduler
+
+from .database import create_db_and_tables
+
+settings = Settings()
+
+# Initialize Sentry SDK
 sentry_sdk.init(
     dsn=settings.SENTRY_DSN,
     environment=settings.APP_ENV,
@@ -27,23 +32,13 @@ sentry_sdk.init(
     },
 )
 
-engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
-
-
-def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_db_and_tables()
-    sensor_data = load_sensor_data("./sensors.json")
-    with Session(engine) as session:
-        if sensor_data:
-            insert_data(sensor_data, session)
-        else:
-            print("No data to insert")
+    scheduler.start()
     yield
+    scheduler.shutdown()
 
 
 app = FastAPI(lifespan=lifespan)
@@ -56,4 +51,4 @@ def hello():
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy", "version": settings.SENTRY_RELEASE}
+    return {"status": "healthy", "version": settings.SENTRY_RELEASE or "dev"}

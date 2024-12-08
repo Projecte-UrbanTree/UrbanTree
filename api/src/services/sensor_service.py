@@ -1,28 +1,33 @@
-from typing import List
+from datetime import datetime
 
-from sqlalchemy.orm import Session
-from src.models.sensor_model import Sensor, SensorHistory
-from src.schemas.sensor import ModelItem
+from sentry_sdk.crons import monitor
+
+from src.database import get_session
+from src.models import SensorHistory
+from src.utils.file_loader import load_json_file
 
 
-def insert_data(sensor_data: List[ModelItem], session: Session):
+# Define a cron job to check the sensors
+@monitor(monitor_slug="check-sensors")
+def check_sensor_task():
+    print("Checking sensors...")
     try:
-        for sensor in sensor_data:
-            # Search existent sensor
-            db_sensor = session.query(Sensor).filter_by(id=sensor.sensor_id).first()
 
-            if db_sensor:
-                db_history = SensorHistory(
-                    sensor_id=sensor.sensor_id,
-                    temperature=sensor.temperature,
-                    humidity=sensor.humidity,
-                    inclination=sensor.inclination,
-                    created_at=sensor.created_at,
-                )
-                session.add(db_history)
+        sensor_file_data = load_json_file("sensors.json")
+        session = get_session()
 
-        session.commit()
-        print("Datos insertados correctamente 👍🏼")
+        if not sensor_file_data:
+            print("No data to insert")
+            return
+
+        for sensor in sensor_file_data:
+            sensor_model = SensorHistory.model_validate(sensor)
+            session.add(sensor_model)
+            session.commit()
+            session.refresh(sensor_model)
+
     except Exception as e:
-        session.rollback()
-        print(f"Error al insertar los datos: {e}")
+        print("Error", e)
+        return
+
+    print(f"Finished checking sensors at {datetime.now()}")

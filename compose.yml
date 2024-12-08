@@ -94,7 +94,7 @@ services:
     develop:
       watch:
         - action: rebuild
-          path: ./api
+          path: ./api/src
 
   phpmyadmin:
     image: phpmyadmin:latest
