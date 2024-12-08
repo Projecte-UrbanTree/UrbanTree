@@ -30,9 +30,6 @@ class SensorHistory(SensorHistoryBase, table=True):
     __tablename__ = "sensor_history"
 
     id: int | None = Field(default=None, primary_key=True)
-    temperature: float
-    humidity: float
-    inclination: float
 
     sensor: Sensor = Relationship(back_populates="histories")
 
