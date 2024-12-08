@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from sentry_sdk.crons import monitor
 
 from src.database import get_session
@@ -10,7 +8,6 @@ from src.utils.file_loader import load_json_file
 # Define a cron job to check the sensors
 @monitor(monitor_slug="check-sensors")
 def check_sensor_task():
-    print("Checking sensors...")
     try:
 
         sensor_file_data = load_json_file("sensors.json")
@@ -29,5 +26,3 @@ def check_sensor_task():
     except Exception as e:
         print("Error", e)
         return
-
-    print(f"Finished checking sensors at {datetime.now()}")

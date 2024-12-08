@@ -4,12 +4,9 @@ import sentry_sdk
 import sentry_sdk.crons
 from fastapi import FastAPI
 
-from src.config import Settings
-from src.services.scheduler_service import scheduler
-
+from .config import settings
 from .database import create_db_and_tables
-
-settings = Settings()
+from .services.scheduler_service import scheduler
 
 # Initialize Sentry SDK
 sentry_sdk.init(
