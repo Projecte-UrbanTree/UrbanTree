@@ -147,7 +147,7 @@ jobs:
 
       # https://github.com/actions/attest-build-provenance/tree/619dbb2e03e0189af0c55118e7d3c5e129e99726
       - name: 📝 Attest the build provenance
-        uses: actions/attest-build-provenance@619dbb2e03e0189af0c55118e7d3c5e129e99726
+        uses: actions/attest-build-provenance@c4fbc648846ca6f503a13a2281a5e7b98aa57202
         if: inputs.version
         with:
           subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
