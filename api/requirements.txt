@@ -1,0 +1,7 @@
+databases[mysql]
+fastapi[standard]==0.115.6
+pydantic_core==2.27.1
+pydantic-settings==2.6.1
+pydantic==2.10.3
+sentry-sdk[fastapi]==2.19.0
+sqlmodel==0.0.22

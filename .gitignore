@@ -1,13 +1,8 @@
-# Created by https://www.toptal.com/developers/gitignore/api/git,dotenv,phpunit,composer,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=git,dotenv,phpunit,composer,visualstudiocode
+#! Custom ↓
+/reports
 
-### Composer ###
-composer.phar
-/vendor/
-
-# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
-# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
-# composer.lock
+# Created by https://www.toptal.com/developers/gitignore/api/git,dotenv,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=git,dotenv,visualstudiocode
 
 ### dotenv ###
 .env
@@ -26,21 +21,6 @@ composer.phar
 *_BASE_*.txt
 *_LOCAL_*.txt
 *_REMOTE_*.txt
-
-### PHPUnit ###
-# Covers PHPUnit
-# Reference: https://phpunit.de/
-
-# Generated files
-.phpunit.result.cache
-.phpunit.cache
-
-# PHPUnit
-/app/phpunit.xml
-/phpunit.xml
-
-# Build data
-/build/
 
 ### VisualStudioCode ###
 .vscode/*
@@ -61,4 +41,4 @@ composer.phar
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/git,dotenv,phpunit,composer,visualstudiocode
+# End of https://www.toptal.com/developers/gitignore/api/git,dotenv,visualstudiocode

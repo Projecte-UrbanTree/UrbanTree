@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: ./app
+      target: test
+    ports:
+      - 8000:80
+    volumes:
+      - ./reports/app:/reports
+    develop:
+      watch:
+        - action: rebuild
+          path: ./app
+  api:
+    build:
+      context: ./api
+      target: test
+    ports:
+      - 8001:8000
+    volumes:
+      - ./reports/api:/reports
+    develop:
+      watch:
+        - action: rebuild
+          path: ./api

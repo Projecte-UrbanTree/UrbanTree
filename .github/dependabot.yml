@@ -6,18 +6,32 @@
 version: 2
 updates:
   - package-ecosystem: "composer"
-    directory: "/"
+    directory: "/app"
     schedule:
       interval: "weekly"
     labels:
       - "kind/dependencies"
       - "needs-triage"
+  - package-ecosystem: "pip"
+    directory: "/api"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "kind/dependencies"
+      - "area/api"
+      - "needs-triage"
+    groups:
+      pydantic:
+        dependency-type: production
+        patterns:
+          - "pydantic*"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
     labels:
       - "kind/dependencies"
+      - "area/docker"
       - "needs-triage"
   - package-ecosystem: "github-actions"
     directory: "/"
