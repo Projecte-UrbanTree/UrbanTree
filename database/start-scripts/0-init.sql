@@ -9,7 +9,6 @@ create table photos (
 );
 
 --* Users, contracts and machines
-
 create table users (
     id int auto_increment primary key,
     company varchar(255),
