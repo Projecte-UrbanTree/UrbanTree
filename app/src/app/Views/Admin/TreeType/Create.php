@@ -11,7 +11,10 @@
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Create Tree Type</h2>
-    <form action="/admin/tree-type/store" method="POST" class="space-y-6">
+
+    <form id="treeForm" action="/admin/tree-type/store" method="POST" class="space-y-6">
+        <div id="errorMessages"
+            class="hidden bg-red-100 border border-red-400 text-red700 px-4 py-3 rounded relative mb-6"></div>
 
         <!-- Family -->
         <div>
