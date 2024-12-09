@@ -10,8 +10,6 @@ class TreeType extends BaseModel
 
     public string $species;
 
-    public ?int $photo_id;
-
     protected static function getTableName(): string
     {
         return 'tree_types';
@@ -24,14 +22,7 @@ class TreeType extends BaseModel
         $tree_type->family = $data['family'];
         $tree_type->genus = $data['genus'];
         $tree_type->species = $data['species'];
-        $tree_type->photo_id = $data['photo_id'];
-        $tree_type->created_at = $data['created_at'];
 
         return $tree_type;
-    }
-
-    public function photo(): ?Photo
-    {
-        return $this->photo_id ? $this->belongsTo(Photo::class, 'photo_id') : null;
     }
 }
