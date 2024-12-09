@@ -1,0 +1,54 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: 🌳 Continous Integration
+
+run-name: 🌱 Checking integrity of the app
+
+on:
+  push:
+    branches: ["**", "!main"]
+
+jobs:
+  foundation:
+    name: 🌱 Foundation setup
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      images: ${{ github.event_name == 'push' && '["all"]' || steps.filter.outputs.changes }}
+    steps:
+      # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      # https://github.com/dorny/paths-filter/tree/de90cc6fb38fc0963ad72b210f1f284cd68cea36
+      - name: 🔄 Detect changes
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36
+        id: filter
+        with:
+          filters: .github/file-filters.yml
+
+  build:
+    name: 🏗️ Build
+    needs: [foundation]
+    uses: ./.github/workflows/build.yml
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
+      id-token: write
+    with:
+      images: ${{ needs.foundation.outputs.images }}
+
+  report:
+    name: 🗃️ Report
+    needs: [build]
+    if: ${{ !cancelled() }}
+    uses: ./.github/workflows/report.yml
+    with:
+      version: ${{ github.sha }}
+    secrets: inherit
