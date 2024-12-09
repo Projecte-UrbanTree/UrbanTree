@@ -53,8 +53,8 @@ body:
       label: Environment Information
       description: Please complete as applicable.
       value: |
-        - **Image ID** [e.g., ge2da1023a77b]
-        - **Interpreter/Compiler/SDK/Runtime Environment:** [e.g., Python 3.10, Node.js 18, GCC 12.2]
+        - **Image or Commit ID:** [e.g., sha256:e2da1023a77b..., df1616d...]
+        - **Interpreter/Compiler/SDK/Runtime Environment:** [e.g., Apache 2.4.62 (Debian), PHP 8.4.1]
         - **Relevant Tooling Versions:** [e.g., npm 9.8.1, pip 23.0.1]
         - **Browser (if applicable):** [e.g., Chrome 127, Safari 16]
     validations:
