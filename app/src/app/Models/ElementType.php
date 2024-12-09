@@ -9,18 +9,17 @@ class ElementType extends BaseModel
 
     protected static function getTableName(): string
     {
-        return "elementTypes";  // Asegúrate de que el nombre de la tabla es correcto
+        return "element_types";  // Asegúrate de que el nombre de la tabla es correcto
     }
 
-    protected static function mapDataToModel(array $data): ElementType
+    protected static function mapDataToModel($data): elementType
     {
         // Asegurarse de que todos los campos sean asignados correctamente
-        $element_type = new self();
-        $element_type->id = $data['id'];
-        $element_type->name = $data["name"];
-        $element_type->description = $data["description"];
-        $element_type->created_at = $data['created_at'];
+        $elementType = new self();
+        $elementType->id = $data['id'];
+        $elementType->name = $data["name"];
+        $elementType->description = $data["description"];
 
-        return $element_type;
+        return $elementType;
     }
 }
