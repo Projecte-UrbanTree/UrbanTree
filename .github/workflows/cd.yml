@@ -50,17 +50,18 @@ jobs:
 
   report:
     name: 🗃️ Report
-    needs: [foundation, build]
+    needs: build
     if: ${{ !cancelled() }}
     uses: ./.github/workflows/report.yml
     with:
-      environment: production
-      version: ${{ needs.foundation.outputs.version }}
+      environment: ${{ needs.build.outputs.version && 'production' }}
+      version: ${{ needs.build.outputs.version }}
     secrets: inherit
 
   release:
     name: 🚀 Release
     needs: build
+    if: ${{ needs.build.outputs.version }}
     runs-on: ubuntu-latest
     environment: Production
 

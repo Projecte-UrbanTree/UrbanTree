@@ -13,6 +13,9 @@ on:
         type: string
       version:
         type: string
+    outputs:
+      version:
+        value: ${{ inputs.version }}
 
 env:
   REGISTRY: ghcr.io
