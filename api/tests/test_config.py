@@ -55,6 +55,15 @@ def test_settings_with_custom_settings():
     assert custom.SENTRY_RELEASE == "api2@1.0.0"
 
 
+def test_v_prefixed_image_version():
+    custom = Settings(
+        APP_ENV="production",
+        IMAGE_VERSION="v1.0.0",
+    )
+    assert custom.IMAGE_VERSION == "1.0.0"
+    assert custom.SENTRY_RELEASE == "api@1.0.0"
+
+
 def test_settings_missing_password():
     with pytest.raises(ValidationError):
         Settings(

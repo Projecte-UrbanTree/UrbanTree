@@ -1,28 +1,37 @@
-from typing import List
+from sentry_sdk.crons import monitor
+from sqlmodel import select
 
-from sqlalchemy.orm import Session
-from src.models.sensor_model import Sensor, SensorHistory
-from src.schemas.sensor import ModelItem
+from src.database import get_session
+from src.models import SensorHistory
+from src.utils.file_loader import load_json_file
 
 
-def insert_data(sensor_data: List[ModelItem], session: Session):
+# Define a cron job to check the sensors
+@monitor(monitor_slug="check-sensors")
+def check_sensor_task():
     try:
-        for sensor in sensor_data:
-            # Search existent sensor
-            db_sensor = session.query(Sensor).filter_by(id=sensor.sensor_id).first()
+        sensor_file_data = load_json_file("sensors.json")
+        session = get_session()
 
-            if db_sensor:
-                db_history = SensorHistory(
-                    sensor_id=sensor.sensor_id,
-                    temperature=sensor.temperature,
-                    humidity=sensor.humidity,
-                    inclination=sensor.inclination,
-                    created_at=sensor.created_at,
-                )
-                session.add(db_history)
+        if not sensor_file_data:
+            raise ValueError("No data to insert")
 
-        session.commit()
-        print("Datos insertados correctamente 👍🏼")
+        for sensor_history_entry in sensor_file_data:
+            sensor_history = SensorHistory.model_validate(sensor_history_entry)
+            statement = select(SensorHistory).where(
+                SensorHistory.sensor_id == sensor_history.sensor_id,
+                SensorHistory.created_at == sensor_history.created_at,
+            )
+            sensor_db = session.exec(statement).first()
+            if sensor_db:
+                sensor_db.temperature = sensor_history.temperature
+                sensor_db.humidity = sensor_history.humidity
+                sensor_db.inclination = sensor_history.inclination
+                session.add(sensor_db)
+            else:
+                session.add(sensor_history)
+            session.commit()
+
     except Exception as e:
         session.rollback()
-        print(f"Error al insertar los datos: {e}")
+        raise e
