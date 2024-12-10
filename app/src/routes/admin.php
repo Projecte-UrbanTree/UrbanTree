@@ -3,6 +3,7 @@
 use App\Controllers\Admin\ContractController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\ElementController;
+use App\Controllers\Admin\ElementTypeController;
 use App\Controllers\Admin\IncidenceController;
 use App\Controllers\Admin\TaskTypeController;
 use App\Controllers\Admin\TreeTypeController;
@@ -137,6 +138,27 @@ return [
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
+        // ElementType
+        '/admin/elementTypes' => [
+            'controller' => ElementTypeController::class,
+            'method' => 'index',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/elementType/create' => [
+            'controller' => ElementTypeController::class,
+            'method' => 'create',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/elementType/:id/edit' => [
+            'controller' => ElementTypeController::class,
+            'method' => 'edit',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/elementType/:id/delete' => [
+            'controller' => ElementTypeController::class,
+            'method' => 'destroy',
+            'middlewares' => [AdminMiddleware::class],
+        ],
         // === TaskTypes GET Routes
         '/admin/task-types' => [
             'controller' => TaskTypeController::class,
@@ -199,6 +221,17 @@ return [
         ],
         '/admin/element/:id/update' => [
             'controller' => ElementController::class,
+            'method' => 'update',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        // === Element-Types POST Routes
+        '/admin/elementType/store' => [
+            'controller' => ElementTypeController::class,
+            'method' => 'store',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/elementType/:id/update' => [
+            'controller' => ElementTypeController::class,
             'method' => 'update',
             'middlewares' => [AdminMiddleware::class],
         ],
