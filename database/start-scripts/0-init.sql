@@ -29,8 +29,8 @@ create table users (
 create table contracts (
     id int auto_increment primary key,
     name varchar(255) not null,
-    start_date timestamp not null,
-    end_date timestamp,
+    start_date date not null,
+    end_date date,
     invoice_proposed float,
     invoice_agreed float,
     invoice_paid float,
