@@ -15,13 +15,15 @@ class ElementType extends BaseModel
 
     protected static function mapDataToModel($data): ElementType
     {
-        $elementType = new self();
-        $elementType->id = $data['id'];
-        $elementType->name = $data['name'];
-        $elementType->description = $data['description'];
-        $elementType->created_at = $data['created_at'];
+        $element_type = new self();
+        $element_type->id = $data['id'];
+        $element_type->name = $data['name'];
+        $element_type->description = $data['description'];
+        $element_type->created_at = $data['created_at'];
+        $element_type->updated_at = $data['updated_at'];
+        $element_type->deleted_at = $data['deleted_at'];
 
-        return $elementType;
+        return $element_type;
     }
 
     //public function element(): Element

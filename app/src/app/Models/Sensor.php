@@ -21,7 +21,9 @@ class Sensor extends BaseModel
         $sensor->model = $data["model"];
         $sensor->class = $data["class"];
         $sensor->is_active = $data["is_active"];
-        $sensor->created_at = $data["created_at"];
+        $sensor->created_at = $data['created_at'];
+        $sensor->updated_at = $data['updated_at'];
+        $sensor->deleted_at = $data['deleted_at'];
 
         return $sensor;
     }

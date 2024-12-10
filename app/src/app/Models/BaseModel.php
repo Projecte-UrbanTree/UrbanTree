@@ -10,6 +10,10 @@ abstract class BaseModel
 
     protected ?string $created_at;
 
+    protected ?string $updated_at;
+
+    protected ?string $deleted_at;
+
     // Insert multiple records into the table
     public static function bulkInsert(array $records): void
     {
@@ -21,8 +25,7 @@ abstract class BaseModel
         $query .= implode(", ", array_fill(0, count($records), "(" . implode(", ", $placeholders) . ")"));
 
         $params = [];
-        foreach ($records as $index => $record)
-            foreach ($record as $key => $value)
+        foreach ($records as $index => $record) foreach ($record as $key => $value)
                 $params["{$key}_{$index}"] = $value;
 
         Database::prepareAndExecute($query, $params);
@@ -40,7 +43,7 @@ abstract class BaseModel
         $query = "SELECT * FROM {$relatedTable} WHERE {$ownerKey} = :foreignKeyValue LIMIT 1";
         $results = Database::prepareAndExecute($query, ['foreignKeyValue' => $foreignKeyValue]);
 
-        return ! empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
+        return !empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
 
     // Many-to-Many relationship
@@ -75,7 +78,7 @@ abstract class BaseModel
 
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
 
-        if (! is_array($results))
+        if (!is_array($results))
             $results = [];
 
         // Process results
@@ -85,7 +88,7 @@ abstract class BaseModel
             if ($withPivot) {
                 // Attach pivot data as a property
                 $relatedInstance->pivot = array_filter($row, function ($key) use ($relatedModel) {
-                    return ! property_exists($relatedModel, $key);
+                    return !property_exists($relatedModel, $key);
                 }, ARRAY_FILTER_USE_KEY);
             }
 
@@ -99,7 +102,7 @@ abstract class BaseModel
         $query = "SELECT COUNT(*) as count FROM " . static::getTableName();
         $params = [];
 
-        if (! empty($conditions)) {
+        if (!empty($conditions)) {
             $query .= " WHERE ";
             $query .= implode(' AND ', array_map(function ($key) {
                 return "$key = :$key";
@@ -156,7 +159,7 @@ abstract class BaseModel
 
         $results = Database::prepareAndExecute($query, ['id' => $id]);
 
-        return ! empty($results) ? static::mapDataToModel($results[0]) : null;
+        return !empty($results) ? static::mapDataToModel($results[0]) : null;
     }
 
     // Fetch all records from the table
@@ -206,7 +209,7 @@ abstract class BaseModel
         $results = Database::prepareAndExecute($query, $parameters);
 
         if ($single)
-            return ! empty($results) ? static::mapDataToModel($results[0]) : null;
+            return !empty($results) ? static::mapDataToModel($results[0]) : null;
 
         if (empty($results))
             return [];
@@ -217,7 +220,7 @@ abstract class BaseModel
     // Fetch all soft deleted records
     public static function findSoftDeleted(): array
     {
-        if (! static::hasSoftDelete())
+        if (!static::hasSoftDelete())
             return [];
 
         $table = static::getTableName();
@@ -236,7 +239,7 @@ abstract class BaseModel
         $query = "SELECT * FROM $relatedTable WHERE $foreignKey = :localKeyValue LIMIT 1";
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
 
-        return ! empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
+        return !empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
 
     // One-to-Many relationship
@@ -249,7 +252,7 @@ abstract class BaseModel
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
 
         // Ensure $results is an array
-        if (! is_array($results))
+        if (!is_array($results))
             $results = [];
 
         return array_map(fn($row) => $relatedModel::mapDataToModel($row), $results);
@@ -261,10 +264,10 @@ abstract class BaseModel
         static $softDeleteCache = [];
         $table = static::getTableName();
 
-        if (! isset($softDeleteCache[$table])) {
+        if (!isset($softDeleteCache[$table])) {
             $query = "SHOW COLUMNS FROM {$table} LIKE 'deleted_at'";
             $result = Database::prepareAndExecute($query);
-            $softDeleteCache[$table] = ! empty($result); // Cache the result
+            $softDeleteCache[$table] = !empty($result); // Cache the result
         }
 
         return $softDeleteCache[$table];
@@ -277,7 +280,7 @@ abstract class BaseModel
         $query = "SELECT * FROM " . static::getTableName();
         $params = [];
 
-        if (! empty($conditions)) {
+        if (!empty($conditions)) {
             $query .= " WHERE " . implode(' AND ', array_map(fn($key) => "{$key} = :{$key}", array_keys($conditions)));
             $params = $conditions;
         }
@@ -326,7 +329,7 @@ abstract class BaseModel
 
         Database::prepareAndExecute($query, $properties);
 
-        if (! isset($this->id))
+        if (!isset($this->id))
             $this->id = Database::connect()->lastInsertId();
     }
 
@@ -343,5 +346,15 @@ abstract class BaseModel
     public function getCreatedAt(): ?string
     {
         return $this->created_at;
+    }
+
+    public function getUpdatedAt(): ?string
+    {
+        return $this->updated_at;
+    }
+
+    public function getDeletedAt(): ?string
+    {
+        return $this->deleted_at;
     }
 }

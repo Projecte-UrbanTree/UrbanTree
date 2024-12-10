@@ -23,6 +23,8 @@ class Machine extends BaseModel
         $machine->max_basket_size = $data['max_basket_size'];
         $machine->photo_id = $data['photo_id'];
         $machine->created_at = $data['created_at'];
+        $machine->updated_at = $data['updated_at'];
+        $machine->deleted_at = $data['deleted_at'];
 
         return $machine;
     }

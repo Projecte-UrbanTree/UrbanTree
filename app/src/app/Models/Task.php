@@ -26,6 +26,8 @@ class Task extends BaseModel
         $task->notes = $data['notes'];
         $task->route_id = $data['route_id'];
         $task->created_at = $data['created_at'];
+        $task->updated_at = $data['updated_at'];
+        $task->deleted_at = $data['deleted_at'];
 
         return $task;
     }
