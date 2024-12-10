@@ -4,6 +4,7 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
+
 updates:
   - package-ecosystem: "composer"
     directory: "/app"
@@ -12,6 +13,9 @@ updates:
     labels:
       - "kind/dependencies"
       - "needs-triage"
+    groups:
+      dev-dependencies:
+        dependency-type: development
   - package-ecosystem: "pip"
     directory: "/api"
     schedule:
@@ -25,14 +29,23 @@ updates:
         dependency-type: production
         patterns:
           - "pydantic*"
+      dev-dependencies:
+        dependency-type: development
   - package-ecosystem: "docker"
-    directory: "/"
+    directories:
+      - "/api"
+      - "/app"
+      - "/database"
     schedule:
       interval: "weekly"
     labels:
       - "kind/dependencies"
       - "area/docker"
       - "needs-triage"
+    groups:
+      general:
+        dependency-type: production
+        applies-to: version-updates
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -40,3 +53,7 @@ updates:
     labels:
       - "kind/dependencies"
       - "needs-triage"
+    groups:
+      general:
+        dependency-type: production
+        applies-to: version-updates
