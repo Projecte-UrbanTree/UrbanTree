@@ -44,6 +44,7 @@ kind/dependencies:
       - any-glob-to-any-file:
           - "**/requirements**.txt"
           - "**/composer.+(json|lock)"
+  - head-branch: '^dependabot\/'
 
 kind/design:
   - changed-files:
