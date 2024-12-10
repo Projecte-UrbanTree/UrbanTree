@@ -70,7 +70,7 @@ jobs:
 
       # https://github.com/actions/cache/tree/6849a6489940f00c2f30c0fb92c6274307ccb58a
       - name: 📦 Cache Docker layers
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57
         id: cache
         with:
           path: |
@@ -147,7 +147,7 @@ jobs:
 
       # https://github.com/actions/attest-build-provenance/tree/619dbb2e03e0189af0c55118e7d3c5e129e99726
       - name: 📝 Attest the build provenance
-        uses: actions/attest-build-provenance@619dbb2e03e0189af0c55118e7d3c5e129e99726
+        uses: actions/attest-build-provenance@7668571508540a607bdfd90a87a560489fe372eb
         if: inputs.version
         with:
           subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
