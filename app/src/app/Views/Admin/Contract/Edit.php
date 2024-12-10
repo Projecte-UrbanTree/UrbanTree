@@ -39,21 +39,21 @@
         <div>
             <label for="invoice_proposed" class="block text-sm font-medium text-gray-700 mb-1">Invoice Proposed</label>
             <input type="number" step="0.01" id="invoice_proposed" name="invoice_proposed"
-                value="<?php echo htmlspecialchars($contract->invoice_proposed); ?>"
+                value="<?php echo htmlspecialchars($contract->invoice_proposed); ?>" max="999999999.99"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <div>
             <label for="invoice_agreed" class="block text-sm font-medium text-gray-700 mb-1">Invoice Agreed</label>
             <input type="number" step="0.01" id="invoice_agreed" name="invoice_agreed"
-                value="<?php echo htmlspecialchars($contract->invoice_agreed); ?>"
+                value="<?php echo htmlspecialchars($contract->invoice_agreed); ?>" max="999999999.99"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <div>
             <label for="invoice_paid" class="block text-sm font-medium text-gray-700 mb-1">Invoice Paid</label>
             <input type="number" step="0.01" id="invoice_paid" name="invoice_paid"
-                value="<?php echo htmlspecialchars($contract->invoice_paid); ?>"
+                value="<?php echo htmlspecialchars($contract->invoice_paid); ?>" max="999999999.99"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
