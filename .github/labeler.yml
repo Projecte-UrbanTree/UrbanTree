@@ -27,6 +27,11 @@ area/docker:
           - "compose+(.yml|.test|.prod)"
           - "**/Dockerfile"
 
+area/javascript:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "app/**/*.js"
+
 area/routes:
   - changed-files:
       - any-glob-to-any-file:
@@ -44,6 +49,7 @@ kind/dependencies:
       - any-glob-to-any-file:
           - "**/requirements**.txt"
           - "**/composer.+(json|lock)"
+  - head-branch: '^dependabot\/'
 
 kind/design:
   - changed-files:
