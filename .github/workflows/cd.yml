@@ -22,7 +22,7 @@ jobs:
       contents: write
       pull-requests: read
     outputs:
-      version: ${{ steps.release.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version }}
 
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
