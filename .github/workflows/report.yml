@@ -52,7 +52,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-      # https://github.com/codecov/codecov-action/tree/015f24e6818733317a2da2edd6290ab26238649a
+      # https://github.com/codecov/codecov-action/tree/7f8b4b4bde536c465e797be725718b88c5d95e0e
       - name: 📈 Upload coverage to Codecov
         uses: codecov/codecov-action@7f8b4b4bde536c465e797be725718b88c5d95e0e
         env:
