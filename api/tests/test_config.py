@@ -22,7 +22,6 @@ def test_settings_defaults():
         str(settings.SQLALCHEMY_DATABASE_URI)
         == "mysql+pymysql://user:password@localhost:3306/test_db"
     )
-    assert settings.SENTRY_RELEASE is None
 
 
 def test_settings_with_custom_settings():
@@ -30,7 +29,7 @@ def test_settings_with_custom_settings():
         APP_NAME="api",
         APP_PACKAGE="api2",
         APP_ENV="production",
-        IMAGE_VERSION="1.0.0",
+        IMAGE_VERSION="v1.0.0",
         MARIADB_SERVER="127.0.0.1",
         MARIADB_PORT=3307,
         MARIADB_USER="user2",
@@ -41,7 +40,7 @@ def test_settings_with_custom_settings():
     assert custom.APP_NAME == "api"
     assert custom.APP_PACKAGE == "api2"
     assert custom.APP_ENV == "production"
-    assert custom.IMAGE_VERSION == "1.0.0"
+    assert custom.IMAGE_VERSION == "v1.0.0"
     assert custom.MARIADB_SERVER == "127.0.0.1"
     assert custom.MARIADB_PORT == 3307
     assert custom.MARIADB_USER == "user2"
@@ -52,16 +51,13 @@ def test_settings_with_custom_settings():
         str(custom.SQLALCHEMY_DATABASE_URI)
         == "mysql+pymysql://user2:password2@127.0.0.1:3307/test_db2"
     )
-    assert custom.SENTRY_RELEASE == "api2@1.0.0"
 
 
-def test_v_prefixed_image_version():
+def test_image_version_without_v_prefix():
     custom = Settings(
-        APP_ENV="production",
-        IMAGE_VERSION="v1.0.0",
+        IMAGE_VERSION="1.0.0",
     )
-    assert custom.IMAGE_VERSION == "1.0.0"
-    assert custom.SENTRY_RELEASE == "api@1.0.0"
+    assert custom.IMAGE_VERSION == "v1.0.0"
 
 
 def test_settings_missing_password():
