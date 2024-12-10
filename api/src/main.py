@@ -12,7 +12,7 @@ from .services.scheduler_service import scheduler
 sentry_sdk.init(
     dsn=settings.SENTRY_DSN,
     environment=settings.APP_ENV,
-    release=settings.SENTRY_RELEASE,
+    release=settings.IMAGE_VERSION,
     enable_tracing=True,
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for tracing.
@@ -48,4 +48,4 @@ def hello():
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy", "version": settings.SENTRY_RELEASE or "dev"}
+    return {"status": "healthy", "version": settings.IMAGE_VERSION or "dev"}

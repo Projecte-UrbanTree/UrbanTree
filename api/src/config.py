@@ -32,8 +32,8 @@ class Settings(BaseSettings):
     def check_image_version(cls, v):
         if v == "":
             return None
-        if v.startswith("v"):
-            return v[1:]
+        if v and not v.startswith("v"):
+            return f"v{v}"
         return v
 
     @model_validator(mode="before")
@@ -74,12 +74,6 @@ class Settings(BaseSettings):
             port=self.MARIADB_PORT,
             path=self.MARIADB_DB,
         )
-
-    @computed_field
-    @property
-    def SENTRY_RELEASE(self) -> str | None:
-        if self.APP_ENV == "production":
-            return f"{self.APP_PACKAGE}@{self.IMAGE_VERSION}"
 
 
 settings = Settings()
