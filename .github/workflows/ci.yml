@@ -41,7 +41,7 @@ jobs:
       fail-fast: false
       # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
       matrix:
-        image: ${{ needs.foundation.outputs.images }}
+        image: ${{ fromJson(needs.foundation.outputs.images) }}
         exclude:
           - image: all
         include:
