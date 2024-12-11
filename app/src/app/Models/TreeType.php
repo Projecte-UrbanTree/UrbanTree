@@ -22,6 +22,9 @@ class TreeType extends BaseModel
         $tree_type->family = $data['family'];
         $tree_type->genus = $data['genus'];
         $tree_type->species = $data['species'];
+        $tree_type->created_at = $data['created_at'];
+        $tree_type->updated_at = $data['updated_at'];
+        $tree_type->deleted_at = $data['deleted_at'];
 
         return $tree_type;
     }
