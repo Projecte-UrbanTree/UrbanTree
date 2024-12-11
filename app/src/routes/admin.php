@@ -9,6 +9,7 @@ use App\Controllers\Admin\TaskTypeController;
 use App\Controllers\Admin\TreeTypeController;
 use App\Controllers\Admin\UserController;
 use App\Controllers\Admin\WorkOrderController;
+use App\Controllers\Admin\EstadistiquesController;
 use App\Controllers\Admin\ZoneController;
 use App\Middlewares\AdminMiddleware;
 
@@ -201,6 +202,15 @@ return [
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
+
+        // Estadistiques
+        '/admin/grafics' => [
+            'controller' => EstadistiquesController::class,
+            'method' => 'index',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+
+
     ],
     'POST' => [
         '/admin/user/store' => [
