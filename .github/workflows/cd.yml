@@ -22,7 +22,7 @@ jobs:
       contents: write
       pull-requests: read
     outputs:
-      version: ${{ steps.release.outputs.version }}
+      version: ${{ steps.version.outputs.version }}
 
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
@@ -38,11 +38,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: 🔎 Check Output Parameters
-        run: |
-          echo "Got tag name ${{ steps.release.outputs.tag_name }}"
-          echo "Got release version ${{ steps.release.outputs.version }}"
-          echo "Upload release artifacts to ${{ steps.release.outputs.upload_url }}"
+      - name: 📦 Set the version
+        id: version
+        run: echo "version=$(echo "${{ steps.release.outputs.tag_name }}" | cut -c 2-)" >> "$GITHUB_OUTPUT"
 
   build:
     name: 🏗️ Build
