@@ -20,27 +20,34 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements-dev.txt,target=requirements-dev.txt \
     python -m pip install -r requirements-dev.txt
 
-FROM dev-deps AS development
-ENV APP_ENV=development
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-WORKDIR /app
-COPY . .
-EXPOSE 8000
-CMD ["python3", "-m", "uvicorn", "src.app:app", "--host=0.0.0.0", "--port=8000"]
-
-FROM development AS test
-ENV APP_ENV=test
-WORKDIR /app
-CMD ["pytest", "tests"]
-
-FROM prod-deps AS final
-ENV APP_ENV=production
+FROM python:${PYTHON_VERSION}-slim AS base
+ARG IMAGE_VERSION
+ENV IMAGE_VERSION=$IMAGE_VERSION
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
 # Keeps Python from buffering stdout and stderr to avoid situations where
 # the application crashes without emitting any logs due to buffering.
 ENV PYTHONUNBUFFERED=1
+WORKDIR /app
+# Copy the source code into the container.
+COPY . .
+# Expose the port that the application listens on.
+EXPOSE 8000
+
+FROM base AS development
+ENV APP_ENV=development
+COPY --from=dev-deps /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
+WORKDIR /app
+CMD ["python3", "-m", "uvicorn", "src.main:app", "--host=0.0.0.0", "--port=8000"]
+
+FROM development AS test
+ENV APP_ENV=test
+WORKDIR /app
+CMD ["python3", "-m", "pytest", "tests", "--junitxml=/reports/junit.xml", "--cov=src", "--cov-report=xml:/reports/coverage.xml"]
+
+FROM base AS final
+ENV APP_ENV=production
+COPY --from=prod-deps /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
 WORKDIR /app
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
@@ -55,10 +62,5 @@ RUN adduser \
     appuser
 # Switch to the non-privileged user to run the application.
 USER appuser
-# Copy the source code into the container.
-COPY . .
-# Expose the port that the application listens on.
-EXPOSE 8000
 # Run the application.
-CMD ["python3", "-m", "uvicorn", "src.app:app", "--host=0.0.0.0", "--port=8000"]
-# CMD ["python", "src/main.py"]
+CMD ["python3", "-m", "uvicorn", "src.main:app", "--host=0.0.0.0", "--port=8000"]
