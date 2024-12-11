@@ -39,26 +39,35 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
+      - name: 🔎 Check Output Parameters
+        run: |
+          echo "Got tag name ${{ steps.release.outputs.tag_name }}"
+          echo "Got release version ${{ steps.release.outputs.version }}"
+          echo "Upload release artifacts to ${{ steps.release.outputs.upload_url }}"
+
   build:
     name: 🏗️ Build
     needs: foundation
     uses: ./.github/workflows/build.yml
+    strategy:
+      fail-fast: false
+      # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
+      matrix:
+        include:
+          - image: urbantree
+            context: ./app
+          - image: api
+            context: ./api
     permissions:
       contents: read
       packages: write
       attestations: write
       id-token: write
     with:
+      context: ${{ matrix.context }}
+      environment: ${{ needs.foundation.outputs.version && 'production' }}
+      image: ${{ matrix.image }}
       version: ${{ needs.foundation.outputs.version }}
-
-  report:
-    name: 🗃️ Report
-    needs: build
-    if: ${{ !cancelled() }}
-    uses: ./.github/workflows/report.yml
-    with:
-      environment: ${{ needs.build.outputs.version && 'production' }}
-      version: ${{ needs.build.outputs.version }}
     secrets: inherit
 
   release:
