@@ -20,6 +20,8 @@ class Route extends BaseModel
         $route->distance = $data['distance'];
         $route->travel_time = $data['travel_time'];
         $route->created_at = $data['created_at'];
+        $route->updated_at = $data['updated_at'];
+        $route->deleted_at = $data['deleted_at'];
 
         return $route;
     }

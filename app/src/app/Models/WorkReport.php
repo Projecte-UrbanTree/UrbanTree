@@ -17,14 +17,16 @@ class WorkReport extends BaseModel
 
     protected static function mapDataToModel($data): WorkReport
     {
-        $workReport = new self();
-        $workReport->id = $data['id'];
-        $workReport->work_order_id = $data['work_order_id'];
-        $workReport->observation = $data['observation'];
-        $workReport->spent_fuel = $data['spent_fuel'];
-        $workReport->created_at = $data['created_at'];
+        $work_report = new self();
+        $work_report->id = $data['id'];
+        $work_report->work_order_id = $data['work_order_id'];
+        $work_report->observation = $data['observation'];
+        $work_report->spent_fuel = $data['spent_fuel'];
+        $work_report->created_at = $data['created_at'];
+        $work_report->updated_at = $data['updated_at'];
+        $work_report->deleted_at = $data['deleted_at'];
 
-        return $workReport;
+        return $work_report;
     }
 
     public function workOrder(): WorkOrder

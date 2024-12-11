@@ -5,7 +5,7 @@ labels: ["kind/bug", "needs-triage"]
 projects: ["Projecte-UrbanTree/1"]
 assignees: []
 body:
- - type: markdown
+  - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
@@ -98,11 +98,11 @@ body:
       label: Bug Severity
       description: Levels of bug severity
       multiple: false
-      option:
-      - Low (Bug won't result in any noticeable breakdown of the system)
-      - Minor (Results in some unexpected or undesired behavior, but not enough to disrupt system function)
-      - Major (Bug capable of collapsing large parts of the system)
-      - Critical (Bug capable of triggering complete system shutdown)
+      options:
+        - Low (Bug won't result in any noticeable breakdown of the system)
+        - Minor (Results in some unexpected or undesired behavior, but not enough to disrupt system function)
+        - Major (Bug capable of collapsing large parts of the system)
+        - Critical (Bug capable of triggering complete system shutdown)
     validations:
       required: true
   - type: textarea

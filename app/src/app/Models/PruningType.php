@@ -23,6 +23,8 @@ class PruningType extends BaseModel
         $pruning_type->description = $data['description'];
         $pruning_type->photo_id = $data['photo_id'];
         $pruning_type->created_at = $data['created_at'];
+        $pruning_type->updated_at = $data['updated_at'];
+        $pruning_type->deleted_at = $data['deleted_at'];
 
         return $pruning_type;
     }

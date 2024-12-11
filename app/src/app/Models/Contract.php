@@ -32,6 +32,8 @@ class Contract extends BaseModel
         $contract->invoice_agreed = $data['invoice_agreed'];
         $contract->invoice_paid = $data['invoice_paid'];
         $contract->created_at = $data['created_at'];
+        $contract->updated_at = $data['updated_at'];
+        $contract->deleted_at = $data['deleted_at'];
 
         return $contract;
     }

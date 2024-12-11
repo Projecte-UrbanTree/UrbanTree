@@ -17,6 +17,8 @@ class Role extends BaseModel
         $role->id = $data['id'];
         $role->name = $data['name'];
         $role->created_at = $data['created_at'];
+        $role->updated_at = $data['updated_at'];
+        $role->deleted_at = $data['deleted_at'];
 
         return $role;
     }

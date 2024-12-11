@@ -20,6 +20,8 @@ class Point extends BaseModel
         $point->latitude = $data['latitude'];
         $point->longitude = $data['longitude'];
         $point->created_at = $data['created_at'];
+        $point->updated_at = $data['updated_at'];
+        $point->deleted_at = $data['deleted_at'];
 
         return $point;
     }

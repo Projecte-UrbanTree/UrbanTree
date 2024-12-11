@@ -21,6 +21,8 @@ class Zone extends BaseModel
         $zone->id = $data['id'];
         $zone->point_id = $data['point_id'];
         $zone->created_at = $data['created_at'];
+        $zone->updated_at = $data['updated_at'];
+        $zone->deleted_at = $data['deleted_at'];
 
         return $zone;
     }
@@ -75,6 +77,8 @@ class Zone extends BaseModel
                 $zone->predefined->name = $row['predefined_name'];
                 $zone->predefined->photo_id = $row['predefined_photo_id'];
                 $zone->predefined->created_at = $row['created_at'];
+                $zone->predefined->updated_at = $row['updated_at'];
+                $zone->predefined->deleted_at = $row['deleted_at'];
 
                 $groupedZones[$row['id']] = $zone;
             }
