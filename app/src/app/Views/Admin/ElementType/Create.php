@@ -1,5 +1,5 @@
 <div class="mb-4 flex justify-end">
-    <a href="/admin/elementTypes"
+    <a href="/admin/element-types"
         class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500 flex items-center space-x-2">
         <!-- Heroicon for return/back (chevron-left) -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -11,7 +11,7 @@
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Create Element Type</h2>
-    <form action="/admin/elementType/store" method="POST" class="space-y-6">
+    <form action="/admin/element-type/store" method="POST" class="space-y-6">
 
         <!-- Name -->
         <div>

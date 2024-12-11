@@ -41,9 +41,9 @@ class ElementTypeController
 
         $elementType->save();
 
-        Session::set('success', 'Element-Type created successfully');
+        Session::set('success', 'Type of Element created successfully');
 
-        header('Location: /admin/elementTypes');
+        header('Location: /admin/element-types');
     }
 
     public function edit($id, $queryParams)
@@ -64,9 +64,9 @@ class ElementTypeController
         $elementType->description = $postData['description'];
         $elementType->save();
 
-        Session::set('success', 'Element-Type updated successfully');
+        Session::set('success', 'Type of Element updated successfully');
 
-        header('Location: /admin/elementTypes');
+        header('Location: /admin/element-types');
     }
 
     public function destroy($id, $queryParams)
@@ -74,8 +74,8 @@ class ElementTypeController
         $elementType = ElementType::find($id);
         $elementType->delete();
 
-        Session::set('success', 'Element-Type deleted successfully');
+        Session::set('success', 'Type of Element deleted successfully');
 
-        header('Location: /admin/elementTypes');
+        header('Location: /admin/element-types');
     }
 }

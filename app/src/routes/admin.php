@@ -139,22 +139,22 @@ return [
             'middlewares' => [AdminMiddleware::class],
         ],
         // ElementType
-        '/admin/elementTypes' => [
+        '/admin/element-types' => [
             'controller' => ElementTypeController::class,
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/elementType/create' => [
+        '/admin/element-type/create' => [
             'controller' => ElementTypeController::class,
             'method' => 'create',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/elementType/:id/edit' => [
+        '/admin/element-type/:id/edit' => [
             'controller' => ElementTypeController::class,
             'method' => 'edit',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/elementType/:id/delete' => [
+        '/admin/element-type/:id/delete' => [
             'controller' => ElementTypeController::class,
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
@@ -225,12 +225,12 @@ return [
             'middlewares' => [AdminMiddleware::class],
         ],
         // === Element-Types POST Routes
-        '/admin/elementType/store' => [
+        '/admin/element-type/store' => [
             'controller' => ElementTypeController::class,
             'method' => 'store',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/elementType/:id/update' => [
+        '/admin/element-type/:id/update' => [
             'controller' => ElementTypeController::class,
             'method' => 'update',
             'middlewares' => [AdminMiddleware::class],
