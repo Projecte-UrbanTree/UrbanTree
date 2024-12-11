@@ -59,7 +59,7 @@ services:
       timeout: 5s
       interval: 10s
       retries: 5
-    image: mariadb:lts
+    image: ghcr.io/projecte-urbantree/database:main
     secrets:
       - db_pass
       - db_root_pass
@@ -91,7 +91,7 @@ services:
     image: ghcr.io/projecte-urbantree/urbantree:main
     ports:
       - mode: host
-        target: 8000
+        target: 80
         published: 8000
     secrets:
       - source: db_pass
