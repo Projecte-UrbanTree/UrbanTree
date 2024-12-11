@@ -8,8 +8,14 @@ name: 🏗️ Build
 on:
   workflow_call:
     inputs:
-      images:
-        default: '["all"]'
+      context:
+        required: true
+        type: string
+      environment:
+        default: test
+        type: string
+      image:
+        required: true
         type: string
       version:
         type: string
@@ -24,18 +30,7 @@ jobs:
   build:
     name: 🐳 Docker
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
-      matrix:
-        image: ${{ fromJSON(inputs.images) }}
-        exclude:
-          - image: all
-        include:
-          - image: urbantree
-            context: ./app
-          - image: api
-            context: ./api
+    environment: ${{ inputs.image }}-test
 
     steps:
       # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
@@ -63,7 +58,7 @@ jobs:
       - uses: docker/metadata-action@b53be03109c4ef6f6cc7aa545b84b17a7fe51c1e
         id: meta
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ inputs.image }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}},value=${{ inputs.version }}
@@ -98,7 +93,7 @@ jobs:
         id: build-test
         with:
           load: true
-          context: ${{ matrix.context }}
+          context: ${{ inputs.context }}
           target: test
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -106,15 +101,15 @@ jobs:
           APP_ENV: test
 
       - name: 🧪 Run tests
-        run: docker run --rm -v "$(pwd)/reports/${{ matrix.image }}:/reports" ${{ steps.build-test.outputs.imageid }}
+        run: docker run --rm -v "$(pwd)/reports/${{ inputs.image }}:/reports" ${{ steps.build-test.outputs.imageid }}
 
       # https://github.com/actions/upload-artifact/tree/b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
       - name: 📤 Upload coverage data
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
         if: ${{ !cancelled() }}
         with:
-          name: ${{ matrix.image }}-coverage
-          path: reports/${{ matrix.image }}
+          name: ${{ inputs.image }}-coverage
+          path: reports/${{ inputs.image }}
           retention-days: 1
 
       # https://github.com/docker/build-push-action/tree/48aba3b46d1b1fec4febb7c5d0c644b249a11355
@@ -124,7 +119,7 @@ jobs:
         with:
           build-args: |
             IMAGE_VERSION=${{ inputs.version }}
-          context: ${{ matrix.context }}
+          context: ${{ inputs.context }}
           push: ${{ !!inputs.version }}
           target: final
           tags: ${{ steps.meta.outputs.tags }}
@@ -153,6 +148,45 @@ jobs:
         uses: actions/attest-build-provenance@7668571508540a607bdfd90a87a560489fe372eb
         if: inputs.version
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ inputs.image }}
           subject-digest: ${{ steps.build-and-push.outputs.digest }}
           push-to-registry: true
+
+  report:
+    name: 🗂️ Upload reports
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ !cancelled() }}
+
+    steps:
+      # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      # https://github.com/actions/download-artifact/tree/fa0a91b85d4f404e444e00e005971372dc801d16
+      - name: 📥 Download coverage data
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
+        with:
+          name: ${{ inputs.image }}-coverage
+
+      # https://github.com/getsentry/action-release/tree/e769183448303de84c5a06aaaddf9da7be26d6c7
+      - name: 📟 Release to Sentry
+        uses: ./.github/actions/release-sentry
+        with:
+          environment: ${{ inputs.environment }}
+          projects: ${{ inputs.image }}
+          version: ${{ inputs.version || github.sha }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+
+      # https://github.com/codecov/test-results-action/tree/9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
+      - name: 🧮 Upload test results to Codecov
+        uses: codecov/test-results-action@9739113ad922ea0a9abb4b2c0f8bf6a4aa8ef820
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      # https://github.com/codecov/codecov-action/tree/7f8b4b4bde536c465e797be725718b88c5d95e0e
+      - name: 📈 Upload coverage to Codecov
+        uses: codecov/codecov-action@7f8b4b4bde536c465e797be725718b88c5d95e0e
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
