@@ -43,6 +43,8 @@ class User extends BaseModel
         $user->role = $data['role'];
         $user->photo_id = $data['photo_id'];
         $user->created_at = $data['created_at'];
+        $user->updated_at = $data['updated_at'];
+        $user->deleted_at = $data['deleted_at'];
 
         return $user;
     }

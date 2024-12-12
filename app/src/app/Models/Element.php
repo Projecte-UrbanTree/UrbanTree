@@ -29,6 +29,9 @@ class Element extends BaseModel
         $element->point_id = $data['point_id'];
         $element->tree_type_id = $data['tree_type_id'];
         $element->created_at = $data['created_at'];
+        $element->updated_at = $data['updated_at'];
+        $element->deleted_at = $data['deleted_at'];
+
         return $element;
     }
 

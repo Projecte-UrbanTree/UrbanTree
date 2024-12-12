@@ -4,77 +4,78 @@ namespace App\Controllers\Admin;
 
 use App\Core\Session;
 use App\Core\View;
+//use App\Models\Element;
 use App\Models\ElementType;
 
 class ElementTypeController
 {
-    // Listar todos los tipos de elemento
     public function index($queryParams)
     {
         $elementTypes = ElementType::findAll();
         View::render([
-            'view' => 'Admin/ElementType/Index',
-            'title' => 'Manage Element Types',
+            'view' => 'Admin/ElementTypes',
+            'title' => 'Manage Elements Types',
             'layout' => 'Admin/AdminLayout',
             'data' => ['elementTypes' => $elementTypes],
         ]);
     }
 
-    // Mostrar formulario para crear un tipo de elemento
     public function create($queryParams)
     {
+        //$elements = Element::findAll();
         View::render([
             'view' => 'Admin/ElementType/Create',
-            'title' => 'Create Element Type',
+            'title' => 'Add Element Type',
             'layout' => 'Admin/AdminLayout',
+            'data' => [
+                //'elements' => $elements,
+            ],
         ]);
     }
 
-    // Guardar un nuevo tipo de elemento
     public function store($postData)
     {
-        $element_type = new ElementType();
-        $element_type->name = $postData['name'];
-        $element_type->description = $postData['description'];
+        $elementType = new ElementType();
+        $elementType->name = $postData['name'];
+        $elementType->description = $postData['description'];
 
-        $element_type->save();
+        $elementType->save();
 
-        Session::set('success', 'Element Type created successfully');
+        Session::set('success', 'Type of Element created successfully');
+
         header('Location: /admin/element-types');
     }
 
-    // Editar un tipo de elemento
     public function edit($id, $queryParams)
     {
-        $element_type = ElementType::find($id);
+        $elementType = ElementType::find($id);
         View::render([
             'view' => 'Admin/ElementType/Edit',
             'title' => 'Edit Element Type',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['element_type' => $element_type],
+            'data' => ['elementType' => $elementType],
         ]);
     }
 
-    // Actualizar un tipo de elemento
     public function update($id, $postData)
     {
-        $element_type = ElementType::find($id);
-        $element_type->name = $postData['name'];
-        $element_type->description = $postData['description'];
+        $elementType = ElementType::find($id);
+        $elementType->name = $postData['name'];
+        $elementType->description = $postData['description'];
+        $elementType->save();
 
-        $element_type->save();
+        Session::set('success', 'Type of Element updated successfully');
 
-        Session::set('success', 'Element Type updated successfully');
         header('Location: /admin/element-types');
     }
 
-    // Eliminar un tipo de elemento
     public function destroy($id, $queryParams)
     {
-        $element_type = ElementType::find($id);
-        $element_type->delete();
+        $elementType = ElementType::find($id);
+        $elementType->delete();
 
-        Session::set('success', 'Element Type deleted successfully');
+        Session::set('success', 'Type of Element deleted successfully');
+
         header('Location: /admin/element-types');
     }
 }

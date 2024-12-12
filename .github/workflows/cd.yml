@@ -1,0 +1,108 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: 🌳 Continuous Deployment
+
+run-name: 🚀 Deploying the app to production
+
+on:
+  push:
+    branches: ["main"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  foundation:
+    name: 🌱 Foundation setup
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      # https://github.com/actions/checkout/tree/11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      # https://github.com/rymndhng/release-on-push-action/tree/aebba2bbce07a9474bf95e8710e5ee8a9e922fe2
+      - name: 🏷️ Create tag and release notes
+        uses: rymndhng/release-on-push-action@aebba2bbce07a9474bf95e8710e5ee8a9e922fe2
+        id: release
+        with:
+          bump_version_scheme: patch
+          use_github_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: 📦 Set the version
+        id: version
+        run: echo "version=$(echo "${{ steps.release.outputs.tag_name }}" | cut -c 2-)" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: 🏗️ Build
+    needs: foundation
+    uses: ./.github/workflows/build.yml
+    strategy:
+      fail-fast: false
+      # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow#example-adding-configurations
+      matrix:
+        include:
+          - image: urbantree
+            context: ./app
+          - image: api
+            context: ./api
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    with:
+      context: ${{ matrix.context }}
+      environment: ${{ needs.foundation.outputs.version && 'production' }}
+      image: ${{ matrix.image }}
+      version: ${{ needs.foundation.outputs.version }}
+    secrets: inherit
+
+  database:
+    name: 🏗️ Build database
+    needs: foundation
+    uses: ./.github/workflows/database.yml
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    with:
+      version: ${{ needs.foundation.outputs.version }}
+    secrets: inherit
+
+  release:
+    name: 🚀 Release
+    needs: [build, database]
+    if: ${{ needs.build.outputs.version && needs.database.outputs.version }}
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      # https://github.com/appleboy/ssh-action/tree/7eaf76671a0d7eec5d98ee897acda4f968735a17
+      - name: 🚚 SSH into production server
+        uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a17
+        with:
+          host: ${{ secrets.SSH_MANAGER_HOST }}
+          username: ${{ secrets.SSH_MANAGER_USER }}
+          password: ${{ secrets.SSH_MANAGER_PASS }}
+          port: ${{ secrets.SSH_MANAGER_PORT }}
+          script: ${{ secrets.SSH_MANAGER_SCRIPT }}
+
+      # https://github.com/jtalk/url-health-check-action/tree/b716ccb6645355dd9fcce8002ce460e5474f7f00
+      - name: 🕵️ Check the deployment
+        uses: jtalk/url-health-check-action@b716ccb6645355dd9fcce8002ce460e5474f7f00
+        with:
+          url: ${{ vars.API_URL }}|${{ vars.APP_URL }}
+          max-attempts: 5
+          retry-delay: 8s
+          retry-all: true
