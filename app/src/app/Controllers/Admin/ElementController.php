@@ -26,7 +26,7 @@ class ElementController
 
     public function create($queryParams)
     {
-        $zones = Zone::findAll();
+        $zones = Zone::findAll(['name' => 'not null']);
         $types = TreeType::findAll();
         $contracts = Contract::findAll();
         $element_types = ElementType::findAll();

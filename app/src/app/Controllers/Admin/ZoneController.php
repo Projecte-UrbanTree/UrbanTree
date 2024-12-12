@@ -4,13 +4,12 @@ namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Models\Zone;
-use App\Models\ZonePredefined;
 
 class ZoneController
 {
     public function index($queryParams)
     {
-        $zones = Zone::getPredefinedZonesWithElements();
+        $zones = Zone::findAll(['name' => 'not null']);
         View::render([
             'view' => 'Admin/Zones',
             'title' => 'Predefined Zones',
@@ -31,7 +30,7 @@ class ZoneController
 
     public function store($postData)
     {
-        $zone = new ZonePredefined();
+        $zone = new Zone();
         $zone->name = $postData['name'];
 
         $zone->save();
