@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?php echo htmlspecialchars($title) . ' - ' . htmlspecialchars(getenv('APP_NAME')); ?>
+        <?= $title . ' - ' . getenv('APP_NAME'); ?>
     </title>
     <script src="/assets/js/app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,13 +19,13 @@
         <!-- Header -->
         <header class="text-center mb-8">
             <h1 class="text-2xl font-extrabold text-gray-800">
-                <?php echo htmlspecialchars($title); ?>
+                <?= $title; ?>
             </h1>
         </header>
 
         <!-- Main content -->
         <main>
-            <?php echo $content; ?>
+            <?= $content; ?>
         </main>
     </div>
 

@@ -133,9 +133,9 @@ $workers = array_unique($workers);
         <!-- Scripts JS -->
         <script>
             const data = {
-                zones: <?php echo json_encode($zones); ?>,
-                tasks: <?php echo json_encode($tasks); ?>,
-                workers: <?php echo json_encode($workers); ?>
+                zones: <?= json_encode($zones); ?>,
+                tasks: <?= json_encode($tasks); ?>,
+                workers: <?= json_encode($workers); ?>
             };
         </script>
 

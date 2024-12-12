@@ -15,11 +15,11 @@
             <?php foreach ($incidences as $incidence): ?>
                 <tr class="hover:bg-gray-50 transition-all duration-200 ease-in-out">
 
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->name; ?></td>
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->element()->name; ?></td>
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->description; ?></td>
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->photo ?? 'No photo'; ?></td>
-                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?php echo $incidence->getCreatedAt(); ?></td>
+                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?= $incidence->name; ?></td>
+                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?= $incidence->element()->name; ?></td>
+                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?= $incidence->description; ?></td>
+                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?= $incidence->photo ?? 'No photo'; ?></td>
+                    <td class="px-6 py-4 border-b text-sm text-gray-700"><?= $incidence->getCreatedAt(); ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

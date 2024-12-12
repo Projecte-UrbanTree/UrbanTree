@@ -11,8 +11,7 @@
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Edit Element</h2>
-    <form action="/admin/element/<?php echo htmlspecialchars($element->getId()); ?>/update" method="POST"
-        class="space-y-6">
+    <form action="/admin/element/<?= htmlspecialchars($element->getId()); ?>/update" method="POST" class="space-y-6">
 
         <div>
             <label for="element_type_id" class="block text-sm font-medium text-gray-700 mb-1">Element Type</label>
@@ -20,7 +19,7 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
                 <?php foreach ($element_types as $element_type): ?>
-                    <?php echo '<option value="' . $element_type->getId() . '">' . $element_type->name . '</option>'; ?>
+                    <?= '<option value="' . $element_type->getId() . '">' . $element_type->name . '</option>'; ?>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -30,7 +29,7 @@
             <select id="tree_type_id" name="tree_type_id"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 <?php foreach ($types as $type): ?>
-                    <?php echo '<option value="' . $type->getId() . '">' . $type->species . '</option>'; ?>
+                    <?= '<option value="' . $type->getId() . '">' . $type->species . '</option>'; ?>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -42,7 +41,7 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
                 <?php foreach ($zones as $zone): ?>
-                    <?php echo '<option value="' . $zone->getId() . '">' . $zone->name . '</option>'; ?>
+                    <?= '<option value="' . $zone->getId() . '">' . $zone->name . '</option>'; ?>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -53,7 +52,7 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
                 <?php foreach ($contracts as $contract): ?>
-                    <?php echo '<option value="' . $contract->getId() . '">' . $contract->name . '</option>'; ?>
+                    <?= '<option value="' . $contract->getId() . '">' . $contract->name . '</option>'; ?>
                 <?php endforeach; ?>
             </select>
         </div>

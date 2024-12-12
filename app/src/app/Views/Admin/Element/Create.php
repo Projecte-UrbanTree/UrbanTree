@@ -21,7 +21,7 @@
                 required>
                 <option value="" disabled selected>Select Element Type</option>
                 <?php foreach ($element_types as $element_type): ?>
-                    <?php echo '<option value="' . $element_type->getId() . '">' . $element_type->name . '</option>'; ?>
+                    <?= '<option value="' . $element_type->getId() . '">' . $element_type->name . '</option>'; ?>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -32,7 +32,7 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 <option value="" disabled selected>Select Tree Type</option>
                 <?php foreach ($types as $type): ?>
-                    <?php echo '<option value="' . $type->getId() . '">' . $type->species . '</option>'; ?>
+                    <?= '<option value="' . $type->getId() . '">' . $type->species . '</option>'; ?>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -45,7 +45,7 @@
                 required>
                 <option value="" disabled selected>Select Zone</option>
                 <?php foreach ($zones as $zone): ?>
-                    <?php echo '<option value="' . $zone->getId() . '">' . $zone->name . '</option>'; ?>
+                    <?= '<option value="' . $zone->getId() . '">' . $zone->name . '</option>'; ?>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -57,7 +57,7 @@
                 required>
                 <option value="" disabled selected>Select Contract</option>
                 <?php foreach ($contracts as $contract): ?>
-                    <?php echo '<option value="' . $contract->getId() . '">' . $contract->name . '</option>'; ?>
+                    <?= '<option value="' . $contract->getId() . '">' . $contract->name . '</option>'; ?>
                 <?php endforeach; ?>
             </select>
         </div>
