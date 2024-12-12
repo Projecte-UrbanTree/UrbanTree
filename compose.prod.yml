@@ -14,12 +14,17 @@ services:
           - node.labels.type==api
     environment:
       APP_NAME: ${APP_NAME}
-      APP_ENV: ${APP_ENV}
       MARIADB_SERVER: database
       MARIADB_PORT: "3306"
       MARIADB_DB: ${DB_NAME}
       MARIADB_USER: ${DB_USER}
       MARIADB_PASSWORD_FILE: /run/secrets/db_pass
+    healthcheck:
+      test:
+        ["CMD", "curl", "-f", "http://localhost:8000/health", "||", "exit", "1"]
+      timeout: 5s
+      interval: 5s
+      retries: 5
     image: ghcr.io/projecte-urbantree/api:main
     ports:
       - mode: host
@@ -54,7 +59,7 @@ services:
       timeout: 5s
       interval: 10s
       retries: 5
-    image: mariadb:lts
+    image: ghcr.io/projecte-urbantree/database:main
     secrets:
       - db_pass
       - db_root_pass
@@ -86,7 +91,7 @@ services:
     image: ghcr.io/projecte-urbantree/urbantree:main
     ports:
       - mode: host
-        target: 8000
+        target: 80
         published: 8000
     secrets:
       - source: db_pass

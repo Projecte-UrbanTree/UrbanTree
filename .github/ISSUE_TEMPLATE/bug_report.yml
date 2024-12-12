@@ -1,11 +1,14 @@
-name: Bug report
-description: Use this template to provide detailed information about the bug so others can
-  easily reproduce and understand the issue.
+name: Bug report  
+description: File a bug report.
 title: "[Bug]: "
 labels: ["kind/bug", "needs-triage"]
 projects: ["Projecte-UrbanTree/1"]
 assignees: []
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
   - type: textarea
     id: description
     attributes:
@@ -42,7 +45,7 @@ body:
     id: stack-trace
     attributes:
       label: Stack Trace
-      placeholder: Paste any stack traces, error logs, or traceback here. If they’re lengthy, consider using a code block (```) or attaching a file.
+      placeholder: Paste any stack traces, error logs, or traceback here. If they're lengthy, consider using a code block (```) or attaching a file.
       render: bash
   - type: textarea
     id: env-info
@@ -50,20 +53,19 @@ body:
       label: Environment Information
       description: Please complete as applicable.
       value: |
-        - **OS:** [e.g., Windows 11, Ubuntu 22.04, macOS Ventura]
-        - **Platform and Architecture:** [e.g., x86, ARM, etc.]
-        - **Interpreter/Compiler/SDK/Runtime Environment:** [e.g., Python 3.10, Node.js 18, GCC 12.2]
+        - **Image or Commit ID:** [e.g., sha256:e2da1023a77b..., df1616d...]
+        - **Interpreter/Compiler/SDK/Runtime Environment:** [e.g., Apache 2.4.62 (Debian), PHP 8.4.1]
         - **Relevant Tooling Versions:** [e.g., npm 9.8.1, pip 23.0.1]
         - **Browser (if applicable):** [e.g., Chrome 127, Safari 16]
     validations:
       required: true
-  - type: checkboxes
+  - type: dropdown
     id: reliably-reproduce
     attributes:
       label: Do you reliably reproduce the issue?
       options:
-        - label: 'Yes'
-        - label: 'No'
+        - 'Yes'
+        - 'No'
   - type: textarea
     id: input
     attributes:
@@ -90,6 +92,19 @@ body:
     attributes:
       label: Additional Context
       description: Provide any additional context that might be helpful to diagnose the issue. If possible, describe a **reduced test case** that isolates the problem and makes it easier for others to debug.
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Bug Severity
+      description: Levels of bug severity
+      multiple: false
+      options:
+        - Low (Bug won't result in any noticeable breakdown of the system)
+        - Minor (Results in some unexpected or undesired behavior, but not enough to disrupt system function)
+        - Major (Bug capable of collapsing large parts of the system)
+        - Critical (Bug capable of triggering complete system shutdown)
+    validations:
+      required: true
   - type: textarea
     id: possible-solutions
     attributes:

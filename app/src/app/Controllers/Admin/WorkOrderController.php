@@ -5,6 +5,12 @@ namespace App\Controllers\Admin;
 use App\Core\Session;
 use App\Core\View;
 use App\Models\WorkOrder;
+use App\Models\Task;
+use App\Models\TaskType;
+use App\Models\Zone;
+use App\Models\Contract;
+use App\Models\User;
+
 
 class WorkOrderController
 {
@@ -31,37 +37,51 @@ class WorkOrderController
         ]);
     }
 
-    public function store($postData) {}
+    public function store($postData)
+    {
+
+        $workOrders = new WorkOrder();
+        $workOrders->contract_id = $postData['contract_id'];
+        $workOrders->save();
+
+
+
+
+
+        Session::set('success', 'Work Order created successfully');
+
+        header('Location: /work-orders');
+    }
 
     public function edit($id, $queryParams)
     {
-        $order = WorkOrder::find($id);
+        $workOrders = WorkOrder::find($id);
         View::render([
-            'view' => 'Admin/Order/Edit',
+            'view' => 'Admin/WorkOrder/Edit',
             'title' => 'Edit Order',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['order' => $order],
+            'data' => ['workOrders' => $workOrders],
         ]);
     }
 
     public function update($id, $postData)
     {
-        $order = WorkOrder::find($id);
+        $workOrders = WorkOrder::find($id);
 
-        $order->save();
+        $workOrders->save();
 
-        Session::set('success', 'Order updated successfully');
+        Session::set('success', 'Work Order updated successfully');
 
-        header('Location: /admin/orders');
+        header('Location: /admin/work-orders');
     }
 
     public function destroy($id, $queryParams)
     {
-        $order = WorkOrder::find($id);
-        $order->delete();
+        $workOrders = WorkOrder::find($id);
+        $workOrders->delete();
 
-        Session::set('success', 'Order deleted successfully');
+        Session::set('success', 'Work Order deleted successfully');
 
-        header('Location: /admin/orders');
+        header('Location: /admin/work-orders');
     }
 }

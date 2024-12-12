@@ -9,7 +9,6 @@ create table photos (
 );
 
 --* Users, contracts and machines
-
 create table users (
     id int auto_increment primary key,
     company varchar(255),
@@ -29,8 +28,8 @@ create table users (
 create table contracts (
     id int auto_increment primary key,
     name varchar(255) not null,
-    start_date timestamp not null,
-    end_date timestamp,
+    start_date date not null,
+    end_date date,
     invoice_proposed float,
     invoice_agreed float,
     invoice_paid float,
@@ -111,7 +110,7 @@ create table elements (
     contract_id int not null,
     zone_id int not null,
     point_id int unique,
-    tree_type_id int null,
+    tree_type_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,

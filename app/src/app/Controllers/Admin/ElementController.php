@@ -4,9 +4,12 @@ namespace App\Controllers\Admin;
 
 use App\Core\Session;
 use App\Core\View;
+use App\Models\Contract;
 use App\Models\Element;
+use App\Models\Point;
 use App\Models\TreeType;
 use App\Models\Zone;
+use App\Models\ElementType;
 
 class ElementController
 {
@@ -25,6 +28,8 @@ class ElementController
     {
         $zones = Zone::findAll();
         $types = TreeType::findAll();
+        $contracts = Contract::findAll();
+        $element_types = ElementType::findAll();
         View::render([
             'view' => 'Admin/Element/Create',
             'title' => 'Add Element',
@@ -32,6 +37,8 @@ class ElementController
             'data' => [
                 'zones' => $zones,
                 'types' => $types,
+                'contracts' => $contracts,
+                'element_types' => $element_types,
             ],
         ]);
     }
@@ -39,9 +46,9 @@ class ElementController
     public function store($postData)
     {
         $element = new Element();
-        $element->name = $postData['name'];
+        $element->element_type_id = $postData['element_type_id'];
         $element->zone_id = $postData['zone_id'];
-        // $element->point_id = $postData['point_id'];
+        $element->contract_id = $postData['contract_id'];
         $element->tree_type_id = $postData['tree_type_id'];
 
         $element->save();
@@ -54,20 +61,30 @@ class ElementController
     public function edit($id, $queryParams)
     {
         $element = Element::find($id);
+        $zones = Zone::findAll();
+        $types = TreeType::findAll();
+        $contracts = Contract::findAll();
+        $element_types = ElementType::findAll();
         View::render([
             'view' => 'Admin/Element/Edit',
             'title' => 'Edit Element',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['element' => $element],
+            'data' => [
+                'element' => $element,
+                'zones' => $zones,
+                'types' => $types,
+                'contracts' => $contracts,
+                'element_types' => $element_types,
+            ],
         ]);
     }
 
     public function update($id, $postData)
     {
         $element = Element::find($id);
-        $element->name = $postData['name'];
+        $element->element_type_id = $postData['element_type_id'];
         $element->zone_id = $postData['zone_id'];
-        // $element->point_id = $postData['point_id'];
+        $element->point_id = $postData['point_id'];
         $element->tree_type_id = $postData['tree_type_id'];
         $element->save();
 

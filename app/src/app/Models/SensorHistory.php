@@ -22,6 +22,8 @@ class SensorHistory extends BaseModel
         $sensor_history->humidity = $data['humidity'];
         $sensor_history->inclination = $data['inclination'];
         $sensor_history->created_at = $data['created_at'];
+        $sensor_history->updated_at = $data['updated_at'];
+        $sensor_history->deleted_at = $data['deleted_at'];
 
         return $sensor_history;
     }
