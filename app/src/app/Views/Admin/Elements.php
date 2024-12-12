@@ -7,7 +7,7 @@ use App\Core\Session;
 <?php if (Session::has('success')) { ?>
     <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
         <strong class="font-bold">Success: </strong>
-        <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
+        <span><?= htmlspecialchars(Session::get('success')); ?></span>
     </div>
 <?php } ?>
 
@@ -33,20 +33,20 @@ use App\Core\Session;
             <?php foreach ($elements as $element) { ?>
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2 border-b">
-                        <?php echo $element->elementType()->name; ?>
+                        <?= $element->elementType()->name; ?>
                     </td>
                     <td class="px-4 py-2 border-b">
-                        <?php echo $element->contract()->name; ?>
+                        <?= $element->contract()->name; ?>
                     </td>
                     <td class="px-4 py-2 border-b">
-                        <?php echo $element->zone()->name ?? 'Not on a predefined zone'; ?>
+                        <?= $element->zone()->name ?? 'Not on a predefined zone'; ?>
                     </td>
                     <td class="px-4 py-2 border-b">
-                        <?php echo $element->treeType()->species ?? 'Not a tree'; ?>
+                        <?= $element->treeType()->species ?? 'Not a tree'; ?>
                     </td>
                     <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
-                        <a href="/admin/element/<?php echo htmlspecialchars($element->getId()); ?>/edit"
+                        <a href="/admin/element/<?= htmlspecialchars($element->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -55,7 +55,7 @@ use App\Core\Session;
                             </svg>
                         </a>
                         <!-- Delete Button (Trash Icon) -->
-                        <a href="/admin/element/<?php echo htmlspecialchars($element->getId()); ?>/delete"
+                        <a href="/admin/element/<?= htmlspecialchars($element->getId()); ?>/delete"
                             onclick="return confirm('Are you sure you want to delete this element?');"
                             class="text-red-500 hover:text-red-700" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

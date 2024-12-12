@@ -7,12 +7,12 @@ use App\Core\Session;
 <?php if (Session::has('success')) { ?>
     <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
         <strong class="font-bold">Success: </strong>
-        <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
+        <span><?= htmlspecialchars(Session::get('success')); ?></span>
     </div>
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/work-order/create"
+    <a href="/admin/work-order/create"
         class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
         Create Work Order
     </a>
@@ -36,13 +36,13 @@ use App\Core\Session;
                 <?php foreach ($workOrder->tasks() as $task) { ?>
                     <tr class="border-b hover:bg-gray-100">
                         <td class="py-2 px-4">
-                            <?php echo $workOrder->getId(); ?>
+                            <?= $workOrder->getId(); ?>
                         </td>
                         <td class="py-2 px-4">
-                            <?php echo $workOrder->contract()->name; ?>
+                            <?= $workOrder->contract()->name; ?>
                         </td>
                         <td class="py-2 px-4">
-                            <?php echo $workOrder->getCreatedAt(); ?>
+                            <?= $workOrder->getCreatedAt(); ?>
                         </td>
                         <td class="py-2 px-4">
                             <?php
@@ -63,12 +63,12 @@ use App\Core\Session;
                             echo implode(', ', $users);
                             ?>
                         </td>
-                        <td class="py-2 px-4"><?php echo $task->notes; ?>
+                        <td class="py-2 px-4"><?= $task->notes; ?>
                         </td>
 
                         <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                             <!-- Edit Button (Pencil Icon) -->
-                            <a href="/user/<?php echo htmlspecialchars($workOrder->getId()); ?>/edit"
+                            <a href="/admin/work-order/<?= htmlspecialchars($workOrder->getId()); ?>/edit"
                                 class="text-blue-500 hover:text-blue-700" title="Edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-5 h-5">
@@ -77,7 +77,7 @@ use App\Core\Session;
                                 </svg>
                             </a>
                             <!-- Delete Button (Trash Icon) -->
-                            <a href="/work-order/<?php echo htmlspecialchars($workOrder->getId()); ?>/delete"
+                            <a href="/admin/work-order/<?= htmlspecialchars($workOrder->getId()); ?>/delete"
                                 onclick="return confirm('Are you sure you want to delete this work order?');"
                                 class="text-red-500 hover:text-red-700" title="Delete">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

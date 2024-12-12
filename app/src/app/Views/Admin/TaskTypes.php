@@ -7,7 +7,7 @@ use App\Core\Session;
 <?php if (Session::has('success')) { ?>
     <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
         <strong class="font-bold">Success: </strong>
-        <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
+        <span><?= htmlspecialchars(Session::get('success')); ?></span>
     </div>
 <?php } ?>
 
@@ -31,11 +31,11 @@ use App\Core\Session;
             <?php foreach ($task_types as $task_type) { ?>
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2 border-b">
-                        <?php echo $task_type->name; ?>
+                        <?= $task_type->name; ?>
                     </td>
                     <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
-                        <a href="/admin/task-types/<?php echo htmlspecialchars($task_type->getId()); ?>/edit"
+                        <a href="/admin/task-types/<?= htmlspecialchars($task_type->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -44,7 +44,7 @@ use App\Core\Session;
                             </svg>
                         </a>
                         <!-- Delete Button (Trash Icon) -->
-                        <a href="/admin/task-types/<?php echo htmlspecialchars($task_type->getId()); ?>/delete"
+                        <a href="/admin/task-types/<?= htmlspecialchars($task_type->getId()); ?>/delete"
                             onclick="return confirm('Are you sure you want to delete this user?');"
                             class="text-red-500 hover:text-red-700" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
