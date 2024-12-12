@@ -75,7 +75,7 @@ create table tasks (
 create table element_types (
     id int auto_increment primary key,
     name varchar(255) not null,
-    description varchar(255) null,
+    description varchar(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp
