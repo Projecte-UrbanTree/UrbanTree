@@ -191,6 +191,9 @@ abstract class BaseModel
 
         $results = Database::prepareAndExecute($query, $params);
 
+        if (!is_array($results))
+            $results = [];
+
         return array_map(fn($row) => static::mapDataToModel($row), $results);
     }
 
