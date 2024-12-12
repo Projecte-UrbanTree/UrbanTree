@@ -110,7 +110,7 @@ create table elements (
     contract_id int not null,
     zone_id int not null,
     point_id int unique,
-    tree_type_id int null,
+    tree_type_id int,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,

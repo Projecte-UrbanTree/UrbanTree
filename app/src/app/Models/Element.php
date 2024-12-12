@@ -6,13 +6,13 @@ class Element extends BaseModel
 {
     public int $element_type_id;
 
-    public string $contract_id;
+    public int $contract_id;
 
     public int $zone_id;
 
-    public int $point_id;
+    public ?int $point_id;
 
-    public int $tree_type_id;
+    public ?int $tree_type_id;
 
     protected static function getTableName(): string
     {
@@ -35,26 +35,29 @@ class Element extends BaseModel
         return $element;
     }
 
-    public function elementType()
+    public function elementType(): ElementType
     {
-        return $this->hasMany(ElementType::class, 'element_type_id', 'id');
-    }
-    public function contract()
-    {
-        return $this->hasMany(Contract::class, 'contract_id','id');
-    }
-    public function zone()
-    {
-        return $this->hasMany(Zone::class, 'zone_id', 'id');
+        return $this->belongsTo(ElementType::class, 'element_type_id');
     }
 
-    public function point()
+    public function contract(): Contract
     {
-        return $this->hasMany(Point::class, 'point_id', 'id');
+        return $this->belongsTo(Contract::class, 'contract_id');
     }
 
-    public function treeType()
+    public function zone(): Zone
     {
-        return $this->hasMany(TreeType::class, 'tree_type_id', 'id');
+        return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    public function point(): ?Point
+    {
+        return $this->point_id ? $this->belongsTo(Point::class, 'point_id') : null;
+    }
+
+    public function treeType(): ?TreeType
+    {
+
+        return $this->tree_type_id ? $this->belongsTo(TreeType::class, 'tree_type_id') : null;
     }
 }

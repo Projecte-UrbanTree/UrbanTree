@@ -29,8 +29,7 @@ class ElementController
         $zones = Zone::findAll();
         $types = TreeType::findAll();
         $contracts = Contract::findAll();
-        $elementsTypes = ElementType::findAll();
-        $points = Point::findAll();
+        $element_types = ElementType::findAll();
         View::render([
             'view' => 'Admin/Element/Create',
             'title' => 'Add Element',
@@ -39,8 +38,7 @@ class ElementController
                 'zones' => $zones,
                 'types' => $types,
                 'contracts' => $contracts,
-                'points'=> $points,
-                'elementsTypes'=> $elementsTypes,
+                'element_types' => $element_types,
             ],
         ]);
     }
@@ -51,7 +49,6 @@ class ElementController
         $element->element_type_id = $postData['element_type_id'];
         $element->zone_id = $postData['zone_id'];
         $element->contract_id = $postData['contract_id'];
-        $element->point_id = $postData['point_id'];
         $element->tree_type_id = $postData['tree_type_id'];
 
         $element->save();
@@ -64,11 +61,21 @@ class ElementController
     public function edit($id, $queryParams)
     {
         $element = Element::find($id);
+        $zones = Zone::findAll();
+        $types = TreeType::findAll();
+        $contracts = Contract::findAll();
+        $element_types = ElementType::findAll();
         View::render([
             'view' => 'Admin/Element/Edit',
             'title' => 'Edit Element',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['element' => $element],
+            'data' => [
+                'element' => $element,
+                'zones' => $zones,
+                'types' => $types,
+                'contracts' => $contracts,
+                'element_types' => $element_types,
+            ],
         ]);
     }
 
