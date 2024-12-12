@@ -23,7 +23,7 @@ $workers = array_unique($workers);
 ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/work-orders"
+    <a href="/admin/work-orders"
         class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500 flex items-center space-x-2">
         <!-- Icon to return(chevron-left) -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -35,7 +35,7 @@ $workers = array_unique($workers);
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Create Work Order</h2>
-    <form action="/work-order/store" method="POST" class="space-y-6">
+    <form action="/admin/work-order/store" method="POST" class="space-y-6">
 
         <div>
             <label for="contract_id" class="block text-sm font-medium text-gray-700 mb-1">Contrato</label>
