@@ -12,17 +12,17 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/task-types/create"
+    <a href="/admin/task-types/create"
         class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
         Create Task Type
     </a>
 </div>
 
-<div class="overflow-x-auto">
-    <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead>
+<div class="rounded-lg shadow-md overflow-hidden overflow-x-auto">
+    <table class="table-auto w-full text-sm text-left text-gray-700">
+        <thead class="bg-darkGray text-white uppercase">
             <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="px-4 py-2 border-b">ID</th>
+
                 <th class="px-4 py-2 border-b">Name</th>
                 <th class="px-4 py-2 border-b">Actions</th>
             </tr>
@@ -31,14 +31,11 @@ use App\Core\Session;
             <?php foreach ($task_types as $task_type) { ?>
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2 border-b">
-                        <?php echo $task_type->getId(); ?>
-                    </td>
-                    <td class="px-4 py-2 border-b">
                         <?php echo $task_type->name; ?>
                     </td>
                     <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
-                        <a href="/task-types/<?php echo htmlspecialchars($task_type->getId()); ?>/edit"
+                        <a href="/admin/task-types/<?php echo htmlspecialchars($task_type->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -47,7 +44,7 @@ use App\Core\Session;
                             </svg>
                         </a>
                         <!-- Delete Button (Trash Icon) -->
-                        <a href="/task-types/<?php echo htmlspecialchars($task_type->getId()); ?>/delete"
+                        <a href="/admin/task-types/<?php echo htmlspecialchars($task_type->getId()); ?>/delete"
                             onclick="return confirm('Are you sure you want to delete this user?');"
                             class="text-red-500 hover:text-red-700" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
