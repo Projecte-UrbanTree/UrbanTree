@@ -31,11 +31,11 @@ CookieConsent.run({
                 consentModal: {
                     title: "Hello traveller, it's cookie time!",
                     description:
-                        "We use cookies to enhance your browsing experience. By continuing to use our site, you consent to our use of cookies. For more details, please review our Cookie Policy.",
+                        "We use cookies to enhance your browsing experience. By continuing to use our site, you consent to our use of cookies. For more details, please review our <a href='/cookie-policy'>Cookie Policy</a>.",
                     acceptAllBtn: "Accept all",
                     acceptNecessaryBtn: "Reject all",
                     showPreferencesBtn: "Manage preferences",
-                    footer: '<a href="#link">Privacy Policy</a>\n<a href="#link">Terms and conditions</a>',
+                    footer: '<a href="/privacy-policy">Privacy Policy</a>\n<a href="/terms-and-conditions">Terms and conditions</a>',
                 },
                 preferencesModal: {
                     title: "Consent Preferences Center",
@@ -48,7 +48,7 @@ CookieConsent.run({
                         {
                             title: "Cookie Usage",
                             description:
-                                "We use cookies to enhance your browsing experience. By continuing to use our site, you consent to our use of cookies. For more details, please review our Cookie Policy.",
+                                "We use cookies to enhance your browsing experience. By continuing to use our site, you consent to our use of cookies. For more details, please review our <a href='/cookie-policy'>Cookie Policy</a>.",
                         },
                         {
                             title: 'Strictly Necessary Cookies <span class="pm__badge">Always Enabled</span>',
@@ -68,11 +68,11 @@ CookieConsent.run({
                 consentModal: {
                     title: "Hola viajero, es la hora de las galletas!",
                     description:
-                        "Utilizamos cookies para mejorar tu experiencia de navegación. Al continuar navegando en este sitio, aceptas el uso de cookies. Para más información, consulta nuestra Política de Cookies.",
+                        "Utilizamos cookies para mejorar tu experiencia de navegación. Al continuar navegando en este sitio, aceptas el uso de cookies. Para más información, consulta nuestra <a href='/cookie-policy'>Política de Cookies</a>.",
                     acceptAllBtn: "Aceptar todo",
                     acceptNecessaryBtn: "Rechazar todo",
                     showPreferencesBtn: "Gestionar preferencias",
-                    footer: '<a href="#link">Política de privacidad</a>\n<a href="#link">Términos y condiciones</a>',
+                    footer: '<a href="/privacy-policy">Política de privacidad</a>\n<a href="/terms-and-conditions">Términos y condiciones</a>',
                 },
                 preferencesModal: {
                     title: "Preferencias de Consentimiento",
@@ -85,7 +85,7 @@ CookieConsent.run({
                         {
                             title: "Uso de Cookies",
                             description:
-                                "Utilizamos cookies para mejorar tu experiencia de navegación. Al continuar navegando en este sitio, aceptas el uso de cookies. Para más información, consulta nuestra Política de Cookies.",
+                                "Utilizamos cookies para mejorar tu experiencia de navegación. Al continuar navegando en este sitio, aceptas el uso de cookies. Para más información, consulta nuestra <a href='/cookie-policy'>Política de Cookies</a>.",
                         },
                         {
                             title: 'Cookies Estrictamente Necesarias <span class="pm__badge">Siempre Habilitado</span>',
