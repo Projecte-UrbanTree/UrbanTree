@@ -12,7 +12,7 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/admin/work-order/create"
+    <a href="/work-order/create"
         class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
         Create Work Order
     </a>
@@ -21,15 +21,14 @@ use App\Core\Session;
 <div class="rounded-lg shadow-md overflow-hidden overflow-x-auto">
     <table class="table-auto w-full text-sm text-left text-gray-700">
         <thead class="bg-darkGray text-white uppercase">
-            <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="py-2 px-4 border-b">ID</th>
-                <th class="py-2 px-4 border-b">Contracte</th>
-                <th class="py-2 px-4 border-b">Data</th>
-                <th class="py-2 px-4 border-b">Zones</th>
-                <th class="py-2 px-4 border-b">Tasca</th>
-                <th class="py-2 px-4 border-b">Operaris</th>
-                <th class="py-2 px-4 border-b">Notes</th>
-                <th class="py-2 px-4 border-b">Accions</th>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">Contracte</th>
+            <th class="py-2 px-4 border-b">Data</th>
+            <th class="py-2 px-4 border-b">Zones</th>
+            <th class="py-2 px-4 border-b">Tasca</th>
+            <th class="py-2 px-4 border-b">Operaris</th>
+            <th class="py-2 px-4 border-b">Notes</th>
+            <th class="py-2 px-4 border-b">Accions</th>
             </tr>
         </thead>
         <tbody>
@@ -69,7 +68,7 @@ use App\Core\Session;
 
                         <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                             <!-- Edit Button (Pencil Icon) -->
-                            <a href="/admin/work-order/<?php echo htmlspecialchars($workOrder->getId()); ?>/edit"
+                            <a href="/user/<?php echo htmlspecialchars($workOrder->getId()); ?>/edit"
                                 class="text-blue-500 hover:text-blue-700" title="Edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-5 h-5">
@@ -78,7 +77,7 @@ use App\Core\Session;
                                 </svg>
                             </a>
                             <!-- Delete Button (Trash Icon) -->
-                            <a href="/admin/work-order/<?php echo htmlspecialchars($workOrder->getId()); ?>/delete"
+                            <a href="/work-order/<?php echo htmlspecialchars($workOrder->getId()); ?>/delete"
                                 onclick="return confirm('Are you sure you want to delete this work order?');"
                                 class="text-red-500 hover:text-red-700" title="Delete">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
