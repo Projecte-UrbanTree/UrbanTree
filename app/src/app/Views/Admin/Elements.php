@@ -12,21 +12,20 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/admin/element/create"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-        Create Element
+    <a href="/admin/element/create" class="btn-create">
+        New element
     </a>
 </div>
 
-<div class="overflow-x-auto">
-    <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead>
-            <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="px-4 py-2 border-b">Element type</th>
-                <th class="px-4 py-2 border-b">Contract</th>
-                <th class="px-4 py-2 border-b">Zone</th>
-                <th class="px-4 py-2 border-b">Tree type</th>
-                <th class="px-4 py-2 border-b">Actions</th>
+<div class="rounded-lg shadow-md overflow-hidden overflow-x-auto">
+    <table class="table-auto w-full text-sm text-left text-gray-700">
+        <thead class="bg-darkGray text-white uppercase">
+            <tr>
+                <th class="px-4 py-2">Element type</th>
+                <th class="px-4 py-2">Contract</th>
+                <th class="px-4 py-2">Zone</th>
+                <th class="px-4 py-2">Tree type</th>
+                <th class="actions-column">Actions</th>
             </tr>
         </thead>
         <tbody>

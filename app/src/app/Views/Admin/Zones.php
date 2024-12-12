@@ -13,16 +13,16 @@ use App\Core\Session;
 
 <div class="mb-4 flex justify-end">
     <a href="/admin/zone/create" class="btn-create">
-        Create Zone
+        New zone
     </a>
 </div>
 
 <div class="rounded-lg shadow-md overflow-hidden overflow-x-auto">
     <table class="table-auto w-full text-sm text-left text-gray-700">
         <thead class="bg-darkGray text-white uppercase">
-            <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="px-4 py-3 border-b">Name</th>
-                <th class="px-4 py-3 border-b">Actions</th>
+            <tr>
+                <th class="px-4 py-2">Name</th>
+                <th class="actions-column">Actions</th>
             </tr>
         </thead>
         <tbody>

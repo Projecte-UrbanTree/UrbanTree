@@ -12,29 +12,24 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/admin/tree-type/create"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-        Create Tree Type
+    <a href="/admin/tree-type/create" class="btn-create">
+        New tree type
     </a>
 </div>
 
-<div class="overflow-x-auto">
-    <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead>
-            <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="px-4 py-2 border-b">ID</th>
-                <th class="px-4 py-2 border-b">Family</th>
-                <th class="px-4 py-2 border-b">Genus</th>
-                <th class="px-4 py-2 border-b">Species</th>
-                <th class="px-4 py-2 border-b">Actions</th>
+<div class="rounded-lg shadow-md overflow-hidden overflow-x-auto">
+    <table class="table-auto w-full text-sm text-left text-gray-700">
+        <thead class="bg-darkGray text-white uppercase">
+            <tr>
+                <th class="px-4 py-2">Family</th>
+                <th class="px-4 py-2">Genus</th>
+                <th class="px-4 py-2">Species</th>
+                <th class="actions-column">Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($tree_types as $tree_type) { ?>
                 <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2 border-b">
-                        <?= $tree_type->getId(); ?>
-                    </td>
                     <td class="px-4 py-2 border-b">
                         <?= $tree_type->family; ?>
                     </td>

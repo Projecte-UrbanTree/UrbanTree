@@ -12,9 +12,8 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/admin/element-type/create"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-        Create Element Type
+    <a href="/admin/element-type/create" class="btn-create">
+        New element type
     </a>
 </div>
 
@@ -22,10 +21,9 @@ use App\Core\Session;
     <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
         <thead>
             <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="px-4 py-2 border-b">Name</th>
-                <th class="px-4 py-2 border-b">Description</th>
-
-                <th class="px-4 py-2 border-b">Actions</th>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Description</th>
+                <th class="actions-column">Actions</th>
             </tr>
         </thead>
         <tbody>

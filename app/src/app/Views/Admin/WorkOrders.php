@@ -12,32 +12,28 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/admin/work-order/create"
-        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-        Create Work Order
+    <a href="/admin/work-order/create" class="btn-create">
+        New work order
     </a>
 </div>
 
 <div class="rounded-lg shadow-md overflow-hidden overflow-x-auto">
     <table class="table-auto w-full text-sm text-left text-gray-700">
         <thead class="bg-darkGray text-white uppercase">
-            <th class="py-2 px-4 border-b">ID</th>
-            <th class="py-2 px-4 border-b">Contracte</th>
-            <th class="py-2 px-4 border-b">Data</th>
-            <th class="py-2 px-4 border-b">Zones</th>
-            <th class="py-2 px-4 border-b">Tasca</th>
-            <th class="py-2 px-4 border-b">Operaris</th>
-            <th class="py-2 px-4 border-b">Notes</th>
-            <th class="py-2 px-4 border-b">Accions</th>
+            <tr>
+                <th class="px-4 py-2">Contracte</th>
+                <th class="px-4 py-2">Data</th>
+                <th class="px-4 py-2">Zones</th>
+                <th class="px-4 py-2">Tasca</th>
+                <th class="px-4 py-2">Operaris</th>
+                <th class="px-4 py-2">Notes</th>
+                <th class="actions-column">Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($workOrders as $workOrder) { ?>
                 <?php foreach ($workOrder->tasks() as $task) { ?>
                     <tr class="border-b hover:bg-gray-100">
-                        <td class="py-2 px-4">
-                            <?= $workOrder->getId(); ?>
-                        </td>
                         <td class="py-2 px-4">
                             <?= $workOrder->contract()->name; ?>
                         </td>

@@ -13,7 +13,7 @@ use App\Core\Session;
 
 <div class="mb-4 flex justify-end">
     <a href="/admin/contract/create" class="btn-create">
-        Create Contract
+        New contract
     </a>
 </div>
 
@@ -31,7 +31,6 @@ use App\Core\Session;
                 <th class="actions-column">Actions</th>
             </tr>
         </thead>
-
         <tbody>
             <?php foreach ($contracts as $contract) { ?>
                 <tr class="hover:bg-gray-50">
@@ -77,7 +76,6 @@ use App\Core\Session;
                             </a>
                         </div>
                     </td>
-
                 </tr>
             <?php } ?>
         </tbody>

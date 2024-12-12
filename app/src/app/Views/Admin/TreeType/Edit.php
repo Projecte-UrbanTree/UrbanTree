@@ -1,6 +1,5 @@
 <div class="mb-4 flex justify-end">
-    <a href="/admin/tree-types"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500 flex items-center space-x-2">
+    <a href="/admin/tree-types" class="btn-create flex items-center space-x-2">
         <!-- Heroicon for return/back (chevron-left) -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>

@@ -34,7 +34,7 @@ $workers = array_unique($workers);
 </div>
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Create Work Order</h2>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Create new Work Order</h2>
     <form action="/admin/work-order/store" method="POST" class="space-y-6">
 
         <div>
@@ -143,7 +143,7 @@ $workers = array_unique($workers);
         <div class="flex items-center">
             <button type="submit"
                 class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-blue-500">
-                Create Work Order
+                Create
             </button>
         </div>
     </form>
