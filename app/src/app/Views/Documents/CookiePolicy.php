@@ -1,0 +1,1 @@
+<h1>Cookie Policy</h1>
