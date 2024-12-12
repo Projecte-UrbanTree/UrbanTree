@@ -171,8 +171,17 @@ abstract class BaseModel
         if (!empty($filters)) {
             $conditions = [];
             foreach ($filters as $key => $value) {
-                $conditions[] = "{$key} = :{$key}";
-                $params[$key] = $value;
+                if (is_string($value) && strtoupper($value) === "NOT NULL") {
+                    // Handle NOT NULL condition
+                    $conditions[] = "{$key} IS NOT NULL";
+                } elseif ($value === null || strtoupper($value) === "NULL") {
+                    // Handle NULL condition
+                    $conditions[] = "{$key} IS NULL";
+                } else {
+                    // Handle standard equality
+                    $conditions[] = "{$key} = :{$key}";
+                    $params[$key] = $value;
+                }
             }
             $query .= " WHERE " . implode(' AND ', $conditions);
         }
