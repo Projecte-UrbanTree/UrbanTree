@@ -8,6 +8,7 @@
     <title><?php echo $title . ' - ' . getenv('APP_NAME'); ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/tailwind.js"></script>
     <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
 </head>
 
@@ -42,14 +43,16 @@
             <!-- Navigation Links (Visible only on large screens) -->
             <div class="hidden md:flex gap-6 ml-20">
                 <a href="/admin"
-                    class="font-bold text-lg <?php echo ($currentPath != '/admin/inventory') ? 'text-gray-700' : 'text-gray-400'; ?> hover:text-gray-700">
+                    class="menu-link <?php echo (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'active' : ''; ?>">
                     Gestión
                 </a>
                 <a href="/admin/inventory"
-                    class="font-bold text-lg <?php echo ($currentPath === '/admin/inventory') ? 'text-gray-700' : 'text-gray-400'; ?> hover:text-gray-700">
+                    class="menu-link <?php echo ($currentPath === '/admin/inventory') ? 'active' : ''; ?>">
                     Inventario
                 </a>
             </div>
+
+
             <!-- User Section -->
             <div class="flex items-center gap-4 mx-2">
                 <!-- User Info Dropdown -->
@@ -66,7 +69,7 @@
                     </button>
                 </div>
                 <!-- Notifications Icon -->
-                <a href="#" class="hidden md:block text-gray-700 hover:text-black">
+                <a href="#" class="hidden md:block text-gray-700 hover:text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="h-6 w-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -86,7 +89,6 @@
                             class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                             <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900 outline-none", Not Active: "text-gray-700" -->
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
                                     role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
@@ -105,54 +107,81 @@
     <!-- Submenu Section (Hidden by default on small screens, visible on medium and larger screens) -->
     <?php if ($currentPath !== '/admin/inventory') { ?>
         <div id="submenu" class="md:flex hidden justify-center items-center gap-6 p-6 border-b-2 md:border-b-0">
-            <!-- Contratos -->
-            <a href="/admin/contracts"
-                class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200 <?php echo ($currentPath == '/admin/contracts') ? 'text-black' : 'text-gray-500 hover:text-black'; ?>">
-                <i class="fas fa-file-contract hidden md:block text-gray-700"></i>
-                <span>Contratos</span>
-            </a>
-            <!-- Orden de Trabajo -->
-            <a href="/admin/work-orders"
-                class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200 <?php echo ($currentPath == '/admin/work-orders') ? 'text-black' : 'text-gray-500 hover:text-black'; ?>">
-                <i class="fas fa-briefcase hidden md:block text-gray-700"></i>
-                <span>Orden de Trabajo</span>
-            </a>
-            <!-- Zonas -->
-            <a href="/admin/zones"
-                class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200 <?php echo ($currentPath == '/admin/zones') ? 'text-black' : 'text-gray-500 hover:text-black'; ?>">
-                <i class="fas fa-map-marker-alt hidden md:block text-gray-700"></i>
-                <span>Zonas</span>
-            </a>
-            <!-- Elementos -->
-            <a href="/admin/elements"
-                class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200 <?php echo ($currentPath == '/admin/elements') ? 'text-black' : 'text-gray-500 hover:text-black'; ?>">
-                <i class="fas fa-cube hidden md:block text-gray-700"></i>
-                <span>Elementos</span>
-            </a>
-            <!-- Tipo Tarea -->
-            <a href="/admin/task-types"
-                class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200 <?php echo ($currentPath == '/admin/task-types') ? 'text-black' : 'text-gray-500 hover:text-black'; ?>">
-                <i class="fas fa-tasks hidden md:block text-gray-700"></i>
-                <span>Tipo Tarea</span>
-            </a>
-            <!-- Usuarios -->
-            <a href="/admin/users"
-                class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200 <?php echo ($currentPath == '/admin/users') ? 'text-black' : 'text-gray-500 hover:text-black'; ?>">
-                <i class="fas fa-users hidden md:block text-gray-700"></i>
-                <span>Usuarios</span>
-            </a>
-            <!-- Partes -->
-            <a href="/admin/work-reports"
-                class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200 <?php echo ($currentPath == '/admin/work-reports') ? 'text-black' : 'text-gray-500 hover:text-black'; ?>">
-                <i class="fas fa-clipboard-list hidden md:block text-gray-700"></i>
-                <span>Partes</span>
-            </a>
-            <!-- Estadísticas -->
-            <a href="/admin/stats"
-                class="submenu-item py-2 flex flex-col md:items-center md:text-center hover:scale-105 duration-200 <?php echo ($currentPath == '/admin/stats') ? 'text-black' : 'text-gray-500 hover:text-black'; ?>">
-                <i class="fas fa-chart-bar hidden md:block text-gray-700"></i>
-                <span>Estadísticas</span>
-            </a>
+            <div class="submenu flex space-x-6">
+                <!-- Contracts -->
+                <div class="submenu-item">
+                    <a href="/admin/contracts"
+                        class="link-primary <?php echo ($currentPath == '/admin/contracts') ? 'active' : ''; ?>">
+                        <i class="fas fa-file-contract md:block"></i>
+                        <span>Contratos</span>
+                    </a>
+                </div>
+
+                <!-- Work Orders-->
+                <div class="submenu-item">
+                    <a href="/admin/work-orders"
+                        class="link-primary <?php echo ($currentPath == '/admin/work-orders') ? 'active' : ''; ?>">
+                        <i class="fas fa-briefcase md:block"></i>
+                        <span>Orden de Trabajo</span>
+                    </a>
+                </div>
+
+                <!-- Zones -->
+                <div class="submenu-item">
+                    <a href="/admin/zones"
+                        class="link-primary <?php echo ($currentPath == '/admin/zones') ? 'active' : ''; ?>">
+                        <i class="fas fa-map-marker-alt md:block"></i>
+                        <span>Zonas</span>
+                    </a>
+                </div>
+
+                <!-- Elements -->
+                <div class="submenu-item">
+                    <a href="/admin/elements"
+                        class="link-primary <?php echo ($currentPath == '/admin/elements') ? 'active' : ''; ?>">
+                        <i class="fas fa-cube md:block"></i>
+                        <span>Elementos</span>
+                    </a>
+                </div>
+
+                <!-- Task Types -->
+                <div class="submenu-item">
+                    <a href="/admin/task-types"
+                        class="link-primary <?php echo ($currentPath == '/admin/task-types') ? 'active' : ''; ?>">
+                        <i class="fas fa-tasks md:block"></i>
+                        <span>Tipo Tarea</span>
+                    </a>
+                </div>
+
+                <!-- Users -->
+                <div class="submenu-item">
+                    <a href="/admin/users"
+                        class="link-primary <?php echo ($currentPath == '/admin/users') ? 'active' : ''; ?>">
+                        <i class="fas fa-users md:block"></i>
+                        <span>Usuarios</span>
+                    </a>
+                </div>
+
+                <!-- Partes -->
+                <div class="submenu-item">
+                    <a href="/admin/work-reports"
+                        class="link-primary <?php echo ($currentPath == '/admin/work-reports') ? 'active' : ''; ?>">
+                        <i class="fas fa-clipboard-list md:block"></i>
+                        <span>Partes</span>
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="submenu-item">
+                    <a href="/admin/stats"
+                        class="link-primary <?php echo ($currentPath == '/admin/stats') ? 'active' : ''; ?>">
+                        <i class="fas fa-chart-bar md:block"></i>
+                        <span>Estadísticas</span>
+                    </a>
+                </div>
+            </div>
+
+
         </div>
     <?php } ?>
 

@@ -12,15 +12,14 @@ use App\Core\Session;
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/zone/create"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
+    <a href="/zone/create" class="btn-create">
         Create Zone
     </a>
 </div>
 
-<div class="overflow-x-auto">
-    <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead>
+<div class="rounded-lg shadow-md overflow-hidden overflow-x-auto">
+    <table class="table-auto w-full text-sm text-left text-gray-700">
+        <thead class="bg-darkGray text-white uppercase">
             <tr class="bg-gray-700 text-white text-left h-14">
                 <th class="px-4 py-3 border-b">Name</th>
                 <th class="px-4 py-3 border-b">Actions</th>
