@@ -1,6 +1,6 @@
 --* Users
 INSERT INTO users (company, name, surname, dni, password, email, role) VALUES
-('TechCorp', 'Carlos', 'García', '12345678A', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'carlos.garcia@example.com', 1), -- Password: demopass
+('TechCorp', 'Carlos', 'García', '12345678A', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'carlos.garcia@example.com', 0), -- Password: demopass
 ('InnovaTech', 'Ana', 'Martínez', '23456789B', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'ana.martinez@example.com', 1), -- Password: demopass
 ('DesignWorks', 'José', 'Rodríguez', '34567890C', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'jose.rodriguez@example.com', 2); -- Password: demopass
 
