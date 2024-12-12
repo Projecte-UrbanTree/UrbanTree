@@ -26,9 +26,9 @@ class ElementType extends BaseModel
         return $element_type;
     }
 
-    //public function element(): Element
-    //{
-    //    return $this->belongsTo(Element::class, 'element_id');
-    //}
+    public function elements(): array
+    {
+        return $this->hasMany(Element::class, 'element_id');
+    }
 
 }
