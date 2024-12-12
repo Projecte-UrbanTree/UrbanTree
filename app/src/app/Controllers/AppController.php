@@ -28,7 +28,7 @@ class AppController
         View::render([
             'view' => 'Documents/CookiePolicy',
             'title' => 'Cookie Policy',
-            'layout' => 'Customer/CustomerLayout',
+            'layout' => 'PublicLayout',
         ]);
     }
 
@@ -37,7 +37,7 @@ class AppController
         View::render([
             'view' => 'Documents/PrivacyPolicy',
             'title' => 'Privacy Policy',
-            'layout' => 'Customer/CustomerLayout',
+            'layout' => 'PublicLayout',
         ]);
     }
 
@@ -46,7 +46,7 @@ class AppController
         View::render([
             'view' => 'Documents/TermsConditions',
             'title' => 'Terms and conditions of use',
-            'layout' => 'Customer/CustomerLayout',
+            'layout' => 'PublicLayout',
         ]);
     }
 }
