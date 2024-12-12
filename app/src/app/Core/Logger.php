@@ -2,15 +2,20 @@
 
 namespace App\Core;
 
+\Sentry\init([
+    'dsn' => getenv('SENTRY_DSN'),
+    'environment' => getenv('APP_ENV'),
+    'release' => getenv('IMAGE_VERSION'),
+    // Specify a fixed sample rate
+    'traces_sample_rate' => 1.0,
+    // Set a sampling rate for profiling - this is relative to traces_sample_rate
+    'profiles_sample_rate' => 1.0,
+]);
+
 class Logger
 {
-    public static function log($message, $level = 'info')
+    public static function log()
     {
-        $logFile = getenv('LOG_FILE_PATH');
-        $logMessage = strtoupper($level).' - '.date('Y-m-d H:i:s').' - '.$message.PHP_EOL;
-        if (! file_exists($logFile)) {
-            touch($logFile);
-        }
-        file_put_contents($logFile, $logMessage, FILE_APPEND);
+        \Sentry\captureLastError();
     }
 }

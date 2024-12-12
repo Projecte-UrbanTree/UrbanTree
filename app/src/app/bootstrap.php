@@ -7,10 +7,10 @@ use App\Core\Session;
 // Start session
 Session::start();
 
+// Set the error handler
+set_error_handler(function () {
+    Logger::log();
+});
+
 // Connect to the database
 Database::connect();
-
-// TODO: Set up global error handler
-// set_error_handler(function ($severity, $message, $file, $line) {
-//     Logger::log("Error: {$message} in {$file} on line {$line}");
-// });
