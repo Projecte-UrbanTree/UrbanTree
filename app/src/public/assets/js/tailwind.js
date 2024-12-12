@@ -4,7 +4,7 @@ tailwind.config = {
             colors: {
                 darkGreen: "#008037",
                 lightGreen: "#7FD959",
-                gray: "#717171",
+                gray: "#919191",
                 darkGray: "#444444",
                 black: "#222222",
                 hoverBlack: "#000000",
@@ -40,7 +40,7 @@ tailwind.config = {
                 },
 
                 ".link-primary": {
-                    "@apply text-sm tracking-wide font-medium text-gray font-sans hover:text-darkGray transition-colors relative":
+                    "@apply text-sm tracking-tighter lg:tracking-widest font-medium text-gray font-sans hover:text-darkGray transition-colors relative":
                         {},
                     "&.active": {
                         "@apply text-darkGray font-bold": {},

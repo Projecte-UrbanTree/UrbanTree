@@ -14,7 +14,7 @@
 
 <body>
     <!-- Navigation Bar -->
-    <div class="border-b-2 border-slate-300">
+    <div class="border-b border-gray">
         <nav class="flex items-center justify-between px-4 py-4 h-16 max-w-7xl mx-auto">
             <!-- Mobile Menu Button (Visible only on small screens) -->
             <button id="menuButton"
@@ -41,7 +41,7 @@
                 <img class="md:hidden block" src="/assets/images/isotip.png" alt="Logo">
             </a>
             <!-- Navigation Links (Visible only on large screens) -->
-            <div class="hidden md:flex gap-6 ml-20">
+            <div class="hidden md:flex gap-6">
                 <a href="/admin"
                     class="menu-link <?php echo (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'active' : ''; ?>">
                     Gestión
@@ -106,15 +106,18 @@
     </div>
     <!-- Submenu Section (Hidden by default on small screens, visible on medium and larger screens) -->
     <?php if ($currentPath !== '/admin/inventory') { ?>
-        <div id="submenu" class="md:flex hidden justify-center items-center gap-6 p-6 border-b-2 md:border-b-0">
-            <div class="submenu flex space-x-6">
+        <div id="submenu"
+            class="md:flex hidden overflow-auto justify-center items-center gap-6 p-6 shadow-md sm:shadow-none px-2 py-1 sm:py-4">
+            <div class=" submenu flex space-x-6">
                 <!-- Contracts -->
                 <div class="submenu-item">
-                    <a href="/admin/contracts"
-                        class="link-primary <?php echo ($currentPath == '/admin/contracts') ? 'active' : ''; ?>">
-                        <i class="fas fa-file-contract md:block"></i>
-                        <span>Contratos</span>
-                    </a>
+                    <div class="submenu-item text-center">
+                        <a href="/admin/contracts"
+                            class="link-primary <?php echo ($currentPath == '/admin/contracts') ? 'active' : ''; ?>">
+                            <i class="fas fa-file-contract md:block"></i>
+                            <span>Contratos</span>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Work Orders-->
