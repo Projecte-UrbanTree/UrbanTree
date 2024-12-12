@@ -62,7 +62,7 @@ tailwind.config = {
                         {},
                 },
                 ".submenu-item": {
-                    "@apply py-2 flex flex-col md:items-center md:text-center":
+                    "@apply py-2 flex flex-col items-center text-center gap-1":
                         {},
                 },
                 ".btn-create": {

@@ -16,25 +16,7 @@
     <!-- Navigation Bar -->
     <div class="border-b border-gray">
         <nav class="flex items-center justify-between px-4 py-4 h-16 max-w-7xl mx-auto">
-            <!-- Mobile Menu Button (Visible only on small screens) -->
-            <button id="menuButton"
-                class="group inline-flex w-12 h-12 text-slate-800 bg-white text-center items-center justify-center rounded transition md:hidden"
-                aria-pressed="false"
-                onclick="this.setAttribute('aria-pressed', !(this.getAttribute('aria-pressed') === 'true'))">
-                <span class="sr-only">Menu</span>
-                <svg class="w-6 h-6 fill-current pointer-events-none" viewBox="0 0 16 16"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <rect
-                        class="origin-center -translate-y-[5px] translate-x-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-[[aria-pressed=true]]:translate-x-0 group-[[aria-pressed=true]]:translate-y-0 group-[[aria-pressed=true]]:rotate-[315deg]"
-                        y="7" width="9" height="2" rx="1"></rect>
-                    <rect
-                        class="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-[[aria-pressed=true]]:rotate-45"
-                        y="7" width="16" height="2" rx="1"></rect>
-                    <rect
-                        class="origin-center translate-y-[5px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-[[aria-pressed=true]]:translate-y-0 group-[[aria-pressed=true]]:rotate-[135deg]"
-                        y="7" width="9" height="2" rx="1"></rect>
-                </svg>
-            </button>
+
             <!-- Logo -->
             <a href="#">
                 <img class="md:block hidden w-48" src="/assets/images/logotip-horizontal.png" alt="Logo">
@@ -107,17 +89,17 @@
     <!-- Submenu Section (Hidden by default on small screens, visible on medium and larger screens) -->
     <?php if ($currentPath !== '/admin/inventory') { ?>
         <div id="submenu"
-            class="md:flex hidden overflow-auto justify-center items-center gap-6 p-6 shadow-md sm:shadow-none px-2 py-1 sm:py-4">
-            <div class=" submenu flex space-x-6">
+            class="md:flex overflow-x-auto justify-center items-center gap-6 p-6 shadow-md sm:shadow-none px-2 py-1 sm:py-4">
+            <!-- class="md:flex hidden overflow-x-auto whitespace-nowrap justify-start items-center gap-4 p-4 shadow-md sm:shadow-none px-2 py-1 sm:py-4"> -->
+
+            <div class="submenu text-center flex items-center space-x-6">
                 <!-- Contracts -->
                 <div class="submenu-item">
-                    <div class="submenu-item text-center">
-                        <a href="/admin/contracts"
-                            class="link-primary <?php echo ($currentPath == '/admin/contracts') ? 'active' : ''; ?>">
-                            <i class="fas fa-file-contract md:block"></i>
-                            <span>Contratos</span>
-                        </a>
-                    </div>
+                    <a href="/admin/contracts"
+                        class="link-primary <?php echo ($currentPath == '/admin/contracts') ? 'active' : ''; ?>">
+                        <i class="fas fa-file-contract block"></i>
+                        <span class="text-sm font-medium whitespace-nowrap">Contratos</span>
+                    </a>
                 </div>
 
                 <!-- Work Orders-->
@@ -125,7 +107,7 @@
                     <a href="/admin/work-orders"
                         class="link-primary <?php echo ($currentPath == '/admin/work-orders') ? 'active' : ''; ?>">
                         <i class="fas fa-briefcase md:block"></i>
-                        <span>Orden de Trabajo</span>
+                        <span class="text-sm font-medium whitespace-nowrap">Orden de Trabajo</span>
                     </a>
                 </div>
 
@@ -134,7 +116,7 @@
                     <a href="/admin/zones"
                         class="link-primary <?php echo ($currentPath == '/admin/zones') ? 'active' : ''; ?>">
                         <i class="fas fa-map-marker-alt md:block"></i>
-                        <span>Zonas</span>
+                        <span class="text-sm font-medium whitespace-nowrap">Zonas</span>
                     </a>
                 </div>
 
@@ -143,7 +125,7 @@
                     <a href="/admin/elements"
                         class="link-primary <?php echo ($currentPath == '/admin/elements') ? 'active' : ''; ?>">
                         <i class="fas fa-cube md:block"></i>
-                        <span>Elementos</span>
+                        <span class="text-sm font-medium whitespace-nowrap">Elementos</span>
                     </a>
                 </div>
 
@@ -152,7 +134,7 @@
                     <a href="/admin/task-types"
                         class="link-primary <?php echo ($currentPath == '/admin/task-types') ? 'active' : ''; ?>">
                         <i class="fas fa-tasks md:block"></i>
-                        <span>Tipo Tarea</span>
+                        <span class="text-sm font-medium whitespace-nowrap">Tipo Tarea</span>
                     </a>
                 </div>
 
@@ -161,7 +143,7 @@
                     <a href="/admin/users"
                         class="link-primary <?php echo ($currentPath == '/admin/users') ? 'active' : ''; ?>">
                         <i class="fas fa-users md:block"></i>
-                        <span>Usuarios</span>
+                        <span class="text-sm font-medium whitespace-nowrap">Usuarios</span>
                     </a>
                 </div>
 
@@ -170,7 +152,7 @@
                     <a href="/admin/work-reports"
                         class="link-primary <?php echo ($currentPath == '/admin/work-reports') ? 'active' : ''; ?>">
                         <i class="fas fa-clipboard-list md:block"></i>
-                        <span>Partes</span>
+                        <span class="text-sm font-medium whitespace-nowrap">Partes</span>
                     </a>
                 </div>
 
@@ -179,7 +161,7 @@
                     <a href="/admin/stats"
                         class="link-primary <?php echo ($currentPath == '/admin/stats') ? 'active' : ''; ?>">
                         <i class="fas fa-chart-bar md:block"></i>
-                        <span>Estadísticas</span>
+                        <span class="text-sm font-medium whitespace-nowrap">Estadísticas</span>
                     </a>
                 </div>
             </div>
