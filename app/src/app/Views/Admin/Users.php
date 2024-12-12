@@ -7,12 +7,12 @@ use App\Core\Session;
 <?php if (Session::has('success')) { ?>
     <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
         <strong class="font-bold">Success: </strong>
-        <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
+        <span><?= htmlspecialchars(Session::get('success')); ?></span>
     </div>
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/user/create" class="btn-create">
+    <a href="/admin/user/create" class="btn-create">
         Create User
     </a>
 </div>
@@ -34,26 +34,26 @@ use App\Core\Session;
             <?php foreach ($users as $user) { ?>
                 <tr class="hover:bg-blue-50">
                     <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->getId()); ?>
+                        <?= htmlspecialchars($user->getId()); ?>
                     </td>
                     <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->company); ?>
+                        <?= htmlspecialchars($user->company); ?>
                     </td>
                     <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->name . ' ' . $user->surname); ?>
+                        <?= htmlspecialchars($user->name . ' ' . $user->surname); ?>
                     </td>
                     <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->dni); ?>
+                        <?= htmlspecialchars($user->dni); ?>
                     </td>
                     <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->email); ?>
+                        <?= htmlspecialchars($user->email); ?>
                     </td>
                     <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($user->role); ?>
+                        <?= htmlspecialchars($user->role); ?>
                     </td>
                     <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
-                        <a href="/user/<?php echo htmlspecialchars($user->getId()); ?>/edit"
+                        <a href="/admin/user/<?= htmlspecialchars($user->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -62,7 +62,7 @@ use App\Core\Session;
                             </svg>
                         </a>
                         <!-- Delete Button (Trash Icon) -->
-                        <a href="/user/<?php echo htmlspecialchars($user->getId()); ?>/delete"
+                        <a href="/admin/user/<?= htmlspecialchars($user->getId()); ?>/delete"
                             onclick="return confirm('Are you sure you want to delete this user?');"
                             class="text-red-500 hover:text-red-700" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

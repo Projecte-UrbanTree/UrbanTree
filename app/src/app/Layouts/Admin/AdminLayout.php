@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title . ' - ' . getenv('APP_NAME'); ?></title>
+    <title><?= $title . ' - ' . getenv('APP_NAME'); ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/assets/css/app.css">
     <script src="/assets/js/tailwind.js"></script>
@@ -25,11 +25,11 @@
             <!-- Navigation Links (Visible only on large screens) -->
             <div class="hidden md:flex gap-6">
                 <a href="/admin"
-                    class="menu-link <?php echo (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'active' : ''; ?>">
+                    class="menu-link <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'active' : ''; ?>">
                     Gestión
                 </a>
                 <a href="/admin/inventory"
-                    class="menu-link <?php echo ($currentPath === '/admin/inventory') ? 'active' : ''; ?>">
+                    class="menu-link <?= ($currentPath === '/admin/inventory') ? 'active' : ''; ?>">
                     Inventario
                 </a>
             </div>
@@ -63,9 +63,9 @@
                     onclick="profileDropdown.classList.toggle('hidden')">
                     <img class="h-10 rounded-full" src="/assets/images/avatar.png" alt="User Avatar">
                     <div class="hidden md:block text-sm relative">
-                        <span class="block text-gray-700"><?php echo $_SESSION['user']['name']; ?></span>
+                        <span class="block text-gray-700"><?= $_SESSION['user']['name']; ?></span>
                         <span class="block text-gray-500">
-                            <?php echo ($_SESSION['user']['role'] == 2) ? 'ADMINISTRADOR' : 'USUARIO'; ?>
+                            <?= ($_SESSION['user']['role'] == 2) ? 'ADMINISTRADOR' : 'USUARIO'; ?>
                         </span>
                         <div id="profile-dropdown"
                             class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
@@ -96,7 +96,7 @@
                 <!-- Contracts -->
                 <div class="submenu-item">
                     <a href="/admin/contracts"
-                        class="link-primary <?php echo ($currentPath == '/admin/contracts') ? 'active' : ''; ?>">
+                        class="link-primary <?= ($currentPath == '/admin/contracts') ? 'active' : ''; ?>">
                         <i class="fas fa-file-contract block"></i>
                         <span class="text-sm font-medium whitespace-nowrap">Contratos</span>
                     </a>
@@ -105,7 +105,7 @@
                 <!-- Work Orders-->
                 <div class="submenu-item">
                     <a href="/admin/work-orders"
-                        class="link-primary <?php echo ($currentPath == '/admin/work-orders') ? 'active' : ''; ?>">
+                        class="link-primary <?= ($currentPath == '/admin/work-orders') ? 'active' : ''; ?>">
                         <i class="fas fa-briefcase md:block"></i>
                         <span class="text-sm font-medium whitespace-nowrap">Orden de Trabajo</span>
                     </a>
@@ -113,8 +113,7 @@
 
                 <!-- Zones -->
                 <div class="submenu-item">
-                    <a href="/admin/zones"
-                        class="link-primary <?php echo ($currentPath == '/admin/zones') ? 'active' : ''; ?>">
+                    <a href="/admin/zones" class="link-primary <?= ($currentPath == '/admin/zones') ? 'active' : ''; ?>">
                         <i class="fas fa-map-marker-alt md:block"></i>
                         <span class="text-sm font-medium whitespace-nowrap">Zonas</span>
                     </a>
@@ -123,7 +122,7 @@
                 <!-- Elements -->
                 <div class="submenu-item">
                     <a href="/admin/elements"
-                        class="link-primary <?php echo ($currentPath == '/admin/elements') ? 'active' : ''; ?>">
+                        class="link-primary <?= ($currentPath == '/admin/elements') ? 'active' : ''; ?>">
                         <i class="fas fa-cube md:block"></i>
                         <span class="text-sm font-medium whitespace-nowrap">Elementos</span>
                     </a>
@@ -132,7 +131,7 @@
                 <!-- Task Types -->
                 <div class="submenu-item">
                     <a href="/admin/task-types"
-                        class="link-primary <?php echo ($currentPath == '/admin/task-types') ? 'active' : ''; ?>">
+                        class="link-primary <?= ($currentPath == '/admin/task-types') ? 'active' : ''; ?>">
                         <i class="fas fa-tasks md:block"></i>
                         <span class="text-sm font-medium whitespace-nowrap">Tipo Tarea</span>
                     </a>
@@ -140,8 +139,7 @@
 
                 <!-- Users -->
                 <div class="submenu-item">
-                    <a href="/admin/users"
-                        class="link-primary <?php echo ($currentPath == '/admin/users') ? 'active' : ''; ?>">
+                    <a href="/admin/users" class="link-primary <?= ($currentPath == '/admin/users') ? 'active' : ''; ?>">
                         <i class="fas fa-users md:block"></i>
                         <span class="text-sm font-medium whitespace-nowrap">Usuarios</span>
                     </a>
@@ -150,7 +148,7 @@
                 <!-- Partes -->
                 <div class="submenu-item">
                     <a href="/admin/work-reports"
-                        class="link-primary <?php echo ($currentPath == '/admin/work-reports') ? 'active' : ''; ?>">
+                        class="link-primary <?= ($currentPath == '/admin/work-reports') ? 'active' : ''; ?>">
                         <i class="fas fa-clipboard-list md:block"></i>
                         <span class="text-sm font-medium whitespace-nowrap">Partes</span>
                     </a>
@@ -158,8 +156,7 @@
 
                 <!-- Stats -->
                 <div class="submenu-item">
-                    <a href="/admin/stats"
-                        class="link-primary <?php echo ($currentPath == '/admin/stats') ? 'active' : ''; ?>">
+                    <a href="/admin/stats" class="link-primary <?= ($currentPath == '/admin/stats') ? 'active' : ''; ?>">
                         <i class="fas fa-chart-bar md:block"></i>
                         <span class="text-sm font-medium whitespace-nowrap">Estadísticas</span>
                     </a>
@@ -172,7 +169,7 @@
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-6">
-        <?php echo $content; ?>
+        <?= $content; ?>
     </div>
 
     <script src="/assets/js/app.js"></script>

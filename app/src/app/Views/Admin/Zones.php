@@ -7,12 +7,12 @@ use App\Core\Session;
 <?php if (Session::has('success')) { ?>
     <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
         <strong class="font-bold">Success: </strong>
-        <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
+        <span><?= htmlspecialchars(Session::get('success')); ?></span>
     </div>
 <?php } ?>
 
 <div class="mb-4 flex justify-end">
-    <a href="/zone/create" class="btn-create">
+    <a href="/admin/zone/create" class="btn-create">
         Create Zone
     </a>
 </div>
@@ -29,11 +29,11 @@ use App\Core\Session;
             <?php foreach ($zones as $zone) { ?>
                 <tr class="hover:bg-blue-50">
                     <td class="px-4 py-3 border-b">
-                        <?php echo htmlspecialchars($zone->name); ?>
+                        <?= htmlspecialchars($zone->name); ?>
                     </td>
                     <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
-                        <a href="/zone/<?php echo htmlspecialchars($zone->getId()); ?>/edit"
+                        <a href="/admin/zone/<?= htmlspecialchars($zone->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -42,7 +42,7 @@ use App\Core\Session;
                             </svg>
                         </a>
                         <!-- Delete Button (Trash Icon) -->
-                        <a href="/zone/<?php echo htmlspecialchars($zone->getId()); ?>/delete"
+                        <a href="/admin/zone/<?= htmlspecialchars($zone->getId()); ?>/delete"
                             onclick="return confirm('Are you sure you want to delete this user?');"
                             class="text-red-500 hover:text-red-700" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
