@@ -10,6 +10,10 @@ abstract class BaseModel
 
     protected ?string $created_at;
 
+    protected ?string $updated_at;
+
+    protected ?string $deleted_at;
+
     // Insert multiple records into the table
     public static function bulkInsert(array $records): void
     {
@@ -342,5 +346,15 @@ abstract class BaseModel
     public function getCreatedAt(): ?string
     {
         return $this->created_at;
+    }
+
+    public function getUpdatedAt(): ?string
+    {
+        return $this->updated_at;
+    }
+
+    public function getDeletedAt(): ?string
+    {
+        return $this->deleted_at;
     }
 }

@@ -20,6 +20,8 @@ class Photo extends BaseModel
         $photo->name = $data['name'];
         $photo->path = $data['path'];
         $photo->created_at = $data['created_at'];
+        $photo->updated_at = $data['updated_at'];
+        $photo->deleted_at = $data['deleted_at'];
 
         return $photo;
     }

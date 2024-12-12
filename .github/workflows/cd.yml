@@ -67,10 +67,23 @@ jobs:
       version: ${{ needs.foundation.outputs.version }}
     secrets: inherit
 
+  database:
+    name: 🏗️ Build database
+    needs: foundation
+    uses: ./.github/workflows/database.yml
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    with:
+      version: ${{ needs.foundation.outputs.version }}
+    secrets: inherit
+
   release:
     name: 🚀 Release
-    needs: build
-    if: ${{ needs.build.outputs.version }}
+    needs: [build, database]
+    if: ${{ needs.build.outputs.version && needs.database.outputs.version }}
     runs-on: ubuntu-latest
     environment: Production
 
