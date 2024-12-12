@@ -59,7 +59,7 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASS_FILE_PATH=/run/secrets/db_pass
-      - LOG_FILE_PATH=/var/www/html/storage/logs/app.log
+      - SENTRY_DSN=${SENTRY_DSN_APP}
     develop:
       watch:
         - action: sync
