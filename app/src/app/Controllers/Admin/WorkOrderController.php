@@ -16,72 +16,90 @@ class WorkOrderController
 {
     public function index($queryParams)
     {
-        $workOrders = WorkOrder::findAll();
+        $work_orders = WorkOrder::findAll();
         View::render([
             'view' => 'Admin/WorkOrders',
-            'title' => 'Manage Orders',
+            'title' => 'Órdenes de Trabajo',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['workOrders' => $workOrders],
+            'data' => ['work_orders' => $work_orders],
         ]);
         Session::remove('success');
     }
 
     public function create($queryParams)
     {
-        $workOrders = WorkOrder::findAll();
+        $work_order = WorkOrder::findAll();
         View::render([
             'view' => 'Admin/WorkOrder/Create',
-            'title' => 'Add Order',
+            'title' => 'Nueva Orden de Trabajo',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['workOrders' => $workOrders],
+            'data' => ['work_order' => $work_order],
         ]);
     }
 
     public function store($postData)
     {
 
-        $workOrders = new WorkOrder();
-        $workOrders->contract_id = $postData['contract_id'];
-        $workOrders->save();
+        $work_order = new WorkOrder();
+        $work_order->contract_id = $postData['contract_id'];
 
+        $work_order->save();
 
-
-
-
-        Session::set('success', 'Work Order created successfully');
+        if ($work_order->getId())
+            Session::set('success', 'Orden de Trabajo creada correctamente');
+        else
+            Session::set('error', 'La orden de trabajo no se pudo crear');
 
         header('Location: /work-orders');
+        exit;
     }
 
     public function edit($id, $queryParams)
     {
-        $workOrders = WorkOrder::find($id);
+        $work_order = WorkOrder::find($id);
+
+        if (!$work_order) {
+            Session::set('error', 'Orden de trabajo no encontrada');
+            header('Location: /admin/work-orders');
+            exit;
+        }
+
         View::render([
             'view' => 'Admin/WorkOrder/Edit',
-            'title' => 'Edit Order',
+            'title' => 'Editando Orden de Trabajo',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['workOrders' => $workOrders],
+            'data' => ['work_order' => $work_order],
         ]);
     }
 
     public function update($id, $postData)
     {
-        $workOrders = WorkOrder::find($id);
+        $work_order = WorkOrder::find($id);
 
-        $workOrders->save();
+        if ($work_order) {
 
-        Session::set('success', 'Work Order updated successfully');
+            $work_order->save();
+
+            Session::set('success', 'Orden de Trabajo actualizada correctamente');
+        } else
+            Session::set('error', 'Orden de trabajo no encontrada');
 
         header('Location: /admin/work-orders');
+        exit;
     }
 
     public function destroy($id, $queryParams)
     {
-        $workOrders = WorkOrder::find($id);
-        $workOrders->delete();
+        $work_order = WorkOrder::find($id);
 
-        Session::set('success', 'Work Order deleted successfully');
+        if ($work_order) {
+            $work_order->delete();
+
+            Session::set('success', 'Orden de Trabajo eliminada correctamente');
+        } else
+            Session::set('error', 'Orden de trabajo no encontrada');
 
         header('Location: /admin/work-orders');
+        exit;
     }
 }

@@ -13,21 +13,18 @@ class UserController
         $users = User::findAll();
         View::render([
             'view' => 'Admin/Users',
-            'title' => 'Manage Users',
+            'title' => 'Usuarios',
             'layout' => 'Admin/AdminLayout',
             'data' => ['users' => $users],
         ]);
-
-        Session::remove('success');
     }
 
     public function create($queryParams)
     {
         View::render([
             'view' => 'Admin/User/Create',
-            'title' => 'Add User',
+            'title' => 'Nuevo Usuario',
             'layout' => 'Admin/AdminLayout',
-            'data' => [],
         ]);
     }
 
@@ -47,17 +44,28 @@ class UserController
         $user->role = $postData['role'];
         $user->save();
 
-        Session::set('success', 'User created successfully');
+        if ($user->getId())
+            Session::set('success', 'Usuario creado correctamente');
+        else
+            Session::set('error', 'El usuario no se pudo crear');
 
         header('Location: /admin/users');
+        exit;
     }
 
     public function edit($id, $queryParams)
     {
         $user = User::find($id);
+
+        if (!$user) {
+            Session::set('error', 'Usuario no encontrado');
+            header('Location: /admin/users');
+            exit;
+        }
+
         View::render([
             'view' => 'Admin/User/Edit',
-            'title' => 'Edit User',
+            'title' => 'Editando Usuario',
             'layout' => 'Admin/AdminLayout',
             'data' => ['user' => $user],
         ]);
@@ -66,25 +74,32 @@ class UserController
     public function update($id, $postData)
     {
         $user = User::find($id);
-        $user->company = $postData['company'];
-        $user->name = $postData['name'];
-        $user->dni = $postData['dni'];
-        $user->email = $postData['email'];
-        $user->role = $postData['role'];
-        $user->save();
+        if ($user) {
+            $user->company = $postData['company'];
+            $user->name = $postData['name'];
+            $user->dni = $postData['dni'];
+            $user->email = $postData['email'];
+            $user->role = $postData['role'];
+            $user->save();
 
-        Session::set('success', 'User updated successfully');
+            Session::set('success', 'Usuario actualizado correctamente');
+        } else
+            Session::set('error', 'Usuario no encontrado');
 
         header('Location: /admin/users');
+        exit;
     }
 
     public function destroy($id, $queryParams)
     {
         $user = User::find($id);
-        $user->delete();
-
-        Session::set('success', 'User deleted successfully');
+        if ($user) {
+            $user->delete();
+            Session::set('success', 'Usuario eliminado correctamente');
+        } else
+            Session::set('error', 'Usuario no encontrado');
 
         header('Location: /admin/users');
+        exit;
     }
 }
