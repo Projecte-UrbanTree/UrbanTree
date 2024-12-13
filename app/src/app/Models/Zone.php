@@ -31,6 +31,6 @@ class Zone extends BaseModel
     // Relationship to elements
     public function elements(): array
     {
-        return $this->hasMany(Element::class, 'zone_id', 'id');
+        return $this->hasMany(Element::class, 'zone_id');
     }
 }
