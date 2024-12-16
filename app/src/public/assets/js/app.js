@@ -4,12 +4,12 @@ const regexPatterns = [
     {
         name: "lettersAndSpaces",
         regex: /^[a-zA-Z\s]+$/,
-        explanation: "El camp només pot contenir lletres i espais.",
+        explanation: "El campo solo puede contener letras y espacios.",
     },
     {
         name: "numbersOnly",
         regex: /^\d+$/,
-        explanation: "Només s'accepten números.",
+        explanation: "El campo solo puede contener números.",
     },
 ];
 
@@ -25,7 +25,7 @@ function createErrorElement(message) {
  */
 function validateEmptyField(value, fieldName) {
     return !value
-        ? createErrorElement(`${fieldName}: El camp no pot estar buit.`)
+        ? createErrorElement(`${fieldName}: El campo no puede estar vacío.`)
         : true;
 }
 
@@ -34,7 +34,9 @@ function validateEmptyField(value, fieldName) {
  */
 function validateField(value, regexName, fieldName) {
     const pattern = regexPatterns.find((pattern) => pattern.name === regexName);
-    const explanation = pattern ? pattern.explanation : "El valor no és vàlid.";
+    const explanation = pattern
+        ? pattern.explanation
+        : "El valor no es válido.";
     return pattern && !pattern.regex.test(value)
         ? createErrorElement(`${fieldName}: ${explanation}`)
         : true;
@@ -46,7 +48,7 @@ function validateField(value, regexName, fieldName) {
 function dateCannotBeAfter(startDate, endDate, fieldName) {
     return new Date(startDate) > new Date(endDate)
         ? createErrorElement(
-              `${fieldName}: La data de finalització no pot ser anterior a la data d'inici.`
+              `${fieldName}: La fecha de inicio no puede ser posterior a la fecha de fin.`
           )
         : true;
 }
@@ -59,7 +61,7 @@ function validatePositiveInteger(value, fieldName) {
     return pattern.test(value) && parseFloat(value) > 0
         ? true
         : createErrorElement(
-              `${fieldName}: El valor ha de ser un número positiu.`
+              `${fieldName}: El valor debe ser un número entero positivo.`
           );
 }
 
@@ -70,7 +72,7 @@ function validateMaxValue(value, max, fieldName) {
     return parseFloat(value) <= max
         ? true
         : createErrorElement(
-              `${fieldName}: El valor no pot ser superior a ${max}.`
+              `${fieldName}: El valor no puede ser mayor a ${max}.`
           );
 }
 
