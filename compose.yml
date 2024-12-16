@@ -60,6 +60,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASS_FILE_PATH=/run/secrets/db_pass
       - SENTRY_DSN=${SENTRY_DSN_APP}
+      - MAPBOX=${MAPBOX}
     develop:
       watch:
         - action: sync
