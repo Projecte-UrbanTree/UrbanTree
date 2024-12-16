@@ -5,10 +5,8 @@ namespace App\Controllers\Admin;
 use App\Core\Session;
 use App\Core\View;
 use App\Models\WorkOrder;
-use App\Models\Task;
 use App\Models\TaskType;
 use App\Models\Zone;
-use App\Models\Contract;
 use App\Models\User;
 
 
@@ -23,17 +21,24 @@ class WorkOrderController
             'layout' => 'Admin/AdminLayout',
             'data' => ['work_orders' => $work_orders],
         ]);
-        Session::remove('success');
     }
 
     public function create($queryParams)
     {
-        $work_order = WorkOrder::findAll();
+        $task_types = array_map(function ($task_type) {
+            return $task_type->name;
+        }, TaskType::findAll());
+        $users = array_map(function ($user) {
+            return $user->name . ' ' . $user->surname;
+        }, User::findAll(['role' => 1]));
+        $zones = array_map(function ($zone) {
+            return $zone->name;
+        }, Zone::findAll(['name' => 'not null']));
         View::render([
             'view' => 'Admin/WorkOrder/Create',
             'title' => 'Nueva Orden de Trabajo',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['work_order' => $work_order],
+            'data' => ['task_types' => $task_types, 'users' => $users, 'zones' => $zones],
         ]);
     }
 
@@ -50,7 +55,7 @@ class WorkOrderController
         else
             Session::set('error', 'La orden de trabajo no se pudo crear');
 
-        header('Location: /work-orders');
+        header('Location: /admin/work-orders');
         exit;
     }
 

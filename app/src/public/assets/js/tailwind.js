@@ -5,7 +5,6 @@ tailwind.config = {
                 darkGreen: "#008037",
                 lightGreen: "#7FD959",
                 black: "#222222",
-                red: "#FF0000",
             },
             fontFamily: {
                 sans: ["Poppins", "sans-serif"],
