@@ -48,8 +48,13 @@ class User extends BaseModel
 
         return $user;
     }
-    public function workOrders()
+
+    public static function role_name($role): string
     {
-        return $this->belongsToMany(WorkOrder::class, 'work_orders_users', 'user_id', 'work_order_id');
+        return match ($role) {
+            0 => "Cliente",
+            1 => "Operario",
+            2 => "Admin"
+        };
     }
 }

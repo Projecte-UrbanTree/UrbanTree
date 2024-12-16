@@ -1,20 +1,6 @@
-<?php
-
-use App\Core\Session;
-
-?>
-
-<?php if (Session::has('success')) { ?>
-    <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-        <strong class="font-bold">Success: </strong>
-        <span><?= htmlspecialchars(Session::get('success')); ?></span>
-    </div>
-<?php } ?>
-
 <div class="mb-4 flex justify-end">
-    <a href="/admin/work-order/create"
-        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-        Create Work Order
+    <a href="/admin/work-order/create" class="btn-create">
+        Nueva órden de trabajo
     </a>
 </div>
 

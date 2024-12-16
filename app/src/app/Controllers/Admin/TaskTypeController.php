@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Core\Session;
 use App\Core\View;
 use App\Models\TaskType;
 
@@ -12,7 +13,7 @@ class TaskTypeController
         $task_types = TaskType::findAll();
         View::render([
             'view' => 'Admin/TaskTypes',
-            'title' => 'Task Types',
+            'title' => 'Tipos de Tarea',
             'layout' => 'Admin/AdminLayout',
             'data' => ['task_types' => $task_types],
         ]);
@@ -22,46 +23,74 @@ class TaskTypeController
     {
         View::render([
             'view' => 'Admin/TaskType/Create',
-            'title' => 'Add Task Type',
+            'title' => 'Nuevo Tipo de Tarea',
             'layout' => 'Admin/AdminLayout',
-            'data' => [],
         ]);
     }
 
     public function store($postData)
     {
-        $tasktype = new TaskType();
-        $tasktype->name = $postData['name'];
-        $tasktype->save();
+        $task_type = new TaskType();
+        $task_type->name = $postData['name'];
+
+        $task_type->save();
+
+        if ($task_type->getId())
+            Session::set('success', 'Tipo de tarea creado correctamente');
+        else
+            Session::set('error', 'El tipo de tarea no se pudo crear');
 
         header('Location: /admin/task-types');
+        exit;
     }
 
     public function edit($id, $queryParams)
     {
-        $tasktype = TaskType::find($id);
+        $task_type = TaskType::find($id);
+
+        if (!$task_type) {
+            Session::set('error', 'Tipo de tarea no encontrado');
+            header('Location: /admin/task-types');
+            exit;
+        }
+
         View::render([
             'view' => 'Admin/TaskType/Edit',
-            'title' => 'Edit Task Type',
+            'title' => 'Editando Tipo de Tarea',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['task_type' => $tasktype],
+            'data' => ['task_type' => $task_type],
         ]);
     }
 
     public function update($id, $postData)
     {
-        $tasktype = TaskType::find($id);
+        $task_type = TaskType::find($id);
 
-        $tasktype->name = $postData['name'];
-        $tasktype->save();
+        if ($task_type) {
+            $task_type->name = $postData['name'];
+
+            $task_type->save();
+
+            Session::set('success', 'Tipo de tarea actualizado correctamente');
+        } else {
+            Session::set('error', 'Tipo de tarea no encontrado');
+        }
 
         header('Location: /admin/task-types');
+        exit;
     }
 
     public function destroy($id, $queryParams)
     {
-        TaskType::find($id)->delete();
+        $task_type = TaskType::find($id);
+
+        if ($task_type) {
+            $task_type->delete();
+            Session::set('success', 'Tipo de tarea eliminado correctamente');
+        } else
+            Session::set('error', 'Tipo de tarea no encontrado');
 
         header('Location: /admin/task-types');
+        exit;
     }
 }

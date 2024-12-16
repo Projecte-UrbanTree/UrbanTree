@@ -62,11 +62,10 @@ create table tree_types (
     constraint UC_TreeType unique (family, genus, species)
 );
 
-create table tasks (
+create table task_types (
     id int auto_increment primary key,
     name varchar(255) unique,
     description varchar(255),
-    require_tree_type boolean default false,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp
@@ -76,6 +75,7 @@ create table element_types (
     id int auto_increment primary key,
     name varchar(255) not null,
     description varchar(255),
+    requires_tree_type boolean not null default false,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp
@@ -189,7 +189,7 @@ create table work_orders_blocks_tasks (
     updated_at timestamp,
     deleted_at timestamp,
     foreign key (work_orders_block_id) references work_orders_blocks(id),
-    foreign key (task_id) references tasks(id),
+    foreign key (task_id) references task_types(id),
     foreign key (tree_type_id) references tree_types(id)
 );
 

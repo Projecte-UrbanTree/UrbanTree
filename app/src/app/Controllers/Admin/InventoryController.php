@@ -18,8 +18,8 @@ class InventoryController
         $workorders = WorkOrder::count();
         View::render([
             'view' => 'Admin/Inventory',
-            'title' => 'Dashboard',
-            'layout' => 'Admin/AdminLayout',
+            'title' => 'Tablero',
+            'layout' => 'Admin/AdminInventoryLayout',
             'data' => [
                 'users' => $users,
                 'contracts' => $contracts,
