@@ -22,11 +22,16 @@
         Seleccionar Contrato
         </button>
         <div id="dropdown-menu" class="absolute bg-white border rounded shadow-lg mt-2 w-48 hidden">
+    <?php if (!empty($contracts)): ?>
         <?php foreach ($contracts as $contract): ?>
-        <div class="dropdown-item" data-value="<?= htmlspecialchars($contract->id) ?>">
-        <?= htmlspecialchars($contract->name) ?>        
-    </div>
-    <?php endforeach; ?></div>
+            <div class="dropdown-item" data-value="<?= htmlspecialchars($contract->id) ?>">
+                <?= htmlspecialchars($contract->name) ?>        
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <div class="dropdown-item text-gray-500">No hay contratos disponibles</div>
+    <?php endif; ?>
+</div>
 </div>
     </div>
 
