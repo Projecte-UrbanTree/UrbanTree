@@ -10,6 +10,7 @@ class ContractController
     public function index($queryParams)
     {
         $contracts = Contract::findAll();
+        
         View::render([
             'view' => 'Admin/Contracts',
             'title' => 'Contracts',

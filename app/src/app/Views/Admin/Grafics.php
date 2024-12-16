@@ -31,8 +31,10 @@
     <?php else: ?>
         <div class="dropdown-item text-gray-500">No hay contratos disponibles</div>
     <?php endif; ?>
-</div>
-</div>
+  </div>
+  <div>
+      <p>Contractes: <?php echo $totalContractes; ?></p>
+      <p>Tipus: <?php echo $totalTreeTypes; ?></p>
     </div>
 
     <!-- Charts Container -->
