@@ -379,3 +379,31 @@ function applySelection() {
     // Cierra el modal
     closeModal();
 }
+
+
+// func to active the button if detect changes in the form
+function checkChanges() {
+    const inputs = document.querySelectorAll("input");
+    const button = document.getElementById("button-save");
+
+    let changesDetected = false;
+
+   
+    inputs.forEach(input => {
+        const originalValue = input.getAttribute("data-original-value");
+        if (input.value !== originalValue) {
+            changesDetected = true;
+        }
+    });
+
+ 
+    if (changesDetected) {
+        button.disabled = false;
+        button.classList.remove("bg-gray-400", "cursor-not-allowed");
+        button.classList.add("bg-green-500", "hover:bg-green-600");
+    } else {
+        button.disabled = true;
+        button.classList.add("bg-gray-400", "cursor-not-allowed");
+        button.classList.remove("bg-green-500", "hover:bg-green-600");
+    }
+}
