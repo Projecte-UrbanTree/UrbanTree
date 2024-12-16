@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,16 +20,14 @@
     <div class="relative mb-16">
       <button id="menuButton" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
         Seleccionar Contrato
-      </button>
-      <div id="dropdown-menu" class="absolute bg-white border rounded shadow-lg mt-2 w-48 hidden">
-        <ul>
-          <!-- Insertar los contratos obtenidos desde PHP -->
-          <?php foreach ($contracts as $contract): ?>
-          <?php echo '<option value="' . $contract->getId() . '">' . $contract->name . '</option>'; ?>
-          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer"><?= $contract; ?></li> 
-          <?php endforeach; ?>
-        </ul>
-      </div>
+        </button>
+        <div id="dropdown-menu" class="absolute bg-white border rounded shadow-lg mt-2 w-48 hidden">
+        <?php foreach ($contracts as $contract): ?>
+        <div class="dropdown-item" data-value="<?= htmlspecialchars($contract->id) ?>">
+        <?= htmlspecialchars($contract->name) ?>        
+    </div>
+    <?php endforeach; ?></div>
+</div>
     </div>
 
     <!-- Charts Container -->

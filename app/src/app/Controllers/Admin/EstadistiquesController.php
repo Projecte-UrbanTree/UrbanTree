@@ -3,30 +3,28 @@
 namespace App\Controllers\Admin;
 
 use App\Core\View;
-use App\Models\Estadistiques; // Assegura't que aquest model existeix
+use App\Models\Estadistiques; 
 
 class EstadistiquesController
 {
-    public function index($queryParams)
+    public function index($queryParams = [])
     {
         // Obtenim les dades del model correcte
         $grafiques = Estadistiques::findAll();
+      
 
         // Comprova si $grafiques és null i assegura't que sigui un array
-        if (!is_array($grafiques)) {
-            $grafiques = []; // Inicialitza com a array buit si cal
-        }
-
+        $contracts = $contracts = Estadistiques::findAll();
         // Renderitzem la vista amb les dades
         View::render([
             'view' => 'Admin/Grafics',
             'title' => 'Grafiques',
             'layout' => 'Admin/AdminLayout',
+            'contracts' => $contracts,
             'data' => ['grafics' => $grafiques],
         ]);
     }
 }
-
 namespace App\Models;
 
 class BaseModel
