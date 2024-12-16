@@ -137,8 +137,8 @@ create table incidences (
 --* Work orders, tasks and reports
 create table work_orders (
     id int auto_increment primary key,
-    contract_id int,
-    date timestamp,
+    contract_id int not null,
+    date timestamp not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,

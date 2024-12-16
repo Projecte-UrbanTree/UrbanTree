@@ -1,27 +1,3 @@
-<?php
-$zones = [];
-$tasks = [];
-$workers = [];
-
-foreach ($workOrders as $workOrder) {
-    foreach ($workOrder->tasks() as $task) {
-        foreach ($task->zones() as $zone) {
-            $zones[] = $zone->name;
-        }
-        foreach ($task->taskTypes() as $task_type) {
-            $tasks[] = $task_type->name;
-        }
-        foreach ($task->workers() as $worker) {
-            $workers[] = $worker->name;
-        }
-    }
-}
-
-$zones = array_unique($zones);
-$tasks = array_unique($tasks);
-$workers = array_unique($workers);
-?>
-
 <div class="mb-4 flex justify-end">
     <a href="/admin/work-orders"
         class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500 flex items-center space-x-2">
@@ -56,6 +32,11 @@ $workers = array_unique($workers);
             <input type="date" id="date" name="date"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
+        </div>
+
+        <div>
+            <label for="workers" class="block text-sm font-medium text-gray-700 mb-1"> Operarios</label>
+
         </div>
 
 
@@ -129,15 +110,6 @@ $workers = array_unique($workers);
                 </div>
             </div>
         </div>
-
-        <!-- Scripts JS -->
-        <script>
-            const data = {
-                zones: <?= json_encode($zones); ?>,
-                tasks: <?= json_encode($tasks); ?>,
-                workers: <?= json_encode($workers); ?>
-            };
-        </script>
 
         <!-- Submit Button -->
         <div class="flex items-center">

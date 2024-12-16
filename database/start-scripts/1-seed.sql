@@ -59,10 +59,10 @@ INSERT INTO incidences (element_id, name, description) VALUES
 (3, 'Fuente sin agua', 'Fuente sin agua en el parque');
 
 --* Work Orders
-INSERT INTO work_orders (contract_id) VALUES
-(1),
-(2),
-(3);
+INSERT INTO work_orders (contract_id, date) VALUES
+(1,"2021-01-01"),
+(2,"2021-02-01"),
+(3,"2021-03-01");
 
 --* Work Orders Users
 INSERT INTO work_orders_users (work_order_id, user_id) VALUES

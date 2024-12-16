@@ -48,4 +48,8 @@ class User extends BaseModel
 
         return $user;
     }
+    public function workOrders()
+    {
+        return $this->belongsToMany(WorkOrder::class, 'work_orders_users', 'user_id', 'work_order_id');
+    }
 }

@@ -4,7 +4,8 @@ namespace App\Models;
 
 class WorkOrder extends BaseModel
 {
-    public ?int $contract_id;
+    public int $contract_id;
+    public string $date;
 
     protected static function getTableName(): string
     {
@@ -13,19 +14,12 @@ class WorkOrder extends BaseModel
 
     protected static function mapDataToModel($data): WorkOrder
     {
-        $work_order = new self();
-        $work_order->id = $data['id'];
-        $work_order->contract_id = $data['contract_id'];
-        $work_order->created_at = $data['created_at'];
-        $work_order->updated_at = $data['updated_at'];
-        $work_order->deleted_at = $data['deleted_at'];
+        $WorkOrder = new self();
+        $WorkOrder->id = $data['id'];
+        $WorkOrder->contract_id = $data['contract_id'];
+        $WorkOrder->date = $data['date'];
 
-        return $work_order;
-    }
-
-    public function report(): WorkReport
-    {
-        return $this->hasOne(WorkReport::class, 'id');
+        return $WorkOrder;
     }
 
     public function contract(): Contract
@@ -33,8 +27,13 @@ class WorkOrder extends BaseModel
         return $this->belongsTo(Contract::class, 'contract_id', 'id');
     }
 
-    public function tasks()
+    public function users(): array
     {
-        return $this->hasMany(Task::class, 'work_order_id', 'id');
+        return $this->belongsToMany(User::class, 'work_orders_users', 'work_order_id', 'user_id');
+    }
+
+    public function blocks()
+    {
+        return $this->hasMany(WorkOrderBlock::class, 'work_order_id', 'id');
     }
 }
