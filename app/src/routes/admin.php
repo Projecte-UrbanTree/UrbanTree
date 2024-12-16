@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Admin\AccountController;
 use App\Controllers\Admin\ContractController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\ElementController;
@@ -23,6 +24,11 @@ return [
         ],
         '/admin/inventory' => [
             'controller' => InventoryController::class,
+            'method' => 'index',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/user-config' => [
+            'controller' => AccountController::class,
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],
