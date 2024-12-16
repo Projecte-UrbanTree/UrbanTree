@@ -5,8 +5,6 @@ tailwind.config = {
                 darkGreen: "#008037",
                 lightGreen: "#7FD959",
                 black: "#222222",
-                hoverBlack: "#000000",
-                activeBorder: "#222222",
                 red: "#FF0000",
             },
             fontFamily: {
@@ -71,14 +69,13 @@ tailwind.config = {
                     "@apply font-condensed": {},
                 },
                 ".box-shadow": {
-                    "@apply rounded-lg shadow-lg bg-hoverGray p-4": {},
+                    "@apply rounded-lg shadow-lg p-4": {},
                 },
                 ".box-flat": {
                     "@apply border border-gray-500 p-4": {},
                 },
                 ".box-active": {
-                    "@apply border border-darkGreen bg-grayActive text-darkGreen p-4":
-                        {},
+                    "@apply border border-darkGreen text-darkGreen p-4": {},
                 },
             });
         },
