@@ -19,7 +19,7 @@ use App\Core\Session;
 
 <div class="rounded-lg shadow-md overflow-hidden overflow-x-auto">
     <table class="table-auto w-full text-sm text-left text-gray-700">
-        <thead class="bg-darkGray text-white uppercase">
+        <thead class="bg-neutral-700 text-white uppercase">
             <tr>
                 <th class="px-4 py-2">Name</th>
                 <th class="actions-column">Actions</th>
