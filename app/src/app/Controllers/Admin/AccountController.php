@@ -11,7 +11,7 @@ class AccountController
     {
         View::render([
             'view' => 'Admin/AccountConfig/AccountConfig',
-            'title' => 'Contracts',
+            'title' => 'Configuración de cuenta',
             'layout' => 'Admin/AdminLayout',
 
         ]);

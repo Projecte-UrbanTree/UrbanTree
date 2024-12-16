@@ -27,7 +27,7 @@ return [
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/user-config' => [
+        '/configuration' => [
             'controller' => AccountController::class,
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
