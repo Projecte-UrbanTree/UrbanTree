@@ -1,41 +1,33 @@
 <div class="mb-4 flex justify-end">
     <a href="/admin/zones" class="btn-create flex items-center space-x-2">
-        <!-- Heroicon for return/back (chevron-left) -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
-        <span>Return to Zones</span>
+        <span>Volver a zonas</span>
     </a>
 </div>
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Edit Zone</h2>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Editando zona</h2>
     <form action="/admin/zone/<?= htmlspecialchars($zone->getId()); ?>/update" method="POST" class="space-y-6">
-
-        <!-- Name -->
         <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Zone Name</label>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
             <input type="text" id="name" name="name" value="<?= htmlspecialchars($zone->predefined()->name); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
-
-        <!-- Postal Code -->
         <div>
-            <label for="postal_code" class="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
+            <label for="postal_code" class="block text-sm font-medium text-gray-700 mb-1">Código postal</label>
             <input type="text" id="postal_code" name="postal_code" value="<?= htmlspecialchars($zone->postal_code); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
-
-        <div>
+        <!-- <div>
             <label for="point_id" class="block text-sm font-medium text-gray-700 mb-1">Points</label>
             <p>Editor not implemented</p>
-        </div>
-
-        <!-- Submit Button -->
+        </div> -->
         <div class="flex items-center">
             <button type="submit"
                 class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-blue-500">
-                Update Zone
+                Actualizar
             </button>
         </div>
     </form>

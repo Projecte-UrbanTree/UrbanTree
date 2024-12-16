@@ -1,58 +1,43 @@
-<?php
-
-use App\Core\Session;
-
-?>
-
-<?php if (Session::has('success')) { ?>
-    <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-        <strong class="font-bold">Success: </strong>
-        <span><?= htmlspecialchars(Session::get('success')); ?></span>
-    </div>
-<?php } ?>
-
 <div class="mb-4 flex justify-end">
     <a href="/admin/tree-type/create" class="btn-create">
-        New tree type
+        Nuevo tipo de árbol
     </a>
 </div>
 
-<div class="rounded-lg shadow-md overflow-hidden overflow-x-auto">
-    <table class="table-auto w-full text-sm text-left text-gray-700">
-        <thead class="bg-darkGray text-white uppercase">
+<div class="relative overflow-x-auto scrollbar-none shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="bg-neutral-700 text-white uppercase">
             <tr>
-                <th class="px-4 py-2">Family</th>
-                <th class="px-4 py-2">Genus</th>
-                <th class="px-4 py-2">Species</th>
-                <th class="actions-column">Actions</th>
+                <th scope="col" class="px-5 py-3">Familia</th>
+                <th scope="col" class="px-5 py-3">Género</th>
+                <th scope="col" class="px-5 py-3">Especie</th>
+                <th scope="col" class="px-5 py-3">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($tree_types as $tree_type) { ?>
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2 border-b">
+                <tr class="border-b hover:bg-gray-50">
+                    <th scope="row" class="px-5 py-4 font-medium text-gray-900 whitespace-nowrap dark\:text-white">
                         <?= $tree_type->family; ?>
-                    </td>
-                    <td class="px-4 py-2 border-b">
+                    </th>
+                    <td class="px-5 py-4">
                         <?= $tree_type->genus; ?>
                     </td>
-                    <td class="px-4 py-2 border-b">
+                    <td class="px-5 py-4">
                         <?= $tree_type->species; ?>
                     </td>
-                    <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
-                        <!-- Edit Button (Pencil Icon) -->
+                    <td class="flex items-center px-5 py-4 space-x-4">
                         <a href="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/edit"
-                            class="text-blue-500 hover:text-blue-700" title="Edit">
+                            class="text-lime-600 hover:scale-110" title="Editar">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                             </svg>
                         </a>
-                        <!-- Delete Button (Trash Icon) -->
                         <a href="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/delete"
-                            onclick="return confirm('Are you sure you want to delete this tree type?');"
-                            class="text-red-500 hover:text-red-700" title="Delete">
+                            onclick="return confirm('¿Desea eliminar el tipo de árbol <?= htmlspecialchars($tree_type->species); ?>');"
+                            class="text-red-600 hover:scale-110" title="Eliminar">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"

@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Core\Session;
 use App\Core\View;
 use App\Models\Zone;
 
@@ -12,7 +13,7 @@ class ZoneController
         $zones = Zone::findAll(['name' => 'not null']);
         View::render([
             'view' => 'Admin/Zones',
-            'title' => 'Predefined Zones',
+            'title' => 'Zonas',
             'layout' => 'Admin/AdminLayout',
             'data' => ['zones' => $zones],
         ]);
@@ -22,9 +23,8 @@ class ZoneController
     {
         View::render([
             'view' => 'Admin/Zone/Create',
-            'title' => 'Add Zone',
+            'title' => 'Nueva Zona',
             'layout' => 'Admin/AdminLayout',
-            'data' => [],
         ]);
     }
 
@@ -35,15 +35,28 @@ class ZoneController
 
         $zone->save();
 
+        if ($zone->getId())
+            Session::set('success', 'Zona creada correctamente');
+        else
+            Session::set('error', 'La zona no se pudo crear');
+
         header('Location: /admin/zones');
+        exit;
     }
 
     public function edit($id, $queryParams)
     {
         $zone = Zone::find($id);
+
+        if (!$zone) {
+            Session::set('error', 'Zona no encontrada');
+            header('Location: /admin/zones');
+            exit;
+        }
+
         View::render([
             'view' => 'Admin/Zone/Edit',
-            'title' => 'Edit Zone',
+            'title' => 'Editando Zona',
             'layout' => 'Admin/AdminLayout',
             'data' => ['zone' => $zone],
         ]);
@@ -52,21 +65,31 @@ class ZoneController
     public function update($id, $postData)
     {
         $zone = Zone::find($id);
+        if ($zone) {
+            $zone->contract_id = $postData['contract_id'];
+            $zone->name = $postData['name'];
 
-        $zone->predefined()->name = $postData['name'];
-        $zone->predefined()->save();
-        $zone->point_id = $postData['point_id'];
+            $zone->save();
 
-        $zone->save();
+            Session::set('success', 'Zona actualizada correctamente');
+        } else
+            Session::set('error', 'Zona no encontrada');
 
         header('Location: /admin/zones');
+        exit;
     }
 
     public function destroy($id, $queryParams)
     {
         $zone = Zone::find($id);
-        $zone->delete();
+
+        if ($zone) {
+            $zone->delete();
+            Session::set('success', 'Zona eliminada correctamente');
+        } else
+            Session::set('error', 'Zona no encontrada');
 
         header('Location: /admin/zones');
+        exit;
     }
 }

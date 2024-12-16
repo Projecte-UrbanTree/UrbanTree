@@ -1,1 +1,1 @@
-Mapa inventari de l'aplicació
+Mapa inventario de la aplicación

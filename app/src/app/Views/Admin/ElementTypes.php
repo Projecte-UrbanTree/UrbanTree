@@ -1,54 +1,43 @@
-<?php
-
-use App\Core\Session;
-
-?>
-
-<?php if (Session::has('success')) { ?>
-    <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-        <strong class="font-bold">Success: </strong>
-        <span><?= htmlspecialchars(Session::get('success')); ?></span>
-    </div>
-<?php } ?>
-
 <div class="mb-4 flex justify-end">
     <a href="/admin/element-type/create" class="btn-create">
-        New element type
+        Nuevo tipo de elemento
     </a>
 </div>
 
-<div class="overflow-x-auto">
-    <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead>
-            <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="px-4 py-2">Name</th>
-                <th class="px-4 py-2">Description</th>
-                <th class="actions-column">Actions</th>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark\:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark\:bg-gray-700 dark\:text-gray-400">
+            <tr>
+                <th class="px-5 py-3">Nombre</th>
+                <th class="px-5 py-3">Descripción</th>
+                <th class="px-5 py-3">Requiere tipo de árbol</th>
+                <th class="px-5 py-3">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($elementTypes as $elementType) { ?>
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2 border-b">
-                        <?= $elementType->name; ?>
+            <?php foreach ($element_types as $element_type) { ?>
+                <tr class="border-b hover:bg-gray-50">
+                    <th class="px-5 py-4">
+                        <?= $element_type->name; ?>
+                    </th>
+                    <td class="px-5 py-4">
+                        <?= $element_type->description; ?>
                     </td>
-                    <td class="px-4 py-2 border-b">
-                        <?= $elementType->description; ?>
+                    <td class="px-5 py-4">
+                        <?= $element_type->requires_tree_type ? "Sí" : "No"; ?>
                     </td>
-                    <td class="px-4 py-3 border-b text-center flex space-x-4">
-                        <!-- Edit Button (Pencil Icon) -->
-                        <a href="/admin/element-type/<?= htmlspecialchars($elementType->getId()); ?>/edit"
-                            class="text-blue-500 hover:text-blue-700" title="Edit">
+                    <td class="px-4 py-3 text-center flex space-x-4">
+                        <a href="/admin/element-type/<?= htmlspecialchars($element_type->getId()); ?>/edit"
+                            class="text-lime-600 hover:scale-110" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                             </svg>
                         </a>
-                        <!-- Delete Button (Trash Icon) -->
-                        <a href="/admin/element-type/<?= htmlspecialchars($elementType->getId()); ?>/delete"
-                            onclick="return confirm('Are you sure you want to delete this element?');"
-                            class="text-red-500 hover:text-red-700" title="Delete">
+                        <a href="/admin/element-type/<?= htmlspecialchars($element_type->getId()); ?>/delete"
+                            onclick="return confirm('¿Desea eliminar el tipo de elemento <?= htmlspecialchars($element_type->name); ?>');"
+                            class="text-red-600 hover:scale-110" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
