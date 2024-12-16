@@ -1,16 +1,3 @@
-<?php
-
-use App\Core\Session;
-
-?>
-
-<?php if (Session::has('success')) { ?>
-    <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-        <strong class="font-bold">Success: </strong>
-        <span><?= htmlspecialchars(Session::get('success')); ?></span>
-    </div>
-<?php } ?>
-
 <div class="mb-4 flex justify-end">
     <a href="/admin/element-type/create" class="btn-create">
         New element type
