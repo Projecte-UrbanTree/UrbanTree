@@ -12,20 +12,19 @@ class EstadistiquesController
     {
         // Obtenim les dades del model correcte
         $totalContractes = Contract::count();
-        $totalTreeTypes = TreeType::count();
+        $nomcontracts = Contract::findAll();
         
 
         // Comprova si $grafiques és null i assegura't que sigui un array
 
         
-        $contracts = Contract::findAll();
 
         // Renderitzem la vista amb les dades
         View::render([
             'view' => 'Admin/Grafics',
             'title' => 'Grafiques',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['totalContractes' => $totalContractes, 'totalTreeTypes' => $totalTreeTypes],
+            'data' => ['totalContractes' => $totalContractes, 'nomsContractes' => $nomcontracts],
         ]);
     }
 }

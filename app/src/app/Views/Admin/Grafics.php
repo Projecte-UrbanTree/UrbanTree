@@ -22,7 +22,10 @@
         Seleccionar Contrato
         </button>
         <div id="dropdown-menu" class="absolute bg-white border rounded shadow-lg mt-2 w-48 hidden">
-        <?php echo $totalContractes; ?>       
+          
+<?php foreach ($nomsContractes as $contracte): ?>
+    <div><?php echo $contracte->name; ?></div>
+<?php endforeach; ?>            
             </div>
   </div>
 
