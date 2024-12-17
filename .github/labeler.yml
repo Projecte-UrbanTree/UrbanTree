@@ -56,6 +56,9 @@ kind/design:
       - any-glob-to-any-file:
           - .editorconfig
 
+kind/docs:
+  - head-branch: '^docs\/'
+
 kind/feature:
   - head-branch: '^feat\/'
 
