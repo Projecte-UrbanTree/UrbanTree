@@ -14,6 +14,7 @@
   </style>
 </head>
 <body>
+<body>
   <!-- Main Content -->
   <div class="max-w-6xl mx-auto my-16">
     <!-- Dropdown Menu -->
@@ -26,13 +27,12 @@
           // Generem els items del desplegable amb PHP
           foreach ($nomsContractes as $contracte): 
         ?>
-          <div class="dropdown-item text-left px-4 py-2 w-full hover:bg-gray-100">
+          <div class="dropdown-item text-left px-4 py-2 w-full hover:bg-gray-100 cursor-pointer">
             <?php echo htmlspecialchars($contracte->name); ?>
           </div>
         <?php endforeach; ?>
       </div>
     </div>
-    <script src="/UrbanTree/app/src/public/assets/js/app.js"></script>
 
     <!-- Charts Container -->
     <div id="charts-container" class="grid grid-cols-3 gap-4 bg-gray-100 relative">
@@ -41,8 +41,39 @@
       <div class="col" id="app3"></div>
     </div>
   </div>
-</body>
 
+  <!-- JavaScript per controlar la visibilitat del desplegable i la selecció -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuButton = document.getElementById('menuButton');
+      const dropdownMenu = document.getElementById('dropdown-menu');
+
+      // Mostrar o amagar el menú desplegable
+      menuButton.addEventListener('click', function (event) {
+        event.stopPropagation(); // Evitar que l'esdeveniment es propagui
+        dropdownMenu.classList.toggle('hidden');
+      });
+
+      // Tancar el desplegable si es fa clic fora
+      document.addEventListener('click', function (event) {
+        if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+          dropdownMenu.classList.add('hidden');
+        }
+      });
+
+      // Gestionar la selecció d'un contracte
+      const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+      dropdownItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+          const selectedContractName = item.innerText;
+          menuButton.textContent = `Contrato: ${selectedContractName}`;
+          dropdownMenu.classList.add('hidden'); // Amagar el desplegable després de la selecció
+        });
+      });
+    });
+  </script>
+  </body>
+</html>
   <script>
     const menuButton = document.getElementById('menuButton');
     const dropdown = document.getElementById('dropdown-menu');
