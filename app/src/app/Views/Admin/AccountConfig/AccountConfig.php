@@ -1,8 +1,8 @@
 <div class="mt-8">
     <h1 class="text-5xl font-semibold">Configuración</h1>
     <p class="text-md text-gray-600 mt-3">Aquí podrás configurar tu cuenta.</p>
-    <article>
-        <h2 class="text-3xl font-semibold col-span-4 mb-5">Informacíon personal</h2>
+    <article class="mb-10">
+        <h2 class="text-3xl font-semibold col-span-4 mb-5 mt-8">Informacíon personal</h2>
 
         <form action="/admin/configuration/<?= $user->getId() ?>/update" method="POST" class="grid grid-cols-4 gap-4">
             <!-- user info -->
@@ -73,6 +73,40 @@
                 </div>
             </div>
 
+            <!-- password change info -->
+            <h3 class="text-3xl font-semibold col-span-4 mt-12">Cambiar contraseña</h3>
+            <div class="mt-4 mb-10 grid grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                    <label for="current-password" class="text-sm font-semibold text-gray-700">Contraseña actual</label>
+                    <input
+                        type="password"
+                        id="current-password"
+                        name="current_password"
+                        class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
+                        oninput="checkChanges()">
+                </div>
+                <div class="flex flex-col">
+                    <label for="new-password" class="text-sm font-semibold text-gray-700">Nueva contraseña</label>
+                    <input
+                        type="password"
+                        id="new-password"
+                        name="password"
+                        class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
+                        oninput="checkChanges()">
+                </div>
+                <div class="flex flex-col">
+                    <label for="confirm-password" class="text-sm font-semibold text-gray-700">Confirmar contraseña</label>
+                    <input
+                        type="password"
+                        id="confirm-password"
+                        name="password_confirmation"
+                        class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
+                        oninput="checkChanges()">
+                </div>
+            </div>
+
+
+
             <!-- save button -->
             <div class="col-span-4 flex justify-end">
                 <button
@@ -85,57 +119,4 @@
             </div>
         </form>
     </article>
-
-
-
-    <hr class="mt-8">
-    <article>
-        <h1 class="text-3xl font-semibold col-span-4 mt-12">Cambiar contraseña</h1>
-
-        <form action="/admin/configuration/<?= $user->getId() ?>/update-password" method="POST" class="flex flex-col justify-between h-full">
-            <div class="mt-4 mb-10 grid grid-cols-4 gap-4">
-                <div class="flex flex-col">
-                    <label for="current-password" class="text-sm font-semibold text-gray-700">Contraseña actual</label>
-                    <input
-                        type="password"
-                        id="current-password"
-                        name="current_password"
-                        class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
-                        oninput="checkPasswordFields()">
-                </div>
-                <div class="flex flex-col">
-                    <label for="new-password" class="text-sm font-semibold text-gray-700">Nueva contraseña</label>
-                    <input
-                        type="password"
-                        id="new-password"
-                        name="password"
-                        class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
-                        oninput="checkPasswordFields()">
-                </div>
-                <div class="flex flex-col">
-                    <label for="confirm-password" class="text-sm font-semibold text-gray-700">Confirmar contraseña</label>
-                    <input
-                        type="password"
-                        id="confirm-password"
-                        name="password_confirmation"
-                        class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
-                        oninput="checkPasswordFields()">
-                </div>
-
-                <!-- Botón Guardar -->
-                <div class="col-span-4 flex justify-end">
-                    <button
-                        id="button-save-password"
-                        type="submit"
-                        class="bg-gray-400 text-gray-500 py-2 px-4 rounded-lg cursor-not-allowed disabled:bg-gray-400 disabled:text-white"
-                        disabled>
-                        Guardar cambios
-                    </button>
-                </div>
-            </div>
-        </form>
-
-    </article>
-
-
 </div>

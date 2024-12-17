@@ -304,14 +304,10 @@ return [
         ],
 
         // === Config POST Routes
+
         '/admin/configuration/:id/update' => [
             'controller' => AccountController::class,
             'method' => 'update',
-            'middlewares' => [AdminMiddleware::class],
-        ],
-        '/admin/configuration/:id/update-password' => [
-            'controller' => AccountController::class,
-            'method' => 'updatePassword',
             'middlewares' => [AdminMiddleware::class],
         ],
     ],
