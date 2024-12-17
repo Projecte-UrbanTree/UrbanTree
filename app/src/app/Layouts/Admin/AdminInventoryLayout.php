@@ -16,6 +16,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>
+
     <style>
         html, body {
             height: 100%; /* Asegúrate de que el body ocupe toda la pantalla */
