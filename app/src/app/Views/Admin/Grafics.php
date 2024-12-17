@@ -20,13 +20,18 @@
     <div class="relative mb-16">
       <button id="menuButton" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
         Seleccionar Contrato
-        </button>
-        <div id="dropdown-menu" class="absolute bg-white border rounded shadow-lg mt-2 w-48 hidden">
-            <?php foreach ($nomsContractes as $contracte): ?>
-            <div><?php echo $contracte->name; ?></div>
-            <?php endforeach; ?>            
-                </div>
-  </div>
+      </button>
+      <div id="dropdown-menu" class="absolute bg-white border rounded shadow-lg mt-2 w-48 hidden">
+        <?php 
+          // Generem els items del desplegable amb PHP
+          foreach ($nomsContractes as $contracte): 
+        ?>
+          <div class="dropdown-item text-left px-4 py-2 w-full hover:bg-gray-100">
+            <?php echo htmlspecialchars($contracte->name); ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
 
     <!-- Charts Container -->
     <div id="charts-container" class="grid grid-cols-3 gap-4 bg-gray-100 relative">
@@ -35,6 +40,7 @@
       <div class="col" id="app3"></div>
     </div>
   </div>
+</body>
 
   <script>
     const menuButton = document.getElementById('menuButton');
