@@ -32,6 +32,7 @@
         <?php endforeach; ?>
       </div>
     </div>
+    <script src="/UrbanTree/app/src/public/assets/js/app.js"></script>
 
     <!-- Charts Container -->
     <div id="charts-container" class="grid grid-cols-3 gap-4 bg-gray-100 relative">
