@@ -22,20 +22,9 @@
         Seleccionar Contrato
         </button>
         <div id="dropdown-menu" class="absolute bg-white border rounded shadow-lg mt-2 w-48 hidden">
-    <?php if (!empty($contracts)): ?>
-        <?php foreach ($contracts as $contract): ?>
-            <div class="dropdown-item" data-value="<?= htmlspecialchars($contract->id) ?>">
-                <?= htmlspecialchars($contract->name) ?>        
+        <?php echo $totalContractes; ?>       
             </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <div class="dropdown-item text-gray-500">No hay contratos disponibles</div>
-    <?php endif; ?>
   </div>
-  <div>
-      <p>Contractes: <?php echo $totalContractes; ?></p>
-      <p>Tipus: <?php echo $totalTreeTypes; ?></p>
-    </div>
 
     <!-- Charts Container -->
     <div id="charts-container" class="grid grid-cols-3 gap-4 bg-gray-100 relative">

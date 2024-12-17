@@ -13,6 +13,7 @@ class EstadistiquesController
         // Obtenim les dades del model correcte
         $totalContractes = Contract::count();
         $totalTreeTypes = TreeType::count();
+        
 
         // Comprova si $grafiques és null i assegura't que sigui un array
 
