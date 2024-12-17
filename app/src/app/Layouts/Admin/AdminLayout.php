@@ -14,74 +14,69 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <link rel="stylesheet" href="/assets/css/app.css">
     <script src="/assets/js/tailwind.js"></script>
     <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
 </head>
 
 <body>
     <!-- Navigation Bar -->
-    <div class="border-b border-gray">
-        <nav class="flex items-center justify-between px-4 py-4 h-16 max-w-7xl mx-auto">
+    <div class="border-b border-softGray">
+        <nav class="flex items-center px-2 py-4 h-16 max-w-7xl mx-auto justify-between">
 
             <!-- Logo -->
-            <a href="#">
+            <a href="#" class="md:basis-1/3 basis-1/5 flex justify-start">
                 <img class="md:block hidden w-48" src="/assets/images/logotip-horizontal.png" alt="Logo">
-                <img class="md:hidden block" src="/assets/images/isotip.png" alt="Logo">
+                <img class="md:hidden block w-12" src="/assets/images/resized-isotip.png" alt="Logo">
             </a>
-            <!-- Navigation Links (Visible only on large screens) -->
-            <div class="hidden md:flex gap-6">
+
+            <div class="flex md:flex gap-3 md:gap-6 basis-0 flex-grow justify-center">
                 <a href="/admin"
-                    class="menu-link <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'active' : ''; ?>">
+                    class="menu-link text-sm sm:text-lg align-middle <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'active' : ''; ?>">
                     Gestión
                 </a>
                 <a href="/admin/inventory"
-                    class="menu-link <?= ($currentPath === '/admin/inventory') ? 'active' : ''; ?>">
+                    class="menu-link text-sm sm:text-lg align-middle <?= ($currentPath === '/admin/inventory') ? 'active' : ''; ?>">
                     Inventario
                 </a>
             </div>
 
-
-            <div class="flex items-center gap-4 mx-2">
+            <!-- User Section -->
+            <div class="flex items-center gap-4 mx-2 basis-1/3 justify-end">
+                <!-- User Info Dropdown -->
                 <div class="relative inline-block text-left">
                     <button onclick="toggleSubmenu()"
                         class="flex items-center gap-2 bg-white px-3 py-2 text-sm text-gray-900 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                        Contratos
-                        <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                        <span class="hidden sm:block">Contratos</span>
+                        <svg class="hidden sm:block -mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
                             aria-hidden="true">
                             <path fill-rule="evenodd"
                                 d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
                                 clip-rule="evenodd" />
                         </svg>
+                        <lord-icon class="block sm:hidden" src="https://cdn.lordicon.com/vdjwmfqs.json" trigger="hover"
+                            colors="primary:#747474" style="width:22px;height:22px">
+                        </lord-icon>
                     </button>
                 </div>
-                <button class="hidden md:block text-gray-700 hover:text-blue-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="h-6 w-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-                    </svg>
-                </button>
+
+                <!-- Notifications Icon -->
+                <a href="#" class="hidden md:block text-gray-700 hover:text-blue-600">
+                    <lord-icon src="https://cdn.lordicon.com/vspbqszr.json" trigger="hover" state="loop-bell"
+                        colors="primary:#747474" style="width:28px;height:28px">
+                    </lord-icon>
+                </a>
+
+                <!-- User Avatar -->
                 <div class="relative flex items-center gap-2 cursor-pointer"
                     onclick="profileDropdown.classList.toggle('hidden')">
-                    <img class="h-10 rounded-full" src="/assets/images/avatar.png" alt="User Avatar">
+                    <img class="h-10 rounded-full" style="width: 25px; height: 25px" src="/assets/images/avatar.png"
+                        alt="User Avatar">
                     <div class="hidden md:block text-sm relative">
                         <span
                             class="block text-gray-700"><?= $_SESSION['user']['name'] . ' ' . $_SESSION['user']['surname']; ?></span>
                         <span class="block text-gray-500">
                             <?= User::role_name($_SESSION['user']['role']); ?>
                         </span>
-                        <div id="profile-dropdown"
-                            class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
-                            role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                            <div class="py-1" role="none">
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
-                                    role="menuitem" tabindex="-1" id="menu-item-0">Configuración de la cuenta</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                    id="menu-item-1">Soporte</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                    id="menu-item-2">Licencia</a>
-                                <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
-                                    role="menuitem" tabindex="-1" id="menu-item-3">Cerrar sesión</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

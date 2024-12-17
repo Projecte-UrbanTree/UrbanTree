@@ -19,8 +19,10 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($contracts as $contract) { ?>
-                <tr class="border-b hover:bg-gray-50">
+            <?php foreach ($contracts as $index => $contract) {
+                $isLast = $index === count($contracts) - 1;
+                ?>
+                <tr class="border-b <?= $isLast ? '' : 'hover:bg-gray-50'; ?>">
                     <th scope="row" class="px-5 py-4 font-medium text-gray-900 whitespace-nowrap dark\:text-white">
                         <?= $contract->name; ?>
                     </th>
@@ -51,7 +53,6 @@
                         <a href="/admin/contract/<?= htmlspecialchars($contract->getId()); ?>/delete"
                             onclick="return confirm('¿Desea eliminar el contrato <?= htmlspecialchars($contract->name); ?>?');"
                             class="text-red-600 hover:scale-110" title="Eliminar">
-                            <!-- <i class="fa-regular fa-trash-can"></i> -->
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
