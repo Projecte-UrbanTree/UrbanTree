@@ -1,5 +1,4 @@
 <?php
-use App\Core\Session;
 use App\Models\User;
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
@@ -20,15 +19,12 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         html,
         body {
             height: 100%;
-            /* Asegúrate de que el body ocupe toda la pantalla */
             margin: 0;
         }
 
         #map {
             height: calc(100% - 65px);
-            /* O cualquier porcentaje que necesites */
             width: 100%;
-            /* Para que ocupe todo el ancho */
         }
     </style>
 </head>
