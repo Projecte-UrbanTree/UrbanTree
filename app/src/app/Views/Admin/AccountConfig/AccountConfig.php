@@ -4,7 +4,7 @@
     <article class="mt-8 grid grid-cols-4 gap-4">
         <h2 class="text-3xl font-semibold col-span-4">Información personal</h2>
 
-        
+
 
         <!-- user info -->
         <div class="flex flex-col justify-between h-full ">
@@ -54,7 +54,7 @@
                 </div>
             </form>
 
-            
+
         </div>
 
         <!-- avatar info -->
@@ -65,11 +65,6 @@
                 <p class="text-xs text-gray-600 mt-1.5">JPG or PNG. 1MB max.</p>
             </div>
         </div>
-
-        <!-- save button -->
-        <div class="col-span-4 flex justify-end">
-            <button id="button-save" class="bg-green-500 text-white py-2 px-4 rounded-lg disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed" disabled>Guardar cambios</button>
-        </div>
     </article>
 
 
@@ -77,7 +72,7 @@
     <article class="">
         <h1 class="text-3xl font-semibold col-span-4 mt-12">Cambiar contraseña</h1>
 
-        <div class="p-4  flex flex-col justify-between h-full ">
+        <div class=" flex flex-col justify-between h-full ">
             <form class="mt-4 mb-10 grid grid-cols-4 gap-4">
                 <div class="flex flex-col">
                     <label for="current-password" class="text-sm font-semibold text-gray-700">Contraseña actual</label>
@@ -104,7 +99,7 @@
                         oninput="checkChanges()">
                 </div>
                 <div class="col-span-4 flex justify-end">
-                    <button id="button-save-password" class="bg-green-500 text-white py-2 px-4 rounded-lg disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed" disabled>Guardar cambios</button>
+                    <button id="button-save" class="bg-green-500 text-white py-2 px-4 rounded-lg disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed" disabled>Guardar cambios</button>
                 </div>
             </form>
         </div>
