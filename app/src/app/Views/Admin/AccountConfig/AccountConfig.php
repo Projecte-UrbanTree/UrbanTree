@@ -4,7 +4,7 @@
     <article class="mt-8 grid grid-cols-4 gap-4">
         <h2 class="text-3xl font-semibold col-span-4">Información personal</h2>
 
-
+        
 
         <!-- user info -->
         <div class="flex flex-col justify-between h-full ">
@@ -50,11 +50,12 @@
                         id="email"
                         class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
                         value="<?= $user->email ?>"
-                        oninput="checkChanges()">
+                        oninput="checkChanges()"
+                        disabled>
                 </div>
             </form>
 
-
+            
         </div>
 
         <!-- avatar info -->
@@ -64,6 +65,11 @@
                 <button class="px-3 py-1.5 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Cambiar imagen</button>
                 <p class="text-xs text-gray-600 mt-1.5">JPG or PNG. 1MB max.</p>
             </div>
+        </div>
+
+        <!-- save button -->
+        <div class="col-span-4 flex justify-end">
+            <button id="button-save" class="bg-green-500 text-white py-2 px-4 rounded-lg disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed" disabled>Guardar cambios</button>
         </div>
     </article>
 
