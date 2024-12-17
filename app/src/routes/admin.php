@@ -27,7 +27,7 @@ return [
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/configuration' => [
+        '/admin/configuration' => [
             'controller' => AccountController::class,
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
@@ -300,6 +300,18 @@ return [
         '/admin/contract/:id/update' => [
             'controller' => ContractController::class,
             'method' => 'update',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+
+        // === Config POST Routes
+        '/admin/configuration/:id/update' => [
+            'controller' => AccountController::class,
+            'method' => 'update',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/configuration/:id/update-password' => [
+            'controller' => AccountController::class,
+            'method' => 'updatePassword',
             'middlewares' => [AdminMiddleware::class],
         ],
     ],
