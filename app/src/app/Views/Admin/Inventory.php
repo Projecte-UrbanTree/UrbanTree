@@ -1,6 +1,6 @@
 <div id="map"></div>
 <script>
-	mapboxgl.accessToken = '<?= getenv("MAPBOX")?>';
+    mapboxgl.accessToken = '<?= getenv("MAPBOX_TOKEN") ?>';
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v9',
