@@ -61,4 +61,3 @@
 
     spinGlobe();
 </script>
-

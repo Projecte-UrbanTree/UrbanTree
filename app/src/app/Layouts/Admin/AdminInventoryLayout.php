@@ -17,14 +17,18 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>
     <style>
-        html, body {
-            height: 100%; /* Asegúrate de que el body ocupe toda la pantalla */
+        html,
+        body {
+            height: 100%;
+            /* Asegúrate de que el body ocupe toda la pantalla */
             margin: 0;
         }
 
         #map {
-            height: calc(100% - 65px); /* O cualquier porcentaje que necesites */
-            width: 100%; /* Para que ocupe todo el ancho */
+            height: calc(100% - 65px);
+            /* O cualquier porcentaje que necesites */
+            width: 100%;
+            /* Para que ocupe todo el ancho */
         }
     </style>
 </head>
@@ -106,14 +110,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     </div>
 
     <!-- Main Content -->
-        <?php if (Session::has('success')): ?>
-            <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-                <strong class="font-bold">Success: </strong>
-                <span><?= htmlspecialchars(Session::get('success')); ?></span>
-            </div>
-        <?php endif;
-        echo $content;
-        ?>
+    <?= $content ?>
 
     <script src="/assets/js/app.js"></script>
     <!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
