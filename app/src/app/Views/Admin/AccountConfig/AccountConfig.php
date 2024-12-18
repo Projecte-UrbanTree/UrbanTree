@@ -1,8 +1,21 @@
+<?php
+use App\Core\Session;
+
+?>
+
+
 <div class="mt-8">
     <h1 class="text-5xl font-semibold">Configuración</h1>
     <p class="text-md text-gray-600 mt-3">Aquí podrás configurar tu cuenta.</p>
     <article class="mb-10">
         <h2 class="text-3xl font-semibold col-span-4 mb-5 mt-8">Informacíon personal</h2>
+
+        <?php if (Session::has('error')) { ?>
+            <div class="bg-red-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
+                <strong class="font-bold">Error: </strong>
+                <span><?= htmlspecialchars(Session::get('error')); ?></span>
+            </div>
+        <?php } ?>
 
         <form action="/admin/configuration/<?= $user->getId() ?>/update" method="POST" class="grid grid-cols-4 gap-4">
             <!-- user info -->
@@ -75,35 +88,35 @@
 
             <!-- password change info -->
             <h3 class="text-3xl font-semibold col-span-4 mt-12">Cambiar contraseña</h3>
-            <div class="mt-4 mb-10 grid grid-cols-2 gap-4">
-                <div class="flex flex-col">
-                    <label for="current-password" class="text-sm font-semibold text-gray-700">Contraseña actual</label>
-                    <input
-                        type="password"
-                        id="current-password"
-                        name="current_password"
-                        class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
-                        oninput="checkChanges()">
-                </div>
-                <div class="flex flex-col">
-                    <label for="new-password" class="text-sm font-semibold text-gray-700">Nueva contraseña</label>
-                    <input
-                        type="password"
-                        id="new-password"
-                        name="password"
-                        class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
-                        oninput="checkChanges()">
-                </div>
-                <div class="flex flex-col">
-                    <label for="confirm-password" class="text-sm font-semibold text-gray-700">Confirmar contraseña</label>
-                    <input
-                        type="password"
-                        id="confirm-password"
-                        name="password_confirmation"
-                        class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
-                        oninput="checkChanges()">
-                </div>
+
+            <div class="flex flex-col">
+                <label for="current-password" class="text-sm font-semibold text-gray-700">Contraseña actual</label>
+                <input
+                    type="password"
+                    id="current-password"
+                    name="current_password"
+                    class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
+                    oninput="checkChanges()">
             </div>
+            <div class="flex flex-col">
+                <label for="new-password" class="text-sm font-semibold text-gray-700">Nueva contraseña</label>
+                <input
+                    type="password"
+                    id="new-password"
+                    name="password"
+                    class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
+                    oninput="checkChanges()">
+            </div>
+            <div class="flex flex-col">
+                <label for="confirm-password" class="text-sm font-semibold text-gray-700">Confirmar contraseña</label>
+                <input
+                    type="password"
+                    id="confirm-password"
+                    name="password_confirmation"
+                    class="mt-1 px-3 py-2 border rounded-md text-gray-600 bg-gray-100"
+                    oninput="checkChanges()">
+            </div>
+
 
 
 

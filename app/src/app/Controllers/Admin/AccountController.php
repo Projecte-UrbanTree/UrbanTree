@@ -33,19 +33,42 @@ class AccountController
             exit;
         }
 
-        
+        // save the new data
         $user->name = $postData['name'];
         $user->surname = $postData['surname'];
 
         // detect password changes
-        if (!empty($postData['password'])) {
-            $user->password = password_hash($postData['password'], PASSWORD_DEFAULT);
+        if (strlen($postData['current_password']) > 0) {
+
+
+
+            if (!password_verify($postData['current_password'], $user->password)) {
+                Session::set('error', 'Contraseña incorrecta');
+                header('Location: /admin/configuration');
+                exit;
+            }
+
+
+            if (empty($postData['password']) || empty($postData['password_confirmation'])) {
+                Session::set('error', 'Completa los campos');
+                header('Location: /admin/configuration');
+                exit;
+            }
+
+
+            if ($postData['password'] !== $postData['password_confirmation']) {
+                Session::set('error', 'Las contraseñas no coinciden');
+                header('Location: /admin/configuration');
+                exit;
+            }
+
+            $user->password = password_hash($postData['password'], PASSWORD_BCRYPT);
         }
 
-    
         $user->save();
 
-            
+
+
         Session::set('user', [
             'id' => $user->getId(),
             'name' => $user->name,
