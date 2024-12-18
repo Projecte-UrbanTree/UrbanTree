@@ -28,6 +28,7 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
   <script type="text/babel">
+
     class ApexChart1 extends React.Component {
       constructor(props) {
         super(props);

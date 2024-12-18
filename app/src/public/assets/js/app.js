@@ -1,36 +1,3 @@
-function initDropdown(menuButtonId, dropdownMenuId, itemSelector) {
-    document.addEventListener('DOMContentLoaded', function () {
-      const menuButton = document.getElementById(menuButtonId);
-      const dropdownMenu = document.getElementById(dropdownMenuId);
-  
-      // Mostrar o amagar el menú desplegable
-      menuButton.addEventListener('click', function (event) {
-        event.stopPropagation(); // Evitar que l'esdeveniment es propagui
-        dropdownMenu.classList.toggle('hidden');
-      });
-  
-      // Tancar el desplegable si es fa clic fora
-      document.addEventListener('click', function (event) {
-        if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-          dropdownMenu.classList.add('hidden');
-        }
-      });
-  
-      // Gestionar la selecció d'un contracte
-      const dropdownItems = dropdownMenu.querySelectorAll(itemSelector);
-      dropdownItems.forEach(function (item) {
-        item.addEventListener('click', function () {
-          const selectedContractName = item.innerText;
-          menuButton.textContent = `Contrato: ${selectedContractName}`;
-          dropdownMenu.classList.add('hidden'); // Amagar el desplegable després de la selecció
-        });
-      });
-    });
-  }
-  
-
-
-
 const errorMessagesDiv = document.getElementById("errorMessages");
 
 const regexPatterns = [
