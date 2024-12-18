@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 import sentry_sdk
 import sentry_sdk.crons
 from fastapi import FastAPI
+from fastapi.templating import Jinja2Templates
 
 from .config import settings
 from .database import create_db_and_tables
@@ -39,6 +40,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+templates = Jinja2Templates(directory="templates")
 
 
 @app.get("/")
