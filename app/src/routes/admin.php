@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Admin\AccountController;
 use App\Controllers\Admin\ContractController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\ElementController;
@@ -24,6 +25,11 @@ return [
         ],
         '/admin/inventory' => [
             'controller' => InventoryController::class,
+            'method' => 'index',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/configuration' => [
+            'controller' => AccountController::class,
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],
@@ -303,6 +309,14 @@ return [
         ],
         '/admin/contract/:id/update' => [
             'controller' => ContractController::class,
+            'method' => 'update',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+
+        // === Config POST Routes
+
+        '/admin/configuration/:id/update' => [
+            'controller' => AccountController::class,
             'method' => 'update',
             'middlewares' => [AdminMiddleware::class],
         ],
