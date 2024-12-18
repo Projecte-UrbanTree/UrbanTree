@@ -13,7 +13,7 @@
     <form id="contractForm" action="/admin/contract/<?= htmlspecialchars($contract->getId()); ?>/update" method="POST"
         class="space-y-6">
         <div id="errorMessages"
-            class="hidden bg-red-100 border border-red-400 text-red700 px-4 py-3 rounded relative mb-6"></div>
+            class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6"></div>
 
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
