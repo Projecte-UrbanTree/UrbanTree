@@ -27,5 +27,13 @@ class View
         } else {
             throw new Exception("Layout file not found: {$layout}");
         }
+
+        if (Session::has('success')) {
+            Session::remove('success');
+        }
+
+        if (Session::has('error')) {
+            Session::remove('error');
+        }
     }
 }
