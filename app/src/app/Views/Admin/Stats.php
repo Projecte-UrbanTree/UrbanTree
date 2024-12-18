@@ -1,55 +1,10 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menu Desplegable</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    /* Asegurar que el menú desplegable aparezca por encima de las estadisticas */
-    #dropdown-menu {
-      z-index: 10; /* Aseguramos que el menú esté por encima de los charts */
-    }
-  </style>
- <!-- Incloem el JavaScript extern -->
- <script src="app/src/public/assets/js/app.js" defer></script>
-</head>
-<body>
-  <!-- Main Content -->
   <div class="max-w-6xl mx-auto my-16">
-
-
-    <!-- Charts Container -->
     <div id="charts-container" class="grid grid-cols-3 gap-4 bg-gray-100 relative">
       <div class="col" id="app1"></div>
       <div class="col" id="app2"></div>
       <div class="col" id="app3"></div>
     </div>
   </div>
-
-  <!-- Incloure el fitxer JavaScript -->
-
-  <script>
-    // Inicialitzar el codi de dropdown quan es carregui la pàgina
-    document.addEventListener('DOMContentLoaded', function () {
-      initDropdown('menuButton', 'dropdown-menu', '.dropdown-item');
-    });
-  </script>
-
-</html>
-  <script>
-    const menuButton = document.getElementById('menuButton');
-    const dropdown = document.getElementById('dropdown-menu');
-
-    menuButton.addEventListener('click', () => {
-      dropdown.classList.toggle('hidden');
-    });
-
-    function toggleDropdown() {
-      dropdown.classList.toggle('hidden');
-    }
-  </script>
 
   <script>
     window.Promise ||
