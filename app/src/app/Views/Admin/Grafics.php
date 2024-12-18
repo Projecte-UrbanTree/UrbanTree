@@ -12,8 +12,9 @@
       z-index: 10; /* Aseguramos que el menú esté por encima de los charts */
     }
   </style>
+ <!-- Incloem el JavaScript extern -->
+ <script src="app/src/public/assets/js/app.js" defer></script>
 </head>
-<body>
 <body>
   <!-- Main Content -->
   <div class="max-w-6xl mx-auto my-16">
@@ -41,38 +42,16 @@
       <div class="col" id="app3"></div>
     </div>
   </div>
-
-  <!-- JavaScript per controlar la visibilitat del desplegable i la selecció -->
+</body>
+  <!-- Incloure el fitxer JavaScript -->
+  <script src="app/src/public/assets/js/app.js"></script>
   <script>
+    // Inicialitzar el codi de dropdown quan es carregui la pàgina
     document.addEventListener('DOMContentLoaded', function () {
-      const menuButton = document.getElementById('menuButton');
-      const dropdownMenu = document.getElementById('dropdown-menu');
-
-      // Mostrar o amagar el menú desplegable
-      menuButton.addEventListener('click', function (event) {
-        event.stopPropagation(); // Evitar que l'esdeveniment es propagui
-        dropdownMenu.classList.toggle('hidden');
-      });
-
-      // Tancar el desplegable si es fa clic fora
-      document.addEventListener('click', function (event) {
-        if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-          dropdownMenu.classList.add('hidden');
-        }
-      });
-
-      // Gestionar la selecció d'un contracte
-      const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
-      dropdownItems.forEach(function (item) {
-        item.addEventListener('click', function () {
-          const selectedContractName = item.innerText;
-          menuButton.textContent = `Contrato: ${selectedContractName}`;
-          dropdownMenu.classList.add('hidden'); // Amagar el desplegable després de la selecció
-        });
-      });
+      initDropdown('menuButton', 'dropdown-menu', '.dropdown-item');
     });
   </script>
-  </body>
+</body>
 </html>
   <script>
     const menuButton = document.getElementById('menuButton');
