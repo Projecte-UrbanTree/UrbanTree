@@ -141,19 +141,21 @@ class Router
                 throw new Exception("Middleware {$middlewareClass} must implement MiddlewareInterface");
             }
 
-            $middleware->handle($_REQUEST, fn () => null);
+            $middleware->handle($_REQUEST, fn() => null);
         }
     }
 
     protected function abort(int $statusCode, string $message): void
     {
-        if ($statusCode === 404) {
-            View::render([
-                'view' => 'Error/404',
-                'title' => 'Error 404',
-                'layout' => 'BlankLayout'
-            ]);
-        }
+        View::render([
+            'view' => "Error",
+            'title' => "Error $statusCode",
+            'layout' => 'PublicLayout',
+            'data' => [
+                'code' => $statusCode,
+                'message' => $message,
+            ],
+        ]);
         http_response_code($statusCode);
         exit;
     }

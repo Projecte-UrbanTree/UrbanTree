@@ -1,55 +1,35 @@
-<?php
-
-use App\Core\Session;
-
-?>
-
-<?php if (Session::has('success')) { ?>
-    <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-        <strong class="font-bold">Success: </strong>
-        <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
-    </div>
-<?php } ?>
-
 <div class="mb-4 flex justify-end">
-    <a href="/task-types/create"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-        Create Task Type
+    <a href="/admin/task-types/create" class="btn-create">
+        Nuevo tipo de tarea
     </a>
 </div>
 
-<div class="overflow-x-auto">
-    <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead>
-            <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="px-4 py-2 border-b">ID</th>
-                <th class="px-4 py-2 border-b">Name</th>
-                <th class="px-4 py-2 border-b">Actions</th>
+<div class="relative overflow-x-auto scrollbar-none shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="bg-neutral-700 text-white uppercase">
+            <tr>
+                <th scope="col" class="px-5 py-3">Nombre</th>
+                <th scope="col" class="px-5 py-3">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($task_types as $task_type) { ?>
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2 border-b">
-                        <?php echo $task_type->getId(); ?>
-                    </td>
-                    <td class="px-4 py-2 border-b">
-                        <?php echo $task_type->name; ?>
-                    </td>
-                    <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
-                        <!-- Edit Button (Pencil Icon) -->
-                        <a href="/task-types/<?php echo htmlspecialchars($task_type->getId()); ?>/edit"
-                            class="text-blue-500 hover:text-blue-700" title="Edit">
+                <tr class="border-b hover:bg-gray-50">
+                    <th scope="row" class="px-5 py-4 font-medium text-gray-900 whitespace-nowrap dark\:text-white">
+                        <?= $task_type->name; ?>
+                    </th>
+                    <td class="flex items-center px-5 py-4 space-x-4">
+                        <a href="/admin/task-types/<?= htmlspecialchars($task_type->getId()); ?>/edit"
+                            class="text-lime-600 hover:scale-110" title="Editar">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                             </svg>
                         </a>
-                        <!-- Delete Button (Trash Icon) -->
-                        <a href="/task-types/<?php echo htmlspecialchars($task_type->getId()); ?>/delete"
-                            onclick="return confirm('Are you sure you want to delete this user?');"
-                            class="text-red-500 hover:text-red-700" title="Delete">
+                        <a href="/admin/task-types/<?= htmlspecialchars($task_type->getId()); ?>/delete"
+                            onclick="return confirm('¿Desea eliminar el tipo de tarea <?= htmlspecialchars($task_type->name); ?>');"
+                            class="text-red-600 hover:scale-110" title="Eliminar">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"

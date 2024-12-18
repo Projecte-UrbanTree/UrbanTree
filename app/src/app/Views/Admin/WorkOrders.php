@@ -1,62 +1,40 @@
-<?php
-
-use App\Core\Session;
-
-?>
-
-<?php if (Session::has('success')) { ?>
-    <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-        <strong class="font-bold">Success: </strong>
-        <span><?php echo htmlspecialchars(Session::get('success')); ?></span>
-    </div>
-<?php } ?>
-
 <div class="mb-4 flex justify-end">
-    <a href="/work-order/create"
-        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-        Create Work Order
+    <a href="/admin/work-order/create" class="btn-create">
+        Nueva órden de trabajo
     </a>
 </div>
 
-<div class="overflow-x-auto">
-    <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead>
-            <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="py-2 px-4 border-b">ID</th>
-                <th class="py-2 px-4 border-b">Contracte</th>
-                <th class="py-2 px-4 border-b">Data</th>
-                <th class="py-2 px-4 border-b">Zones</th>
-                <th class="py-2 px-4 border-b">Tasca</th>
-                <th class="py-2 px-4 border-b">Operaris</th>
-                <th class="py-2 px-4 border-b">Notes</th>
-                <th class="py-2 px-4 border-b">Accions</th>
+<div class="relative overflow-x-auto scrollbar-none shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="bg-neutral-700 text-white uppercase">
+            <tr>
+                <th scope="col" class="px-5 py-3">Fecha</th>
+                <th scope="col" class="px-5 py-3">Zonas</th>
+                <th scope="col" class="px-5 py-3">Tareas</th>
+                <th scope="col" class="px-5 py-3">Operarios</th>
+                <th scope="col" class="px-5 py-3">Notas</th>
+                <th scope="col" class="px-5 py-3">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($workOrders as $workOrder) { ?>
-                <?php foreach ($workOrder->tasks() as $task) { ?>
-                    <tr class="border-b hover:bg-gray-100">
-                        <td class="py-2 px-4">
-                            <?php echo $workOrder->getId(); ?>
-                        </td>
-                        <td class="py-2 px-4">
-                            <?php echo $workOrder->contract()->name; ?>
-                        </td>
-                        <td class="py-2 px-4">
-                            <?php echo $workOrder->getCreatedAt(); ?>
-                        </td>
-                        <td class="py-2 px-4">
+            <?php foreach ($work_orders as $work_order) { ?>
+                <?php foreach ($work_order->tasks() as $task) { ?>
+                    <tr class="border-b hover:bg-gray-50">
+                        <th scope="row" class="px-5 py-4 font-medium text-gray-900 whitespace-nowrap dark\:text-white">
+                            <?= $work_order->getCreatedAt(); ?>
+                        </th>
+                        <td class="px-5 py-4">
                             <?php
                             $zoneNames = [];
                             foreach ($task->zones() as $zone)
-                                $zoneNames[] = $zone->predefined()->name ?? 'Not on a predefined zone';
+                                $zoneNames[] = $zone->name ?? 'No se encuentra en una zona predefinida';
                             echo implode(', ', $zoneNames);
                             ?>
                         </td>
-                        <td class="py-2 px-4">
+                        <td class="px-5 py-4">
                             <?= $task->taskType()->name; ?>
                         </td>
-                        <td class="py-2 px-4">
+                        <td class="px-5 py-4">
                             <?php
                             $users = [];
                             foreach ($task->users() as $user)
@@ -64,23 +42,21 @@ use App\Core\Session;
                             echo implode(', ', $users);
                             ?>
                         </td>
-                        <td class="py-2 px-4"><?php echo $task->notes; ?>
+                        <td class="px-5 py-4">
+                            <?= $task->notes; ?>
                         </td>
-
-                        <td class="px-4 py-3 border-b text-center flex justify-center space-x-4">
-                            <!-- Edit Button (Pencil Icon) -->
-                            <a href="/user/<?php echo htmlspecialchars($workOrder->getId()); ?>/edit"
-                                class="text-blue-500 hover:text-blue-700" title="Edit">
+                        <td class="flex items-center px-5 py-4 space-x-4">
+                            <a href="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/edit"
+                                class="text-lime-600 hover:scale-110" title="Edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                 </svg>
                             </a>
-                            <!-- Delete Button (Trash Icon) -->
-                            <a href="/work-order/<?php echo htmlspecialchars($workOrder->getId()); ?>/delete"
-                                onclick="return confirm('Are you sure you want to delete this work order?');"
-                                class="text-red-500 hover:text-red-700" title="Delete">
+                            <a href="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/delete"
+                                onclick="return confirm('¿Desea eliminar la órden de trabajo <?= htmlspecialchars($work_order->getCreatedAt()); ?>');"
+                                class="text-red-600 hover:scale-110" title="Delete">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round"

@@ -5,6 +5,7 @@ use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\ElementController;
 use App\Controllers\Admin\ElementTypeController;
 use App\Controllers\Admin\IncidenceController;
+use App\Controllers\Admin\InventoryController;
 use App\Controllers\Admin\TaskTypeController;
 use App\Controllers\Admin\TreeTypeController;
 use App\Controllers\Admin\UserController;
@@ -18,6 +19,11 @@ return [
         // === App GET Routes
         '/admin' => [
             'controller' => DashboardController::class,
+            'method' => 'index',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/inventory' => [
+            'controller' => InventoryController::class,
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],

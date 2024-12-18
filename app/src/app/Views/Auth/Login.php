@@ -6,10 +6,10 @@ use App\Core\Session;
 <?php $title = getenv('APP_NAME'); ?>
 
 <?php if (Session::has('error')) { ?>
-<div class="bg-red-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-    <strong class="font-bold">Error: </strong>
-    <span><?php echo htmlspecialchars(Session::get('error')); ?></span>
-</div>
+    <div class="bg-red-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
+        <strong class="font-bold">Error: </strong>
+        <span><?= htmlspecialchars(Session::get('error')); ?></span>
+    </div>
 <?php } ?>
 
 <form action="/auth/login" method="POST" class="space-y-6">

@@ -1,6 +1,6 @@
 --* Users
 INSERT INTO users (company, name, surname, dni, password, email, role) VALUES
-('TechCorp', 'Carlos', 'García', '12345678A', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'carlos.garcia@example.com', 1), -- Password: demopass
+('TechCorp', 'Carlos', 'García', '12345678A', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'carlos.garcia@example.com', 0), -- Password: demopass
 ('InnovaTech', 'Ana', 'Martínez', '23456789B', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'ana.martinez@example.com', 1), -- Password: demopass
 ('DesignWorks', 'José', 'Rodríguez', '34567890C', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'jose.rodriguez@example.com', 2); -- Password: demopass
 
@@ -17,10 +17,10 @@ INSERT INTO machines (name, max_basket_size) VALUES
 ('Tijera elevadora', 400.00);
 
 --* Element Types
-INSERT INTO element_types (name, description) VALUES
-('Árbol', 'Elemento tipo árbol'),
-('Banco', 'Elemento tipo banco'),
-('Fuente', 'Elemento tipo fuente');
+INSERT INTO element_types (name, description, requires_tree_type) VALUES
+('Árbol', 'Elemento tipo árbol', true),
+('Banco', 'Elemento tipo banco', false),
+('Fuente', 'Elemento tipo fuente', false);
 
 --* Tree Types
 INSERT INTO tree_types (family, genus, species) VALUES
@@ -29,10 +29,10 @@ INSERT INTO tree_types (family, genus, species) VALUES
 ('Sapindaceae', 'Acer', 'Acer campestre');
 
 --* Tasks
-INSERT INTO tasks (name, description, require_tree_type) VALUES
-('Podar árboles', 'Tarea de poda general', TRUE),
-('Riego de árboles', 'Riego programado', FALSE),
-('Fertilización', 'Fertilización básica', NULL);
+INSERT INTO task_types (name, description) VALUES
+('Podar árboles', 'Tarea de poda general'),
+('Riego de árboles', 'Riego programado'),
+('Fertilización', 'Fertilización básica');
 
 --* Points
 INSERT INTO points (latitude, longitude) VALUES

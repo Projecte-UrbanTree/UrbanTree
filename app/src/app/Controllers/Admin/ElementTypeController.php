@@ -4,78 +4,94 @@ namespace App\Controllers\Admin;
 
 use App\Core\Session;
 use App\Core\View;
-//use App\Models\Element;
 use App\Models\ElementType;
 
 class ElementTypeController
 {
     public function index($queryParams)
     {
-        $elementTypes = ElementType::findAll();
+        $element_types = ElementType::findAll();
         View::render([
             'view' => 'Admin/ElementTypes',
-            'title' => 'Manage Elements Types',
+            'title' => 'Tipos de Elemento',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['elementTypes' => $elementTypes],
+            'data' => ['element_types' => $element_types],
         ]);
     }
 
     public function create($queryParams)
     {
-        //$elements = Element::findAll();
         View::render([
             'view' => 'Admin/ElementType/Create',
-            'title' => 'Add Element Type',
+            'title' => 'Nuevo Tipo de Elemento',
             'layout' => 'Admin/AdminLayout',
-            'data' => [
-                //'elements' => $elements,
-            ],
         ]);
     }
 
     public function store($postData)
     {
-        $elementType = new ElementType();
-        $elementType->name = $postData['name'];
-        $elementType->description = $postData['description'];
+        $element_type = new ElementType();
+        $element_type->name = $postData['name'];
+        $element_type->description = $postData['description'];
 
-        $elementType->save();
+        $element_type->save();
 
-        Session::set('success', 'Type of Element created successfully');
+        if ($element_type->getId())
+            Session::set('success', 'Tipo de elemento creado correctamente');
+        else
+            Session::set('error', 'El tipo de elemento no se pudo crear');
 
         header('Location: /admin/element-types');
+        exit;
     }
 
     public function edit($id, $queryParams)
     {
-        $elementType = ElementType::find($id);
+        $element_type = ElementType::find($id);
+
+        if (!$element_type) {
+            Session::set('error', 'Tipo de elemento no encontrado');
+            header('Location: /admin/element-types');
+            exit;
+        }
+
         View::render([
             'view' => 'Admin/ElementType/Edit',
-            'title' => 'Edit Element Type',
+            'title' => 'Editando Tipo de Elemento',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['elementType' => $elementType],
+            'data' => ['element_type' => $element_type],
         ]);
     }
 
     public function update($id, $postData)
     {
-        $elementType = ElementType::find($id);
-        $elementType->name = $postData['name'];
-        $elementType->description = $postData['description'];
-        $elementType->save();
+        $element_type = ElementType::find($id);
 
-        Session::set('success', 'Type of Element updated successfully');
+        if ($element_type) {
+            $element_type->name = $postData['name'];
+            $element_type->description = $postData['description'];
+
+            $element_type->save();
+
+            Session::set('success', 'Tipo de elemento actualizado correctamente');
+        } else
+            Session::set('error', 'Tipo de elemento no encontrado');
 
         header('Location: /admin/element-types');
+        exit;
     }
 
     public function destroy($id, $queryParams)
     {
-        $elementType = ElementType::find($id);
-        $elementType->delete();
+        $element_type = ElementType::find($id);
 
-        Session::set('success', 'Type of Element deleted successfully');
+        if ($element_type) {
+            $element_type->delete();
+            Session::set('success', 'Tipo de elemento eliminado correctamente');
+        } else
+            Session::set('error', 'Tipo de elemento no encontrado');
 
         header('Location: /admin/element-types');
+        exit;
     }
 }
