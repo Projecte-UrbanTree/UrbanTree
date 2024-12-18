@@ -4,37 +4,42 @@
         <span class="material-icons">Filtros</span> 
     </button>
 
-    <!-- Panel de filtros (desaparece desde abajo) -->
-    <div id="firstPanel" class="absolute z-10 bottom-0 right-20 bg-white shadow-lg w-full sm:w-96 h-1/4 p-5 transform translate-y-full transition-transform ease-in-out duration-300 rounded-xl">
-    <button class="absolute text-xl top-3" id="openFilters">
-        <span class="text-lg font-semibold">Filtros</span>
-    </button>
-    <button class="absolute text-xl top-1/3" id="openZones">
-        <span class="text-lg font-semibold">Agregar Zonas</span>
-    </button>
-    <button class="absolute text-xl top-2/3" id="openElements">
-        <span class="text-lg font-semibold">Agregar Elementos</span>
-    </button>
-</div>
+    
+    <div id="firstPanel" class="absolute z-10 bottom-0 right-20 bg-white shadow-lg sm:w-64 h-1/4 p-5 transform translate-y-full transition-transform ease-in-out duration-300 rounded-xl">
+        <button class="absolute text-xl top-3" id="openFilters">
+            <span class="text-lg font-semibold">Filtros</span>
+        </button>
+        <button class="absolute text-xl top-1/3" id="openZones">
+            <span class="text-lg font-semibold">Agregar Zonas</span>
+        </button>
+        <button class="absolute text-xl top-2/3" id="openElements">
+            <span class="text-lg font-semibold">Agregar Elementos</span>
+        </button>
+    </div>
 
-<div id="filterPanel" class="absolute z-10 bottom-0 right-[calc(20rem+1rem)] bg-white shadow-lg w-full sm:w-96 h-1/4 p-5 transform translate-y-full transition-transform ease-in-out duration-300 rounded-xl">
-    <div class="space-y-2">
-        <label class="block">
-            <input type="checkbox" class="mr-2" /> Opción 1
-        </label>
-        <label class="block">
-            <input type="checkbox" class="mr-2" /> Opción 2
-        </label>
-        <label class="block">
-            <input type="checkbox" class="mr-2" /> Opción 3
-        </label>
+    <!-- Panel de filtros (desaparece desde abajo) -->
+    <div id="filterPanel" class="absolute z-10 bottom-0 right-80 bg-white shadow-lg sm:w-64 h-1/4 p-5 transform translate-y-full transition-transform ease-in-out duration-300 rounded-xl">
+        <div class="space-y-2">
+            <label class="block">
+                <input type="checkbox" class="mr-2" /> Zonas
+            </label>
+            <label class="block">
+                <input type="checkbox" class="mr-2" /> Elementos
+            </label>
+            <label class="block">
+                <input type="checkbox" class="mr-2" /> Opción 3
+            </label>
+            <button class="absolute z-10 bottom-5 right-5 p-2 bg-blue-500 text-white rounded-full">
+                <span class="material-icons">Aplicar</span>
+            </button>
+        </div>
     </div>
 </div>
 
 <script>
     const openFiltersButton = document.getElementById("openMore");
     const firstPanel = document.getElementById("firstPanel");
-    const openElementsButton = document.getElementById("openElements");
+    const openElementsButton = document.getElementById("openFilters");
     const filterPanel = document.getElementById("filterPanel");
 
     // Primer Panel
@@ -58,6 +63,7 @@
         }
         else{
             filterPanel.style.transform = "translateY(100%)";
+            panel2=false
         }
     })
 </script>
