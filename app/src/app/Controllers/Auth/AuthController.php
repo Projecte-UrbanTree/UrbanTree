@@ -52,6 +52,7 @@ class AuthController
             'surname' => $user->surname[0],
             'email' => $user->email,
             'role' => $user->role,
+            
         ]);
         if ($user->role === 0) {
             header('Location: /customer');
