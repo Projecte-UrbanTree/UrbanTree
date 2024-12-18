@@ -1,12 +1,16 @@
+import os
 from contextlib import asynccontextmanager
+from typing import List
 
 import sentry_sdk
 import sentry_sdk.crons
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, Request
 from fastapi.templating import Jinja2Templates
+from sqlmodel import Session, select
 
 from .config import settings
-from .database import create_db_and_tables
+from .database import create_db_and_tables, get_session
+from .models import Sensor
 from .services.scheduler_service import scheduler
 
 # Initialize Sentry SDK
@@ -41,7 +45,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(
+    directory=os.path.join(os.path.dirname(__file__), "templates")
+)
 
 
 @app.get("/")
@@ -52,3 +58,18 @@ def hello():
 @app.get("/health")
 def health_check():
     return {"status": "healthy", "version": settings.IMAGE_VERSION or "dev"}
+
+
+@app.get("/prueba")
+def get_sensor_state(request: Request):
+    return templates.TemplateResponse(
+        "index.html", {"request": request, "name": "FastAPI User"}
+    )
+
+
+@app.get("/sensors", response_model=list[Sensor])
+def get_sensor_data(*, db: Session = Depends(get_session), request: Request):
+    sensors: List[Sensor] = db.exec(select(Sensor)).all()
+    return templates.TemplateResponse(
+        "index.html", {"request": request, "sensors": sensors}
+    )
