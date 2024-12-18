@@ -5,21 +5,21 @@
 </div>
 
 <div class="overflow-x-auto">
-    <table class="min-w-full table-fixed bg-white border border-gray-300 rounded-lg shadow-md">
+    <table class="min-w-full table-auto bg-white border border-gray-300 rounded-lg shadow-md">
         <thead>
             <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="py-2 px-4 border-b">Contracte</th>
+                <th class="py-2 px-4 border-b">Orden de Trabajo</th>
                 <th class="py-2 px-4 border-b">Fecha</th>
                 <th class="py-2 px-4 border-b">Operarios</th>
                 <th class="py-2 px-4 border-b">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($workOrders as $index => $workOrder) { ?>
+            <?php foreach ($work_orders as $index => $work_order) { ?>
                 <tr class="border-b hover:bg-gray-100">
                     <td class="py-2 px-4 flex items-center">
                         <button id="accordionButton<?php echo $index; ?>" onclick="toggleAccordion(<?php echo $index; ?>)"
-                            class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                            aria-expanded="false" class="text-gray-500 hover:text-gray-700 focus:outline-none">
                             <!-- SVG Acordeon-->
                             <svg id="accordionIcon<?php echo $index; ?>" xmlns="http://www.w3.org/2000/svg"
                                 class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -28,15 +28,15 @@
                                     stroke-width="2" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
-                        <?php echo $workOrder->contract()->name; ?>
+                        <?php echo "OT-" . htmlspecialchars($work_order->contract()->getId()); ?>
                     </td>
-                    <td class="py-2 px-4">
-                        <?php echo $workOrder->date; ?>
+                    <td>
+                        <?= date('d/m/Y', strtotime($work_order->date)); ?>
                     </td>
                     <td class="py-2 px-4">
                         <?php
                         $users = [];
-                        foreach ($workOrder->users() as $user) {
+                        foreach ($work_order->users() as $user) {
                             $users[] = $user->name . " " . $user->surname;
                         }
                         echo implode(', ', $users);
@@ -44,7 +44,7 @@
                     </td>
                     <td class="px-4 py-3 border-b text-center flex space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
-                        <a href="/work-order/<?php echo htmlspecialchars($workOrder->getId()); ?>/edit"
+                        <a href="/admin/work-order/<?php echo htmlspecialchars($work_order->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -53,7 +53,7 @@
                             </svg>
                         </a>
                         <!-- Delete Button (Trash Icon) -->
-                        <a href="/work-order/<?php echo htmlspecialchars($workOrder->getId()); ?>/delete"
+                        <a href="/admin/work-order/<?php echo htmlspecialchars($work_order->getId()); ?>/delete"
                             onclick="return confirm('Are you sure you want to delete this work order?');"
                             class="text-red-500 hover:text-red-700" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -68,32 +68,47 @@
                 <!-- Row Accordeon -->
                 <tr id="accordionContent<?php echo $index; ?>" class="hidden">
                     <!-- Accordeon Content -->
-                    <td colspan="4" class="py-2 px-4 bg-gray-100">
-                        <?php foreach ($workOrder->blocks() as $block) { ?>
-                            <div class="mb-4">
-                                <strong>Bloque </strong> <?php echo htmlspecialchars($block->getId()); ?>
-                            </div>
-                            <div>
-                                <strong>Zona:</strong>
-                                <?php
-                                $zones = $block->zones();
-                                $zoneNames = [];
-                                foreach ($zones as $zone) {
-                                    $zoneNames[] = htmlspecialchars($zone->name);
-                                }
-                                echo implode(', ', $zoneNames); ?>
-                            </div>
-                            <div>
-                                <strong>Tipo de Tarea:</strong>
-                                <?php echo htmlspecialchars($block->task()->name); ?>
-                            </div>
+                    <td colspan="4" class="py-2 px-3 bg-gray-50">
+                        <?php foreach ($work_order->blocks() as $block) { ?>
+                            <table class="w-full border-collapse border border-gray-300 rounded-lg">
+                                <thead>
+                                    <tr class="bg-gray-200 text-gray-700 text-center">
+                                        <th class="border p-2">Zonas</th>
+                                        <th class="border p-2">Tipo de Tareas</th>
+                                        <th class="border p-2">Notas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="hover:bg-gray-100">
+                                        <td class="border px-2 py-1 align-top w-1/5">
+                                            <?php foreach ($block->zones() as $blockZones) { ?>
+                                                <div class="mb-1">•
+                                                    <?php echo htmlspecialchars($blockZones->name); ?>
+                                                </div>
+                                            <?php } ?>
+                                        </td>
 
-                            <?php if ($block->notes) { ?>
-                                <div>
-                                    <strong>Notas:</strong>
-                                    <?php echo htmlspecialchars($block->notes); ?>
-                                </div>
-                            <?php } ?>
+                                        <td class="border px-2 py-1 align-top w-2/5">
+                                            <?php foreach ($block->tasks() as $blockTask) { ?>
+                                                <div class="mb-1">•
+                                                    <?php echo htmlspecialchars($blockTask->task()->name);
+                                                    if ($blockTask->treeType() != null) {
+                                                        echo ": " . htmlspecialchars($blockTask->treeType()->species);
+                                                    } ?>
+                                                </div>
+                                            <?php } ?>
+                                        </td>
+
+                                        <td class="border px-2 py-1 align-top w-2/5">
+                                            <?php if ($block->notes !== null) {
+                                                echo htmlspecialchars($block->notes);
+                                            }
+                                            ?>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
                         <?php } ?>
                     </td>
                 </tr>
@@ -101,20 +116,3 @@
         </tbody>
     </table>
 </div>
-
-<script>
-    function toggleAccordion(index) {
-        console.log('toggleAccordion ejecutado con index:', index);
-
-        var contentRow = document.getElementById('accordionContent' + index);
-        var path = document.getElementById('accordionPath' + index);
-
-        if (contentRow.classList.contains('hidden')) {
-            contentRow.classList.remove('hidden');
-            path.setAttribute('d', 'M5 9l7 7 7-7');
-        } else {
-            contentRow.classList.add('hidden');
-            path.setAttribute('d', 'M9 5l7 7-7 7');
-        }
-    }
-</script>

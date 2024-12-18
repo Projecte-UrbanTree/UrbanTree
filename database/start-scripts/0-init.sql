@@ -138,7 +138,7 @@ create table incidences (
 create table work_orders (
     id int auto_increment primary key,
     contract_id int not null,
-    date timestamp not null,
+    date date not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,

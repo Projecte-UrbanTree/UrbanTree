@@ -9,6 +9,11 @@ class Zone extends BaseModel
     public ?int $point_id;
     public array $elements = []; // Declare elements property
 
+    public int $contract_id;
+    public string $name;
+
+
+
     protected static function getTableName(): string
     {
         return 'zones';
