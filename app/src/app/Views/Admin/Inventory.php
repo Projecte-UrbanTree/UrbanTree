@@ -129,6 +129,32 @@
 
     spinGlobe();
 
+    // Location User
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const { latitude, longitude } = position.coords;
+
+            // Crear un marcador exacto en la posición del usuario
+            new mapboxgl.Marker()
+                .setLngLat([longitude, latitude])
+                .addTo(map);
+
+            // Centrar el mapa en la ubicación del usuario
+            map.flyTo({
+                center: [longitude, latitude],
+                zoom: 15, // Ajusta el nivel de zoom si es necesario
+                essential: true // Garantiza la animación
+            });
+        },
+        (error) => {
+            console.error('Error al obtener la ubicación:', error);
+        },
+        {
+            enableHighAccuracy: true, // GPS más preciso
+            timeout: 10000, // Tiempo máximo para obtener la ubicación (ms)
+            maximumAge: 0 // Siempre obtener datos frescos
+        }
+    );
     //GeoJSON
     map.on('load', () => {
     // Agregar fuente con GeoJSON
