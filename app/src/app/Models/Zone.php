@@ -6,9 +6,13 @@ use App\Core\Database;
 
 class Zone extends BaseModel
 {
-    public int $contract_id;
+    public ?int $point_id;
+    public array $elements = []; // Declare elements property
 
-    public ?string $name;
+    public int $contract_id;
+    public string $name;
+
+
 
     protected static function getTableName(): string
     {
@@ -26,6 +30,14 @@ class Zone extends BaseModel
         $zone->deleted_at = $data['deleted_at'];
 
         return $zone;
+    }
+
+    // Relationship to points
+    public function point(): ?Point
+    {
+        return $this->point_id
+            ? $this->belongsTo(Point::class, 'point_id')
+            : null;
     }
 
     // Relationship to elements
