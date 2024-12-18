@@ -24,9 +24,9 @@
         Seleccionar Contrato
       </button>
       <div id="dropdown-menu" class="absolute bg-white border rounded shadow-lg mt-2 w-48 hidden">
-        <?php 
+        <?php
           // Generem els items del desplegable amb PHP
-          foreach ($nomsContractes as $contracte): 
+          foreach ($nomsContractes as $contracte):
         ?>
           <div class="dropdown-item text-left px-4 py-2 w-full hover:bg-gray-100 cursor-pointer">
             <?php echo htmlspecialchars($contracte->name); ?>
@@ -42,16 +42,16 @@
       <div class="col" id="app3"></div>
     </div>
   </div>
-</body>
+
   <!-- Incloure el fitxer JavaScript -->
-  <script src="app/src/public/assets/js/app.js"></script>
+
   <script>
     // Inicialitzar el codi de dropdown quan es carregui la pàgina
     document.addEventListener('DOMContentLoaded', function () {
       initDropdown('menuButton', 'dropdown-menu', '.dropdown-item');
     });
   </script>
-</body>
+
 </html>
   <script>
     const menuButton = document.getElementById('menuButton');
@@ -69,11 +69,11 @@
   <script>
     window.Promise ||
       document.write(
-        '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>' 
+        '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
       );
     window.Promise ||
       document.write(
-        '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>' 
+        '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
       );
     window.Promise ||
       document.write(
