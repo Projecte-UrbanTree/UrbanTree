@@ -1,5 +1,31 @@
 import "https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.umd.js";
 
+// Function to get seasonal emoji related to tree and leaves
+// Usable in the footer of the consent modal
+function getSeasonalEmoji() {
+    const date = new Date();
+    const month = date.getMonth() + 1;
+
+    // spring runs from March 1 to May 31;
+    if (month >= 3 && month <= 5) {
+        return "🌸";
+    }
+    // summer runs from June 1 to August 31;
+    else if (month >= 6 && month <= 8) {
+        return "🌳";
+    }
+    // fall (autumn) runs from September 1 to November 30;
+    else if (month >= 9 && month <= 11) {
+        return "🍂";
+    }
+    // and winter runs from December 1 to February 28 (February 29 in a leap year).
+    else if (month >= 12 || month <= 2) {
+        return "🎄";
+    }
+    // default emoji if none of the conditions are met
+    return "🌲";
+}
+
 // Enable dark mode
 document.documentElement.classList.add("cc--darkmode");
 
@@ -33,14 +59,14 @@ CookieConsent.run({
                     description:
                         "We use cookies to enhance your browsing experience. By continuing to use our site, you consent to our use of cookies. For more details, please review our <a href='/cookie-policy'>Cookie Policy</a>.",
                     acceptAllBtn: "Accept all",
-                    acceptNecessaryBtn: "Reject all",
+                    acceptNecessaryBtn: "Accept only necessary",
                     showPreferencesBtn: "Manage preferences",
-                    footer: '<a href="/privacy-policy">Privacy Policy</a>\n<a href="/terms-and-conditions">Terms and conditions</a>',
+                    footer: `${getSeasonalEmoji()} ${new Date().getFullYear()} Urban Tree 5.0`,
                 },
                 preferencesModal: {
                     title: "Consent Preferences Center",
                     acceptAllBtn: "Accept all",
-                    acceptNecessaryBtn: "Reject all",
+                    acceptNecessaryBtn: "Accept only necessary",
                     savePreferencesBtn: "Save preferences",
                     closeIconLabel: "Close modal",
                     serviceCounterLabel: "Service|Services",
@@ -59,7 +85,7 @@ CookieConsent.run({
                         {
                             title: "More information",
                             description:
-                                'For any query in relation to my policy on cookies and your choices, please <a class="cc__link" href="#yourdomain.com">contact me</a>.',
+                                'For any query in relation to our policy on cookies and your choices, please <a class="cc__link" href="mailto:urbantree@iesmonsia.org" target="_blank">contact us</a>.',
                         },
                     ],
                 },
@@ -70,17 +96,17 @@ CookieConsent.run({
                     description:
                         "Utilizamos cookies para mejorar tu experiencia de navegación. Al continuar navegando en este sitio, aceptas el uso de cookies. Para más información, consulta nuestra <a href='/cookie-policy'>Política de Cookies</a>.",
                     acceptAllBtn: "Aceptar todo",
-                    acceptNecessaryBtn: "Rechazar todo",
+                    acceptNecessaryBtn: "Aceptar solo las necesarias",
                     showPreferencesBtn: "Gestionar preferencias",
-                    footer: '<a href="/privacy-policy">Política de privacidad</a>\n<a href="/terms-and-conditions">Términos y condiciones</a>',
+                    footer: `${getSeasonalEmoji()} ${new Date().getFullYear()} Urban Tree 5.0`,
                 },
                 preferencesModal: {
                     title: "Preferencias de Consentimiento",
                     acceptAllBtn: "Aceptar todo",
-                    acceptNecessaryBtn: "Rechazar todo",
+                    acceptNecessaryBtn: "Aceptar solo las necesarias",
                     savePreferencesBtn: "Guardar preferencias",
                     closeIconLabel: "Cerrar modal",
-                    serviceCounterLabel: "Servicios",
+                    serviceCounterLabel: "Servicio|Servicios",
                     sections: [
                         {
                             title: "Uso de Cookies",
@@ -96,7 +122,7 @@ CookieConsent.run({
                         {
                             title: "Más información",
                             description:
-                                'For any query in relation to my policy on cookies and your choices, please <a class="cc__link" href="mailto:urbantree@iesmonsia.org" target="_blank">email us</a>.',
+                                'Para cualquier consulta en relación con nuestra política sobre cookies y sus opciones, por favor, <a class="cc__link" href="mailto:urbantree@iesmonsia.org" target="_blank">póngase en contacto con nosotros</a>.',
                         },
                     ],
                 },
