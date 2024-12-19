@@ -1,23 +1,26 @@
 import "https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.umd.js";
 
-// Function to get seasonal emoji
+// Function to get seasonal emoji related to tree and leaves
 // Usable in the footer of the consent modal
 function getSeasonalEmoji() {
     const date = new Date();
     const month = date.getMonth() + 1;
-    const day = date.getDate();
 
-    // del deciembre al 6 de enero
-    if (month === 12 || (month === 1 && day <= 6)) {
+    // spring runs from March 1 to May 31;
+    if (month >= 3 && month <= 5) {
+        return "🌸";
+    }
+    // summer runs from June 1 to August 31;
+    else if (month >= 6 && month <= 8) {
+        return "🌳";
+    }
+    // fall (autumn) runs from September 1 to November 30;
+    else if (month >= 9 && month <= 11) {
+        return "🍂";
+    }
+    // and winter runs from December 1 to February 28 (February 29 in a leap year).
+    else if (month >= 12 || month <= 2) {
         return "🎄";
-    } else if (month === 10 && day >= 31 && day <= 31) {
-        return "🎃";
-    } else if (month === 7 && day >= 1 && day <= 31) {
-        return "🏖️";
-    } else if (month === 4 && day >= 1 && day <= 30) {
-        return "🌷";
-    } else {
-        return "🌲";
     }
 }
 
