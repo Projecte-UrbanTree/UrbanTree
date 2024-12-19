@@ -59,14 +59,14 @@ CookieConsent.run({
                     description:
                         "We use cookies to enhance your browsing experience. By continuing to use our site, you consent to our use of cookies. For more details, please review our <a href='/cookie-policy'>Cookie Policy</a>.",
                     acceptAllBtn: "Accept all",
-                    acceptNecessaryBtn: "Accept necessary only",
+                    acceptNecessaryBtn: "Accept only necessary",
                     showPreferencesBtn: "Manage preferences",
                     footer: `${getSeasonalEmoji()} ${new Date().getFullYear()} Urban Tree 5.0`,
                 },
                 preferencesModal: {
                     title: "Consent Preferences Center",
                     acceptAllBtn: "Accept all",
-                    acceptNecessaryBtn: "Accept necessary only",
+                    acceptNecessaryBtn: "Accept only necessary",
                     savePreferencesBtn: "Save preferences",
                     closeIconLabel: "Close modal",
                     serviceCounterLabel: "Service|Services",
@@ -96,14 +96,14 @@ CookieConsent.run({
                     description:
                         "Utilizamos cookies para mejorar tu experiencia de navegación. Al continuar navegando en este sitio, aceptas el uso de cookies. Para más información, consulta nuestra <a href='/cookie-policy'>Política de Cookies</a>.",
                     acceptAllBtn: "Aceptar todo",
-                    acceptNecessaryBtn: "Aceptar solo necesarias",
+                    acceptNecessaryBtn: "Aceptar solo las necesarias",
                     showPreferencesBtn: "Gestionar preferencias",
                     footer: `${getSeasonalEmoji()} ${new Date().getFullYear()} Urban Tree 5.0`,
                 },
                 preferencesModal: {
                     title: "Preferencias de Consentimiento",
                     acceptAllBtn: "Aceptar todo",
-                    acceptNecessaryBtn: "Aceptar solo necesarias",
+                    acceptNecessaryBtn: "Aceptar solo las necesarias",
                     savePreferencesBtn: "Guardar preferencias",
                     closeIconLabel: "Cerrar modal",
                     serviceCounterLabel: "Servicio|Servicios",
