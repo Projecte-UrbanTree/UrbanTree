@@ -22,6 +22,8 @@ function getSeasonalEmoji() {
     else if (month >= 12 || month <= 2) {
         return "🎄";
     }
+    // default emoji if none of the conditions are met
+    return "🌲";
 }
 
 // Enable dark mode
@@ -57,14 +59,14 @@ CookieConsent.run({
                     description:
                         "We use cookies to enhance your browsing experience. By continuing to use our site, you consent to our use of cookies. For more details, please review our <a href='/cookie-policy'>Cookie Policy</a>.",
                     acceptAllBtn: "Accept all",
-                    acceptNecessaryBtn: "Reject all",
+                    acceptNecessaryBtn: "Accept necessary only",
                     showPreferencesBtn: "Manage preferences",
                     footer: `${getSeasonalEmoji()} ${new Date().getFullYear()} Urban Tree 5.0`,
                 },
                 preferencesModal: {
                     title: "Consent Preferences Center",
                     acceptAllBtn: "Accept all",
-                    acceptNecessaryBtn: "Reject all",
+                    acceptNecessaryBtn: "Accept necessary only",
                     savePreferencesBtn: "Save preferences",
                     closeIconLabel: "Close modal",
                     serviceCounterLabel: "Service|Services",
@@ -94,17 +96,17 @@ CookieConsent.run({
                     description:
                         "Utilizamos cookies para mejorar tu experiencia de navegación. Al continuar navegando en este sitio, aceptas el uso de cookies. Para más información, consulta nuestra <a href='/cookie-policy'>Política de Cookies</a>.",
                     acceptAllBtn: "Aceptar todo",
-                    acceptNecessaryBtn: "Rechazar todo",
+                    acceptNecessaryBtn: "Aceptar solo necesarias",
                     showPreferencesBtn: "Gestionar preferencias",
                     footer: `${getSeasonalEmoji()} ${new Date().getFullYear()} Urban Tree 5.0`,
                 },
                 preferencesModal: {
                     title: "Preferencias de Consentimiento",
                     acceptAllBtn: "Aceptar todo",
-                    acceptNecessaryBtn: "Rechazar todo",
+                    acceptNecessaryBtn: "Aceptar solo necesarias",
                     savePreferencesBtn: "Guardar preferencias",
                     closeIconLabel: "Cerrar modal",
-                    serviceCounterLabel: "Servicios",
+                    serviceCounterLabel: "Servicio|Servicios",
                     sections: [
                         {
                             title: "Uso de Cookies",
