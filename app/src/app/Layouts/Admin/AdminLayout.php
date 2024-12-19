@@ -138,8 +138,9 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             </div>
 
             <div class="submenu-item">
-                <a href="/admin/stats" class="link-primary <?= ($currentPath == '/admin/stats') ? 'active' : ''; ?>">
-                    <i class="fas fa-chart-bar md:block"></i>
+                <a href="/admin/stats"
+                    class="link-primary <?= ($currentPath == '/admin/stats') ? 'active' : ''; ?>">
+                    <i class="fas fa-chart-column md:block"></i>
                     <span class="text-sm font-medium whitespace-nowrap">Estadísticas</span>
                 </a>
             </div>
