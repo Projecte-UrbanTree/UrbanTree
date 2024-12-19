@@ -83,7 +83,7 @@ CookieConsent.run({
                         {
                             title: "More information",
                             description:
-                                'For any query in relation to my policy on cookies and your choices, please <a class="cc__link" href="#yourdomain.com">contact me</a>.',
+                                'For any query in relation to our policy on cookies and your choices, please <a class="cc__link" href="mailto:urbantree@iesmonsia.org" target="_blank">contact us</a>.',
                         },
                     ],
                 },
@@ -120,7 +120,7 @@ CookieConsent.run({
                         {
                             title: "Más información",
                             description:
-                                'For any query in relation to my policy on cookies and your choices, please <a class="cc__link" href="mailto:urbantree@iesmonsia.org" target="_blank">email us</a>.',
+                                'Para cualquier consulta en relación con nuestra política sobre cookies y sus opciones, por favor, <a class="cc__link" href="mailto:urbantree@iesmonsia.org" target="_blank">póngase en contacto con nosotros</a>.',
                         },
                     ],
                 },
