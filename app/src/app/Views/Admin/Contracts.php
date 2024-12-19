@@ -10,8 +10,8 @@
         <thead class="bg-neutral-700 text-white uppercase">
             <tr>
                 <th scope="col" class="px-5 py-3">Nombre</th>
-                <th scope="col" class="px-5 py-3">Fecha de inicio</th>
-                <th scope="col" class="px-5 py-3">Fecha de fin</th>
+                <th scope="col" class="px-5 py-3">Fecha inicial</th>
+                <th scope="col" class="px-5 py-3">Fecha final</th>
                 <th scope="col" class="px-5 py-3">Factura propuesta</th>
                 <th scope="col" class="px-5 py-3">Factura aceptada</th>
                 <th scope="col" class="px-5 py-3">Factura pagada</th>
