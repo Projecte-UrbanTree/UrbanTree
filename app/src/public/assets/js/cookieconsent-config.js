@@ -1,5 +1,26 @@
 import "https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.umd.js";
 
+// Function to get seasonal emoji
+// Usable in the footer of the consent modal
+function getSeasonalEmoji() {
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    // del deciembre al 6 de enero
+    if (month === 12 || (month === 1 && day <= 6)) {
+        return "🎄";
+    } else if (month === 10 && day >= 31 && day <= 31) {
+        return "🎃";
+    } else if (month === 7 && day >= 1 && day <= 31) {
+        return "🏖️";
+    } else if (month === 4 && day >= 1 && day <= 30) {
+        return "🌷";
+    } else {
+        return "🌲";
+    }
+}
+
 // Enable dark mode
 document.documentElement.classList.add("cc--darkmode");
 
@@ -35,7 +56,7 @@ CookieConsent.run({
                     acceptAllBtn: "Accept all",
                     acceptNecessaryBtn: "Reject all",
                     showPreferencesBtn: "Manage preferences",
-                    footer: '<a href="/privacy-policy">Privacy Policy</a>\n<a href="/terms-and-conditions">Terms and conditions</a>',
+                    footer: `${getSeasonalEmoji()} ${new Date().getFullYear()} Urban Tree 5.0`,
                 },
                 preferencesModal: {
                     title: "Consent Preferences Center",
@@ -72,7 +93,7 @@ CookieConsent.run({
                     acceptAllBtn: "Aceptar todo",
                     acceptNecessaryBtn: "Rechazar todo",
                     showPreferencesBtn: "Gestionar preferencias",
-                    footer: '<a href="/privacy-policy">Política de privacidad</a>\n<a href="/terms-and-conditions">Términos y condiciones</a>',
+                    footer: `${getSeasonalEmoji()} ${new Date().getFullYear()} Urban Tree 5.0`,
                 },
                 preferencesModal: {
                     title: "Preferencias de Consentimiento",
