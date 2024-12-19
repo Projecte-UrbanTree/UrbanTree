@@ -77,6 +77,20 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                         <span class="block text-gray-500">
                             <?= User::role_name($_SESSION['user']['role']); ?>
                         </span>
+                        <div id="profile-dropdown"
+                            class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+                            role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            <div class="py-1" role="none">
+                                <a href="/admin/configuration" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
+                                    role="menuitem" tabindex="-1" id="menu-item-0">Configuración de la cuenta</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                                    id="menu-item-1">Soporte</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                                    id="menu-item-2">Licencia</a>
+                                <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
+                                    role="menuitem" tabindex="-1" id="menu-item-3">Cerrar sesión</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
