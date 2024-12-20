@@ -12,7 +12,7 @@ class TaskTypeController
     {
         $task_types = TaskType::findAll();
         View::render([
-            'view' => 'Admin/TaskTypes',
+            'view' => 'Admin/TaskType/TaskTypes',
             'title' => 'Tipos de Tarea',
             'layout' => 'Admin/AdminLayout',
             'data' => ['task_types' => $task_types],

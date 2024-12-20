@@ -28,4 +28,9 @@ class TreeType extends BaseModel
 
         return $tree_type;
     }
+
+    public function elements(): array
+    {
+        return $this->hasMany(Element::class, 'tree_type_id');
+    }
 }

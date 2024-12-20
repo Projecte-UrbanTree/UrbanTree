@@ -31,7 +31,7 @@ class ElementType extends BaseModel
 
     public function elements(): array
     {
-        return $this->hasMany(Element::class, 'element_id');
+        return $this->hasMany(Element::class, 'element_type_id');
     }
 
 }

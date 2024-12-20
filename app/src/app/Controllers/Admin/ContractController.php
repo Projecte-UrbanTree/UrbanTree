@@ -12,7 +12,7 @@ class ContractController
     {
         $contracts = Contract::findAll();
         View::render([
-            'view' => 'Admin/Contracts',
+            'view' => 'Admin/Contract/Contracts',
             'title' => 'Contracts',
             'layout' => 'Admin/AdminLayout',
             'data' => ['contracts' => $contracts],
