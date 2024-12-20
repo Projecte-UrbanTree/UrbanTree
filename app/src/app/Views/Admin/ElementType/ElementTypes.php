@@ -11,6 +11,7 @@
                 <th scope="col" class="px-5 py-3">Nombre</th>
                 <th scope="col" class="px-5 py-3">Descripción</th>
                 <th scope="col" class="px-5 py-3">Requiere tipo de árbol</th>
+                <th scope="col" class="px-5 py-3">Elementos</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@
                     </td>
                     <td class="px-5 py-4">
                         <?= $element_type->requires_tree_type ? "Sí" : "No"; ?>
+                    </td>
+                    <td class="px-5 py-4">
+                        <?= count($element_type->elements()); ?>
                     </td>
                 </tr>
             <?php } ?>
