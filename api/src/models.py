@@ -1,5 +1,7 @@
 from datetime import datetime
+from typing import Generic, List, Optional, TypeVar, Union
 
+from pydantic import BaseModel
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -14,7 +16,7 @@ class Sensor(SQLModel, table=True):
     model: str | None = Field(default=None, index=True)
     is_active: bool | None = Field(default=None, index=True)
 
-    histories: list["SensorHistory"] = Relationship(back_populates="sensor")
+    histories: List["SensorHistory"] = Relationship(back_populates="sensor")
 
 
 class SensorHistoryBase(SQLModel):
@@ -36,3 +38,50 @@ class SensorHistory(SensorHistoryBase, table=True):
 
 class SensorHistoryCreate(SensorHistoryBase):
     pass
+
+
+class User(SQLModel, table=True):
+    __tablename__ = "users"
+
+    id: int | None = Field(default=None, primary_key=True)
+    company: Optional[str] = Field(default=None, max_length=255)
+    name: str = Field(max_length=255)
+    surname: str = Field(max_length=255)
+    dni: Optional[str] = Field(default=None, max_length=255, unique=True)
+    password: str = Field(max_length=255)
+    email: str = Field(max_length=255)
+    role: int = Field()  # 0: customer, 1: worker, 2: admin
+    photo_id: Optional[int] = Field(default=None, foreign_key="photos.id")
+    created_at: Optional[datetime] = Field(default_factory=datetime.utcnow)
+    updated_at: Optional[datetime] = Field(default=None)
+    deleted_at: Optional[datetime] = Field(default=None)
+
+    class Config:
+        orm_mode = True
+
+
+class UserResponse(BaseModel):
+    id: int
+    company: Optional[str] = None
+    name: str
+    surname: str
+    dni: Optional[str] = None
+    email: str
+    role: int  # 0: customer, 1: worker, 2: admin
+    photo_id: Optional[int] = None
+
+    class Config:
+        orm_mode = True
+
+
+T = TypeVar("T")
+
+
+class ApiResponse(BaseModel, Generic[T]):
+    status: str  # 'success' o 'error'
+    details: Union[T, List[T]]  # response details
+    message: str
+    status_code: int  # status code
+
+    class Config:
+        orm_mode = True

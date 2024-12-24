@@ -4,13 +4,14 @@ from typing import List
 
 import sentry_sdk
 import sentry_sdk.crons
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, Request, Response
+from fastapi.responses import JSONResponse
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
 
 from .config import settings
 from .database import create_db_and_tables, get_session
-from .models import Sensor
+from .models import ApiResponse, Sensor, User, UserResponse
 from .services.scheduler_service import scheduler
 
 # Initialize Sentry SDK
@@ -72,4 +73,33 @@ def get_sensor_data(*, db: Session = Depends(get_session), request: Request):
     sensors: List[Sensor] = db.exec(select(Sensor)).all()
     return templates.TemplateResponse(
         "index.html", {"request": request, "sensors": sensors}
+    )
+
+
+@app.get("/users", response_model=ApiResponse[List[User]])
+def get_users(db: Session = Depends(get_session)):
+    users: List[User] = db.exec(select(User)).all()
+
+    user_responses = [
+        {
+            key: value
+            for key, value in user.dict().items()
+            if key not in ["password", "created_at", "updated_at", "deleted_at"]
+        }
+        for user in users
+    ]
+
+    if not users:
+        return ApiResponse(
+            status="error",
+            details=[],
+            message="No users found",
+            status_code=404,
+        )
+
+    return ApiResponse(
+        status="success",
+        details=user_responses,
+        message="Users retrieved successfully",
+        status_code=200,
     )
