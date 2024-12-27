@@ -108,27 +108,8 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
     <!-- Main Content -->
     <?= $content ?>
-
     <script src="/assets/js/app.js"></script>
-    <!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
-    <script>
-        setTimeout(() => {
-            const alertMsg = document.getElementById('alert-msg');
-            if (alertMsg) {
-                alertMsg.classList.add('hidden');
-            }
-        }, 3500);
-    </script>
-    <script>
-        const menuButton = document.getElementById('menuButton');
-        const submenu = document.getElementById('submenu');
-        const submenuItems = document.querySelectorAll('.submenu-item');
-        const profileDropdown = document.getElementById('profile-dropdown');
-
-        menuButton.addEventListener('click', () => {
-            submenu.classList.toggle('hidden');
-        });
-    </script>
+    <script src="/assets/js/inventary.js"></script>
 </body>
 
 </html>
