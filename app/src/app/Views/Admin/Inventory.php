@@ -11,7 +11,7 @@
         <button class="absolute text-xl top-1/3" id="openZones">
             <span class="text-lg font-semibold">Add Zones</span>
         </button>
-        <button class="absolute text-xl top-2   /3" id="openElements">
+        <button class="absolute text-xl top-2/3" id="openElements">
             <span class="text-lg font-semibold">Add Elements</span>
         </button>
     </div>
@@ -50,6 +50,34 @@
             <span class="material-icons">Apply</span>
         </button>
     </div>
+
+    <!-- Add Zones Panel -->
+    <div id="secondPanel" class="absolute z-10 bottom-0 right-[calc(64px*5.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
+        <span>Zones</span>
+    </div>
+    <!-- Add Elements Panel -->
+    <div id="thirdPanel" class="absolute z-10 bottom-0 right-[calc(64px*5.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
+        <span>Elements</span>
+    </div>
+    <div class="absolute bottom-5 inset-x-0 flex justify-center items-center">
+        <!-- Mensaje para Zonas -->
+        <div id="zoneMessage" class="hidden flex items-center bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-lg w-2/3 max-w-lg z-10">
+            <svg class="h-6 w-6 mr-2 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 17h0a4.978 4.978 0 01-1.5-.215m1.5.215a4.978 4.978 0 001.5-.215m-3 0a4.978 4.978 0 00-1.5-.215h0a4.978 4.978 0 00-1.5.215m3-10a4.978 4.978 0 011.5.215m-1.5-.215A4.978 4.978 0 0010.5 6.785m2.5 0A4.978 4.978 0 0113 6.215M12 17h0a4.978 4.978 0 01-1.5-.215m1.5.215a4.978 4.978 0 001.5-.215" />
+            </svg>
+            <span>Por favor pon puntos dónde quieres crear la zona.</span>
+        </div>
+
+        <!-- Mensaje para Elementos -->
+        <div id="elementMessage" class="hidden flex items-center bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-lg w-2/3 max-w-lg z-10">
+            <svg class="h-6 w-6 mr-2 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 17h0a4.978 4.978 0 01-1.5-.215m1.5.215a4.978 4.978 0 001.5-.215m-3 0a4.978 4.978 0 00-1.5-.215h0a4.978 4.978 0 00-1.5.215m3-10a4.978 4.978 0 011.5.215m-1.5-.215A4.978 4.978 0 0010.5 6.785m2.5 0A4.978 4.978 0 0113 6.215M12 17h0a4.978 4.978 0 01-1.5-.215m1.5.215a4.978 4.978 0 001.5-.215" />
+            </svg>
+            <span>Por favor seleccione dónde quieres crear el elemento.</span>
+        </div>
+    </div>
+    
+
 </div>
 
 <script>
@@ -65,7 +93,14 @@
     const filterPanelZones = document.getElementById("filterPanelZones");
     const openElementsButton = document.getElementById("openFiltersElements");
     const filterPanelElements = document.getElementById("filterPanelElements");
-    Panels = [firstPanel, filterPanel, filterPanelZones, filterPanelElements];
+    const openAddZonesButton = document.getElementById("openZones");
+    const secondPanel = document.getElementById("secondPanel");
+    const openAddElementsButton = document.getElementById("openElements");
+    const thirdPanel = document.getElementById("thirdPanel");
+    Panels = [firstPanel, filterPanel, filterPanelZones, filterPanelElements, secondPanel, thirdPanel];
+    PanelsFiltres = [filterPanel, filterPanelZones, filterPanelElements];
+    PanelsAddZones = [secondPanel];
+    PanelsAddElements = [thirdPanel];
 
     // Function to open or close the panels
     function openFilterPanel(panel, isPanelOpen) {
@@ -82,9 +117,20 @@
     let isFilterPanelOpen = false;
     let isFilterPanelZonesOpen = false;
     let isFilterPanelElementsOpen = false;
+    let isAddZonesPanelOpen = false;
+    let isAddElementsPanelOpen = false;
 
     // Show/Hide the first panel
     openMoreButton.addEventListener("click", () => {
+        rotateIcon();
+        isFirstPanelOpen = openFilterPanel(firstPanel, isFirstPanelOpen);
+        for (let panel of Panels) {
+            if (panel !== firstPanel) {
+                panel.classList.add("hidden");
+            }
+        }
+    });
+    function rotateIcon() {
         if (!isRotated) {
             // Rotar 45 grados
             plusIcon.style.transform = 'rotate(45deg)';
@@ -93,16 +139,26 @@
             plusIcon.style.transform = 'rotate(0deg)';
         }
         isRotated = !isRotated; // Cambiar el estado
-        isFirstPanelOpen = openFilterPanel(firstPanel, isFirstPanelOpen);
-        for (let panel of Panels) {
-            if (panel !== firstPanel) {
-                panel.classList.add("hidden");
-            }
-        }
-    });
+    }
     // Show/Hide the filter panel
     openFiltersButton.addEventListener("click", () => {
         isFilterPanelOpen = openFilterPanel(filterPanel, isFilterPanelOpen);
+        for (let panel of PanelsAddElements) {
+            if (!panel.classList.contains("hidden")) {
+                panel.classList.add("hidden");
+            }
+        }
+        for (let panel of PanelsAddZones) {
+            if (!panel.classList.contains("hidden")) {
+                panel.classList.add("hidden");
+            }
+        }
+        if (isAddZonesPanelOpen){
+            isAddZonesPanelOpen=openFilterPanel(secondPanel, isAddZonesPanelOpen);
+        }
+        if (isAddElementsPanelOpen){
+            isAddElementsPanelOpen=openFilterPanel(thirdPanel, isAddElementsPanelOpen);
+        }
     });
     // Show/Hide the filter panel for zones
     openZonesButton.addEventListener("click", () => {
@@ -118,6 +174,44 @@
             isFilterPanelZonesOpen=openFilterPanel(filterPanelZones, isFilterPanelZonesOpen);
         }
     });
+    // Show/Hide the add zones panel
+    openAddZonesButton.addEventListener("click", () => {
+        showMessage('zone');
+    });
+    // Show/Hide the add elements panel
+    openAddElementsButton.addEventListener("click", () => {
+        showMessage('element');
+    });
+
+    //Function to show the alert message
+    function showMessage(type) {
+        for (let panel of Panels) {
+            if (!panel.classList.contains("hidden")) {
+                panel.classList.add("hidden");
+            }
+        }
+        rotateIcon();
+        isFirstPanelOpen = false;
+        const zoneMessage = document.getElementById('zoneMessage');
+        const elementMessage = document.getElementById('elementMessage');
+        
+        // Ocultamos los mensajes
+        zoneMessage.classList.add('hidden');
+        elementMessage.classList.add('hidden');
+
+        // Mostramos el mensaje correspondiente
+        if (type === 'zone') {
+            zoneMessage.classList.remove('hidden');
+        } else if (type === 'element') {
+            elementMessage.classList.remove('hidden');
+        }
+        // Agregar un temporizador para ocultar el mensaje después de unos segundos
+        setTimeout(() => {
+            zoneMessage.classList.add('hidden');
+            elementMessage.classList.add('hidden');
+        }, 5000); 
+    }
+
 </script>
 
 <script>
@@ -169,7 +263,7 @@
             }
 
             // Create or update the vision cone
-            const radius = 0.1; // Radius of the cone in kilometers
+            const radius = 0.07; // Radius of the cone in kilometers
             const coneCoordinates = [];
             for (let i = -30; i <= 30; i++) {
                 const angle = (userOrientation + i) * (Math.PI / 180);
