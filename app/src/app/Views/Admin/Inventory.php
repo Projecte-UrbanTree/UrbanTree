@@ -1,287 +1,383 @@
 <div id="map" class="relative">
-    <!-- Botón para abrir el panel de filtros -->
-    <button class="absolute z-10 bottom-5 right-5 p-2 bg-blue-500 text-white rounded-full" id="openMore">
-        <span class="material-icons">Filtros</span> 
+    <!-- Button to open the filter panel -->
+    <button id="openMore" class="absolute z-10 bottom-5 right-5 p-2 bg-blue-500 text-white rounded-full" id="openMore">
+        <img id="plusIcon" src="/assets/images/More.png" alt="+" class="w-8 h-8 transition-transform duration-300">
     </button>
-
-    
-    <div id="firstPanel" class="absolute z-10 bottom-0 right-20 bg-white shadow-lg sm:w-64 h-1/4 p-5 transform translate-y-full transition-transform ease-in-out duration-300 rounded-xl">
+    <!-- First Panel -->
+    <div id="firstPanel" class="absolute z-10 bottom-0 right-20 bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl flex flex-col justify-evenly">
         <button class="absolute text-xl top-3" id="openFilters">
-            <span class="text-lg font-semibold">Filtros</span>
+            <span class="text-lg font-semibold">Filters</span>
         </button>
         <button class="absolute text-xl top-1/3" id="openZones">
-            <span class="text-lg font-semibold">Agregar Zonas</span>
+            <span class="text-lg font-semibold">Add Zones</span>
         </button>
-        <button class="absolute text-xl top-2/3" id="openElements">
-            <span class="text-lg font-semibold">Agregar Elementos</span>
+        <button class="absolute text-xl top-2   /3" id="openElements">
+            <span class="text-lg font-semibold">Add Elements</span>
         </button>
     </div>
 
-    <!-- Panel de filtros (desaparece desde abajo) -->
-    <div id="filterPanel" class="absolute z-10 bottom-0 right-80 bg-white shadow-lg sm:w-64 h-1/4 p-5 transform translate-y-full transition-transform ease-in-out duration-300 rounded-xl">
+    <!-- Filter Panel -->
+    <div id="filterPanel" class="absolute z-10 bottom-0 right-[calc(64px*5.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
         <div class="space-y-2">
-            <label class="block">
-                <input type="checkbox" class="mr-2" /> Zonas
-            </label>
-            <label class="block">
-                <input type="checkbox" class="mr-2" /> Elementos
-            </label>
-            <label class="block">
-                <input type="checkbox" class="mr-2" /> Opción 3
-            </label>
-            <button class="absolute z-10 bottom-5 right-5 p-2 bg-blue-500 text-white rounded-full">
-                <span class="material-icons">Aplicar</span>
+            <button class="absolute text-xl top-3" id="openFiltersZones">
+                <span class="text-lg font-semibold">Zones</span>
+            </button>
+            <button class="absolute text-xl top-1/3" id="openFiltersElements">
+                <span class="text-lg font-semibold">Elements</span>
             </button>
         </div>
+    </div>
+
+    <!-- Zones Panel -->
+    <div id="filterPanelZones" class="absolute z-10 bottom-0 right-[calc(64px*9.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
+        <div class="space-y-2" id="zonesContainer">
+            <!-- Here we will add the zones -->
+        </div>
+        <button class="absolute z-10 bottom-5 right-5 p-2 bg-blue-500 text-white rounded-full">
+            <span class="material-icons">Apply</span>
+        </button>
+    </div>
+
+    <!-- Elements Panel -->
+    <div id="filterPanelElements" class="absolute z-10 bottom-0 right-[calc(64px*9.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
+        <div class="space-y-2" id="elementsContainer">
+            <!-- Here we will add the elements -->
+            <button class="absolute text-xl top-1/3" id="openFiltersElements">
+                <span class="text-lg font-semibold">Elements</span>
+            </button>
+        </div>
+        <button class="absolute z-10 bottom-5 right-5 p-2 bg-blue-500 text-white rounded-full">
+            <span class="material-icons">Apply</span>
+        </button>
     </div>
 </div>
 
 <script>
-    const openFiltersButton = document.getElementById("openMore");
+    // Script for the plus icon rotation
+    const plusIcon = document.getElementById('plusIcon');
+    let isRotated = false; // Variable para rastrear el estado de rotación
+    // Script for the dropdown menu
+    const openMoreButton = document.getElementById("openMore");
     const firstPanel = document.getElementById("firstPanel");
-    const openElementsButton = document.getElementById("openFilters");
+    const openFiltersButton = document.getElementById("openFilters");
     const filterPanel = document.getElementById("filterPanel");
+    const openZonesButton = document.getElementById("openFiltersZones");
+    const filterPanelZones = document.getElementById("filterPanelZones");
+    const openElementsButton = document.getElementById("openFiltersElements");
+    const filterPanelElements = document.getElementById("filterPanelElements");
+    Panels = [firstPanel, filterPanel, filterPanelZones, filterPanelElements];
 
-    // Primer Panel
-    let panel = false
-    let panel2 = false
-
-    openFiltersButton.addEventListener("click", () => {
-        if (panel === false){
-            firstPanel.style.transform = "translateY(0)"; // Mostrar panel
-            panel = true
+    // Function to open or close the panels
+    function openFilterPanel(panel, isPanelOpen) {
+        if (!isPanelOpen) {
+            panel.classList.remove("hidden");
+            return true;
+        } else {
+            panel.classList.add("hidden");
+            return false;
         }
-        else{
-            firstPanel.style.transform = "translateY(100%)"; // Ocultar panel
-            panel = false
+    }
+    // States of panels
+    let isFirstPanelOpen = false;
+    let isFilterPanelOpen = false;
+    let isFilterPanelZonesOpen = false;
+    let isFilterPanelElementsOpen = false;
+
+    // Show/Hide the first panel
+    openMoreButton.addEventListener("click", () => {
+        if (!isRotated) {
+            // Rotar 45 grados
+            plusIcon.style.transform = 'rotate(45deg)';
+        } else {
+            // Volver a la posición inicial
+            plusIcon.style.transform = 'rotate(0deg)';
+        }
+        isRotated = !isRotated; // Cambiar el estado
+        isFirstPanelOpen = openFilterPanel(firstPanel, isFirstPanelOpen);
+        for (let panel of Panels) {
+            if (panel !== firstPanel) {
+                panel.classList.add("hidden");
+            }
         }
     });
-    openElementsButton.addEventListener("click",() =>{
-        if (panel2 === false){
-            filterPanel.style.transform = "translateY(0)";
-            panel2 = true
+    // Show/Hide the filter panel
+    openFiltersButton.addEventListener("click", () => {
+        isFilterPanelOpen = openFilterPanel(filterPanel, isFilterPanelOpen);
+    });
+    // Show/Hide the filter panel for zones
+    openZonesButton.addEventListener("click", () => {
+        isFilterPanelZonesOpen = openFilterPanel(filterPanelZones, isFilterPanelZonesOpen);
+        if (isFilterPanelElementsOpen){
+            isFilterPanelElementsOpen=openFilterPanel(filterPanelElements, isFilterPanelElementsOpen);
         }
-        else{
-            filterPanel.style.transform = "translateY(100%)";
-            panel2=false
+    });
+    // Show/Hide the filter panel for elements
+    openElementsButton.addEventListener("click", () => {
+        isFilterPanelElementsOpen = openFilterPanel(filterPanelElements, isFilterPanelElementsOpen);
+        if (isFilterPanelZonesOpen){
+            isFilterPanelZonesOpen=openFilterPanel(filterPanelZones, isFilterPanelZonesOpen);
         }
-    })
+    });
 </script>
 
 <script>
+    // Initialize the map
     mapboxgl.accessToken = '<?= getenv("MAPBOX_TOKEN") ?>';
     const map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/satellite-streets-v12', // Estil del mapa
+        style: 'mapbox://styles/mapbox/satellite-streets-v12', // Style of the map
         projection: 'globe', // Display the map as a globe, since satellite-v9 defaults to Mercator
         zoom: 12,
         center: [-0.3763, 39.4699]
     });
 
-    map.addControl(new mapboxgl.NavigationControl()); // Ampliar o alejar-se con el cursor
+    map.addControl(new mapboxgl.NavigationControl()); // Zoom in or out with the cursor
 
     map.on('style.load', () => {
         map.setFog({}); // Set the default atmosphere style
     });
 
-    // The following values can be changed to control rotation speed:
-
-    // At low zooms, complete a revolution every two minutes.
-    const secondsPerRevolution = 240;
-    // Above zoom level 5, do not rotate.
-    const maxSpinZoom = 5;
-    // Rotate at intermediate speeds between zoom levels 3 and 5.
-    const slowSpinZoom = 3;
-
-    let userInteracting = false;
-    const spinEnabled = true;
-
-    function spinGlobe() {
-        const zoom = map.getZoom();
-        if (spinEnabled && !userInteracting && zoom < maxSpinZoom) {
-            let distancePerSecond = 360 / secondsPerRevolution;
-            if (zoom > slowSpinZoom) {
-                // Slow spinning at higher zooms
-                const zoomDif =
-                    (maxSpinZoom - zoom) / (maxSpinZoom - slowSpinZoom);
-                distancePerSecond *= zoomDif;
-            }
-            const center = map.getCenter();
-            center.lng -= distancePerSecond;
-            // Smoothly animate the map over one second.
-            // When this animation is complete, it calls a 'moveend' event.
-            map.easeTo({ center, duration: 1000, easing: (n) => n });
-        }
+    // Create a blue dot with a vision cone
+    function createBlueDot() {
+        const el = document.createElement('div');
+        el.className = 'blue-dot';
+        el.style.width = '12px';
+        el.style.height = '12px';
+        el.style.backgroundColor = '#007AFF';
+        el.style.border = '2px solid white';
+        el.style.borderRadius = '50%';
+        el.style.boxShadow = '0 0 5px rgba(0, 122, 255, 0.5)';
+        return el;
     }
 
-    // Pause spinning on interaction
-    map.on('mousedown', () => {
-        userInteracting = true;
-    });
-    map.on('dragstart', () => {
-        userInteracting = true;
-    });
+    let blueDotMarker;
+    let visionConeLayer;
 
-    // When animation is complete, start spinning if there is no ongoing interaction
-    map.on('moveend', () => {
-        spinGlobe();
-    });
-
-    spinGlobe();
-
-    // Location User
-    navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.watchPosition(
         (position) => {
             const { latitude, longitude } = position.coords;
+            const userLocation = [longitude, latitude];
+            const userOrientation = 45; // Angle of the vision cone in degrees
 
-            // Crear un marcador exacto en la posición del usuario
-            new mapboxgl.Marker()
-                .setLngLat([longitude, latitude])
-                .addTo(map);
+            // Create or update the blue dot marker
+            if (!blueDotMarker) {
+                blueDotMarker = new mapboxgl.Marker({ element: createBlueDot() })
+                    .setLngLat(userLocation)
+                    .addTo(map);
+            } else {
+                blueDotMarker.setLngLat(userLocation);
+            }
 
-            // Centrar el mapa en la ubicación del usuario
+            // Create or update the vision cone
+            const radius = 0.1; // Radius of the cone in kilometers
+            const coneCoordinates = [];
+            for (let i = -30; i <= 30; i++) {
+                const angle = (userOrientation + i) * (Math.PI / 180);
+                const dx = radius * Math.cos(angle);
+                const dy = radius * Math.sin(angle);
+                coneCoordinates.push([userLocation[0] + dx / 111, userLocation[1] + dy / 111]);
+            }
+            coneCoordinates.push(userLocation);
+
+            const visionConeData = {
+                type: 'Feature',
+                geometry: {
+                    type: 'Polygon',
+                    coordinates: [coneCoordinates]
+                }
+            };
+
+            if (!map.getSource('vision-cone')) {
+                map.addSource('vision-cone', {
+                    type: 'geojson',
+                    data: visionConeData
+                });
+
+                map.addLayer({
+                    id: 'vision-cone-layer',
+                    type: 'fill',
+                    source: 'vision-cone',
+                    paint: {
+                        'fill-color': 'rgba(0, 122, 255, 0.3)',
+                        'fill-opacity': 0.5
+                    }
+                });
+            } else {
+                map.getSource('vision-cone').setData(visionConeData);
+            }
+
+            // Center the map on the current location
             map.flyTo({
-                center: [longitude, latitude],
-                zoom: 15, // Ajusta el nivel de zoom si es necesario
-                essential: true // Garantiza la animación
+                center: userLocation,
+                zoom: 15,
+                essential: true
             });
         },
         (error) => {
-            console.error('Error al obtener la ubicación:', error);
+            console.error('Error getting location:', error);
         },
         {
-            enableHighAccuracy: true, // GPS más preciso
-            timeout: 10000, // Tiempo máximo para obtener la ubicación (ms)
-            maximumAge: 0 // Siempre obtener datos frescos
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
         }
     );
-    //GeoJSON
+
+    // GeoJSON
     map.on('load', () => {
-    // Agregar fuente con GeoJSON
-    map.addSource('valencia-area', {
-        'type': 'geojson',
-        'data': {
-            'type': 'FeatureCollection',
-            'features': [
-                // Zona: Polígono
-                {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'Polygon',
-                        'coordinates': [
-                            [
-                                [-0.379946, 39.472606], // Estación del Norte
-                                [-0.377255, 39.470085], // Mercado Central
-                                [-0.374091, 39.470914], // Plaza Redonda
-                                [-0.372027, 39.472846], // Plaza de la Reina
-                                [-0.374709, 39.475012], // Torres de Serranos
-                                [-0.378901, 39.474073], // Plaza del Ayuntamiento
-                                [-0.379946, 39.472606]  // Cierra el polígono
+        // Add source with GeoJSON
+        map.addSource('valencia-area', {
+            'type': 'geojson',
+            'data': {
+                'type': 'FeatureCollection',
+                'features': [
+                    // Zone: Polygon
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Polygon',
+                            'coordinates': [
+                                [
+                                    [-0.379946, 39.472606], // Estación del Norte
+                                    [-0.377255, 39.470085], // Mercado Central
+                                    [-0.374091, 39.470914], // Plaza Redonda
+                                    [-0.372027, 39.472846], // Plaza de la Reina
+                                    [-0.374709, 39.475012], // Torres de Serranos
+                                    [-0.378901, 39.474073], // Plaza del Ayuntamiento
+                                    [-0.379946, 39.472606]  // Close the polygon
+                                ]
                             ]
-                        ]
+                        },
+                        'properties': {
+                            'name': 'Historic Center of Valencia',
+                            'description': 'One of the most emblematic areas of Valencia, including squares, markets, and historic towers.'
+                        }
                     },
-                    'properties': {
-                        'name': 'Centro Histórico de Valencia',
-                        'description': 'Una de las zonas más emblemáticas de Valencia, que incluye plazas, mercados y torres históricas.'
+                    // Point: Plaza del Ayuntamiento
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-0.3789, 39.4740]
+                        },
+                        'properties': {
+                            'name': 'Plaza del Ayuntamiento',
+                            'description': 'The nerve center of Valencia with iconic views and cultural activities.'
+                        }
+                    },
+                    // Point: Mercado Central
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-0.377255, 39.470085]
+                        },
+                        'properties': {
+                            'name': 'Mercado Central',
+                            'description': 'An iconic market full of fresh products and modernist architecture.'
+                        }
+                    },
+                    // Point: Plaza de la Reina
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-0.372027, 39.472846]
+                        },
+                        'properties': {
+                            'name': 'Plaza de la Reina',
+                            'description': 'A historic square surrounded by cafes and the famous Valencia Cathedral.'
+                        }
                     }
+                ]
+            }
+        });
+
+        // Add polygon and point layers
+        map.addLayer({
+            'id': 'valencia-boundary',
+            'type': 'fill',
+            'source': 'valencia-area',
+            'paint': {
+                'fill-color': '#0080ff',
+                'fill-opacity': 0.3
+            },
+            'filter': ['==', '$type', 'Polygon']
+        });
+
+        map.addLayer({
+            'id': 'valencia-points',
+            'type': 'circle',
+            'source': 'valencia-area',
+            'paint': {
+                'circle-radius': 6,
+                'circle-color': '#ff5733'
+            },
+            'filter': ['==', '$type', 'Point']
+        });
+
+        // Add custom marker icon
+        map.loadImage('/assets/images/Cursor-marker.png', (error, image) => {
+            if (error) throw error;
+            map.addImage('custom-marker', image);
+
+            map.addLayer({
+                'id': 'valencia-points',
+                'type': 'symbol',
+                'source': 'valencia-area',
+                'layout': {
+                    'icon-image': 'custom-marker',
+                    'icon-size': 0.5 // Adjust the icon size as needed
                 },
-                // Punto: Plaza del Ayuntamiento
-                {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'Point',
-                        'coordinates': [-0.3789, 39.4740]
-                    },
-                    'properties': {
-                        'name': 'Plaza del Ayuntamiento',
-                        'description': 'Centro neurálgico de Valencia con vistas icónicas y actividades culturales.'
-                    }
-                },
-                // Punto: Mercado Central
-                {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'Point',
-                        'coordinates': [-0.377255, 39.470085]
-                    },
-                    'properties': {
-                        'name': 'Mercado Central',
-                        'description': 'Un mercado icónico lleno de productos frescos y arquitectura modernista.'
-                    }
-                },
-                // Punto: Plaza de la Reina
-                {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'Point',
-                        'coordinates': [-0.372027, 39.472846]
-                    },
-                    'properties': {
-                        'name': 'Plaza de la Reina',
-                        'description': 'Una plaza histórica rodeada de cafeterías y la famosa Catedral de Valencia.'
-                    }
-                }
-            ]
-        }
-    });
+                'filter': ['==', '$type', 'Point']
+            });
+        });
 
-    // Añadir capas de polígono y puntos
-    map.addLayer({
-        'id': 'valencia-boundary',
-        'type': 'fill',
-        'source': 'valencia-area',
-        'paint': {
-            'fill-color': '#0080ff',
-            'fill-opacity': 0.3
-        },
-        'filter': ['==', '$type', 'Polygon']
-    });
+        // Event for clicking on the polygon
+        map.on('click', 'valencia-boundary', (e) => {
+            const coordinates = e.lngLat;
+            const properties = e.features[0].properties;
 
-    map.addLayer({
-        'id': 'valencia-points',
-        'type': 'circle',
-        'source': 'valencia-area',
-        'paint': {
-            'circle-radius': 6,
-            'circle-color': '#ff5733'
-        },
-        'filter': ['==', '$type', 'Point']
-    });
+            new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(`<strong>${properties.name}</strong><p>${properties.description}</p>`)
+                .addTo(map);
+        });
 
-    // Evento para clic en el polígono
-    map.on('click', 'valencia-boundary', (e) => {
-        const coordinates = e.lngLat;
-        const properties = e.features[0].properties;
+        // Event for clicking on the points
+        map.on('click', 'valencia-points', (e) => {
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const properties = e.features[0].properties;
 
-        new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(`<strong>${properties.name}</strong><p>${properties.description}</p>`)
-            .addTo(map);
-    });
+            new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(`<strong>${properties.name}</strong><p>${properties.description}</p>`)
+                .addTo(map);
+        });
 
-    // Evento para clic en los puntos
-    map.on('click', 'valencia-points', (e) => {
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        const properties = e.features[0].properties;
-
-        new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(`<strong>${properties.name}</strong><p>${properties.description}</p>`)
-            .addTo(map);
+        // Change the cursor to "pointer" when hovering over points or the zone
+        map.on('mouseenter', 'valencia-boundary', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+        map.on('mouseleave', 'valencia-boundary', () => {
+            map.getCanvas().style.cursor = '';
+        });
+        map.on('mouseenter', 'valencia-points', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+        map.on('mouseleave', 'valencia-points', () => {
+            map.getCanvas().style.cursor = '';
+        });
     });
-
-    // Cambiar el cursor a "pointer" al pasar por los puntos o la zona
-    map.on('mouseenter', 'valencia-boundary', () => {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', 'valencia-boundary', () => {
-        map.getCanvas().style.cursor = '';
-    });
-    map.on('mouseenter', 'valencia-points', () => {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', 'valencia-points', () => {
-        map.getCanvas().style.cursor = '';
-    });
-});
 </script>
+
+<style>
+    .blue-dot {
+        width: 12px;
+        height: 12px;
+        background-color: #007AFF;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 5px rgba(0, 122, 255, 0.5);
+    }
+</style>
