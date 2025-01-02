@@ -1,23 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FastAPI + Jinja2</title>
-</head>
-<body>
-    <h1>Hello, {{ name }}!</h1>
-    <p>Welcome to FastAPI with Jinja2 templates!</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sensor Health Status - FastAPI + Jinja2</title>
+        <link href="../static/styles.css" type="text/css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <h1>Sensor Health Status</h1>
+            <p>Check the current status of all sensors</p>
+        </header>
 
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sensor Model</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sensor in sensors %}
+                        <tr class="{% if sensor.is_active == 1 %}active{% else %}inactive{% endif %}">
+                            <td>{{ sensor.model }}</td>
+                            <td>
+                                {% if sensor.is_active == 1 %}
+                                <span class="status active">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 12L9 18L21 6" fill="none" stroke="#28a745" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    Active
+                                </span>
+                                
+                                {% else %}
+                                    <span class="status inactive">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="status-icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                        </svg>
+                                        Inactive
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
 
-    <div>
-        <ul>  
-            {% for sensor in sensors %}
-                <li>{{ sensor.model }}</li>
-            {% endfor %}
-        </ul>
-
-    </div>
-
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+           
+            document.querySelectorAll("td:nth-child(1)").forEach(function(td) {
+                td.addEventListener("click", function() {
+                    alert("Clic en el modelo de sensor: " + td.textContent);
+                });
+            });
+        });
+    </script>
+    
+    
 </html>

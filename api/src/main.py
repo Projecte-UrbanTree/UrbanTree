@@ -6,12 +6,13 @@ import sentry_sdk
 import sentry_sdk.crons
 from fastapi import Depends, FastAPI, Request, Response
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
 
 from .config import settings
 from .database import create_db_and_tables, get_session
-from .models import ApiResponse, Sensor, User, UserResponse
+from .models import ApiResponse, Sensor, SensorHistory, User, UserResponse
 from .services.scheduler_service import scheduler
 
 # Initialize Sentry SDK
@@ -46,6 +47,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+app.mount("/static", StaticFiles(directory="src/static"), name="static")
+
 templates = Jinja2Templates(
     directory=os.path.join(os.path.dirname(__file__), "templates")
 )
@@ -61,19 +64,20 @@ def health_check():
     return {"status": "healthy", "version": settings.IMAGE_VERSION or "dev"}
 
 
-@app.get("/prueba")
-def get_sensor_state(request: Request):
-    return templates.TemplateResponse(
-        "index.html", {"request": request, "name": "FastAPI User"}
-    )
-
-
 @app.get("/sensors", response_model=list[Sensor])
 def get_sensor_data(*, db: Session = Depends(get_session), request: Request):
     sensors: List[Sensor] = db.exec(select(Sensor)).all()
     return templates.TemplateResponse(
         "index.html", {"request": request, "sensors": sensors}
     )
+
+
+@app.get("/sensor/{id}", response_model=ApiResponse[SensorHistory])
+def get_sensor_history(sensor_id: int, db: Session = Depends(get_session)):
+    sensor = db.query(Sensor).filter(Sensor.id == sensor_id).first()
+
+    if sensor is None:
+        return {}
 
 
 @app.get("/users", response_model=ApiResponse[List[User]])
