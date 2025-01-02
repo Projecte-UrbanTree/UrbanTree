@@ -1,0 +1,59 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fc;
+    color: #333;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.not-found {
+    text-align: center;
+    padding: 50px;
+}
+
+.not-found h2 {
+    font-size: 3em;
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.not-found p {
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+.not-found a {
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.not-found a:hover {
+    color: #28a745;
+}
