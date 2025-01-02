@@ -1,5 +1,4 @@
 <?php
-use App\Core\Session;
 use App\Models\User;
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
@@ -14,6 +13,21 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <link rel="stylesheet" href="/assets/css/app.css">
     <script src="/assets/js/tailwind.js"></script>
     <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #map {
+            height: calc(100% - 65px);
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -93,16 +107,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-6">
-        <?php if (Session::has('success')): ?>
-            <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-                <strong class="font-bold">Success: </strong>
-                <span><?= htmlspecialchars(Session::get('success')); ?></span>
-            </div>
-        <?php endif;
-        echo $content;
-        ?>
-    </div>
+    <?= $content ?>
 
     <script src="/assets/js/app.js"></script>
     <!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->

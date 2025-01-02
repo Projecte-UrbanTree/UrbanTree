@@ -48,7 +48,7 @@ function validateField(value, regexName, fieldName) {
 function dateCannotBeAfter(startDate, endDate, fieldName) {
     return new Date(startDate) > new Date(endDate)
         ? createErrorElement(
-            `${fieldName}: La fecha de inicio no puede ser posterior a la fecha de fin.`
+            `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
         )
         : true;
 }
@@ -265,6 +265,47 @@ addFormValidation("treeTypeForm", [
         ],
     },
 ]);
+
+// func to active the button if detect changes in the form
+function checkChanges() {
+    const inputs = document.querySelectorAll("input");
+    const button = document.getElementById("button-save");
+
+    let changesDetected = false;
+
+    inputs.forEach((input) => {
+        const originalValue = input.getAttribute("data-original-value");
+        if (input.value !== originalValue) {
+            changesDetected = true;
+        }
+    });
+
+    if (changesDetected) {
+        button.disabled = false;
+        button.classList.remove(
+            "bg-gray-400",
+            "cursor-not-allowed",
+            "text-gray-500"
+        );
+        button.classList.add(
+            "bg-green-500",
+            "hover:bg-green-600",
+            "text-white"
+        );
+    } else {
+        button.disabled = true;
+        button.classList.add(
+            "bg-gray-400",
+            "cursor-not-allowed",
+            "text-gray-500"
+        );
+        button.classList.remove(
+            "bg-green-500",
+            "hover:bg-green-600",
+            "text-white"
+        );
+    }
+}
 
 function toggleAccordion(index) {
 

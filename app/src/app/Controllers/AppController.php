@@ -31,22 +31,4 @@ class AppController
             'layout' => 'PublicLayout',
         ]);
     }
-
-    public function privacyPolicy($queryParams)
-    {
-        View::render([
-            'view' => 'Documents/PrivacyPolicy',
-            'title' => 'Privacy Policy',
-            'layout' => 'PublicLayout',
-        ]);
-    }
-
-    public function termsConditions($queryParams)
-    {
-        View::render([
-            'view' => 'Documents/TermsConditions',
-            'title' => 'Terms and conditions of use',
-            'layout' => 'PublicLayout',
-        ]);
-    }
 }
