@@ -1,5 +1,5 @@
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f7fc;
@@ -7,11 +7,11 @@ body {
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
     padding: 20px;
     text-align: center;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
 }
 
 h1 {
@@ -39,7 +39,8 @@ table {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
+th,
+td {
     padding: 12px 20px;
     text-align: left;
     border: 1px solid #ddd;
@@ -48,7 +49,7 @@ th, td {
 th {
     background-color: #f2f2f2;
     font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
 }
 
 tr:hover {
@@ -88,21 +89,25 @@ tr:hover {
     height: 20px;
 }
 
-
-
-
 td:nth-child(1) {
     cursor: pointer;
 }
-
 
 td:nth-child(1):hover {
     background-color: #e8fcdd;
 }
 
-
 td:nth-child(2) {
     cursor: default;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
+a:focus,
+a:hover {
+    outline: none;
+    text-decoration: none;
+}

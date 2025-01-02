@@ -85,7 +85,7 @@ async def get_sensor_history(
         db.query(SensorHistory).filter(SensorHistory.sensor_id == sensor_id).all()
     )
     
-    print(sensor_history)
+    
 
     return templates.TemplateResponse(
         "sensor_detail.html",
