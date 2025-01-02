@@ -22,13 +22,13 @@
         </div>
 
         <div>
-            <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Fecha de inicio</label>
+            <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Fecha inicial</label>
             <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($contract->start_date); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <div>
-            <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">Fecha de fin</label>
+            <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">Fecha final</label>
             <input type="date" id="end_date" name="end_date" value="<?= htmlspecialchars($contract->end_date); ?>"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
@@ -53,10 +53,14 @@
                 value="<?= htmlspecialchars($contract->invoice_paid); ?>" max="999999999.99"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-4">
             <button type="submit"
                 class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-blue-500">
                 Actualizar
+            </button>
+            <button type="button"
+                class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-red-500">
+                Eliminar
             </button>
         </div>
     </form>
