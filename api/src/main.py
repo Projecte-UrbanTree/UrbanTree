@@ -72,14 +72,11 @@ def get_sensor_data(*, db: Session = Depends(get_session), request: Request):
     )
 
 
-from fastapi import Request
-
-
 @app.get("/sensor/{sensor_id}")
 async def get_sensor_history(
     sensor_id: int, request: Request, db: Session = Depends(get_session)
 ):
-    sensor = db.query(Sensor).filter(Sensor.id == sensor_id).first()
+    sensor: Sensor = db.query(Sensor).filter(Sensor.id == sensor_id).first()
 
     if sensor is None:
         return templates.TemplateResponse("not_found.html", {"request": request})
@@ -87,6 +84,8 @@ async def get_sensor_history(
     sensor_history = (
         db.query(SensorHistory).filter(SensorHistory.sensor_id == sensor_id).all()
     )
+    
+    print(sensor_history)
 
     return templates.TemplateResponse(
         "sensor_detail.html",

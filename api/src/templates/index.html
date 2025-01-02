@@ -10,7 +10,7 @@
     <body>
         <header>
             <h1>Sensor Health Status</h1>
-            <p>Check the current status of all sensors</p>
+            <p>Consulta el estado actual de todos los sensores.</p>
         </header>
 
         <div class="container">
@@ -24,7 +24,10 @@
                 <tbody>
                     {% for sensor in sensors %}
                         <tr class="{% if sensor.is_active == 1 %}active{% else %}inactive{% endif %}">
-                            <td>{{ sensor.model }}</td>
+                            <td>
+                                <a href="/sensor/{{ sensor.id }}" class="sensor-link">{{ sensor.model }}</a>
+                            </td>
+
                             <td>
                                 {% if sensor.is_active == 1 %}
                                 <span class="status active">
@@ -55,7 +58,7 @@
            
             document.querySelectorAll("td:nth-child(1)").forEach(function(td) {
                 td.addEventListener("click", function() {
-                    alert("Clic en el modelo de sensor: " + td.textContent);
+                    
                 });
             });
         });
