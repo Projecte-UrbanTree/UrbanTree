@@ -81,12 +81,12 @@ async def get_sensor_history(
     if sensor is None:
         return templates.TemplateResponse("not_found.html", {"request": request})
 
-    sensor_history = (
+    sensor_history: SensorHistory = (
         db.query(SensorHistory).filter(SensorHistory.sensor_id == sensor_id).all()
     )
     
-    
-
+    # sort sensor history by last update
+    sensor_history.sort(key=lambda x: x.created_at, reverse=True)
     return templates.TemplateResponse(
         "sensor_detail.html",
         {"request": request, "sensor": sensor, "sensor_history": sensor_history},

@@ -101,13 +101,13 @@ td:nth-child(2) {
     cursor: default;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
+
+table a {
+    text-decoration: none;  
+    color: inherit;        
 }
 
-a:focus,
-a:hover {
-    outline: none;
+table a:hover {
     text-decoration: none;
 }
+
