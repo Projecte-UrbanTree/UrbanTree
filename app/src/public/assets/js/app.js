@@ -48,8 +48,8 @@ function validateField(value, regexName, fieldName) {
 function dateCannotBeAfter(startDate, endDate, fieldName) {
     return new Date(startDate) > new Date(endDate)
         ? createErrorElement(
-            `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
-        )
+              `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
+          )
         : true;
 }
 
@@ -61,8 +61,8 @@ function validatePositiveInteger(value, fieldName) {
     return pattern.test(value) && parseFloat(value) > 0
         ? true
         : createErrorElement(
-            `${fieldName}: El valor debe ser un número entero positivo.`
-        );
+              `${fieldName}: El valor debe ser un número entero positivo.`
+          );
 }
 
 /**
@@ -72,8 +72,8 @@ function validateMaxValue(value, max, fieldName) {
     return parseFloat(value) <= max
         ? true
         : createErrorElement(
-            `${fieldName}: El valor no puede ser mayor a ${max}.`
-        );
+              `${fieldName}: El valor no puede ser mayor a ${max}.`
+          );
 }
 
 function getFieldName(fieldId) {
@@ -308,16 +308,15 @@ function checkChanges() {
 }
 
 function toggleAccordion(index) {
+    const contentRow = document.getElementById("accordionContent" + index);
+    const path = document.getElementById("accordionPath" + index);
 
-    const contentRow = document.getElementById('accordionContent' + index);
-    const path = document.getElementById('accordionPath' + index);
-
-    if (contentRow.classList.contains('hidden')) {
-        contentRow.classList.remove('hidden');
-        path.setAttribute('d', 'M5 9l7 7 7-7');
+    if (contentRow.classList.contains("hidden")) {
+        contentRow.classList.remove("hidden");
+        path.setAttribute("d", "M5 9l7 7 7-7");
     } else {
-        contentRow.classList.add('hidden');
-        path.setAttribute('d', 'M9 5l7 7-7 7');
+        contentRow.classList.add("hidden");
+        path.setAttribute("d", "M9 5l7 7-7 7");
     }
 }
 
@@ -326,16 +325,16 @@ let currentInputId = null;
 function openModal(modalId, inputId) {
     currentInputId = inputId;
     const input = document.getElementById(inputId);
-    const selectedValues = input.value.split(',').map(val => val.trim());
+    const selectedValues = input.value.split(",").map((val) => val.trim());
 
     const modal = document.getElementById(modalId);
     const checkboxes = modal.querySelectorAll('input[type="checkbox"]');
 
-    checkboxes.forEach(checkbox => {
+    checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
     });
 
-    checkboxes.forEach(checkbox => {
+    checkboxes.forEach((checkbox) => {
         const label = checkbox.nextElementSibling.textContent.trim();
         if (selectedValues.includes(label)) {
             checkbox.checked = true;
@@ -352,14 +351,16 @@ function closeModal(modalId) {
 function saveSelection(modalId) {
     const modal = document.getElementById(modalId);
     const checkboxes = modal.querySelectorAll('input[type="checkbox"]:checked');
-    const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.nextElementSibling.textContent.trim());
+    const selectedValues = Array.from(checkboxes).map((checkbox) =>
+        checkbox.nextElementSibling.textContent.trim()
+    );
 
     if (currentInputId) {
         const input = document.getElementById(currentInputId);
         input.value = selectedValues.join(", ");
     }
 
-    modal.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    modal.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.checked = false;
     });
 
@@ -368,7 +369,7 @@ function saveSelection(modalId) {
 }
 
 let taskTypeOptions = `<option value="" disabled selected>Seleccione una tarea</option>`;
-taskTypes.forEach(task_type => {
+taskTypes.forEach((task_type) => {
     taskTypeOptions += `
             <option value="${task_type.id}">
                 ${task_type.name}
@@ -377,7 +378,7 @@ taskTypes.forEach(task_type => {
 });
 
 let speciesOptions = `<option value="" selected>Opcional</option>`;
-treeTypes.forEach(tree_type => {
+treeTypes.forEach((tree_type) => {
     speciesOptions += `
             <option value="${tree_type.id}">
                 ${tree_type.species}
@@ -386,13 +387,14 @@ treeTypes.forEach(tree_type => {
 });
 
 function addBlock() {
-    const blocksContainer = document.getElementById('blocksContainer');
+    const blocksContainer = document.getElementById("blocksContainer");
     const blockCount = blocksContainer.children.length + 1;
     const zoneInputId = `zonesInput_${blockCount}`;
     const notesId = `notes_${blockCount}`;
 
-    const block = document.createElement('div');
-    block.className = 'border border-gray-300 rounded-lg shadow p-4 bg-gray-50 mb-4';
+    const block = document.createElement("div");
+    block.className =
+        "border border-gray-300 rounded-lg shadow p-4 bg-gray-50 mb-4";
 
     block.innerHTML = `
         <div class="flex justify-between items-center">
@@ -461,12 +463,12 @@ function addBlock() {
     blocksContainer.appendChild(block);
 }
 function addTask(button) {
-    const blockContainer = button.closest('.border');
-    const tasksContainer = blockContainer.querySelector('.tasksContainer');
-    const notesDiv = tasksContainer.querySelector('.mt-4');
+    const blockContainer = button.closest(".border");
+    const tasksContainer = blockContainer.querySelector(".tasksContainer");
+    const notesDiv = tasksContainer.querySelector(".mt-4");
 
-    const taskRow = document.createElement('div');
-    taskRow.className = 'task-row flex space-x-4 items-end';
+    const taskRow = document.createElement("div");
+    taskRow.className = "task-row flex space-x-4 items-end";
 
     taskRow.innerHTML = `
         <div class="w-1/2">
@@ -506,4 +508,3 @@ function removeBlock(button) {
     const block = button.parentNode.parentNode;
     block.remove();
 }
-

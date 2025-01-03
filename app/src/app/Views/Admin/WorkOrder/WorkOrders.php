@@ -4,22 +4,23 @@
     </a>
 </div>
 
-<div class="overflow-x-auto">
-    <table class="min-w-full table-auto bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead>
-            <tr class="bg-gray-700 text-white text-left h-14">
-                <th class="py-2 px-4 border-b">Orden de Trabajo</th>
-                <th class="py-2 px-4 border-b">Fecha</th>
-                <th class="py-2 px-4 border-b">Operarios</th>
-                <th class="py-2 px-4 border-b">Acciones</th>
+<div class="relative overflow-x-auto scrollbar-none shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="bg-neutral-700 text-white uppercase">
+            <tr>
+                <th scope="col" class="px-5 py-3">Orden de Trabajo</th>
+                <th scope="col" class="px-5 py-3">Fecha</th>
+                <th scope="col" class="px-5 py-3">Operarios</th>
+                <th scope="col" class="px-5 py-3">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($work_orders as $index => $work_order) { ?>
-                <tr class="border-b hover:bg-gray-100">
-                    <td class="py-2 px-4 flex items-center">
+                <tr class="border-b hover:bg-gray-50">
+                    <th scope="row" class="px-5 py-4 font-medium text-gray-900 whitespace-nowrap dark\:text-white">
                         <button id="accordionButton<?php echo $index; ?>" onclick="toggleAccordion(<?php echo $index; ?>)"
-                            aria-expanded="false" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                            aria-expanded="false" class="text-gray-500 hover:text-gray-700 focus:outline-none mr-2">
+
                             <!-- SVG Acordeon-->
                             <svg id="accordionIcon<?php echo $index; ?>" xmlns="http://www.w3.org/2000/svg"
                                 class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -29,11 +30,11 @@
                             </svg>
                         </button>
                         <?php echo "OT-" . htmlspecialchars($work_order->contract()->getId()); ?>
-                    </td>
-                    <td>
+                    </th>
+                    <td class="px-5 py-4">
                         <?= date('d/m/Y', strtotime($work_order->date)); ?>
                     </td>
-                    <td class="py-2 px-4">
+                    <td class="px-5 py-4">
                         <?php
                         $users = [];
                         foreach ($work_order->users() as $user) {
@@ -42,7 +43,7 @@
                         echo implode(', ', $users);
                         ?>
                     </td>
-                    <td class="px-4 py-3 border-b text-center flex space-x-4">
+                    <td class="px-5 py-4 text-center flex space-x-4">
                         <!-- Edit Button (Pencil Icon) -->
                         <a href="/admin/work-order/<?php echo htmlspecialchars($work_order->getId()); ?>/edit"
                             class="text-blue-500 hover:text-blue-700" title="Edit">
@@ -70,45 +71,50 @@
                     <!-- Accordeon Content -->
                     <td colspan="4" class="py-2 px-3 bg-gray-50">
                         <?php foreach ($work_order->blocks() as $block) { ?>
-                            <table class="w-full border-collapse border border-gray-300 rounded-lg">
-                                <thead>
-                                    <tr class="bg-gray-200 text-gray-700 text-center">
-                                        <th class="border p-2">Zonas</th>
-                                        <th class="border p-2">Tipo de Tareas</th>
-                                        <th class="border p-2">Notas</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="hover:bg-gray-100">
-                                        <td class="border px-2 py-1 align-top w-1/5">
-                                            <?php foreach ($block->zones() as $blockZones) { ?>
-                                                <div class="mb-1">•
-                                                    <?php echo htmlspecialchars($blockZones->name); ?>
-                                                </div>
-                                            <?php } ?>
-                                        </td>
+                            <div class="relative overflow-x-auto scrollbar-none shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                                    <thead class="bg-neutral-600 text-white uppercase">
+                                        <tr>
+                                            <th scope="col" class="px-5 py-3">Zonas</th>
+                                            <th scope="col" class="px-5 py-3">Tipo de Tareas</th>
+                                            <th scope="col" class="px-5 py-3">Notas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b hover:bg-gray-50">
+                                            <td scope="row" class="px-5 py-4 whitespace-nowrap w-1/5">
+                                                <ul>
+                                                    <?php foreach ($block->zones() as $blockZones) { ?>
+                                                        <li>•
+                                                            <?php echo htmlspecialchars($blockZones->name); ?>
+                                                        </li>
+                                                    <?php } ?>
+                                                </ul>
+                                            </td>
 
-                                        <td class="border px-2 py-1 align-top w-2/5">
-                                            <?php foreach ($block->tasks() as $blockTask) { ?>
-                                                <div class="mb-1">•
-                                                    <?php echo htmlspecialchars($blockTask->task()->name);
-                                                    if ($blockTask->treeType() != null) {
-                                                        echo ": " . htmlspecialchars($blockTask->treeType()->species);
-                                                    } ?>
-                                                </div>
-                                            <?php } ?>
-                                        </td>
+                                            <td class="px-5 py-4 w-2/5">
+                                                <ul>
+                                                    <?php foreach ($block->tasks() as $blockTask) { ?>
+                                                        <li>•
+                                                            <?php echo htmlspecialchars($blockTask->task()->name);
+                                                            if ($blockTask->treeType() != null) {
+                                                                echo ": " . htmlspecialchars($blockTask->treeType()->species);
+                                                            } ?>
+                                                        </li>
+                                                    <?php } ?>
+                                                </ul>
+                                            </td>
 
-                                        <td class="border px-2 py-1 align-top w-2/5">
-                                            <?php if ($block->notes !== null) {
-                                                echo htmlspecialchars($block->notes);
-                                            }
-                                            ?>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
+                                            <td class="px-5 py-4 w-2/5">
+                                                <?php if ($block->notes !== null) {
+                                                    echo htmlspecialchars($block->notes);
+                                                }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         <?php } ?>
                     </td>
                 </tr>
