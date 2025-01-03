@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Models;
+
 class WorkOrderBlock extends BaseModel
 {
     public int $work_order_id;
+
     public ?string $notes;
 
     protected static function getTableName(): string
@@ -13,21 +15,21 @@ class WorkOrderBlock extends BaseModel
 
     protected static function mapDataToModel($data): WorkOrderBlock
     {
-        $workOrderBlock = new self();
-        $workOrderBlock->id = $data['id'];
-        $workOrderBlock->work_order_id = $data['work_order_id'];
-        $workOrderBlock->notes = $data['notes'];
+        $work_order_block = new self();
+        $work_order_block->id = $data['id'];
+        $work_order_block->work_order_id = $data['work_order_id'];
+        $work_order_block->notes = $data['notes'];
 
-        return $workOrderBlock;
+        return $work_order_block;
     }
 
-    public function zones()
+    public function zones(): array
     {
         return $this->belongsToMany(Zone::class, 'work_orders_blocks_zones', 'work_orders_block_id', 'zone_id');
     }
 
-    public function tasks()
+    public function tasks(): array
     {
-        return $this->hasMany(WorkOrderBlockTask::class, 'work_orders_block_id', 'id');
+        return $this->hasMany(WorkOrderBlockTask::class, 'work_orders_block_id');
     }
 }

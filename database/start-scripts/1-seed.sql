@@ -102,8 +102,6 @@ INSERT INTO work_orders_blocks_zones (work_orders_block_id, zone_id) VALUES
 (2, 2),
 (3, 3);
 
-
-
 INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_id) VALUES
 (1, 1, 1),
 (1, 2, 2),
