@@ -8,6 +8,7 @@ use App\Models\WorkOrder;
 use App\Models\TaskType;
 use App\Models\Zone;
 use App\Models\User;
+use App\Models\TreeType;
 
 
 class WorkOrderController
@@ -25,20 +26,20 @@ class WorkOrderController
 
     public function create($queryParams)
     {
-        $task_types = array_map(function ($task_type) {
-            return $task_type->name;
-        }, TaskType::findAll());
-        $users = array_map(function ($user) {
-            return $user->name . ' ' . $user->surname;
-        }, User::findAll(['role' => 1]));
-        $zones = array_map(function ($zone) {
-            return $zone->name;
-        }, Zone::findAll(['name' => 'not null']));
+        $task_types = TaskType::findAll();
+        $users = User::findAll(['role' => 1]);
+        $zones = Zone::findAll(['name' => 'not null']);
+        $tree_types = TreeType::findAll();
         View::render([
             'view' => 'Admin/WorkOrder/Create',
             'title' => 'Nueva Orden de Trabajo',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['task_types' => $task_types, 'users' => $users, 'zones' => $zones],
+            'data' => [
+                'users' => $users,
+                'zones' => $zones,
+                'task_types' => $task_types,
+                'tree_types' => $tree_types,
+            ],
         ]);
     }
 
@@ -46,9 +47,25 @@ class WorkOrderController
     {
 
         $work_order = new WorkOrder();
-        $work_order->contract_id = $postData['contract_id'];
+        $work_order->date=$postData['date'];
 
         $work_order->save();
+
+        $task_types = new TaskType();
+        $task_types->name = $postData['task_type'];
+        $task_types->save();
+
+        $users = new User();
+        $users->name = $postData['user'];
+        $users->save();
+
+        $zones = new Zone();
+        $zones->name = $postData['zone'];
+        $zones->save();
+
+        $tree_types = new TreeType();
+        $tree_types->species = $postData['species'];
+        $tree_types->save();
 
         if ($work_order->getId())
             Session::set('success', 'Orden de Trabajo creada correctamente');
