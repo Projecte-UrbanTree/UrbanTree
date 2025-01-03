@@ -109,7 +109,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <!-- Main Content -->
     <?= $content ?>
 
-    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
     <!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
     <script>
         setTimeout(() => {
