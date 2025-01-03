@@ -47,9 +47,25 @@ class WorkOrderController
     {
 
         $work_order = new WorkOrder();
-
+        $work_order->date=$postData['date'];
 
         $work_order->save();
+
+        $task_types = new TaskType();
+        $task_types->name = $postData['task_type'];
+        $task_types->save();
+
+        $users = new User();
+        $users->name = $postData['user'];
+        $users->save();
+
+        $zones = new Zone();
+        $zones->name = $postData['zone'];
+        $zones->save();
+
+        $tree_types = new TreeType();
+        $tree_types->species = $postData['species'];
+        $tree_types->save();
 
         if ($work_order->getId())
             Session::set('success', 'Orden de Trabajo creada correctamente');

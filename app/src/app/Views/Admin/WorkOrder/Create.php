@@ -19,8 +19,8 @@
         </div>
 
         <div>
-            <label for="workers" class="block text-sm font-medium text-gray-700 mb-1">Operarios</label>
-            <input type="text" id="workersInput" readonly onclick="openModal('modalWorkers')"
+            <label for="users" class="block text-sm font-medium text-gray-700 mb-1">Operarios</label>
+            <input type="text" id="workersInput" readonly onclick="openModal('modalWorkers', 'workersInput')"
                 placeholder="Seleccionar Operarios"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-pointer focus:outline-none">
         </div>
@@ -46,12 +46,12 @@
                 </div>      
                 <div>
                     <label for="zones" class="block text-sm font-medium text-gray-700 mb-1">Zonas</label>
-                    <input type="text" id="zonesInput" readonly onclick="openModal('modalZones')"
+                    <input type="text" id="zonesInput_1" readonly onclick="openModal('modalZones', 'zonesInput_1')"
                         placeholder="Seleccionar Zonas"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-pointer focus:outline-none">
                 </div>
                 <div class="flex justify-end mt-4">
-                    <button type="button" id="addTask" onclick="addTask(this)"
+                    <button type="button" onclick="addTask(this)"
                         class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
                         Agregar Tareas
                     </button>
@@ -61,7 +61,7 @@
                     <div class="task-row flex space-x-4 items-end">
                         <!-- Dropdown Task Type -->
                         <div class="w-1/2">
-                            <select name="taskType" id="taskType"
+                            <select name="taskType[]"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                                 <option value="" disabled selected>Seleccione una tarea</option>
                                 <?php foreach ($task_types as $task_type) { ?>
@@ -75,7 +75,7 @@
                         <!-- Dropdown Specie -->
                         <div class="w-1/2 flex items-center space-x-2">
                             <span class="block text-lg font-semibold text-gray-800">Species</span>
-                            <select name="species" id="species"
+                            <select name="species[]"
                                 class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                                 <option value="" selected>Opcional</option>
                                 <?php foreach ($tree_types as $tree_type) { ?>
@@ -100,8 +100,8 @@
 
                     </div>
                     <div class="mt-4">
-                        <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
-                        <textarea name="notes" id="notes" rows="4" placeholder="Añadir notas aquí..."
+                        <label for="notes_1"class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+                        <textarea name="notes[]" id="notes_1" rows="4" placeholder="Añadir notas aquí..."
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
         </div>
 
         <div class="flex justify-end mt-4">
-            <button onclick="saveSelection('modalWorkers', 'workersInput')"
+            <button onclick="saveSelection('modalWorkers')"
                 class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
                 Aplicar
             </button>
@@ -157,7 +157,7 @@
             <?php } ?>
         </div>
         <div class="flex justify-end mt-4">
-            <button onclick="saveSelection('modalZones', 'zonesInput')"
+            <button onclick="saveSelection('modalZones')"
                 class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
                 Aplicar
             </button>
@@ -168,3 +168,8 @@
         </div>
     </div>
 </div>
+
+<script>
+    const taskTypes = <?php echo json_encode($task_types); ?>;
+    const treeTypes = <?php echo json_encode($tree_types); ?>;
+</script>
