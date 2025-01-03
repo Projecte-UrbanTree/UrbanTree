@@ -1,7 +1,8 @@
 --* Users
 INSERT INTO users (company, name, surname, dni, password, email, role) VALUES
 ('TechCorp', 'Carlos', 'García', '12345678A', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'carlos.garcia@example.com', 0), -- Password: demopass
-('InnovaTech', 'Ana', 'Martínez', '23456789B', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'ana.martinez@example.com', 1), -- Password: demopass
+('InnovaTech', 'Ana', 'Martínez', '23456789B', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'ana.martinez@example.com', 1),
+('DesignWorks', 'Gemma', 'Palanca', '33344456G', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'gemma.palanca@example.com', 1), -- Password: demopass
 ('DesignWorks', 'José', 'Rodríguez', '34567890C', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'jose.rodriguez@example.com', 2); -- Password: demopass
 
 --* Contracts
@@ -43,8 +44,8 @@ INSERT INTO points (latitude, longitude) VALUES
 --* Zones
 INSERT INTO zones (name, contract_id) VALUES
 ('Zona Norte', 1),
-(NULL, 2),
-(NULL, 3);
+('Zona Este', 2),
+('Zona Oeste', 3);
 
 --* Elements
 INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type_id) VALUES
@@ -59,10 +60,10 @@ INSERT INTO incidences (element_id, name, description) VALUES
 (3, 'Fuente sin agua', 'Fuente sin agua en el parque');
 
 --* Work Orders
-INSERT INTO work_orders (contract_id) VALUES
-(1),
-(2),
-(3);
+INSERT INTO work_orders (contract_id, date) VALUES
+(1,"2021-01-01"),
+(2,"2021-02-01"),
+(3,"2021-03-01");
 
 --* Work Orders Users
 INSERT INTO work_orders_users (work_order_id, user_id) VALUES
@@ -89,18 +90,20 @@ INSERT INTO sensor_history (sensor_id, temperature, humidity, inclination) VALUE
 (3, 19.0, 50.0, 12.0);
 
 --* Work Orders Blocks
-INSERT INTO work_orders_blocks (work_order_id) VALUES
-(1),
-(2),
-(3);
+INSERT INTO work_orders_blocks (work_order_id, notes) VALUES
+(1,"Notas de la orden 1"),
+(2,"Notas de la orden test test test test test test test test test test test"),
+(3, NULL);
 
 --* Work Orders Blocks Zones
 INSERT INTO work_orders_blocks_zones (work_orders_block_id, zone_id) VALUES
 (1, 1),
+(1, 2),
 (2, 2),
 (3, 3);
 
 INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_id) VALUES
 (1, 1, 1),
+(1, 2, 2),
 (2, 2, NULL),
 (3, 3, NULL);
