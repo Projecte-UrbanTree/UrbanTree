@@ -48,7 +48,7 @@ function validateField(value, regexName, fieldName) {
 function dateCannotBeAfter(startDate, endDate, fieldName) {
     return new Date(startDate) > new Date(endDate)
         ? createErrorElement(
-              `${fieldName}: La fecha de inicio no puede ser posterior a la fecha de fin.`
+              `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
           )
         : true;
 }
