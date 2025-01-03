@@ -10,7 +10,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title . ' - ' . getenv('APP_NAME'); ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/app.css?v=<?= time(); ?>">
     <script src="/assets/js/tailwind.js"></script>
     <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
@@ -95,35 +95,69 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             </div>
         </nav>
     </div>
+    <button id="toggleSidebar" class="fixed left-0 top-1/2 -translate-y-1/2 z-50 
+    w-8 h-24 bg-white hover:bg-gray-200 rounded-r-lg shadow-md cursor-pointer">
+        <i class="fas fa-chevron-right text-gray-600"></i>
+    </button>
+
+    <div class="fixed top-1/6 mt-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 
+    flex flex-row gap-2 bg-white bg-opacity-50 backdrop-filter backdrop-blur-md 
+    shadow-md rounded-lg p-4">
+        <button class="w-10 h-10 flex items-center justify-center rounded-full 
+    bg-gray-100 hover:bg-green-100 active:bg-green-100 transition-colors duration-300">
+            <i class="fas fa-file-contract text-gray-600"></i>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-full 
+    bg-gray-100 hover:bg-green-100 active:bg-green-100 transition-colors duration-300">
+            <i class="fas fa-map-marker-alt text-gray-600"></i>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-full 
+    bg-gray-100 hover:bg-green-100 active:bg-green-100 transition-colors duration-300">
+            <i class="fas fa-cube text-gray-600"></i>
+        </button>
+    </div>
 
 
-    <div id="submenu"
-        class="md:flex overflow-x-auto justify-center items-center gap-6 p-6 shadow-md sm:shadow-none px-2 py-1 sm:py-4">
-        <div class="submenu text-center flex items-center justify-center space-x-6 w-full">
-            <div class="submenu-item">
-                <a href="/admin/contracts"
-                    class="link-primary <?= ($currentPath == '/admin/contracts') ? 'active' : ''; ?>">
-                    <i class="fas fa-file-contract block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Contratos</span>
-                </a>
-            </div>
 
-            <div class="submenu-item">
-                <a href="/admin/zones" class="link-primary <?= ($currentPath == '/admin/zones') ? 'active' : ''; ?>">
-                    <i class="fas fa-map-marker-alt md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Zonas</span>
-                </a>
-            </div>
 
-            <div class="submenu-item">
-                <a href="/admin/elements"
-                    class="link-primary <?= ($currentPath == '/admin/elements') ? 'active' : ''; ?>">
-                    <i class="fas fa-cube md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Elementos</span>
-                </a>
-            </div>
+
+
+    <!-- Barra lateral -->
+    <div id="sidebar" class="fixed top-16 left-0 h-[calc(100%-65px)] w-16 
+    flex flex-col items-center justify-start 
+    bg-white shadow-xl 
+    pt-6 pb-4 z-40 
+    hidden transition-transform transform -translate-x-full group">
+        <!-- Opción 1: Edit -->
+        <div class="relative group mb-6">
+            <button class="flex items-center justify-center 
+        w-12 h-12 hover:bg-gray-100 rounded-full 
+        transition-colors duration-200 ease-in-out cursor-pointer">
+                <i class="fas fa-edit text-xl text-gray-600"></i>
+            </button>
+        </div>
+        <!-- Opción 2: Filter -->
+        <div class="relative group mb-6">
+            <button class="flex items-center justify-center 
+        w-12 h-12 hover:bg-gray-100 rounded-full 
+        transition-colors duration-200 ease-in-out cursor-pointer">
+                <i class="fas fa-filter text-xl text-gray-600"></i>
+            </button>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </div>
 
@@ -157,6 +191,40 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
         menuButton.addEventListener('click', () => {
             submenu.classList.toggle('hidden');
+        });
+    </script>
+    <script>
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const floatingButtons = document.querySelectorAll('#floatingContracts, #floatingZones, #floatingElements');
+
+        toggleSidebar.addEventListener('mouseenter', () => {
+            toggleSidebar.classList.add('hidden');
+            sidebar.classList.remove('hidden');
+            sidebar.classList.add('translate-x-0');
+        });
+
+        sidebar.addEventListener('mouseleave', () => {
+            toggleSidebar.classList.remove('hidden');
+            sidebar.classList.add('hidden');
+            sidebar.classList.remove('translate-x-0');
+        });
+
+        floatingButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                floatingButtons.forEach((btn) => btn.classList.remove('bg-blue-500', 'text-white'));
+                button.classList.add('bg-blue-500', 'text-white');
+            });
+        });
+    </script>
+    <script>
+        const buttons = document.querySelectorAll('.w-10.h-10');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => btn.classList.remove('bg-green-100'));
+                button.classList.add('bg-green-100');
+            });
         });
     </script>
 </body>
