@@ -81,8 +81,9 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                             class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                             <div class="py-1" role="none">
-                                <a href="/admin/configuration" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
-                                    role="menuitem" tabindex="-1" id="menu-item-0">Configuración de la cuenta</a>
+                                <a href="/admin/configuration"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800" role="menuitem"
+                                    tabindex="-1" id="menu-item-0">Configuración de la cuenta</a>
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                                     id="menu-item-1">Soporte</a>
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
@@ -117,17 +118,18 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             </div>
 
             <div class="submenu-item">
-                <a href="/admin/zones" class="link-primary <?= ($currentPath == '/admin/zones') ? 'active' : ''; ?>">
-                    <i class="fas fa-map-marker-alt md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Zonas</span>
+                <a href="/admin/element-types"
+                    class="link-primary <?= ($currentPath == '/admin/element-types') ? 'active' : ''; ?>">
+                    <i class="fas fa-cube md:block"></i>
+                    <span class="text-sm font-medium whitespace-nowrap">Tipos de elemento</span>
                 </a>
             </div>
 
             <div class="submenu-item">
-                <a href="/admin/elements"
-                    class="link-primary <?= ($currentPath == '/admin/elements') ? 'active' : ''; ?>">
-                    <i class="fas fa-cube md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Elementos</span>
+                <a href="/admin/tree-types"
+                    class="link-primary <?= ($currentPath == '/admin/tree-types') ? 'active' : ''; ?>">
+                    <i class="fas fa-tree md:block"></i>
+                    <span class="text-sm font-medium whitespace-nowrap">Tipos de árbol</span>
                 </a>
             </div>
 
