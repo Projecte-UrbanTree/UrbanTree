@@ -103,17 +103,17 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <div class="fixed top-1/6 mt-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 
     flex flex-row gap-2 bg-white bg-opacity-50 backdrop-filter backdrop-blur-md 
     shadow-md rounded-lg p-4">
-        <button class="w-10 h-10 flex items-center justify-center rounded-full 
+        <!-- <button class="w-10 h-10 flex items-center justify-center rounded-full 
     bg-gray-100 hover:bg-green-100 active:bg-green-100 transition-colors duration-300">
             <i class="fas fa-file-contract text-gray-600"></i>
-        </button>
+        </button> -->
         <button class="w-10 h-10 flex items-center justify-center rounded-full 
     bg-gray-100 hover:bg-green-100 active:bg-green-100 transition-colors duration-300">
             <i class="fas fa-map-marker-alt text-gray-600"></i>
         </button>
         <button class="w-10 h-10 flex items-center justify-center rounded-full 
     bg-gray-100 hover:bg-green-100 active:bg-green-100 transition-colors duration-300">
-            <i class="fas fa-cube text-gray-600"></i>
+            <i class="fas fa-tree text-gray-600"></i>
         </button>
     </div>
 
