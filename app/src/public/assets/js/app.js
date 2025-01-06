@@ -508,3 +508,26 @@ function removeBlock(button) {
     const block = button.parentNode.parentNode;
     block.remove();
 }
+
+// Function to POST on set-contract and then update the session values
+async function setCurrentContract(contractId) {
+    try {
+        const response = await fetch('/admin/set-contract', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Set the content type to JSON
+            },
+            body: JSON.stringify({ contractId }), // Stringify the body
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            window.location.reload();
+        } else {
+            console.error('Error:', data);
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
+}

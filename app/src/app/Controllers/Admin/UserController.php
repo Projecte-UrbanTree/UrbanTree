@@ -33,12 +33,13 @@ class UserController
         $user = new User();
         $user->company = $postData['company'];
         $user->name = $postData['name'];
+        $user->surname = $postData['surname'];
         $user->dni = $postData['dni'];
         $user->email = $postData['email'];
 
         // Check if password is not empty before updating
         if (!empty($postData['password'])) {
-            $user->password = $postData['password'];
+            $user->password = password_hash($postData['password'], PASSWORD_DEFAULT);
         }
 
         $user->role = $postData['role'];
@@ -77,6 +78,7 @@ class UserController
         if ($user) {
             $user->company = $postData['company'];
             $user->name = $postData['name'];
+            $user->surname = $postData['surname'];
             $user->dni = $postData['dni'];
             $user->email = $postData['email'];
             $user->role = $postData['role'];

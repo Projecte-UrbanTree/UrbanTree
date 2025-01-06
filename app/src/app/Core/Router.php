@@ -35,9 +35,28 @@ class Router
 
     public function dispatch(string $requestMethod, string $requestUri, array $postData = []): void
     {
+        // Automatically detect the content type
+        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+
+        if ($requestMethod == 'POST') {
+            if (strpos($contentType, 'application/json') !== false) {
+                // Read the raw POST data
+                $rawData = file_get_contents('php://input');
+
+                // Decode the JSON into an associative array
+                $postData = json_decode($rawData, true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    $this->abort(400, 'Invalid JSON data');
+                    return;
+                }
+            } elseif (strpos($contentType, 'application/x-www-form-urlencoded') !== false) {
+                // Handle standard form data
+                parse_str(file_get_contents('php://input'), $postData);
+            }
+        }
+
         if (!in_array($requestMethod, self::HTTP_METHODS)) {
             $this->abort(405, 'Method Not Allowed');
-
             return;
         }
 
@@ -48,7 +67,6 @@ class Router
             $queryParameters = array_reduce($queryParameters, function ($carry, $item) {
                 [$key, $value] = explode('=', $item);
                 $carry[$key] = $value;
-
                 return $carry;
             }, []);
             $requestUri = explode('?', $requestUri)[0];
@@ -61,7 +79,6 @@ class Router
             } else {
                 $this->callRoute($this->routes[$requestMethod][$requestUri], ['postData' => $postData]);
             }
-
             return;
         }
 
@@ -75,14 +92,12 @@ class Router
                 if ($requestMethod === 'GET') {
                     $arguments = array_merge($params, ['queryParams' => $queryParameters]);
                     $this->callRoute($routeInfo, $arguments);
-
                     return;
                 }
 
                 if ($requestMethod === 'POST') {
                     $arguments = array_merge($params, ['postData' => $postData]);
                     $this->callRoute($routeInfo, $arguments);
-
                     return;
                 }
 
@@ -92,6 +107,8 @@ class Router
 
         $this->abort(404, 'Not Found');
     }
+
+
 
     public function redirect(string $uri, int $statusCode = 302): void
     {
