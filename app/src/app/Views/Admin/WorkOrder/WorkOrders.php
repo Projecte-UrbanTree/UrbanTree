@@ -71,7 +71,7 @@
                     <!-- Accordeon Content -->
                     <td colspan="4" class="py-2 px-3 bg-gray-50">
                         <?php foreach ($work_order->blocks() as $block) { ?>
-                            <div class="relative overflow-x-auto scrollbar-none shadow-md sm:rounded-lg">
+                            <div class="relative overflow-x-auto scrollbar-none shadow-md sm:rounded-lg mb-3">
                                 <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                                     <thead class="bg-neutral-600 text-white uppercase">
                                         <tr>
