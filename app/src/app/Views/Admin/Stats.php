@@ -198,9 +198,7 @@
                             console.error("No data received for 'dades2'");
                         }
                     })
-                    .catch(error => {
-                        console.error('Error fetching data for dades2:', error);
-                    });
+                    .catch(error => console.error('Error fetching data for dades2:', error));
             }
 
             render() {
