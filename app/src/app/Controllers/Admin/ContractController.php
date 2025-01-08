@@ -98,4 +98,15 @@ class ContractController
         header('Location: /admin/contracts');
         exit;
     }
+
+    public function setCurrentContract($postData)
+    {
+        header('Content-Type: application/json');
+        if (!$postData['contractId']) {
+            echo json_encode(['success' => false, 'message' => 'No contractId provided']);
+            exit;
+        }
+        Session::set('current_contract', $postData['contractId']);
+        echo json_encode(['success' => true]);
+    }
 }
