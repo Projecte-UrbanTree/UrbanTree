@@ -84,7 +84,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                         <span
                             class="block text-gray-700"><?= $_SESSION['user']['name'] . ' ' . $_SESSION['user']['surname']; ?></span>
                         <span class="block text-gray-500">
-                            <?= User::role_name($_SESSION['user']['role']); ?>
+                            <?= User::getRoleName($_SESSION['user']['role']); ?>
                         </span>
                         <div id="profile-dropdown"
                             class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
