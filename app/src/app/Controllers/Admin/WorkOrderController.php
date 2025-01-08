@@ -131,6 +131,7 @@ class WorkOrderController
 
     public function update($id, $postData)
     {
+        var_dump($postData);
         try {
             $work_order = WorkOrder::find($id);
 
@@ -150,8 +151,12 @@ class WorkOrderController
                 $existingBlocks = $work_order->blocks();
                 foreach ($existingBlocks as $existingBlock) {
                     // Eliminar zonas y tareas asociadas
-                    WorkOrderBlockZone::deleteAll(['work_orders_block_id' => $existingBlock->getId()]);
-                    WorkOrderBlockTask::deleteAll(['work_orders_block_id' => $existingBlock->getId()]);
+                    $zones = WorkOrderBlockZone::findBy(['work_orders_block_id' => $existingBlock->getId()]);
+                    foreach ($zones as $zone)
+                        $zone->delete();
+                    $tasks = WorkOrderBlockTask::findBy(['work_orders_block_id' => $existingBlock->getId()]);
+                    foreach ($tasks as $task)
+                        $task->delete();
                     $existingBlock->delete();
                 }
 
@@ -191,11 +196,11 @@ class WorkOrderController
                 Session::set('error', 'Orden de trabajo no encontrada');
             }
 
-            header('Location: /admin/work-orders');
+            // header('Location: /admin/work-orders');
             exit;
         } catch (\Throwable $th) {
             Session::set('error', $th->getMessage());
-            header('Location: /admin/work-order/edit?id=' . $id);
+            // header("Location: /admin/work-order/$id/edit");
             exit;
         }
     }

@@ -492,8 +492,8 @@ function addBlock() {
             Añadir Tarea
         </button>
         <div class="mt-4">
-            <label for="notes_${notesId}" class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
-            <textarea name="blocks[${blockCount}][notes]" id="notes_${notesId}" rows="4" placeholder="Añadir notas aquí..."
+            <label for="${notesId}" class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+            <textarea name="blocks[${blockCount}][notes]" id="${notesId}" rows="4" placeholder="Añadir notas aquí..."
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
         </div>
     `;
