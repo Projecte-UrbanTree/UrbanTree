@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         } elseif ($_GET['endpoint'] === 'dades2') {
             $data = obtenir_dades($conn, 'work_orders_users');
             $response = array_map(function($item) {
-                return ['name' => $item['user_id'], 'valor' => $item['user_id']];
+                return ['name' => $item['user_id'], 'valor' => $item['hours_worked']]; // Corrige el mapeo de datos
             }, $data);
             echo json_encode($response);
         } elseif ($_GET['endpoint'] === 'dades3') {
