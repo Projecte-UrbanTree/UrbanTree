@@ -103,6 +103,8 @@
     let isFirstPanelOpen = false;
     let isFilterPanelZonesOpen = false;
     let isFilterPanelElementsOpen = false;
+    let isAddZonesPanelOpen = false;
+    let isAddElementsPanelOpen = false;
 
     openMoreButton.addEventListener("click", () => {
         rotateIcon();
@@ -204,6 +206,7 @@
             }
 
             // Create or update the vision cone
+            const radius = 0.07; // Radius of the cone in kilometers
             const radius = 0.07; // Radius of the cone in kilometers
             const coneCoordinates = [];
             for (let i = -30; i <= 30; i++) {
