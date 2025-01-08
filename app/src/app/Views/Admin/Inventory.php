@@ -1,35 +1,26 @@
 <div id="map" class="relative">
     <!-- Button to open the filter panel -->
-    <button id="openMore" class="absolute z-10 bottom-5 right-5 p-2 bg-blue-500 text-white rounded-full" id="openMore">
+    <button id="openMore" class="absolute z-10 bottom-5 right-5 p-2 bg-blue-500 text-white rounded-full">
         <img id="plusIcon" src="/assets/images/More.png" alt="+" class="w-8 h-8 transition-transform duration-300">
     </button>
     <!-- First Panel -->
-    <div id="firstPanel" class="absolute z-10 bottom-0 right-20 bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl flex flex-col justify-evenly">
-        <button class="absolute text-xl top-3" id="openFilters">
-            <span class="text-lg font-semibold">Filters</span>
+    <div id="firstPanel" class="absolute z-10 bottom-0 right-20 bg-white shadow-lg sm:w-64 h-2/5 p-5 hidden rounded-xl flex flex-col justify-between">
+        <button class="text-xl text-left" id="openFiltersZones">
+            <span class="text-lg font-semibold">Filter Zone</span>
         </button>
-        <button class="absolute text-xl top-1/3" id="openZones">
+        <button class="text-xl text-left" id="openFiltersElements">
+            <span class="text-lg font-semibold">Filter Element</span>
+        </button>
+        <button class="text-xl text-left" id="openZones">
             <span class="text-lg font-semibold">Add Zones</span>
         </button>
-        <button class="absolute text-xl top-2   /3" id="openElements">
+        <button class="text-xl text-left" id="openElements">
             <span class="text-lg font-semibold">Add Elements</span>
         </button>
     </div>
 
-    <!-- Filter Panel -->
-    <div id="filterPanel" class="absolute z-10 bottom-0 right-[calc(64px*5.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
-        <div class="space-y-2">
-            <button class="absolute text-xl top-3" id="openFiltersZones">
-                <span class="text-lg font-semibold">Zones</span>
-            </button>
-            <button class="absolute text-xl top-1/3" id="openFiltersElements">
-                <span class="text-lg font-semibold">Elements</span>
-            </button>
-        </div>
-    </div>
-
     <!-- Zones Panel -->
-    <div id="filterPanelZones" class="absolute z-10 bottom-0 right-[calc(64px*9.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
+    <div id="filterPanelZones" class="absolute z-10 bottom-0 right-[calc(64px*5.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
         <div class="space-y-2" id="zonesContainer">
             <!-- Here we will add the zones -->
         </div>
@@ -39,7 +30,7 @@
     </div>
 
     <!-- Elements Panel -->
-    <div id="filterPanelElements" class="absolute z-10 bottom-0 right-[calc(64px*9.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
+    <div id="filterPanelElements" class="absolute z-10 bottom-0 right-[calc(64px*5.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
         <div class="space-y-2" id="elementsContainer">
             <!-- Here we will add the elements -->
             <button class="absolute text-xl top-1/3" id="openFiltersElements">
@@ -50,74 +41,118 @@
             <span class="material-icons">Apply</span>
         </button>
     </div>
+
+    <!-- Add Zones Panel -->
+    <div id="secondPanel" class="absolute z-10 bottom-0 right-[calc(64px*5.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
+        <span>Zones</span>
+    </div>
+    <!-- Add Elements Panel -->
+    <div id="thirdPanel" class="absolute z-10 bottom-0 right-[calc(64px*5.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
+        <span>Elements</span>
+    </div>
+    <div class="absolute bottom-5 inset-x-0 flex justify-center items-center">
+        <!-- Mensaje para Zonas -->
+        <div id="zoneMessage" class="hidden flex items-center bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-lg w-2/3 max-w-lg z-10">
+            <svg class="h-6 w-6 mr-2 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 17h0a4.978 4.978 0 01-1.5-.215m1.5.215a4.978 4.978 0 001.5-.215m-3 0a4.978 4.978 0 00-1.5-.215h0a4.978 4.978 0 00-1.5.215m3-10a4.978 4.978 0 011.5.215m-1.5-.215A4.978 4.978 0 0010.5 6.785m2.5 0A4.978 4.978 0 0113 6.215M12 17h0a4.978 4.978 0 01-1.5-.215m1.5.215a4.978 4.978 0 001.5-.215" />
+            </svg>
+            <span>Por favor pon puntos dónde quieres crear la zona.</span>
+        </div>
+
+        <!-- Mensaje para Elementos -->
+        <div id="elementMessage" class="hidden flex items-center bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-lg w-2/3 max-w-lg z-10">
+            <svg class="h-6 w-6 mr-2 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 17h0a4.978 4.978 0 01-1.5-.215m1.5.215a4.978 4.978 0 001.5-.215m-3 0a4.978 4.978 0 00-1.5-.215h0a4.978 4.978 0 00-1.5.215m3-10a4.978 4.978 0 011.5.215m-1.5-.215A4.978 4.978 0 0010.5 6.785m2.5 0A4.978 4.978 0 0113 6.215M12 17h0a4.978 4.978 0 01-1.5-.215m1.5.215a4.978 4.978 0 001.5-.215" />
+            </svg>
+            <span>Por favor seleccione dónde quieres crear el elemento.</span>
+        </div>
+    </div>
 </div>
 
 <script>
-    // Script for the plus icon rotation
     const plusIcon = document.getElementById('plusIcon');
-    let isRotated = false; // Variable para rastrear el estado de rotación
-    // Script for the dropdown menu
+    let isRotated = false;
+
     const openMoreButton = document.getElementById("openMore");
     const firstPanel = document.getElementById("firstPanel");
-    const openFiltersButton = document.getElementById("openFilters");
-    const filterPanel = document.getElementById("filterPanel");
-    const openZonesButton = document.getElementById("openFiltersZones");
-    const filterPanelZones = document.getElementById("filterPanelZones");
     const openElementsButton = document.getElementById("openFiltersElements");
     const filterPanelElements = document.getElementById("filterPanelElements");
-    Panels = [firstPanel, filterPanel, filterPanelZones, filterPanelElements];
+    const openAddZonesButton = document.querySelector("#openZones");
+    const secondPanel = document.getElementById("secondPanel");
+    const openAddElementsButton = document.querySelector("#openElements");
+    const thirdPanel = document.getElementById("thirdPanel");
+    const filterPanelZones = document.querySelector("#filterPanelZones");
 
-    // Function to open or close the panels
+    const Panels = [firstPanel, filterPanelZones, filterPanelElements, secondPanel, thirdPanel];
+
     function openFilterPanel(panel, isPanelOpen) {
-        if (!isPanelOpen) {
-            panel.classList.remove("hidden");
-            return true;
+        if (panel) {
+            if (!isPanelOpen) {
+                panel.classList.remove("hidden");
+                return true;
+            } else {
+                panel.classList.add("hidden");
+                return false;
+            }
         } else {
-            panel.classList.add("hidden");
+            console.error("Panel no encontrado.");
             return false;
         }
     }
-    // States of panels
+
     let isFirstPanelOpen = false;
-    let isFilterPanelOpen = false;
     let isFilterPanelZonesOpen = false;
     let isFilterPanelElementsOpen = false;
 
-    // Show/Hide the first panel
     openMoreButton.addEventListener("click", () => {
-        if (!isRotated) {
-            // Rotar 45 grados
-            plusIcon.style.transform = 'rotate(45deg)';
-        } else {
-            // Volver a la posición inicial
-            plusIcon.style.transform = 'rotate(0deg)';
-        }
-        isRotated = !isRotated; // Cambiar el estado
+        rotateIcon();
         isFirstPanelOpen = openFilterPanel(firstPanel, isFirstPanelOpen);
-        for (let panel of Panels) {
+        Panels.forEach(panel => {
             if (panel !== firstPanel) {
                 panel.classList.add("hidden");
             }
+        });
+    });
+
+    function rotateIcon() {
+        plusIcon.style.transform = isRotated ? 'rotate(0deg)' : 'rotate(45deg)';
+        isRotated = !isRotated;
+    }
+
+    if (openAddZonesButton) {
+        openAddZonesButton.addEventListener("click", () => {
+            showMessage('zone');
+        });
+    }
+
+    if (openAddElementsButton) {
+        openAddElementsButton.addEventListener("click", () => {
+            showMessage('element');
+        });
+    }
+
+    function showMessage(type) {
+        Panels.forEach(panel => panel.classList.add("hidden"));
+        rotateIcon();
+        isFirstPanelOpen = false;
+
+        const zoneMessage = document.getElementById('zoneMessage');
+        const elementMessage = document.getElementById('elementMessage');
+
+        zoneMessage?.classList.add('hidden');
+        elementMessage?.classList.add('hidden');
+
+        if (type === 'zone') {
+            zoneMessage?.classList.remove('hidden');
+        } else if (type === 'element') {
+            elementMessage?.classList.remove('hidden');
         }
-    });
-    // Show/Hide the filter panel
-    openFiltersButton.addEventListener("click", () => {
-        isFilterPanelOpen = openFilterPanel(filterPanel, isFilterPanelOpen);
-    });
-    // Show/Hide the filter panel for zones
-    openZonesButton.addEventListener("click", () => {
-        isFilterPanelZonesOpen = openFilterPanel(filterPanelZones, isFilterPanelZonesOpen);
-        if (isFilterPanelElementsOpen){
-            isFilterPanelElementsOpen=openFilterPanel(filterPanelElements, isFilterPanelElementsOpen);
-        }
-    });
-    // Show/Hide the filter panel for elements
-    openElementsButton.addEventListener("click", () => {
-        isFilterPanelElementsOpen = openFilterPanel(filterPanelElements, isFilterPanelElementsOpen);
-        if (isFilterPanelZonesOpen){
-            isFilterPanelZonesOpen=openFilterPanel(filterPanelZones, isFilterPanelZonesOpen);
-        }
-    });
+
+        setTimeout(() => {
+            zoneMessage?.classList.add('hidden');
+            elementMessage?.classList.add('hidden');
+        }, 5000);
+    }
 </script>
 
 <script>
@@ -169,7 +204,7 @@
             }
 
             // Create or update the vision cone
-            const radius = 0.1; // Radius of the cone in kilometers
+            const radius = 0.07; // Radius of the cone in kilometers
             const coneCoordinates = [];
             for (let i = -30; i <= 30; i++) {
                 const angle = (userOrientation + i) * (Math.PI / 180);
