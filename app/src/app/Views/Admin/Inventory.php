@@ -4,7 +4,7 @@
         <img id="plusIcon" src="/assets/images/More.png" alt="+" class="w-8 h-8 transition-transform duration-300">
     </button>
     <!-- First Panel -->
-    <div id="firstPanel" class="absolute z-10 bottom-0 right-20 bg-white shadow-lg sm:w-64 h-2/5 p-5 hidden rounded-xl flex flex-col justify-between">
+    <div id="firstPanel" class="absolute z-10 bottom-0 right-20 bg-white shadow-lg sm:w-64 h-2/5 p-5 hidden rounded-xl flex flex-col justify-between items-start">
         <button class="text-xl text-left" id="openFiltersZones">
             <span class="text-lg font-semibold">Filter Zone</span>
         </button>
@@ -41,7 +41,6 @@
             <span class="material-icons">Apply</span>
         </button>
     </div>
-
     <!-- Add Zones Panel -->
     <div id="secondPanel" class="absolute z-10 bottom-0 right-[calc(64px*5.2)] bg-white shadow-lg sm:w-64 h-1/4 p-5 hidden rounded-xl">
         <span>Zones</span>
@@ -68,95 +67,117 @@
         </div>
     </div>
 </div>
-
 <script>
+    // Script for the plus icon rotation
     const plusIcon = document.getElementById('plusIcon');
-    let isRotated = false;
-
+    let isRotated = false; // Variable para rastrear el estado de rotación
+    // Script for the dropdown menu
     const openMoreButton = document.getElementById("openMore");
     const firstPanel = document.getElementById("firstPanel");
+    const openZonesButton = document.getElementById("openFiltersZones");
+    const filterPanelZones = document.getElementById("filterPanelZones");
     const openElementsButton = document.getElementById("openFiltersElements");
     const filterPanelElements = document.getElementById("filterPanelElements");
-    const openAddZonesButton = document.querySelector("#openZones");
+    const openAddZonesButton = document.getElementById("openZones");
     const secondPanel = document.getElementById("secondPanel");
-    const openAddElementsButton = document.querySelector("#openElements");
+    const openAddElementsButton = document.getElementById("openElements");
     const thirdPanel = document.getElementById("thirdPanel");
-    const filterPanelZones = document.querySelector("#filterPanelZones");
-
     const Panels = [firstPanel, filterPanelZones, filterPanelElements, secondPanel, thirdPanel];
 
+    // Function to open or close the panels
     function openFilterPanel(panel, isPanelOpen) {
-        if (panel) {
-            if (!isPanelOpen) {
-                panel.classList.remove("hidden");
-                return true;
-            } else {
-                panel.classList.add("hidden");
-                return false;
-            }
+        if (!isPanelOpen) {
+            panel.classList.remove("hidden");
+            return true;
         } else {
-            console.error("Panel no encontrado.");
+            panel.classList.add("hidden");
             return false;
         }
     }
-
+    // States of panels
     let isFirstPanelOpen = false;
     let isFilterPanelZonesOpen = false;
     let isFilterPanelElementsOpen = false;
     let isAddZonesPanelOpen = false;
     let isAddElementsPanelOpen = false;
 
+    // Show/Hide the first panel
     openMoreButton.addEventListener("click", () => {
         rotateIcon();
         isFirstPanelOpen = openFilterPanel(firstPanel, isFirstPanelOpen);
-        Panels.forEach(panel => {
+        for (let panel of Panels) {
             if (panel !== firstPanel) {
                 panel.classList.add("hidden");
             }
-        });
+        }
     });
 
     function rotateIcon() {
-        plusIcon.style.transform = isRotated ? 'rotate(0deg)' : 'rotate(45deg)';
-        isRotated = !isRotated;
+        if (!isRotated) {
+            // Rotar 45 grados
+            plusIcon.style.transform = 'rotate(45deg)';
+        } else {
+            // Volver a la posición inicial
+            plusIcon.style.transform = 'rotate(0deg)';
+        }
+        isRotated = !isRotated; // Cambiar el estado
     }
 
-    if (openAddZonesButton) {
-        openAddZonesButton.addEventListener("click", () => {
-            showMessage('zone');
-        });
-    }
+    // Show/Hide the filter panel for zones
+    openZonesButton.addEventListener("click", () => {
+        isFilterPanelZonesOpen = openFilterPanel(filterPanelZones, isFilterPanelZonesOpen);
+        if (isFilterPanelElementsOpen){
+            isFilterPanelElementsOpen = openFilterPanel(filterPanelElements, isFilterPanelElementsOpen);
+        }
+    });
 
-    if (openAddElementsButton) {
-        openAddElementsButton.addEventListener("click", () => {
-            showMessage('element');
-        });
-    }
+    // Show/Hide the filter panel for elements
+    openElementsButton.addEventListener("click", () => {
+        isFilterPanelElementsOpen = openFilterPanel(filterPanelElements, isFilterPanelElementsOpen);
+        if (isFilterPanelZonesOpen){
+            isFilterPanelZonesOpen = openFilterPanel(filterPanelZones, isFilterPanelZonesOpen);
+        }
+    });
 
+    // Show/Hide the add zones panel
+    openAddZonesButton.addEventListener("click", () => {
+        showMessage('zone');
+    });
+
+    // Show/Hide the add elements panel
+    openAddElementsButton.addEventListener("click", () => {
+        showMessage('element');
+    });
+
+    // Function to show the alert message
     function showMessage(type) {
-        Panels.forEach(panel => panel.classList.add("hidden"));
+        for (let panel of Panels) {
+            if (!panel.classList.contains("hidden")) {
+                panel.classList.add("hidden");
+            }
+        }
         rotateIcon();
         isFirstPanelOpen = false;
-
         const zoneMessage = document.getElementById('zoneMessage');
         const elementMessage = document.getElementById('elementMessage');
+        
+        // Ocultamos los mensajes
+        zoneMessage.classList.add('hidden');
+        elementMessage.classList.add('hidden');
 
-        zoneMessage?.classList.add('hidden');
-        elementMessage?.classList.add('hidden');
-
+        // Mostramos el mensaje correspondiente
         if (type === 'zone') {
-            zoneMessage?.classList.remove('hidden');
+            zoneMessage.classList.remove('hidden');
         } else if (type === 'element') {
-            elementMessage?.classList.remove('hidden');
+            elementMessage.classList.remove('hidden');
         }
-
+        // Agregar un temporizador para ocultar el mensaje después de unos segundos
         setTimeout(() => {
-            zoneMessage?.classList.add('hidden');
-            elementMessage?.classList.add('hidden');
-        }, 5000);
+            zoneMessage.classList.add('hidden');
+            elementMessage.classList.add('hidden');
+        }, 5000); 
     }
 </script>
-
 <script>
     // Initialize the map
     mapboxgl.accessToken = '<?= getenv("MAPBOX_TOKEN") ?>';
@@ -206,8 +227,7 @@
             }
 
             // Create or update the vision cone
-            const radius = 0.07; // Radius of the cone in kilometers
-            const radius = 0.07; // Radius of the cone in kilometers
+             const radius = 0.07; // Radius of the cone in kilometers
             const coneCoordinates = [];
             for (let i = -30; i <= 30; i++) {
                 const angle = (userOrientation + i) * (Math.PI / 180);
