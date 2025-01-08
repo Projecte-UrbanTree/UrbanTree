@@ -63,7 +63,7 @@ create table tree_types (
     deleted_at timestamp,
     constraint UC_TreeType unique (family, genus, species)
 );
-
+    
 create table task_types (
     id int auto_increment primary key,
     name varchar(255) unique,

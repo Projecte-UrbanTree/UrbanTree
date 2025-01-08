@@ -99,6 +99,12 @@
                                     data: data.map(item => item.valor),
                                 },
                             ],
+                            options: {
+                                ...this.state.options,
+                                xaxis: {
+                                    categories: data.map(item => item.name),
+                                },
+                            },
                         });
                     })
                     .catch(error => console.error('Error fetching data:', error));
@@ -181,6 +187,12 @@
                                     data: data.map(item => item.valor),
                                 },
                             ],
+                            options: {
+                                ...this.state.options,
+                                xaxis: {
+                                    categories: data.map(item => item.name),
+                                },
+                            },
                         });
                     })
                     .catch(error => console.error('Error fetching data:', error));
@@ -263,6 +275,12 @@
                                     data: data.map(item => item.valor),
                                 },
                             ],
+                            options: {
+                                ...this.state.options,
+                                xaxis: {
+                                    categories: data.map(item => item.name),
+                                },
+                            },
                         });
                     })
                     .catch(error => console.error('Error fetching data:', error));
