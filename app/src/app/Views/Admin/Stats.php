@@ -62,7 +62,7 @@
                             colors: ["transparent"],
                         },
                         xaxis: {
-                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],
+                            categories: [],
                         },
                         yaxis: {
                             title: {
@@ -84,13 +84,8 @@
             }
 
             componentDidMount() {
-                fetch('/app/src/app/Views/Admin/Stats/api.php?endpoint=dades1')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
+                fetch('/grafica.php?endpoint=dades1')
+                    .then(response => response.json())
                     .then(data => {
                         this.setState({
                             series: [
@@ -150,7 +145,7 @@
                             colors: ["transparent"],
                         },
                         xaxis: {
-                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],
+                            categories: [],
                         },
                         yaxis: {
                             title: {
@@ -172,13 +167,8 @@
             }
 
             componentDidMount() {
-                fetch('/app/src/app/Views/Admin/Stats/api.php?endpoint=dades2')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
+                fetch('/api.php?endpoint=dades2')
+                    .then(response => response.json())
                     .then(data => {
                         this.setState({
                             series: [
@@ -238,7 +228,7 @@
                             colors: ["transparent"],
                         },
                         xaxis: {
-                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],
+                            categories: [],
                         },
                         yaxis: {
                             title: {
@@ -260,13 +250,8 @@
             }
 
             componentDidMount() {
-                fetch('/app/src/app/Views/Admin/Stats/api.php?endpoint=dades3')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
+                fetch('/api.php?endpoint=dades3')
+                    .then(response => response.json())
                     .then(data => {
                         this.setState({
                             series: [

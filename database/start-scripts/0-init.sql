@@ -155,6 +155,7 @@ create table work_orders_users (
     id int auto_increment primary key,
     work_order_id int not null,
     user_id int not null,
+    hours_worked int, -- Añadir esta columna
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
