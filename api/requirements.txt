@@ -1,7 +1,7 @@
 apscheduler==3.11.0
 databases[mysql]
 fastapi[standard]==0.115.6
-pydantic_core==2.27.1
-pydantic-settings==2.7.0
+pydantic_core==2.27.2
+pydantic-settings==2.7.1
 sentry-sdk[fastapi]==2.19.2
 sqlmodel==0.0.22
