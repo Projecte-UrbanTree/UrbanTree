@@ -48,8 +48,8 @@ function validateField(value, regexName, fieldName) {
 function dateCannotBeAfter(startDate, endDate, fieldName) {
     return new Date(startDate) > new Date(endDate)
         ? createErrorElement(
-              `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
-          )
+            `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
+        )
         : true;
 }
 
@@ -61,8 +61,8 @@ function validatePositiveInteger(value, fieldName) {
     return pattern.test(value) && parseFloat(value) > 0
         ? true
         : createErrorElement(
-              `${fieldName}: El valor debe ser un número entero positivo.`
-          );
+            `${fieldName}: El valor debe ser un número entero positivo.`
+        );
 }
 
 /**
@@ -72,8 +72,8 @@ function validateMaxValue(value, max, fieldName) {
     return parseFloat(value) <= max
         ? true
         : createErrorElement(
-              `${fieldName}: El valor no puede ser mayor a ${max}.`
-          );
+            `${fieldName}: El valor no puede ser mayor a ${max}.`
+        );
 }
 
 function getFieldName(fieldId) {
@@ -412,14 +412,13 @@ function addBlock() {
 
     const block = document.createElement("div");
     block.className =
-        "block border border-gray-300 rounded-lg shadow p-4 bg-gray-50 mb-4";
+        "workorder-block border border-gray-300 rounded-lg shadow p-4 bg-gray-50 mb-4";
     block.dataset.blockIndex = blockCount;
 
     block.innerHTML = `
         <div class="flex justify-between items-center">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Bloque <span class="block-number">${
-                blockCount + 1
-            }</span></h3>
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Bloque <span class="block-number">${blockCount + 1
+        }</span></h3>
             <button type="button" onclick="removeBlock(this)"
                 class="text-red-500 hover:text-red-700 focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -438,7 +437,6 @@ function addBlock() {
         </div>
         <div class="tasksContainer space-y-4">
             <h3 class="text-lg font-semibold text-gray-800 my-3">Seleccionar Tareas</h3>
-            <div class="task-row flex space-x-4 items-end" data-task-index="0">
             </div>
         </div>
         <button type="button" onclick="addTask(this)" class="btn-create mt-4">
@@ -457,7 +455,7 @@ function addBlock() {
 }
 
 function addTask(button) {
-    const blockContainer = button.closest(".block");
+    const blockContainer = button.closest(".workorder-block");
     const tasksContainer = blockContainer.querySelector(".tasksContainer");
     const taskCount = tasksContainer.querySelectorAll(".task-row").length;
     const blockIndex = blockContainer.dataset.blockIndex;
@@ -491,10 +489,11 @@ function addTask(button) {
     `;
 
     tasksContainer.appendChild(taskRow);
+    updateBlock();
 }
 
 function updateBlock() {
-    const blocks = document.querySelectorAll("#blocksContainer .block");
+    const blocks = document.querySelectorAll("#blocksContainer .workorder-block");
     blocks.forEach((block, index) => {
         block.dataset.blockIndex = index;
         block.querySelector(".block-number").textContent = index + 1;
@@ -528,13 +527,38 @@ function updateBlock() {
     });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    const blocksContainer = document.getElementById("blocksContainer");
+
+    if (blocksContainer.querySelectorAll(".workorder-block").length === 0) {
+        addBlock();
+    }
+});
+
 function removeTaskRow(button) {
+    const blockContainer = button.closest(".workorder-block");
+    const tasksContainer = blockContainer.querySelector(".tasksContainer");
+    const allTasks = tasksContainer.querySelectorAll(".task-row");
+
+    if (allTasks.length === 1) {
+        alert("No se puede eliminar esta tarea, debe haber al menos una tarea en este bloque.");
+        return;
+    }
+
     const row = button.parentNode;
     row.remove();
     updateBlock();
 }
 
 function removeBlock(button) {
+    const blocksContainer = document.getElementById("blocksContainer");
+    const allBlocks = blocksContainer.querySelectorAll(".workorder-block");
+
+    if (allBlocks.length === 1) {
+        alert("No se puede eliminar este bloque, debe haber al menos un bloque.");
+        return;
+    }
+
     const block = button.parentNode.parentNode;
     block.remove();
     updateBlock();
