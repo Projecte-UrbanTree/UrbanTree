@@ -65,7 +65,7 @@
                     <tr id="accordionContent<?php echo $index; ?>" class="hidden">
                         <td colspan="4" class="py-2 px-3 bg-gray-50">
                             <?php foreach ($work_order->blocks() as $block) { ?>
-                                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-3">
                                     <table class="w-full text-sm text-left text-gray-700">
                                         <thead class="bg-gradient-to-r from-gray-800 to-gray-700 text-white uppercase">
                                             <tr>
