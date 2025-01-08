@@ -35,8 +35,6 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
     <script type="text/babel">
-        // Definir taskTypes para evitar el error de referencia
-        const taskTypes = ["Completat", "Hores", "Consum"];
 
         class ApexChart1 extends React.Component {
             constructor(props) {
@@ -86,7 +84,7 @@
             }
 
             componentDidMount() {
-                fetch('/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades1')
+                fetch('/admin/stats/grafica?endpoint=dades1')
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -174,7 +172,7 @@
             }
 
             componentDidMount() {
-                fetch('/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades2')
+                fetch('/admin/stats/grafica?endpoint=dades2')
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -262,7 +260,7 @@
             }
 
             componentDidMount() {
-                fetch('/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades3')
+                fetch('/admin/stats/grafica?endpoint=dades3')
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');

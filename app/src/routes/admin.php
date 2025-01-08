@@ -221,7 +221,11 @@ return [
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],
-
+        '/admin/stats/grafica' => [
+            'controller' => StatsController::class,
+            'method' => 'grafica',
+            'middlewares' => [AdminMiddleware::class],
+        ],
 
     ],
     'POST' => [
