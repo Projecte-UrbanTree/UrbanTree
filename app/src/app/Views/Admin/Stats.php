@@ -62,7 +62,7 @@
                             colors: ["transparent"],
                         },
                         xaxis: {
-                            categories: [],
+                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],
                         },
                         yaxis: {
                             title: {
@@ -84,8 +84,13 @@
             }
 
             componentDidMount() {
-                fetch('/grafica.php?endpoint=dades1')
-                    .then(response => response.json())
+                fetch('/UrbanTree/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades1')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         this.setState({
                             series: [
@@ -145,7 +150,7 @@
                             colors: ["transparent"],
                         },
                         xaxis: {
-                            categories: [],
+                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],
                         },
                         yaxis: {
                             title: {
@@ -167,8 +172,13 @@
             }
 
             componentDidMount() {
-                fetch('/api.php?endpoint=dades2')
-                    .then(response => response.json())
+                fetch('/UrbanTree/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades2')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         this.setState({
                             series: [
@@ -228,7 +238,7 @@
                             colors: ["transparent"],
                         },
                         xaxis: {
-                            categories: [],
+                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],
                         },
                         yaxis: {
                             title: {
@@ -250,8 +260,13 @@
             }
 
             componentDidMount() {
-                fetch('/api.php?endpoint=dades3')
-                    .then(response => response.json())
+                fetch('/UrbanTree/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades3')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         this.setState({
                             series: [
