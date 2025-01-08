@@ -386,6 +386,20 @@ function saveSelection(modalId) {
     currentInputId = null;
 }
 
+// Definir taskTypes antes de su uso
+const taskTypes = [
+    { id: 1, name: "Tarea 1" },
+    { id: 2, name: "Tarea 2" },
+    { id: 3, name: "Tarea 3" },
+];
+
+// Definir treeTypes antes de su uso
+const treeTypes = [
+    { id: 1, species: "Especie 1" },
+    { id: 2, species: "Especie 2" },
+    { id: 3, species: "Especie 3" },
+];
+
 let taskTypeOptions = `<option value="" disabled selected>Seleccione una tarea</option>`;
 taskTypes.forEach((task_type) => {
     taskTypeOptions += `
@@ -530,7 +544,7 @@ function updateBlock() {
 document.addEventListener("DOMContentLoaded", () => {
     const blocksContainer = document.getElementById("blocksContainer");
 
-    if (blocksContainer.querySelectorAll(".workorder-block").length === 0) {
+    if (blocksContainer && blocksContainer.querySelectorAll(".workorder-block").length === 0) {
         addBlock();
     }
 });
