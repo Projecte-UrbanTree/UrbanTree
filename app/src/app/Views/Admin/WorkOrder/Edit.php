@@ -20,7 +20,7 @@ function mapWithId($items, $getIdMethod)
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Editar órden de trabajo</h2>
-    <form action="/admin/work-order/update?id=<?= htmlspecialchars($work_order->getId()); ?>" method="POST"
+    <form action="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/update" method="POST"
         class="space-y-6">
         <div>
             <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>

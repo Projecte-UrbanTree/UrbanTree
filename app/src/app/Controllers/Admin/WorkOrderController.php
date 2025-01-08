@@ -135,10 +135,10 @@ class WorkOrderController
             $work_order = WorkOrder::find($id);
 
             if ($work_order) {
+                $work_order->contract_id = $_SESSION['current_contract'];
                 $work_order->date = $postData['date'];
                 $work_order->save();
 
-                // Update user relationships
                 WorkOrderUser::deleteAll(['work_order_id' => $work_order->getId()]);
                 foreach (explode(',', $postData['userIds']) as $userId) {
                     $workOrderUser = new WorkOrderUser();
@@ -147,32 +147,42 @@ class WorkOrderController
                     $workOrderUser->save();
                 }
 
-                // Update blocks
-                WorkOrderBlock::deleteAll(['work_order_id' => $work_order->getId()]);
-                foreach ($postData['blocks'] as $blockData) {
-                    $block = new WorkOrderBlock();
-                    $block->work_order_id = (int) $work_order->getId();
-                    $block->notes = $blockData['notes'];
-                    $block->save();
+                $existingBlocks = $work_order->blocks();
+                foreach ($existingBlocks as $existingBlock) {
+                    // Eliminar zonas y tareas asociadas
+                    WorkOrderBlockZone::deleteAll(['work_orders_block_id' => $existingBlock->getId()]);
+                    WorkOrderBlockTask::deleteAll(['work_orders_block_id' => $existingBlock->getId()]);
+                    $existingBlock->delete();
+                }
 
-                    // Update zones
-                    WorkOrderBlockZone::deleteAll(['work_orders_block_id' => $block->getId()]);
-                    foreach (explode(',', $blockData['zonesIds']) as $zoneId) {
-                        $blockZone = new WorkOrderBlockZone();
-                        $blockZone->work_orders_block_id = (int) $block->getId();
-                        $blockZone->zone_id = (int) $zoneId;
-                        $blockZone->save();
+                foreach ($postData['blocks'] as $blockData) {
+                    if (empty($blockData['notes']) && empty($blockData['zonesIds']) && empty($blockData['tasks'])) {
+                        continue;
                     }
 
-                    // Update tasks
-                    WorkOrderBlockTask::deleteAll(['work_orders_block_id' => $block->getId()]);
-                    foreach ($blockData['tasks'] as $taskData) {
-                        $task = new WorkOrderBlockTask();
-                        $task->work_orders_block_id = (int) $block->getId();
-                        $task->task_id = (int) $taskData['taskType'];
-                        $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
-                        $task->status = 1; // Default status
-                        $task->save();
+                    $block = new WorkOrderBlock();
+                    $block->work_order_id = (int) $work_order->getId();
+                    $block->notes = $blockData['notes'] ?? '';
+                    $block->save();
+
+                    if (!empty($blockData['zonesIds'])) {
+                        foreach (explode(',', $blockData['zonesIds']) as $zoneId) {
+                            $blockZone = new WorkOrderBlockZone();
+                            $blockZone->work_orders_block_id = (int) $block->getId();
+                            $blockZone->zone_id = (int) $zoneId;
+                            $blockZone->save();
+                        }
+                    }
+
+                    if (!empty($blockData['tasks'])) {
+                        foreach ($blockData['tasks'] as $taskData) {
+                            $task = new WorkOrderBlockTask();
+                            $task->work_orders_block_id = (int) $block->getId();
+                            $task->task_id = (int) $taskData['taskType'];
+                            $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
+                            $task->status = 1;
+                            $task->save();
+                        }
                     }
                 }
 

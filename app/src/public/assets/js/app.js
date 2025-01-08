@@ -396,6 +396,41 @@ treeTypes.forEach((tree_type) => {
     speciesOptions += `<option value="${tree_type.id}">${tree_type.species}</option>`;
 });
 
+function updateBlock() {
+    const blocks = document.querySelectorAll("#blocksContainer .workorder-block");
+    blocks.forEach((block, index) => {
+        block.dataset.blockIndex = index;
+        block.querySelector(".block-number").textContent = index + 1;
+
+        const zoneInput = block.querySelector("[id^='zonesInput_']");
+        if (zoneInput) {
+            zoneInput.id = `zonesInput_${index}`;
+            zoneInput.setAttribute(
+                "onclick",
+                `openModal('modalZones', 'zonesInput_${index}')`
+            );
+        }
+
+        const notesTextarea = block.querySelector("[id^='notes_']");
+        if (notesTextarea) {
+            notesTextarea.id = `notes_${index}`;
+            notesTextarea.name = `blocks[${index}][notes]`;
+        }
+
+        const taskRows = block.querySelectorAll(".task-row");
+        taskRows.forEach((taskRow, taskIndex) => {
+            const taskTypeSelect = taskRow.querySelector(
+                "select[name^='blocks'][name*='[taskType]']"
+            );
+            const speciesSelect = taskRow.querySelector(
+                "select[name^='blocks'][name*='[species]']"
+            );
+            taskTypeSelect.name = `blocks[${index}][tasks][${taskIndex}][taskType]`;
+            speciesSelect.name = `blocks[${index}][tasks][${taskIndex}][species]`;
+        });
+    });
+}
+
 function addBlock() {
     const blocksContainer = document.getElementById("blocksContainer");
     const blockCount = blocksContainer.children.length;
@@ -503,41 +538,6 @@ function addTask(button) {
 
     tasksContainer.appendChild(taskRow);
     updateBlock();
-}
-
-function updateBlock() {
-    const blocks = document.querySelectorAll("#blocksContainer .workorder-block");
-    blocks.forEach((block, index) => {
-        block.dataset.blockIndex = index;
-        block.querySelector(".block-number").textContent = index + 1;
-
-        const zoneInput = block.querySelector("[id^='zonesInput_']");
-        if (zoneInput) {
-            zoneInput.id = `zonesInput_${index}`;
-            zoneInput.setAttribute(
-                "onclick",
-                `openModal('modalZones', 'zonesInput_${index}')`
-            );
-        }
-
-        const notesTextarea = block.querySelector("[id^='notes_']");
-        if (notesTextarea) {
-            notesTextarea.id = `notes_${index}`;
-            notesTextarea.name = `blocks[${index}][notes]`;
-        }
-
-        const taskRows = block.querySelectorAll(".task-row");
-        taskRows.forEach((taskRow, taskIndex) => {
-            const taskTypeSelect = taskRow.querySelector(
-                "select[name^='blocks'][name*='[taskType]']"
-            );
-            const speciesSelect = taskRow.querySelector(
-                "select[name^='blocks'][name*='[species]']"
-            );
-            taskTypeSelect.name = `blocks[${index}][tasks][${taskIndex}][taskType]`;
-            speciesSelect.name = `blocks[${index}][tasks][${taskIndex}][species]`;
-        });
-    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
