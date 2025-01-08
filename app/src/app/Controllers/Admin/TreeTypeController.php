@@ -12,7 +12,7 @@ class TreeTypeController
     {
         $tree_types = TreeType::findAll();
         View::render([
-            'view' => 'Admin/TreeType/TreeTypes',
+            'view' => 'Admin/TreeTypes',
             'title' => 'Tipos de Árbol',
             'layout' => 'Admin/AdminLayout',
             'data' => ['tree_types' => $tree_types],

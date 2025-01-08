@@ -17,7 +17,7 @@ class WorkOrderController
     {
         $work_orders = WorkOrder::findAll();
         View::render([
-            'view' => 'Admin/WorkOrder/WorkOrders',
+            'view' => 'Admin/WorkOrders',
             'title' => 'Órdenes de Trabajo',
             'layout' => 'Admin/AdminLayout',
             'data' => ['work_orders' => $work_orders],

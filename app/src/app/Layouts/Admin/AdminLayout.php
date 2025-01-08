@@ -19,31 +19,35 @@ $currentContract = Session::get('current_contract');
     <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <!-- Navigation Bar -->
-    <div class="border-b border-gray">
-        <nav class="flex items-center justify-between px-4 py-4 h-16 max-w-7xl mx-auto">
+<body class="bg-gray-50">
 
-            <!-- Logo -->
-            <a href="#">
-                <img class="md:block hidden w-48" src="/assets/images/logotip-horizontal.png" alt="Logo">
-                <img class="md:hidden block" src="/assets/images/isotip.png" alt="Logo">
+    <!-- Navigation Bar -->
+    <header class="border-b bg-white shadow-md">
+        <nav class="flex items-center justify-between px-4 py-4 max-w-7xl mx-auto">
+
+            <!-- Logo (hidden on mobile) -->
+            <a href="/" class="hidden sm:block">
+                <img class="w-36 md:w-48" src="/assets/images/logotip-horizontal.png" alt="Logo">
             </a>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-toggle" class="block md:hidden text-gray-700 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+
             <!-- Navigation Links (Visible only on large screens) -->
-            <div class="hidden md:flex gap-6">
-                <a href="/admin"
-                    class="menu-link <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'active' : ''; ?>">
-                    Gestión
+            <div class="hidden md:flex space-x-6">
+                <a href="/admin" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
+                    <i class="fas fa-tachometer-alt"></i> Gestión
                 </a>
-                <a href="/admin/inventory"
-                    class="menu-link <?= ($currentPath === '/admin/inventory') ? 'active' : ''; ?>">
-                    Inventario
+                <a href="/admin/inventory" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
+                    <i class="fas fa-cogs"></i> Inventario
                 </a>
             </div>
 
-
-            <div class="flex items-center gap-4 mx-2">
-                <select id="contractBtn" name="contractBtn" class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md" onchange="setCurrentContract(this.value)">
+            <!-- Profile and Contract Dropdown -->
+            <div class="flex items-center gap-4">
+                <select id="contractBtn" name="contractBtn" class="bg-white text-sm rounded-md p-2 text-right focus:outline-none" onchange="setCurrentContract(this.value)">
                     <?php
                     foreach ($contracts as $contract) {
                         echo '<option value="' . $contract->getId() . '"' . ($currentContract == $contract->getId() ? ' selected' : '') . '>' . $contract->name . '</option>';
@@ -51,134 +55,129 @@ $currentContract = Session::get('current_contract');
                     echo '<option value="-1"' . ($currentContract == -1 ? ' selected' : '') . '>Todos los contratos</option>';
                     ?>
                 </select>
-                <button class="hidden md:block text-gray-700 hover:text-blue-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="h-6 w-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-                    </svg>
-                </button>
-                <div class="relative flex items-center gap-2 cursor-pointer"
-                    onclick="profileDropdown.classList.toggle('hidden')">
-                    <img class="h-10 rounded-full" src="/assets/images/avatar.png" alt="User Avatar">
-                    <div class="hidden md:block text-sm relative">
-                        <span
-                            class="block text-gray-700"><?= $_SESSION['user']['name'] . ' ' . $_SESSION['user']['surname']; ?></span>
-                        <span class="block text-gray-500">
-                            <?= User::getRoleName($_SESSION['user']['role']); ?>
-                        </span>
-                        <div id="profile-dropdown"
-                            class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
-                            role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                            <div class="py-1" role="none">
-                                <a href="/admin/configuration"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800" role="menuitem"
-                                    tabindex="-1" id="menu-item-0">Configuración de la cuenta</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                    id="menu-item-1">Soporte</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                    id="menu-item-2">Licencia</a>
-                                <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
-                                    role="menuitem" tabindex="-1" id="menu-item-3">Cerrar sesión</a>
-                            </div>
-                        </div>
+                <div class="relative">
+                    <img class="h-10 rounded-full cursor-pointer" src="https://via.placeholder.com/150" alt="User Avatar" onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
+                    <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
+                        <a href="/admin/account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuración de la cuenta</a>
+                        <a href="/license" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Licencia</a>
+                        <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
         </nav>
-    </div>
-    <div id="submenu"
-        class="md:flex overflow-x-auto justify-center items-center gap-6 p-6 shadow-md sm:shadow-none px-2 py-1 sm:py-4">
 
-        <div class="submenu text-center flex items-center space-x-6">
-            <div class="submenu-item">
-                <a href="/admin/contracts"
-                    class="link-primary <?= ($currentPath == '/admin/contracts') ? 'active' : ''; ?>">
-                    <i class="fas fa-file-contract block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Contratos</span>
-                </a>
-            </div>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 py-4 bg-gray-100">
+            <a href="/admin" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-tachometer-alt"></i> Gestión
+            </a>
+            <a href="/admin/inventory" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-cogs"></i> Inventario
+            </a>
+        </div>
+    </header>
 
-            <div class="submenu-item">
-                <a href="/admin/work-orders"
-                    class="link-primary <?= ($currentPath == '/admin/work-orders') ? 'active' : ''; ?>">
-                    <i class="fas fa-briefcase md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Órdenes de trabajo</span>
-                </a>
-            </div>
-
-            <div class="submenu-item">
-                <a href="/admin/element-types"
-                    class="link-primary <?= ($currentPath == '/admin/element-types') ? 'active' : ''; ?>">
-                    <i class="fas fa-cube md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Tipos de elemento</span>
-                </a>
-            </div>
-
-            <div class="submenu-item">
-                <a href="/admin/tree-types"
-                    class="link-primary <?= ($currentPath == '/admin/tree-types') ? 'active' : ''; ?>">
-                    <i class="fas fa-tree md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Tipos de árbol</span>
-                </a>
-            </div>
-
-            <div class="submenu-item">
-                <a href="/admin/task-types"
-                    class="link-primary <?= ($currentPath == '/admin/task-types') ? 'active' : ''; ?>">
-                    <i class="fas fa-tasks md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Tipos de tarea</span>
-                </a>
-            </div>
-
-            <div class="submenu-item">
-                <a href="/admin/users" class="link-primary <?= ($currentPath == '/admin/users') ? 'active' : ''; ?>">
-                    <i class="fas fa-users md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Usuarios</span>
-                </a>
-            </div>
-
-            <div class="submenu-item">
-                <a href="/admin/stats" class="link-primary <?= ($currentPath == '/admin/stats') ? 'active' : ''; ?>">
-                    <i class="fas fa-chart-bar md:block"></i>
-                    <span class="text-sm font-medium whitespace-nowrap">Estadísticas</span>
-                </a>
-            </div>
+    <!-- Submenu -->
+    <div id="submenu" class="md:flex overflow-x-auto flex-nowrap whitespace-nowrap items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
+        <div class="submenu text-center flex items-center space-x-6 mx-auto">
+            <a href="/admin/contracts" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/contracts') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-file-contract block"></i>
+                Contratos
+            </a>
+            <a href="/admin/work-orders" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/work-orders') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-briefcase block"></i>
+                Órdenes de trabajo
+            </a>
+            <a href="/admin/element-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/element-types') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-cube block"></i>
+                Tipos de elemento
+            </a>
+            <a href="/admin/tree-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/tree-types') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-tree block"></i>
+                Tipos de árbol
+            </a>
+            <a href="/admin/task-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/task-types') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-tasks block"></i>
+                Tipos de tarea
+            </a>
+            <a href="/admin/users" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/users') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-users block"></i>
+                Usuarios
+            </a>
+            <a href="/admin/stats" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/stats') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-chart-bar block"></i>
+                Estadísticas
+            </a>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-6">
+    <main class="max-w-7xl mx-auto px-4 pt-8 pb-16">
         <?php if (Session::has('success')): ?>
-            <div id="alert-msg" class="bg-blue-500 text-white px-4 py-3 rounded-lg mb-6" role="alert">
-                <strong class="font-bold">Success: </strong>
-                <span><?= htmlspecialchars(Session::get('success')); ?></span>
+            <div id="alert-msg" class="bg-green-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out" role="alert">
+                <span class="inline-block mr-2">
+                    <!-- Success Icon (Font Awesome) -->
+                    <i class="fas fa-check-circle w-5 h-5 text-white"></i>
+                </span>
+                <?= htmlspecialchars(Session::get('success')); ?>
             </div>
-        <?php endif;
-        echo $content;
-        ?>
-    </div>
+        <?php endif; ?>
+
+        <?php if (Session::has('error')): ?>
+            <div id="alert-msg-error" class="bg-red-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out" role="alert">
+                <span class="inline-block mr-2">
+                    <!-- Error Icon (Font Awesome) -->
+                    <i class="fas fa-exclamation-circle w-5 h-5 text-white"></i>
+                </span>
+                <strong class="font-bold">Error:</strong> <?= htmlspecialchars(Session::get('error')); ?>
+            </div>
+        <?php endif; ?>
+
+        <?= $content; ?>
+    </main>
 
     <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
-    <!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
     <script>
-        setTimeout(() => {
-            const alertMsg = document.getElementById('alert-msg');
-            if (alertMsg) {
-                alertMsg.classList.add('hidden');
-            }
-        }, 3500);
-    </script>
-    <script>
-        const menuButton = document.getElementById('menuButton');
-        const submenu = document.getElementById('submenu');
-        const submenuItems = document.querySelectorAll('.submenu-item');
-        const profileDropdown = document.getElementById('profile-dropdown');
+        document.addEventListener("DOMContentLoaded", function() {
+            // Show alerts with animation (Success and Error messages)
+            const alertMsg = document.querySelector("#alert-msg");
+            const alertMsgError = document.querySelector("#alert-msg-error");
 
-        menuButton.addEventListener('click', () => {
-            submenu.classList.toggle('hidden');
+            if (alertMsg) {
+                setTimeout(() => {
+                    alertMsg.classList.remove("hidden", "opacity-0");
+                    alertMsg.classList.add("opacity-100");
+                }, 100);
+
+                setTimeout(() => {
+                    alertMsg.classList.add("opacity-0");
+                    alertMsg.classList.remove("opacity-100");
+                    setTimeout(() => {
+                        alertMsg.classList.add("hidden");
+                    }, 500);
+                }, 3500);
+            }
+
+            if (alertMsgError) {
+                setTimeout(() => {
+                    alertMsgError.classList.add("opacity-0");
+                    alertMsgError.classList.remove("opacity-100");
+                    setTimeout(() => {
+                        alertMsgError.classList.add("hidden");
+                    }, 500);
+                }, 3500);
+            }
+
+            // Mobile menu toggle functionality
+            const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+            const mobileMenu = document.getElementById("mobile-menu");
+
+            mobileMenuToggle.addEventListener("click", function() {
+                mobileMenu.classList.toggle("hidden");
+            });
         });
     </script>
+
 </body>
 
 </html>

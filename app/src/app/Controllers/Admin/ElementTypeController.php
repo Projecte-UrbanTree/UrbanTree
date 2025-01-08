@@ -12,7 +12,7 @@ class ElementTypeController
     {
         $element_types = ElementType::findAll();
         View::render([
-            'view' => 'Admin/ElementType/ElementTypes',
+            'view' => 'Admin/ElementTypes',
             'title' => 'Tipos de Elemento',
             'layout' => 'Admin/AdminLayout',
             'data' => ['element_types' => $element_types],

@@ -93,8 +93,6 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
                                     role="menuitem" tabindex="-1" id="menu-item-0">Configuración de la cuenta</a>
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                    id="menu-item-1">Soporte</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                                     id="menu-item-2">Licencia</a>
                                 <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
                                     role="menuitem" tabindex="-1" id="menu-item-3">Cerrar sesión</a>
