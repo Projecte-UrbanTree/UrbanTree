@@ -16,14 +16,8 @@
     <script>
         window.Promise ||
             document.write(
-                '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
-            );
-        window.Promise ||
-            document.write(
-                '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
-            );
-        window.Promise ||
-            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>' +
+                '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>' +
                 '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
             );
     </script>
@@ -34,6 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
+
     <script type="text/babel">
 
         class ApexChart1 extends React.Component {
@@ -62,7 +57,7 @@
                             colors: ["transparent"],
                         },
                         xaxis: {
-                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],
+                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],  // Valor per defecte
                         },
                         yaxis: {
                             title: {
@@ -89,25 +84,29 @@
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
-                        return response.json();
+                        return response.json(); // Leer la respuesta como JSON
                     })
                     .then(data => {
-                        this.setState({
-                            series: [
-                                {
-                                    name: "Completat",
-                                    data: data.map(item => item.valor),
+                        if (data && data.length > 0) {
+                            this.setState({
+                                series: [
+                                    {
+                                        name: "Completat",
+                                        data: data.map(item => item.valor),
+                                    },
+                                ],
+                                options: {
+                                    ...this.state.options,
+                                    xaxis: {
+                                        categories: data.map(item => item.name),
+                                    },
                                 },
-                            ],
-                            options: {
-                                ...this.state.options,
-                                xaxis: {
-                                    categories: data.map(item => item.name),
-                                },
-                            },
-                        });
+                            });
+                        } else {
+                            console.error("No data received for 'dades1'");
+                        }
                     })
-                    .catch(error => console.error('Error fetching data:', error));
+                    .catch(error => console.error('Error fetching data for dades1:', error));
             }
 
             render() {
@@ -177,25 +176,31 @@
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
-                        return response.json();
+                        return response.json(); // Leer la respuesta como JSON
                     })
                     .then(data => {
-                        this.setState({
-                            series: [
-                                {
-                                    name: "Hores",
-                                    data: data.map(item => item.valor),
+                        if (data && data.length > 0) {
+                            this.setState({
+                                series: [
+                                    {
+                                        name: "Hores",
+                                        data: data.map(item => item.valor),
+                                    },
+                                ],
+                                options: {
+                                    ...this.state.options,
+                                    xaxis: {
+                                        categories: data.map(item => item.name),
+                                    },
                                 },
-                            ],
-                            options: {
-                                ...this.state.options,
-                                xaxis: {
-                                    categories: data.map(item => item.name),
-                                },
-                            },
-                        });
+                            });
+                        } else {
+                            console.error("No data received for 'dades2'");
+                        }
                     })
-                    .catch(error => console.error('Error fetching data:', error));
+                    .catch(error => {
+                        console.error('Error fetching data for dades2:', error);
+                    });
             }
 
             render() {
@@ -238,9 +243,9 @@
                             colors: ["transparent"],
                         },
                         xaxis: {
-                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],
+                            categories: ["Lun", "Mar", "Mie", "Jue", "Vie"],  // Valor per defecte
                         },
-                        yaxis: {
+                         yaxis: {
                             title: {
                                 text: "Consum",
                             },
@@ -265,25 +270,29 @@
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
-                        return response.json();
+                        return response.json(); // Leer la respuesta como JSON
                     })
                     .then(data => {
-                        this.setState({
-                            series: [
-                                {
-                                    name: "Consum",
-                                    data: data.map(item => item.valor),
+                        if (data && data.length > 0) {
+                            this.setState({
+                                series: [
+                                    {
+                                        name: "Consum",
+                                        data: data.map(item => item.valor),
+                                    },
+                                ],
+                                options: {
+                                    ...this.state.options,
+                                    xaxis: {
+                                        categories: data.map(item => item.name),
+                                    },
                                 },
-                            ],
-                            options: {
-                                ...this.state.options,
-                                xaxis: {
-                                    categories: data.map(item => item.name),
-                                },
-                            },
-                        });
+                            });
+                        } else {
+                            console.error("No data received for 'dades3'");
+                        }
                     })
-                    .catch(error => console.error('Error fetching data:', error));
+                    .catch(error => console.error('Error fetching data for dades3:', error));
             }
 
             render() {
@@ -314,6 +323,7 @@
         if (domContainer3) {
             ReactDOM.render(React.createElement(ApexChart3), domContainer3);
         }
+
     </script>
 </body>
 </html>
