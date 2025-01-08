@@ -8,7 +8,11 @@ use App\Models\WorkOrder;
 use App\Models\TaskType;
 use App\Models\Zone;
 use App\Models\User;
-
+use App\Models\TreeType;
+use App\Models\WorkOrderBlock;
+use App\Models\WorkOrderBlockTask;
+use App\Models\WorkOrderUser;
+use App\Models\WorkOrderBlockZone;
 
 class WorkOrderController
 {
@@ -25,38 +29,76 @@ class WorkOrderController
 
     public function create($queryParams)
     {
-        $task_types = array_map(function ($task_type) {
-            return $task_type->name;
-        }, TaskType::findAll());
-        $users = array_map(function ($user) {
-            return $user->name . ' ' . $user->surname;
-        }, User::findAll(['role' => 1]));
-        $zones = array_map(function ($zone) {
-            return $zone->name;
-        }, Zone::findAll(['name' => 'not null']));
+        $task_types = TaskType::findAll();
+        $users = User::findAll(['role' => 1]);
+        $zones = Zone::findAll(['name' => 'not null']);
+        $tree_types = TreeType::findAll();
         View::render([
             'view' => 'Admin/WorkOrder/Create',
             'title' => 'Nueva Orden de Trabajo',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['task_types' => $task_types, 'users' => $users, 'zones' => $zones],
+            'data' => [
+                'users' => $users,
+                'zones' => $zones,
+                'task_types' => $task_types,
+                'tree_types' => $tree_types,
+            ],
         ]);
     }
 
     public function store($postData)
     {
+        try {
+            $work_order = new WorkOrder();
+            $work_order->contract_id = 1;
+            $work_order->date = $postData['date'];
+            $work_order->save();
 
-        $work_order = new WorkOrder();
-        $work_order->contract_id = $postData['contract_id'];
+            // Create user relationships
+            foreach (explode(',', $postData['userIds']) as $userId) {
+                $workOrderUser = new WorkOrderUser();
+                $workOrderUser->work_order_id = (int) $work_order->getId();
+                $workOrderUser->user_id = (int) $userId;
+                $workOrderUser->save();
+            }
 
-        $work_order->save();
+            foreach ($postData['blocks'] as $blockData) {
+                $block = new WorkOrderBlock();
+                $block->work_order_id = (int) $work_order->getId();
+                $block->notes = $blockData['notes'];
+                $block->save();
 
-        if ($work_order->getId())
-            Session::set('success', 'Orden de Trabajo creada correctamente');
-        else
-            Session::set('error', 'La orden de trabajo no se pudo crear');
+                foreach (explode(',', $blockData['zonesIds']) as $zoneId) {
+                    $blockZone = new WorkOrderBlockZone();
+                    $blockZone->work_orders_block_id = (int) $block->getId();
+                    $blockZone->zone_id = (int) $zoneId;
+                    $blockZone->save();
+                }
 
-        header('Location: /admin/work-orders');
-        exit;
+                foreach ($blockData['tasks'] as $taskData) {
+                    $task = new WorkOrderBlockTask();
+                    $task->work_orders_block_id = (int) $block->getId();
+                    $task->task_id = (int) $taskData['taskType'];
+                    $task->tree_type_id = isset($taskData['species']) ? (int) $taskData['species'] : null;
+                    $task->status = 1; // Default status
+                    $task->save();
+                }
+            }
+
+            if ($work_order->getId()) {
+                Session::set('success', 'Orden de Trabajo creada correctamente');
+            } else {
+                Session::set('error', 'La orden de trabajo no se pudo crear');
+            }
+
+            header('Location: /admin/work-orders');
+            exit;
+        } catch (\Throwable $th) {
+            Session::set('error', $th->getMessage());
+            header('Location: /admin/work-orders/create');
+            exit;
+        }
+
     }
 
     public function edit($id, $queryParams)

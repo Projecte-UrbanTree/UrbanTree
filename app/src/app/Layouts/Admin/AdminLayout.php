@@ -1,7 +1,10 @@
 <?php
+
 use App\Core\Session;
 use App\Models\User;
+
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$currentContract = Session::get('current_contract');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,22 +45,17 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
             <!-- User Section -->
             <div class="flex items-center gap-4 mx-2 basis-1/3 justify-end">
-                <!-- User Info Dropdown -->
-                <div class="relative inline-block text-left">
-                    <button onclick="toggleSubmenu()"
-                        class="flex items-center gap-2 bg-white px-3 py-2 text-sm text-gray-900 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                        <span class="hidden sm:block">Contratos</span>
-                        <svg class="hidden sm:block -mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
-                            aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <lord-icon class="block sm:hidden" src="https://cdn.lordicon.com/vdjwmfqs.json" trigger="hover"
-                            colors="primary:#747474" style="width:22px;height:22px">
-                        </lord-icon>
-                    </button>
-                </div>
+                <!-- Contract Dropdown -->
+                <select id="contractBtn" name="contractBtn"
+                    class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                    onchange="setCurrentContract(this.value)">
+                    <?php
+                    foreach ($contracts as $contract) {
+                        echo '<option value="' . $contract->getId() . '"' . ($currentContract == $contract->getId() ? ' selected' : '') . '>' . $contract->name . '</option>';
+                    }
+                    echo '<option value="-1"' . ($currentContract == -1 ? ' selected' : '') . '>Todos los contratos</option>';
+                    ?>
+                </select>
 
                 <!-- Notifications Icon -->
                 <a href="#" class="hidden md:block text-gray-700 hover:text-blue-600">
@@ -75,7 +73,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                         <span
                             class="block text-gray-700"><?= $_SESSION['user']['name'] . ' ' . $_SESSION['user']['surname']; ?></span>
                         <span class="block text-gray-500">
-                            <?= User::role_name($_SESSION['user']['role']); ?>
+                            <?= User::getRoleName($_SESSION['user']['role']); ?>
                         </span>
                         <div id="profile-dropdown"
                             class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
@@ -169,7 +167,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         ?>
     </div>
 
-    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
     <!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
     <script>
         setTimeout(() => {

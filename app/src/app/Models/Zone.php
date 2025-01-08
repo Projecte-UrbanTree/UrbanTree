@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Core\Database;
-
 class Zone extends BaseModel
 {
     public int $contract_id;
