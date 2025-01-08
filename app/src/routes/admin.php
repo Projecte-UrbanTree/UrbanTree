@@ -320,5 +320,13 @@ return [
             'method' => 'update',
             'middlewares' => [AdminMiddleware::class],
         ],
+
+        // === Miscelaneous POST Routes
+
+        '/admin/set-contract' => [
+            'controller' => ContractController::class,
+            'method' => 'setCurrentContract',
+            'middlewares' => [AdminMiddleware::class],
+        ],
     ],
 ];

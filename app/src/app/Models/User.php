@@ -49,12 +49,12 @@ class User extends BaseModel
         return $user;
     }
 
-    public static function role_name($role): string
+    public static function getRoleName($role): string
     {
         return match ($role) {
-            0 => "Cliente",
-            1 => "Operario",
-            2 => "Admin"
+            0 => 'Cliente',
+            1 => 'Operario',
+            2 => 'Admin'
         };
     }
 }

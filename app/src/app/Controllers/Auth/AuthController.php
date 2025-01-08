@@ -4,6 +4,7 @@ namespace App\Controllers\Auth;
 
 use App\Core\Session;
 use App\Core\View;
+use App\Models\Contract;
 use App\Models\User;
 
 class AuthController
@@ -46,14 +47,29 @@ class AuthController
             exit;
         }
 
+        if ($user->role == 2) {
+            $contracts = Contract::findAll();
+            foreach ($contracts as $contract) {
+                $currentDate = date('Y-m-d');
+                if ($currentDate > $contract->start_date && $currentDate < $contract->end_date) {
+                    $contract_id = $contract->getId();
+                    break;
+                }
+            }
+        } else {
+            $contract_id = null;
+        }
+
         Session::set('user', [
             'id' => $user->getId(),
             'name' => $user->name,
             'surname' => $user->surname[0],
             'email' => $user->email,
             'role' => $user->role,
-            
         ]);
+
+        Session::set('current_contract', $contract_id);
+
         if ($user->role === 0) {
             header('Location: /customer');
         } elseif ($user->role === 1) {
