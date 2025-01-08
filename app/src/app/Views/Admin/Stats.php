@@ -35,6 +35,8 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
     <script type="text/babel">
+        // Definir taskTypes para evitar el error de referencia
+        const taskTypes = ["Completat", "Hores", "Consum"];
 
         class ApexChart1 extends React.Component {
             constructor(props) {
@@ -84,7 +86,7 @@
             }
 
             componentDidMount() {
-                fetch('/UrbanTree/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades1')
+                fetch('/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades1')
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -172,7 +174,7 @@
             }
 
             componentDidMount() {
-                fetch('/UrbanTree/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades2')
+                fetch('/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades2')
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -260,7 +262,7 @@
             }
 
             componentDidMount() {
-                fetch('/UrbanTree/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades3')
+                fetch('/app/src/app/Views/Admin/Stats/grafica.php?endpoint=dades3')
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -301,13 +303,19 @@
         }
 
         const domContainer1 = document.querySelector("#app1");
-        ReactDOM.render(React.createElement(ApexChart1), domContainer1);
+        if (domContainer1) {
+            ReactDOM.render(React.createElement(ApexChart1), domContainer1);
+        }
 
         const domContainer2 = document.querySelector("#app2");
-        ReactDOM.render(React.createElement(ApexChart2), domContainer2);
+        if (domContainer2) {
+            ReactDOM.render(React.createElement(ApexChart2), domContainer2);
+        }
 
         const domContainer3 = document.querySelector("#app3");
-        ReactDOM.render(React.createElement(ApexChart3), domContainer3);
+        if (domContainer3) {
+            ReactDOM.render(React.createElement(ApexChart3), domContainer3);
+        }
     </script>
 </body>
 </html>
