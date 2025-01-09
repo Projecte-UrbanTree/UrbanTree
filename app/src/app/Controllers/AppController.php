@@ -26,8 +26,17 @@ class AppController
     public function cookiePolicy($queryParams)
     {
         View::render([
-            'view' => 'Documents/CookiePolicy',
+            'view' => 'CookiePolicy',
             'title' => 'Cookie Policy',
+            'layout' => 'PublicLayout',
+        ]);
+    }
+
+    public function license($queryParams)
+    {
+        View::render([
+            'view' => 'License',
+            'title' => 'License',
             'layout' => 'PublicLayout',
         ]);
     }

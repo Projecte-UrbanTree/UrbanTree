@@ -27,7 +27,7 @@ return [
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/configuration' => [
+        '/admin/account' => [
             'controller' => AccountController::class,
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
@@ -305,7 +305,7 @@ return [
 
         // === Config POST Routes
 
-        '/admin/configuration/:id/update' => [
+        '/admin/account' => [
             'controller' => AccountController::class,
             'method' => 'update',
             'middlewares' => [AdminMiddleware::class],
