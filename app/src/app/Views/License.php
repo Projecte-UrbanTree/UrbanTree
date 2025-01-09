@@ -1,13 +1,13 @@
 <div class="mt-4 ml-4">
-  <h1 class="text-3xl font-bold mb-4 text-gray-700">Licencia</h1>
-  <p class="text-lg text-gray-600">
-    Este software está licenciado bajo la Licencia Pública de la Unión Europea (EUPL). Usted es libre de usar, modificar
-    y distribuirlo, con la condición de que la misma licencia se aplique a cualquier obra derivada.<br />
-    Puede encontrar más información de la licencia en <a class="underline hover:text-gray-900"
-      href="https://interoperable-europe.ec.europa.eu/collection/eupl" target="__blank">este enlace</a>, o el texto
-    completo a continuación:
-  </p>
-  <pre class="bg-gray-100 p-8 rounded-md text-sm text-gray-700 mt-4">
+    <h1 class="text-3xl font-bold mb-4 text-gray-700">Licencia</h1>
+    <p class="text-lg text-gray-600">
+        Este software está licenciado bajo la Licencia Pública de la Unión Europea (EUPL). Usted es libre de usar, modificar
+        y distribuirlo, con la condición de que la misma licencia se aplique a cualquier obra derivada.<br />
+        Puede encontrar más información de la licencia en <a class="underline hover:text-gray-900"
+            href="https://interoperable-europe.ec.europa.eu/collection/eupl" target="__blank">este enlace</a>, o el texto
+        completo a continuación:
+    </p>
+    <pre class="bg-gray-100 p-8 rounded-md text-sm text-gray-700 mt-4 overflow-x-auto">
                 LICENCIA PÚBLICA DE LA UNIÓN EUROPEA v. 1.2
                 EUPL © Unión Europea 2007, 2016
 
