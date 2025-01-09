@@ -55,6 +55,9 @@ class AuthController
                     break;
                 }
             }
+            if (!isset($contract_id)) {
+                $contract_id = -1;
+            }
         } else {
             $contract_id = null;
         }
