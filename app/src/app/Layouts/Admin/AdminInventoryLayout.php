@@ -1,5 +1,7 @@
 <?php
+
 use App\Models\User;
+
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
 <!DOCTYPE html>
@@ -37,8 +39,8 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
             <!-- Logo -->
             <a href="#">
-                <img class="md:block hidden w-48" src="/assets/images/logotip-horizontal.png" alt="Logo">
-                <img class="md:hidden block" src="/assets/images/isotip.png" alt="Logo">
+                <img class="md:block hidden w-48" src="/assets/images/logo.png" alt="Logo">
+                <img class="md:hidden block" src="/assets/images/isotype.png" alt="Logo">
             </a>
             <!-- Navigation Links (Visible only on large screens) -->
             <div class="hidden md:flex gap-6">
@@ -92,8 +94,6 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                             <div class="py-1" role="none">
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"
                                     role="menuitem" tabindex="-1" id="menu-item-0">Configuración de la cuenta</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                    id="menu-item-1">Soporte</a>
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                                     id="menu-item-2">Licencia</a>
                                 <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800"

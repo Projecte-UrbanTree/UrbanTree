@@ -13,7 +13,7 @@ class AccountController
 
         $user = User::find(Session::get('user')['id']);
         View::render([
-            'view' => 'Admin/AccountConfig/AccountConfig',
+            'view' => 'Admin/Account',
             'title' => 'Configuración de cuenta',
             'layout' => 'Admin/AdminLayout',
             'data' => [
@@ -23,42 +23,36 @@ class AccountController
     }
 
 
-    public function update($id, $postData)
+    public function update($postData)
     {
-        $user = User::find(id: $id);
+        $user = User::find(Session::get('user')['id']);
 
         if (!$user) {
             Session::set('error', 'Usuario no encontrado');
-            header('Location: /admin/configuration');
+            header('Location: /admin/account');
             exit;
         }
 
-        // save the new data
         $user->name = $postData['name'];
         $user->surname = $postData['surname'];
 
-        // detect password changes
         if (strlen($postData['current_password']) > 0) {
-
-
 
             if (!password_verify($postData['current_password'], $user->password)) {
                 Session::set('error', 'Contraseña incorrecta');
-                header('Location: /admin/configuration');
+                header('Location: /admin/account');
                 exit;
             }
-
 
             if (empty($postData['password']) || empty($postData['password_confirmation'])) {
-                Session::set('error', 'Completa los campos');
-                header('Location: /admin/configuration');
+                Session::set('error', 'Completa los campos de contraseña');
+                header('Location: /admin/account');
                 exit;
             }
-
 
             if ($postData['password'] !== $postData['password_confirmation']) {
                 Session::set('error', 'Las contraseñas no coinciden');
-                header('Location: /admin/configuration');
+                header('Location: /admin/account');
                 exit;
             }
 
@@ -66,8 +60,6 @@ class AccountController
         }
 
         $user->save();
-
-
 
         Session::set('user', [
             'id' => $user->getId(),
@@ -78,6 +70,6 @@ class AccountController
         ]);
 
         Session::set('success', 'Usuario y/o contraseña actualizados correctamente');
-        header('Location: /admin/configuration');
+        header('Location: /admin/account');
     }
 }

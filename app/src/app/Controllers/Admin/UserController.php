@@ -12,7 +12,7 @@ class UserController
     {
         $users = User::findAll();
         View::render([
-            'view' => 'Admin/User/Users',
+            'view' => 'Admin/Users',
             'title' => 'Usuarios',
             'layout' => 'Admin/AdminLayout',
             'data' => ['users' => $users],

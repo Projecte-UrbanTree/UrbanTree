@@ -12,5 +12,9 @@ return [
             'controller' => AppController::class,
             'method' => 'cookiePolicy',
         ],
+        '/license' => [
+            'controller' => AppController::class,
+            'method' => 'license',
+        ],
     ],
 ];
