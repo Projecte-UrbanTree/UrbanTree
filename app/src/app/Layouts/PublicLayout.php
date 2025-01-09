@@ -38,7 +38,7 @@
     </div>
 
     <!-- Return Button -->
-    <div id="returnBtn" class="fixed bottom-16 right-16">
+    <div id="returnBtn">
         <a href="javascript:history.back()" class="bg-primary hover:bg-primaryDark text-white py-2 px-4 rounded-lg">
             <i class="fa-solid fa-rotate-left"></i> Volver atrás
         </a>
