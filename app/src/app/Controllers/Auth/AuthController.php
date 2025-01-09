@@ -31,7 +31,7 @@ class AuthController
 
         if (!$email || !$password) {
             // Redirect back with error if fields are missing
-            Session::set('error', 'Email and password are required.');
+            Session::set('error', 'Por favor, ingresa tu email y contraseña.');
             header('Location: /auth/login');
             exit;
         }
@@ -40,9 +40,8 @@ class AuthController
         $user = User::findBy(['email' => $email], true);
 
         if (!$user || !password_verify($password, $user->password)) {
-            echo 'Invalid email or password.';
             // Redirect back with error if authentication fails
-            Session::set('error', 'Invalid email or password.');
+            Session::set('error', 'Has ingresado un email o contraseña incorrectos.');
             header('Location: /auth/login');
             exit;
         }
