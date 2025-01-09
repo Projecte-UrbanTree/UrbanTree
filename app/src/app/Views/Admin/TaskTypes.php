@@ -1,11 +1,11 @@
 <div class="p-2 md:p-6">
+    <div class="mb-4 flex justify-end">
+        <a href="/admin/task-types/create" class="px-4 py-2 bg-gray-700 text-white shadow-sm hover:bg-gray-500 transition-all duration-200 rounded">
+            <i class="fas fa-plus mr-2"></i> Nuevo tipo de tarea
+        </a>
+    </div>
     <!-- Task Types Table -->
     <div class="relative overflow-x-auto rounded-lg">
-        <div class="mb-4 flex justify-end">
-            <a href="/admin/task-types/create" class="px-4 py-2 bg-gray-700 text-white shadow-sm hover:bg-gray-500 transition-all duration-200 rounded">
-                <i class="fas fa-plus mr-2"></i> Nuevo tipo de tarea
-            </a>
-        </div>
         <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
             <thead class="bg-gray-700 text-white">
                 <tr class="h-12">
