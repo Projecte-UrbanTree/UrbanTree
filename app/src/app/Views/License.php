@@ -1,7 +1,7 @@
 <div class="mt-4 ml-4">
     <h1 class="text-3xl font-bold mb-4 text-gray-700">License</h1>
     <p class="text-lg text-gray-600">
-        This software is licensed under the MIT License. You are free to use, modify, and distribute it, with the condition that the same license is applied to any derived works. The full text of the license is available below:
+        This software is licensed under the European Union Public Licence (EUPL). You are free to use, modify, and distribute it, with the condition that the same license is applied to any derived works. The full text of the license is available below:
     </p>
     <pre class="bg-gray-100 p-8 rounded-md text-sm text-gray-700 mt-4">
                       EUROPEAN UNION PUBLIC LICENCE v. 1.2
