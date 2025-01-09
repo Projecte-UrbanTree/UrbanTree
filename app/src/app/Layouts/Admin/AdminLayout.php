@@ -89,31 +89,31 @@ $currentContract = Session::get('current_contract');
     <!-- Submenu -->
     <div id="submenu" class="md:flex overflow-x-auto flex-nowrap whitespace-nowrap items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
         <div class="submenu text-center flex items-center space-x-6 mx-auto">
-            <a href="/admin/contracts" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/contracts') ? 'font-semibold' : ''; ?>">
+            <a href="/admin/contracts" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/contract') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-file-contract block"></i>
                 Contratos
             </a>
-            <a href="/admin/work-orders" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/work-orders') ? 'font-semibold' : ''; ?>">
+            <a href="/admin/work-orders" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/work-order') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-briefcase block"></i>
                 Órdenes de trabajo
             </a>
-            <a href="/admin/element-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/element-types') ? 'font-semibold' : ''; ?>">
+            <a href="/admin/element-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/element-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-cube block"></i>
                 Tipos de elemento
             </a>
-            <a href="/admin/tree-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/tree-types') ? 'font-semibold' : ''; ?>">
+            <a href="/admin/tree-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/tree-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tree block"></i>
                 Tipos de árbol
             </a>
-            <a href="/admin/task-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/task-types') ? 'font-semibold' : ''; ?>">
+            <a href="/admin/task-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tasks block"></i>
                 Tipos de tarea
             </a>
-            <a href="/admin/users" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/users') ? 'font-semibold' : ''; ?>">
+            <a href="/admin/users" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/user') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-users block"></i>
                 Usuarios
             </a>
-            <a href="/admin/stats" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath == '/admin/stats') ? 'font-semibold' : ''; ?>">
+            <a href="/admin/stats" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/stats') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-chart-bar block"></i>
                 Estadísticas
             </a>
