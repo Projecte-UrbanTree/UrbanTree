@@ -1,6 +1,6 @@
 <div class="p-2 md:p-6">
     <!-- Task Types Table -->
-    <div class="relative overflow-x-auto rounded-lg shadow-md sm:rounded-lg">
+    <div class="relative overflow-x-auto rounded-lg">
         <div class="mb-4 flex justify-end">
             <a href="/admin/task-types/create" class="px-4 py-2 bg-gray-700 text-white shadow-sm hover:bg-gray-500 transition-all duration-200 rounded">
                 <i class="fas fa-plus mr-2"></i> Nuevo tipo de tarea
@@ -27,14 +27,14 @@
                             <td class="px-4 py-3 text-center">
                                 <div class="flex justify-center space-x-3">
                                     <a href="/admin/task-types/<?= htmlspecialchars($task_type->getId()); ?>/edit"
-                                       class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
-                                       title="Editar" aria-label="Editar tipo de tarea <?= htmlspecialchars($task_type->name); ?>">
+                                        class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
+                                        title="Editar" aria-label="Editar tipo de tarea <?= htmlspecialchars($task_type->name); ?>">
                                         <i class="fas fa-pencil"></i>
                                     </a>
                                     <a href="/admin/task-types/<?= htmlspecialchars($task_type->getId()); ?>/delete"
-                                       onclick="return confirm('¿Desea eliminar el tipo de tarea <?= htmlspecialchars($task_type->name); ?>?');"
-                                       class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
-                                       title="Eliminar" aria-label="Eliminar tipo de tarea <?= htmlspecialchars($task_type->name); ?>">
+                                        onclick="return confirm('¿Desea eliminar el tipo de tarea <?= htmlspecialchars($task_type->name); ?>?');"
+                                        class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
+                                        title="Eliminar" aria-label="Eliminar tipo de tarea <?= htmlspecialchars($task_type->name); ?>">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>
