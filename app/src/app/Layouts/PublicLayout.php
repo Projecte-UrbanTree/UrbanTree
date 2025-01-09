@@ -19,7 +19,7 @@
         <!-- Logo -->
         <div class="flex justify-center">
             <a href="/">
-                <img src="/assets/images/logotip-horizontal.png" alt="Logo" class="mx-auto mb-4 w-36 md:w-48">
+                <img src="/assets/images/logo.png" alt="Logo" class="mx-auto mb-4 w-36 md:w-48">
             </a>
         </div>
 

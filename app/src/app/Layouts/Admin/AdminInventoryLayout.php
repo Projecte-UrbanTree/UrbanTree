@@ -1,5 +1,7 @@
 <?php
+
 use App\Models\User;
+
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
 <!DOCTYPE html>
@@ -37,8 +39,8 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
             <!-- Logo -->
             <a href="#">
-                <img class="md:block hidden w-48" src="/assets/images/logotip-horizontal.png" alt="Logo">
-                <img class="md:hidden block" src="/assets/images/isotip.png" alt="Logo">
+                <img class="md:block hidden w-48" src="/assets/images/logo.png" alt="Logo">
+                <img class="md:hidden block" src="/assets/images/isotype.png" alt="Logo">
             </a>
             <!-- Navigation Links (Visible only on large screens) -->
             <div class="hidden md:flex gap-6">

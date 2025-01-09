@@ -27,7 +27,7 @@ $currentContract = Session::get('current_contract');
 
             <!-- Logo (hidden on mobile) -->
             <a href="/" class="hidden sm:block">
-                <img class="w-36 md:w-48" src="/assets/images/logotip-horizontal.png" alt="Logo">
+                <img class="w-36 md:w-48" src="/assets/images/logo.png" alt="Logo">
             </a>
 
             <!-- Mobile Menu Toggle Button -->
