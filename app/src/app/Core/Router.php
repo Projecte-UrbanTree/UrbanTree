@@ -105,7 +105,7 @@ class Router
             }
         }
 
-        $this->abort(404, 'Not Found');
+        $this->abort(404, '¡No se ha encontrado la página!');
     }
 
 
