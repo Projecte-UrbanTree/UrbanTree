@@ -1,5 +1,4 @@
 <?php
-
 $servername = "localhost";
 $username = "urbantree";
 $password = "J0HMXAJ6XE";
