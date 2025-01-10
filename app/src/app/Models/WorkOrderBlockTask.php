@@ -29,6 +29,11 @@ class WorkOrderBlockTask extends BaseModel
         return $work_order_block_task;
     }
 
+    public function workOrderBlock(): WorkOrderBlock
+    {
+        return $this->belongsTo(WorkOrderBlock::class, 'work_orders_block_id');
+    }
+
     public function treeType(): ?TreeType
     {
         return $this->belongsTo(TreeType::class, 'tree_type_id');
