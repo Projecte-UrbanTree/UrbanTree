@@ -149,6 +149,7 @@ $currentContract = Session::get('current_contract');
     </main>
 
     <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
+    <script src="/assets/js/work-orders.js?v=<?= time(); ?>"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Show alerts with animation (Success and Error messages)
