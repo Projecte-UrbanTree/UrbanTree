@@ -131,7 +131,6 @@ class WorkOrderController
 
     public function update($id, $postData)
     {
-        var_dump($postData);
         try {
             $work_order = WorkOrder::find($id);
 

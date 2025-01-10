@@ -1,4 +1,3 @@
-
 function toggleAccordion(index) {
     const contentRow = document.getElementById("accordionContent" + index);
     const path = document.getElementById("accordionPath" + index);
@@ -130,10 +129,12 @@ function updateBlock() {
 
             if (taskTypeSelect) {
                 taskTypeSelect.name = `blocks[${index}][tasks][${taskIndex}][taskType]`;
+                taskTypeSelect.id = `taskType_${index}_${taskIndex}`;
             }
 
             if (speciesSelect) {
                 speciesSelect.name = `blocks[${index}][tasks][${taskIndex}][species]`;
+                speciesSelect.id = `species_${index}_${taskIndex}`;
             }
         });
     });
@@ -174,14 +175,14 @@ function addBlock() {
             <h3 class="text-lg font-semibold text-gray-800 my-3">Seleccionar Tareas</h3>
                 <div class="task-row flex space-x-4 items-end" data-task-index="0">
                 <div class="flex-auto">
-                    <select name="blocks[${blockCount}][tasks][0][taskType]"
+                    <select name="blocks[${blockCount}][tasks][0][taskType]" id="taskType_${blockCount}_0"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                         ${taskTypeOptions}
                     </select>
                 </div>
                 <div class="flex-auto flex items-center space-x-2">
                     <span class="block text-lg font-semibold text-gray-800">Species</span>
-                    <select name="blocks[${blockCount}][tasks][0][species]"
+                    <select name="blocks[${blockCount}][tasks][0][species]" id="species_${blockCount}_0"
                         class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                         ${speciesOptions}
                     </select>
@@ -222,14 +223,14 @@ function addTask(button) {
 
     taskRow.innerHTML = `
         <div class="flex-auto">
-            <select name="blocks[${blockIndex}][tasks][${taskCount}][taskType]"
+            <select name="blocks[${blockIndex}][tasks][${taskCount}][taskType]" id="taskType_${blockIndex}_${taskCount}"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 ${taskTypeOptions}
             </select>
         </div>
         <div class="flex-auto flex items-center space-x-2">
             <span class="block text-lg font-semibold text-gray-800">Species</span>
-            <select name="blocks[${blockIndex}][tasks][${taskCount}][species]"
+            <select name="blocks[${blockIndex}][tasks][${taskCount}][species]" id="species_${blockIndex}_${taskCount}"
                 class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 ${speciesOptions}
             </select>
