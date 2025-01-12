@@ -345,23 +345,13 @@ abstract class BaseModel
             $this->id = Database::connect()->lastInsertId();
     }
 
-    // Delete multiple records from the table
-    public static function deleteAll(array $conditions): void
+    public function deleteForce(): void
     {
         $table = static::getTableName();
-        $whereClauses = [];
-        $parameters = [];
-
-        foreach ($conditions as $column => $value) {
-            $whereClauses[] = "{$column} = :{$column}";
-            $parameters[$column] = $value;
-        }
-
-        $whereClause = implode(' AND ', $whereClauses);
-        $query = "DELETE FROM {$table} WHERE {$whereClause}";
-
-        Database::prepareAndExecute($query, $parameters);
+        $query = "DELETE FROM {$table} WHERE id = :id";
+        Database::prepareAndExecute($query, ['id' => $this->id]);
     }
+
 
     //* Abstract methods to enforce subclass implementation
     abstract protected static function getTableName(): string;

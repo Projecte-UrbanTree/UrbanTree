@@ -5,7 +5,6 @@ namespace App\Models;
 class WorkOrderBlockZone extends BaseModel
 {
     public int $work_orders_block_id;
-
     public int $zone_id;
 
     protected static function getTableName(): string
@@ -19,7 +18,13 @@ class WorkOrderBlockZone extends BaseModel
         $work_order_block_zone->id = $data['id'];
         $work_order_block_zone->work_orders_block_id = $data['work_orders_block_id'];
         $work_order_block_zone->zone_id = $data['zone_id'];
+        $work_order_block_zone->deleted_at = $data['deleted_at'] ?? null;
 
         return $work_order_block_zone;
+    }
+
+    protected static function hasSoftDelete(): bool
+    {
+        return true;
     }
 }

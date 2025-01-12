@@ -139,7 +139,29 @@ class WorkOrderController
                 $work_order->date = $postData['date'];
                 $work_order->save();
 
-                WorkOrderUser::deleteAll(['work_order_id' => $work_order->getId()]);
+                // Eliminar relaciones de usuarios
+                foreach ($work_order->users() as $user) {
+                    $workOrderUser = WorkOrderUser::findBy(['work_order_id' => $work_order->getId(), 'user_id' => $user->getId()], true);
+                    if ($workOrderUser) {
+                        $workOrderUser->deleteForce();
+                    }
+                }
+
+                // Eliminar bloques, tareas y zonas
+                foreach ($work_order->blocks() as $block) {
+                    foreach ($block->tasks() as $task) {
+                        $task->deleteForce();
+                    }
+                    foreach ($block->zones() as $zone) {
+                        $blockZone = WorkOrderBlockZone::findBy(['work_orders_block_id' => $block->getId(), 'zone_id' => $zone->getId()], true);
+                        if ($blockZone) {
+                            $blockZone->deleteForce();
+                        }
+                    }
+                    $block->deleteForce();
+                }
+
+                // Crear relaciones de usuarios
                 foreach (explode(',', $postData['userIds']) as $userId) {
                     $workOrderUser = new WorkOrderUser();
                     $workOrderUser->work_order_id = (int) $work_order->getId();
@@ -147,46 +169,27 @@ class WorkOrderController
                     $workOrderUser->save();
                 }
 
-                $existingBlocks = $work_order->blocks();
-                foreach ($existingBlocks as $existingBlock) {
-                    // Eliminar zonas y tareas asociadas
-                    $zones = WorkOrderBlockZone::findBy(['work_orders_block_id' => $existingBlock->getId()]);
-                    foreach ($zones as $zone)
-                        $zone->delete();
-                    $tasks = WorkOrderBlockTask::findBy(['work_orders_block_id' => $existingBlock->getId()]);
-                    foreach ($tasks as $task)
-                        $task->delete();
-                    $existingBlock->delete();
-                }
-
+                // Crear bloques, tareas y zonas
                 foreach ($postData['blocks'] as $blockData) {
-                    if (empty($blockData['notes']) && empty($blockData['zonesIds']) && empty($blockData['tasks'])) {
-                        continue;
-                    }
-
                     $block = new WorkOrderBlock();
                     $block->work_order_id = (int) $work_order->getId();
-                    $block->notes = $blockData['notes'] ?? '';
+                    $block->notes = $blockData['notes'];
                     $block->save();
 
-                    if (!empty($blockData['zonesIds'])) {
-                        foreach (explode(',', $blockData['zonesIds']) as $zoneId) {
-                            $blockZone = new WorkOrderBlockZone();
-                            $blockZone->work_orders_block_id = (int) $block->getId();
-                            $blockZone->zone_id = (int) $zoneId;
-                            $blockZone->save();
-                        }
+                    foreach (explode(',', $blockData['zonesIds']) as $zoneId) {
+                        $blockZone = new WorkOrderBlockZone();
+                        $blockZone->work_orders_block_id = (int) $block->getId();
+                        $blockZone->zone_id = (int) $zoneId;
+                        $blockZone->save();
                     }
 
-                    if (!empty($blockData['tasks'])) {
-                        foreach ($blockData['tasks'] as $taskData) {
-                            $task = new WorkOrderBlockTask();
-                            $task->work_orders_block_id = (int) $block->getId();
-                            $task->task_id = (int) $taskData['taskType'];
-                            $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
-                            $task->status = 1;
-                            $task->save();
-                        }
+                    foreach ($blockData['tasks'] as $taskData) {
+                        $task = new WorkOrderBlockTask();
+                        $task->work_orders_block_id = (int) $block->getId();
+                        $task->task_id = (int) $taskData['taskType'];
+                        $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
+                        $task->status = 1; // Default status
+                        $task->save();
                     }
                 }
 
@@ -195,11 +198,11 @@ class WorkOrderController
                 Session::set('error', 'Orden de trabajo no encontrada');
             }
 
-            // header('Location: /admin/work-orders');
+            header('Location: /admin/work-orders');
             exit;
         } catch (\Throwable $th) {
             Session::set('error', $th->getMessage());
-            // header("Location: /admin/work-order/$id/edit");
+            header("Location: /admin/work-order/$id/edit");
             exit;
         }
     }
@@ -209,11 +212,32 @@ class WorkOrderController
         $work_order = WorkOrder::find($id);
 
         if ($work_order) {
-            $work_order->delete();
+            // Eliminar relaciones de usuarios
+            foreach ($work_order->users() as $user) {
+                $workOrderUser = WorkOrderUser::findBy(['work_order_id' => $work_order->getId(), 'user_id' => $user->getId()], true);
+                if ($workOrderUser) {
+                    $workOrderUser->delete();
+                }
+            }
 
+            foreach ($work_order->blocks() as $block) {
+                foreach ($block->tasks() as $task) {
+                    $task->delete();
+                }
+                foreach ($block->zones() as $zone) {
+                    $blockZone = WorkOrderBlockZone::findBy(['work_orders_block_id' => $block->getId(), 'zone_id' => $zone->getId()], true);
+                    if ($blockZone) {
+                        $blockZone->delete();
+                    }
+                }
+                $block->delete();
+            }
+
+            $work_order->delete();
             Session::set('success', 'Orden de Trabajo eliminada correctamente');
-        } else
+        } else {
             Session::set('error', 'Orden de trabajo no encontrada');
+        }
 
         header('Location: /admin/work-orders');
         exit;
