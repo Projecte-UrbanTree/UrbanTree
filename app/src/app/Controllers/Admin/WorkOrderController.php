@@ -18,7 +18,9 @@ class WorkOrderController
 {
     public function index($queryParams)
     {
-        $work_orders = WorkOrder::findAll();
+        $current_contract_id = Session::get('current_contract');
+        $work_orders = WorkOrder::findBy(['contract_id' => $current_contract_id]);
+
         View::render([
             'view' => 'Admin/WorkOrders',
             'title' => 'Órdenes de Trabajo',
@@ -50,7 +52,7 @@ class WorkOrderController
     {
         try {
             $work_order = new WorkOrder();
-            $work_order->contract_id = $_SESSION['current_contract'];
+            $work_order->contract_id = Session::get('current_contract');
             $work_order->date = $postData['date'];
             $work_order->save();
 
@@ -135,7 +137,7 @@ class WorkOrderController
             $work_order = WorkOrder::find($id);
 
             if ($work_order) {
-                $work_order->contract_id = $_SESSION['current_contract'];
+                $work_order->contract_id = Session::get('current_contract');
                 $work_order->date = $postData['date'];
                 $work_order->save();
 
