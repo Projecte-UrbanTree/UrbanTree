@@ -101,10 +101,9 @@ td:nth-child(2) {
     cursor: default;
 }
 
-
 table a {
-    text-decoration: none;  
-    color: inherit;        
+    text-decoration: none;
+    color: inherit;
 }
 
 table a:hover {
