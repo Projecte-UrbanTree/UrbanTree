@@ -48,8 +48,8 @@ function validateField(value, regexName, fieldName) {
 function dateCannotBeAfter(startDate, endDate, fieldName) {
     return new Date(startDate) > new Date(endDate)
         ? createErrorElement(
-              `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
-          )
+            `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
+        )
         : true;
 }
 
@@ -61,8 +61,8 @@ function validatePositiveInteger(value, fieldName) {
     return pattern.test(value) && parseFloat(value) > 0
         ? true
         : createErrorElement(
-              `${fieldName}: El valor debe ser un número entero positivo.`
-          );
+            `${fieldName}: El valor debe ser un número entero positivo.`
+        );
 }
 
 /**
@@ -72,8 +72,18 @@ function validateMaxValue(value, max, fieldName) {
     return parseFloat(value) <= max
         ? true
         : createErrorElement(
-              `${fieldName}: El valor no puede ser mayor a ${max}.`
-          );
+            `${fieldName}: El valor no puede ser mayor a ${max}.`
+        );
+}
+
+/**
+ * Validate that a field does not contain SQL injection patterns
+ */
+function validateNoSQLInjection(value, fieldName) {
+    const sqlInjectionPattern = /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|CREATE|TRUNCATE|EXEC|UNION|OR|AND)\b|--|;|\/\*|\*\/|@@|@|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)/i;
+    return sqlInjectionPattern.test(value)
+        ? createErrorElement(`${fieldName}: El campo contiene patrones no permitidos.`)
+        : true;
 }
 
 function getFieldName(fieldId) {
@@ -95,8 +105,11 @@ function getFieldName(fieldId) {
     if (fieldId.startsWith("taskType_")) {
         return "Tipo de Tarea";
     }
+    if (fieldId.startsWith("notes_")) {
+        return "Notas";
 
-    return customFieldNames[fieldId] || fieldId;
+        return customFieldNames[fieldId] || fieldId;
+    }
 }
 
 function validateForm(event, fields) {
@@ -142,6 +155,9 @@ function validateForm(event, fields) {
                         break;
                     case "maxValue":
                         validation = validateMaxValue(value, max, fieldName);
+                        break;
+                    case "noSQLInjection":
+                        validation = validateNoSQLInjection(value, fieldName);
                         break;
                     default:
                         validation = true;
@@ -303,7 +319,10 @@ addFormValidation("workOrderForm", [
         id: "taskType_",
         checks: [{ type: "empty" }],
     },
-    // Add more fields as needed
+    {
+        id: "notes_",
+        checks: [{ type: "noSQLInjection" }],
+    },
 ]);
 addFormValidation("taskTypeForm", [
     {
@@ -365,6 +384,7 @@ async function setCurrentContract(contractId) {
             },
             body: JSON.stringify({ contractId }), // Stringify the body
         });
+
 
         const data = await response.json();
 
