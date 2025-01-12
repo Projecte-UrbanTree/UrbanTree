@@ -95,11 +95,16 @@ class UserController
     public function destroy($id, $queryParams)
     {
         $user = User::find($id);
-        if ($user) {
+
+        // verify the role
+        $admin_count = User::count(['role' => 2]);
+        if ($admin_count = 1) {
+            Session::set('error', 'No se puede eliminar el único administrador');
+        } else if ($user->role != 2) {
             $user->delete();
             Session::set('success', 'Usuario eliminado correctamente');
         } else
-            Session::set('error', 'Usuario no encontrado');
+            Session::set('error', 'No se pueden eliminar administradores');
 
         header('Location: /admin/users');
         exit;
