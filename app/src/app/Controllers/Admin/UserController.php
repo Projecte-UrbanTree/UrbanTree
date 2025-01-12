@@ -79,7 +79,7 @@ class UserController
         $admin_count = User::count(['role' => 2]);
 
         if ($admin_count == 1 && $user->role == 2 && $user->role != $postData['role']) {
-            Session::set('error', 'No se puede cambiar el rol al único un administrador');
+            Session::set('error', 'No se puede cambiar el rol al único administrador');
             header('Location: /admin/users');
             exit;
         }
@@ -109,11 +109,11 @@ class UserController
         $admin_count = User::count(['role' => 2]);
         if ($admin_count == 1) {
             Session::set('error', 'No se puede eliminar el único administrador');
-        } else if ($user->role != 2) {
+        } else if ($user) {
             $user->delete();
             Session::set('success', 'Usuario eliminado correctamente');
         } else
-            Session::set('error', 'No se pueden eliminar administradores');
+            Session::set('error', 'Usuario no encontrado');
 
         header('Location: /admin/users');
         exit;
