@@ -48,8 +48,8 @@ function validateField(value, regexName, fieldName) {
 function dateCannotBeAfter(startDate, endDate, fieldName) {
     return new Date(startDate) > new Date(endDate)
         ? createErrorElement(
-            `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
-        )
+              `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
+          )
         : true;
 }
 
@@ -61,8 +61,8 @@ function validatePositiveInteger(value, fieldName) {
     return pattern.test(value) && parseFloat(value) > 0
         ? true
         : createErrorElement(
-            `${fieldName}: El valor debe ser un número entero positivo.`
-        );
+              `${fieldName}: El valor debe ser un número entero positivo.`
+          );
 }
 
 /**
@@ -72,8 +72,8 @@ function validateMaxValue(value, max, fieldName) {
     return parseFloat(value) <= max
         ? true
         : createErrorElement(
-            `${fieldName}: El valor no puede ser mayor a ${max}.`
-        );
+              `${fieldName}: El valor no puede ser mayor a ${max}.`
+          );
 }
 
 function getFieldName(fieldId) {
@@ -305,7 +305,15 @@ addFormValidation("workOrderForm", [
     },
     // Add more fields as needed
 ]);
-
+addFormValidation("taskTypeForm", [
+    {
+        id: "name",
+        checks: [
+            { type: "empty" },
+            // { type: "regex", regexName: "lettersAndSpaces" },
+        ],
+    },
+]);
 // func to active the button if detect changes in the form
 function checkChanges() {
     const inputs = document.querySelectorAll("input");
@@ -350,10 +358,10 @@ function checkChanges() {
 // Function to POST on set-contract and then update the session values
 async function setCurrentContract(contractId) {
     try {
-        const response = await fetch('/admin/set-contract', {
-            method: 'POST',
+        const response = await fetch("/admin/set-contract", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json', // Set the content type to JSON
+                "Content-Type": "application/json", // Set the content type to JSON
             },
             body: JSON.stringify({ contractId }), // Stringify the body
         });
@@ -363,9 +371,9 @@ async function setCurrentContract(contractId) {
         if (data.success) {
             window.location.reload();
         } else {
-            console.error('Error:', data);
+            console.error("Error:", data);
         }
     } catch (error) {
-        console.error('Fetch error:', error);
+        console.error("Fetch error:", error);
     }
 }
