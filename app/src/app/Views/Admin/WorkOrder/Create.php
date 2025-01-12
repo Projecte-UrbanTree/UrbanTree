@@ -20,12 +20,15 @@ function mapWithId($items, $getIdMethod)
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Crear nueva órden de trabajo</h2>
-    <form action="/admin/work-order/store" method="POST" class="space-y-6">
+    <form id="workOrderForm" action="/admin/work-order/store" method="POST" class="space-y-6">
+
+        <div id="errorMessages" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        </div>
+
         <div>
             <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
-            <input type="date" id="date" name="date"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                required>
+            <input type="date" id="date" name="date" required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <div>

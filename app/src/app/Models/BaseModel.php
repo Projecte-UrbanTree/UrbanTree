@@ -345,6 +345,14 @@ abstract class BaseModel
             $this->id = Database::connect()->lastInsertId();
     }
 
+    public function deleteForce(): void
+    {
+        $table = static::getTableName();
+        $query = "DELETE FROM {$table} WHERE id = :id";
+        Database::prepareAndExecute($query, ['id' => $this->id]);
+    }
+
+
     //* Abstract methods to enforce subclass implementation
     abstract protected static function getTableName(): string;
     abstract protected static function mapDataToModel(array $data): object;
