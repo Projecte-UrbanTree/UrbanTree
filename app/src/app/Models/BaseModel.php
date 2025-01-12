@@ -116,11 +116,11 @@ abstract class BaseModel
     }
 
     // Delete a record from the table
-    public function delete(): void
+    public function delete($force = false): void
     {
         $table = static::getTableName();
 
-        if (static::hasSoftDelete())
+        if (static::hasSoftDelete() && !$force)
             $query = "UPDATE {$table} SET deleted_at = NOW() WHERE id = :id";
         else
             $query = "DELETE FROM {$table} WHERE id = :id";
@@ -343,24 +343,6 @@ abstract class BaseModel
 
         if (!isset($this->id))
             $this->id = Database::connect()->lastInsertId();
-    }
-
-    // Delete multiple records from the table
-    public static function deleteAll(array $conditions): void
-    {
-        $table = static::getTableName();
-        $whereClauses = [];
-        $parameters = [];
-
-        foreach ($conditions as $column => $value) {
-            $whereClauses[] = "{$column} = :{$column}";
-            $parameters[$column] = $value;
-        }
-
-        $whereClause = implode(' AND ', $whereClauses);
-        $query = "DELETE FROM {$table} WHERE {$whereClause}";
-
-        Database::prepareAndExecute($query, $parameters);
     }
 
     //* Abstract methods to enforce subclass implementation
