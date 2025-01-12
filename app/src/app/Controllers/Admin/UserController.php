@@ -75,6 +75,15 @@ class UserController
     public function update($id, $postData)
     {
         $user = User::find($id);
+
+        $admin_count = User::count(['role' => 2]);
+
+        if ($admin_count == 1 && $user->role == 2 && $user->role != $postData['role']) {
+            Session::set('error', 'No se puede cambiar el rol a un administrador');
+            header('Location: /admin/users');
+            exit;
+        }
+
         if ($user) {
             $user->company = $postData['company'];
             $user->name = $postData['name'];
