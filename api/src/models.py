@@ -1,7 +1,5 @@
 from datetime import datetime
-from typing import Generic, List, TypeVar, Union
 
-from pydantic import BaseModel
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -16,7 +14,7 @@ class Sensor(SQLModel, table=True):
     model: str | None = Field(default=None, index=True)
     is_active: bool | None = Field(default=None, index=True)
 
-    histories: List["SensorHistory"] = Relationship(back_populates="sensor")
+    histories: list["SensorHistory"] = Relationship(back_populates="sensor")
 
 
 class SensorHistoryBase(SQLModel):
@@ -38,14 +36,3 @@ class SensorHistory(SensorHistoryBase, table=True):
 
 class SensorHistoryCreate(SensorHistoryBase):
     pass
-
-
-T = TypeVar("T")
-class ApiResponse(BaseModel, Generic[T]):
-    status: str  # 'success' o 'error'
-    details: Union[T, List[T]]  # response details
-    message: str
-    status_code: int  # status code
-
-    class Config:
-        orm_mode = True
