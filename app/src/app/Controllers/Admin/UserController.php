@@ -98,7 +98,7 @@ class UserController
 
         // verify the role
         $admin_count = User::count(['role' => 2]);
-        if ($admin_count = 1) {
+        if ($admin_count == 1) {
             Session::set('error', 'No se puede eliminar el único administrador');
         } else if ($user->role != 2) {
             $user->delete();
