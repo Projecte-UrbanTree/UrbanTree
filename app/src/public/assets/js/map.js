@@ -42,11 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (mode === "zone") {
                 editor_mode = "zone";
                 createButton.innerHTML =
-                    "<i class='fas fa-plus-circle'></i> Crear zona";
+                    "<i class='fas fa-plus-circle'></i> Crear nueva zona";
             } else if (mode === "element") {
                 editor_mode = "element";
                 createButton.innerHTML =
-                    "<i class='fas fa-plus-circle'></i> Crear elemento";
+                    "<i class='fas fa-plus-circle'></i> Crear nuevo elemento";
             }
 
             createButton.classList.remove("text-gray-300");
@@ -152,9 +152,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const map = new mapboxgl.Map({
         container: "map",
-        center: [-3.70379, 40.416775],
+        center: [0.5826405437646912, 40.70973485628924],
         style: "mapbox://styles/mapbox/standard-satellite",
-        zoom: 18,
+        zoom: 15,
     });
 
     map.on("load", () => {
@@ -306,10 +306,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const zoneControls = document.createElement("div");
         zoneControls.className = "flex items-center space-x-4";
 
-        const showHideCheckbox = document.createElement("input");
-        showHideCheckbox.type = "checkbox";
-        showHideCheckbox.checked = true;
-        showHideCheckbox.className = "rounded-full border-gray-300";
+        const showHideLabel = document.createElement("label");
+        showHideLabel.className = "flex items-center space-x-2 cursor-pointer";
+        showHideLabel.innerHTML = `
+            <input type="checkbox" class="rounded-full border-gray-300" checked>
+            <i class="fas fa-eye text-gray-700"></i>
+        `;
+        const showHideCheckbox = showHideLabel.querySelector("input");
         showHideCheckbox.dataset.zoneId = zone.id;
         showHideCheckbox.addEventListener("change", (e) =>
             handleZoneToggle(e, zone)
@@ -317,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const colorPicker = createColorPicker(zone.id, zone.color);
 
-        zoneControls.appendChild(showHideCheckbox);
+        zoneControls.appendChild(showHideLabel);
         zoneControls.appendChild(colorPicker);
 
         zoneHeader.appendChild(zoneTitleContainer);

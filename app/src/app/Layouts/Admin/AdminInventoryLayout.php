@@ -116,7 +116,7 @@ $currentContract = Session::get('current_contract');
         <!-- Create Button -->
         <button id="create-control" class="text-sm text-gray-300 flex flex-col items-center" disabled>
             <i class="fas fa-plus-circle"></i>
-            Crear zona
+            Crear nueva zona
         </button>
 
         <!-- Finish Creation Button -->
