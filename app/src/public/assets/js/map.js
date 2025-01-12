@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const createZoneItem = (zone) => {
         const zoneItem = document.createElement("div");
-        zoneItem.className = "bg-white border rounded-lg mb-4 p-4 shadow-lg";
+        zoneItem.className = "bg-white border rounded-lg mb-4 p-4";
 
         const zoneHeader = document.createElement("div");
         zoneHeader.className = "flex items-center justify-between mb-4";
@@ -234,14 +234,14 @@ document.addEventListener("DOMContentLoaded", () => {
         zoneTitleContainer.className = "flex items-center space-x-2";
 
         const zoneTitle = document.createElement("span");
-        zoneTitle.className = "text-xl font-semibold text-gray-800 truncate";
+        zoneTitle.className = "text-xl font-semibold text-gray-700 truncate";
         zoneTitle.innerText = `${zone.name}`;
 
         const zoneTitleInput = document.createElement("input");
         zoneTitleInput.type = "text";
         zoneTitleInput.className =
-            "hidden text-xl font-semibold text-gray-800 border-b-2 border-gray-300 focus:outline-none";
-        zoneTitleInput.value = `Zona ${zone.id}`;
+            "hidden text-xl font-semibold text-gray-700 border-b-2 border-gray-300 focus:outline-none";
+        zoneTitleInput.value = ` ${zone.name}`;
 
         zoneTitle.addEventListener("click", () => {
             zoneTitle.classList.add("hidden");
@@ -249,10 +249,28 @@ document.addEventListener("DOMContentLoaded", () => {
             zoneTitleInput.focus();
         });
 
-        zoneTitleInput.addEventListener("blur", () => {
+        zoneTitleInput.addEventListener("blur", async () => {
             zoneTitle.classList.remove("hidden");
             zoneTitleInput.classList.add("hidden");
             zoneTitle.innerText = zoneTitleInput.value;
+
+            try {
+                const response = await fetch("/api/map/zones/name", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ id: zone.id, name: zoneTitleInput.value }),
+                });
+
+                const result = await response.json();
+                if (result.status !== "success") {
+                    alert(`Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error("Update Zone Name Error", error);
+                alert("Error al actualizar el nombre de la zona.");
+            }
         });
 
         zoneTitleInput.addEventListener("keydown", (e) => {
@@ -276,20 +294,13 @@ document.addEventListener("DOMContentLoaded", () => {
             handleZoneToggle(e, zone)
         );
 
-        const deleteButton = document.createElement("button");
-        deleteButton.className =
-            "bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300";
-        deleteButton.innerText = "Eliminar";
-        deleteButton.onclick = () => deleteZone(zone.id);
+        const colorPicker = createColorPicker(zone.id, zone.color);
 
         zoneControls.appendChild(showHideCheckbox);
-        zoneControls.appendChild(deleteButton);
+        zoneControls.appendChild(colorPicker);
 
         zoneHeader.appendChild(zoneTitleContainer);
         zoneHeader.appendChild(zoneControls);
-
-        const colorPicker = createColorPicker(zone.id, zone.color);
-        zoneHeader.appendChild(colorPicker);
 
         const zoneDescription = document.createElement("textarea");
         zoneDescription.className =
@@ -312,9 +323,22 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
+        const zoneFooter = document.createElement("div");
+        zoneFooter.className = "flex justify-end mt-4";
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className =
+            "bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300";
+        deleteButton.innerText = "Eliminar";
+        deleteButton.onclick = () => deleteZone(zone.id);
+
+        zoneFooter.appendChild(deleteButton);
+
         zoneItem.appendChild(zoneHeader);
         zoneItem.appendChild(zoneDescription);
         zoneItem.appendChild(elementTypesContainer);
+        zoneItem.appendChild(zoneFooter);
+
         return zoneItem;
     };
 
@@ -368,9 +392,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!hiddenMessageDiv) {
                 hiddenMessageDiv = document.createElement("div");
                 hiddenMessageDiv.className =
-                    "zone-hidden-message text-gray-800 mt-2 p-4";
+                    "zone-hidden-message text-gray-700 mt-2 p-4";
                 hiddenMessageDiv.innerHTML = "Zona actualmente oculta.";
-                zoneItem.appendChild(hiddenMessageDiv);
+                zoneItem.insertBefore(hiddenMessageDiv, zoneItem.querySelector(".flex.justify-end.mt-4"));
             }
 
             removeMarkersForZone(zone);
@@ -530,9 +554,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const colorPickerContainer = document.createElement("div");
         colorPickerContainer.className = "ml-4";
         colorPickerContainer.innerHTML = `
-        <input type="color" class="w-8 h-8" value="${
-            color || "#fff"
-        }" data-zone-id="${zoneId}">
+        <input
+            type="color"
+            data-zone-id="${zoneId}"
+            class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none"
+            value="${color || '#2563eb'}"
+            title="Choose your color"
+        >
     `;
         const colorPickerInput = colorPickerContainer.querySelector("input");
 

@@ -23,6 +23,12 @@ return [
             'method' => 'createElement',
         ]
     ],
+    'PUT' => [
+        '/api/map/zones/name' => [
+            'controller' => MapController::class,
+            'method' => 'updateZoneName',
+        ],
+    ],
     'DELETE' => [
         '/api/map/zones' => [
             'controller' => MapController::class,

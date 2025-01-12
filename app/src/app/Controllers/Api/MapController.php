@@ -139,4 +139,21 @@ class MapController
         echo json_encode($data);
         exit;
     }
+
+    public function updateZoneName($postData)
+    {
+        try {
+            $zone = Zone::find($postData['id']);
+            if ($zone) {
+                $zone->name = $postData['name'];
+                $zone->save();
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Zone not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
 }
