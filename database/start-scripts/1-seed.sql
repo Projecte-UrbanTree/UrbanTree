@@ -18,10 +18,10 @@ INSERT INTO machines (name, max_basket_size) VALUES
 ('Tijera elevadora', 400.00);
 
 --* Element Types
-INSERT INTO element_types (name, description, requires_tree_type) VALUES
-('Árbol', 'Elemento tipo árbol', true),
-('Banco', 'Elemento tipo banco', false),
-('Fuente', 'Elemento tipo fuente', false);
+INSERT INTO element_types (name, description, requires_tree_type, icon, color) VALUES
+('Árbol', 'Elemento tipo árbol', true, 'fa-solid fa-tree', '#ff8629'),
+('Banco', 'Elemento tipo banco', false, 'fa-solid fa-chair', '#3bc736'),
+('Fuente', 'Elemento tipo fuente', false, 'fa-solid fa-faucet', '#007bff');
 
 --* Tree Types
 INSERT INTO tree_types (family, genus, species) VALUES
@@ -35,17 +35,17 @@ INSERT INTO task_types (name, description) VALUES
 ('Riego de árboles', 'Riego programado'),
 ('Fertilización', 'Fertilización básica');
 
---* Points
-INSERT INTO points (latitude, longitude) VALUES
-(40.416775, -3.703790),
-(40.416776, -3.703795),
-(40.416777, -3.703800);
-
 --* Zones
-INSERT INTO zones (name, contract_id) VALUES
-('Zona Norte', 1),
-('Zona Este', 2),
-('Zona Oeste', 3);
+INSERT INTO zones (name, contract_id, color, description) VALUES
+('Zona Norte', 1, '#FF0000', 'Esta es una descripción de la zona 1.'),
+('Zona Este', 2, '#00FF00', 'Esta es una descripción de la zona 2.'),
+('Zona Oeste', 3, '#0000FF', 'Esta es una descripción de la zona 3.');
+
+--* Points
+INSERT INTO points (latitude, longitude, zone_id, element_id) VALUES
+(40.416775, -3.703790, 1, NULL),
+(40.416776, -3.703795, 1, NULL),
+(40.416777, -3.703800, 1, NULL);
 
 --* Elements
 INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type_id) VALUES

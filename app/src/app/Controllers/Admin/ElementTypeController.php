@@ -33,6 +33,8 @@ class ElementTypeController
         $element_type = new ElementType();
         $element_type->name = $postData['name'];
         $element_type->description = $postData['description'];
+        $element_type->icon = $postData['icon'];
+        $element_type->color = $postData['color'];
 
         $element_type->save();
 
@@ -70,6 +72,8 @@ class ElementTypeController
         if ($element_type) {
             $element_type->name = $postData['name'];
             $element_type->description = $postData['description'];
+            $element_type->icon = $postData['icon'];
+            $element_type->color = $postData['color'];
 
             $element_type->save();
 

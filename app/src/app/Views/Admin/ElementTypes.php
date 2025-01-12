@@ -8,10 +8,12 @@
     <div class="relative overflow-x-auto rounded-lg">
         <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
             <thead class="bg-gray-700 text-white">
-                <tr class="h-12"> <!-- Adjusted height -->
+                <tr class="h-12">
                     <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Nombre</th>
                     <th scope="col" class="px-4 py-3 font-medium">Descripción</th>
                     <th scope="col" class="px-4 py-3 font-medium">Requiere tipo de árbol</th>
+                    <th scope="col" class="px-4 py-3 font-medium">Icono</th>
+                    <th scope="col" class="px-4 py-3 font-medium">Color</th>
                     <th scope="col" class="px-4 py-3 font-medium">Elementos</th>
                     <th scope="col" class="px-4 py-3 text-center font-medium w-32 rounded-tr-lg">Acciones</th>
                 </tr>
@@ -27,6 +29,12 @@
                         </td>
                         <td class="px-4 py-3">
                             <?= $element_type->requires_tree_type ? "Sí" : "No"; ?>
+                        </td>
+                        <td class="px-4 py-3">
+                            <i class="<?= htmlspecialchars($element_type->icon); ?>"></i>
+                        </td>
+                        <td class="px-4 py-3">
+                            <span style="color: <?= htmlspecialchars($element_type->color); ?>;">■</span>
                         </td>
                         <td class="px-4 py-3">
                             <?= count($element_type->elements()); ?>

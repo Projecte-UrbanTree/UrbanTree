@@ -4,11 +4,11 @@ namespace App\Models;
 
 class ElementType extends BaseModel
 {
-    public string $name;
-
-    public string $description;
-
-    public bool $requires_tree_type;
+    public ?string $name;
+    public ?string $description;
+    public ?bool $requires_tree_type;
+    public ?string $icon;
+    public ?string $color;
 
     protected static function getTableName(): string
     {
@@ -22,6 +22,8 @@ class ElementType extends BaseModel
         $element_type->name = $data['name'];
         $element_type->description = $data['description'];
         $element_type->requires_tree_type = $data['requires_tree_type'];
+        $element_type->icon = $data['icon'];
+        $element_type->color = $data['color'];
         $element_type->created_at = $data['created_at'];
         $element_type->updated_at = $data['updated_at'];
         $element_type->deleted_at = $data['deleted_at'];
@@ -29,9 +31,10 @@ class ElementType extends BaseModel
         return $element_type;
     }
 
-    public function elements(): array
+    // Relationship to elements
+    public function elements(array $conditions = []): array
     {
-        return $this->hasMany(Element::class, 'element_type_id');
+        $conditions['element_type_id'] = $this->id;
+        return Element::findAll($conditions);
     }
-
 }

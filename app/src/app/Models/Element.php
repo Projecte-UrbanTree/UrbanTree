@@ -52,12 +52,11 @@ class Element extends BaseModel
 
     public function point(): ?Point
     {
-        return $this->point_id ? $this->belongsTo(Point::class, 'point_id') : null;
+        return $this->belongsTo(Point::class, 'point_id');
     }
 
     public function treeType(): ?TreeType
     {
-
         return $this->tree_type_id ? $this->belongsTo(TreeType::class, 'tree_type_id') : null;
     }
 }

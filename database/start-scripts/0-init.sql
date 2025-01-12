@@ -76,34 +76,39 @@ create table element_types (
     name varchar(255) not null,
     description varchar(255),
     requires_tree_type boolean not null default false,
+    icon varchar(255), -- New column for icon
+    color varchar(7), -- New column for color
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp
 );
 
---* Points and zones
-create table points (
-    id int auto_increment primary key,
-    latitude decimal(10, 7) not null,
-    longitude decimal(10, 7) not null,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp,
-    deleted_at timestamp,
-    constraint UC_Point unique (latitude, longitude)
-);
-
+--* Zones and elements
 create table zones (
     id int auto_increment primary key,
     contract_id int not null,
     name varchar(255),
+    color varchar(7), -- New column for color
+    description varchar(255), -- New column for description
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (contract_id) references contracts(id),
-    constraint UC_Zone unique (contract_id, name)
+    foreign key (contract_id) references contracts(id)
 );
 
---* Elements and incidences
+create table points (
+    id int auto_increment primary key,
+    latitude decimal(10, 7) not null,
+    longitude decimal(10, 7) not null,
+    zone_id int null, -- Nullable column for zone relationship
+    element_id int null, -- Nullable column for element relationship
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
+    foreign key (zone_id) references zones(id), -- Foreign key for zone relationship
+    constraint UC_Point unique (latitude, longitude)
+);
+
 create table elements (
     id int auto_increment primary key,
     element_type_id int not null,
@@ -121,6 +126,7 @@ create table elements (
     foreign key (element_type_id) references element_types(id)
 );
 
+--* Incidences
 create table incidences (
     id int auto_increment primary key,
     element_id int not null,
