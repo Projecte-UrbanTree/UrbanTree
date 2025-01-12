@@ -79,7 +79,7 @@ class UserController
         $admin_count = User::count(['role' => 2]);
 
         if ($admin_count == 1 && $user->role == 2 && $user->role != $postData['role']) {
-            Session::set('error', 'No se puede cambiar el rol a un administrador');
+            Session::set('error', 'No se puede cambiar el rol al único un administrador');
             header('Location: /admin/users');
             exit;
         }
