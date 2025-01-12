@@ -79,8 +79,29 @@ document.addEventListener("DOMContentLoaded", () => {
         return maxId + 1;
     };
 
+    const zonesCollide = (newZonePoints) => {
+        if (newZonePoints.length < 4) {
+            return false;
+        }
+
+        const closedNewZonePoints = [...newZonePoints, newZonePoints[0]];
+        const newZonePolygon = turf.polygon([closedNewZonePoints]);
+
+        return zonesData.zones.some((zone) => {
+            const zonePoints = zone.points.map(([lng, lat]) => [parseFloat(lng), parseFloat(lat)]);
+            const closedZonePoints = [...zonePoints, zonePoints[0]];
+            const zonePolygon = turf.polygon([closedZonePoints]);
+            return turf.booleanOverlap(newZonePolygon, zonePolygon);
+        });
+    };
+
     finishButton.addEventListener("click", async () => {
         if (editor_mode === "zone" && editor_status === "create") {
+            if (zonesCollide(zonePoints)) {
+                alert("La nueva zona colisiona con una zona existente.");
+                return;
+            }
+
             const newZone = {
                 id: getNextZoneId(),
                 name: `Zona ${getNextZoneId()}`,
