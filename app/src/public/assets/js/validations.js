@@ -266,17 +266,14 @@ new FormValidator("workOrderForm", [
     },
     {
         id: "zonesInput_",
-        idStartsWith: true,
         checks: [{ type: "empty" }],
     },
     {
         id: "taskType_",
-        idStartsWith: true,
         checks: [{ type: "empty" }],
     },
     {
         id: "notes_",
-        idStartsWith: true,
         checks: [
             { type: "empty" },
             { type: "regex", regexName: "noSQLInjection" },
