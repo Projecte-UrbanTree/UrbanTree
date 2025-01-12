@@ -1,3 +1,9 @@
+<?php
+
+use App\Core\Session;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +49,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-600">Welcome,
-                        <?= $_SESSION['user']['name'] . ' ' . $_SESSION['user']['surname']; ?></span>
+                        <?= Session::get('user')['name'] . ' ' . Session::get('user')['surname']; ?></span>
                     <a href="/logout"
                         class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
                         Logout</a>

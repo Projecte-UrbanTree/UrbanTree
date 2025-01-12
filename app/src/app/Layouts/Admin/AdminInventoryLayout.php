@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Session;
 use App\Models\User;
 
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -84,9 +85,9 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                     <img class="h-10 rounded-full" src="/assets/images/avatar.png" alt="User Avatar">
                     <div class="hidden md:block text-sm relative">
                         <span
-                            class="block text-gray-700"><?= $_SESSION['user']['name'] . ' ' . $_SESSION['user']['surname']; ?></span>
+                            class="block text-gray-700"><?= Session::get('user')['name'] . ' ' . Session::get('user')['surname']; ?></span>
                         <span class="block text-gray-500">
-                            <?= User::getRoleName($_SESSION['user']['role']); ?>
+                            <?= User::getRoleName(Session::get('user')['role']); ?>
                         </span>
                         <div id="profile-dropdown"
                             class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
