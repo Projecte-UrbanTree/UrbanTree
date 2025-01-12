@@ -1,76 +1,175 @@
 <?php
 
 use App\Core\Session;
+use App\Models\User;
 
+$currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$currentContract = Session::get('current_contract');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <!-- Character set declaration for the document -->
     <meta charset="UTF-8">
+    <!-- Viewport settings to make the layout responsive on different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $title . ' - ' . getenv('APP_NAME'); ?>
-    </title>
-    <script src="/assets/js/app.js"></script>
+    <!-- Page title dynamically generated from PHP -->
+    <title><?= $title . ' - ' . getenv('APP_NAME'); ?></title>
+    <!-- Favicon link -->
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <!-- Tailwind CSS framework (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Main stylesheet for the application -->
     <link rel="stylesheet" href="/assets/css/app.css">
+    <!-- Tailwind custom JavaScript file (local) -->
+    <script src="/assets/js/tailwind.js"></script>
+    <!-- FontAwesome CDN for icons -->
+    <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+<body class="bg-gray-50">
 
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside class="bg-gray-800 w-64 flex-shrink-0">
-            <div class="text-white text-2xl font-bold p-4 border-b border-gray-700">
-                <?= getenv('APP_NAME'); ?>
-            </div>
-            <nav class="mt-4">
-                <?php $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
-                <a href="/dashboard"
-                    class="block py-2 px-4 text-white hover:bg-gray-700 <?= $currentPath === '/' ? 'bg-gray-700' : ''; ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-5 h-5 inline">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
-                    </svg>
+    <!-- Navigation Bar -->
+    <header class="border-b bg-white shadow-md">
+        <nav class="flex items-center justify-between px-4 py-4 max-w-7xl mx-auto">
 
-                    Dashboard
+            <!-- Logo (hidden on mobile) -->
+            <a href="/" class="hidden sm:block">
+                <img class="w-36 md:w-48" src="/assets/images/logo.png" alt="Logo">
+            </a>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-toggle" class="block md:hidden text-gray-700 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+
+            <!-- Navigation Links (Visible only on large screens) -->
+            <div class="hidden md:flex space-x-6">
+                <a href="/worker/inventory"
+                    class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/worker/inventory') ? 'font-semibold' : ''; ?>">
+                    <i class="fas fa-cogs"></i> Inventario
                 </a>
-            </nav>
-        </aside>
-
-        <!-- Main content area -->
-        <div class="flex-1 flex flex-col">
-            <!-- Top bar -->
-            <header class="bg-white shadow p-4 flex justify-between items-center">
-                <div class="text-xl font-bold"><?= $title; ?>
+                <a href="/worker/work-orders"
+                    class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/worker/work-orders') ? 'font-semibold' : ''; ?>">
+                    <i class="fas fa-briefcase block"></i>
+                    Órdenes de trabajo
+                </a>
+            </div>
+            <!-- Profile and Contract Dropdown -->
+            <div class="flex items-center gap-4">
+                <select id="contractBtn" name="contractBtn"
+                    class="bg-white text-sm rounded-md p-2 text-right focus:outline-none"
+                    onchange="setCurrentContract(this.value)">
+                    <?php
+                    foreach ($contracts as $contract) {
+                        echo '<option value="' . $contract->getId() . '"' . ($currentContract == $contract->getId() ? ' selected' : '') . '>' . $contract->name . '</option>';
+                    }
+                    echo '<option value="-1"' . ($currentContract == -1 ? ' selected' : '') . '>Todos los contratos</option>';
+                    ?>
+                </select>
+                <div class="relative">
+                    <!-- Letters avatar -->
+                    <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer"
+                        onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
+                        <?= strtoupper(substr($_SESSION['user']['name'], 0, 1) . substr($_SESSION['user']['surname'], 0, 1)); ?>
+                    </div>
+                    <div id="profile-dropdown"
+                        class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
+                        <a href="/worker/account"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuración de la
+                            cuenta</a>
+                        <a href="/license" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Licencia</a>
+                        <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cerrar
+                            sesión</a>
+                    </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <span class="text-gray-600">Welcome,
-                        <?= Session::get('user')['name'] . ' ' . Session::get('user')['surname']; ?></span>
-                    <a href="/logout"
-                        class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg shadow focus:outline-none focus:ring focus:ring-green-500">
-                        Logout</a>
-                </div>
-            </header>
+            </div>
+        </nav>
 
-            <!-- Content area -->
-            <main class="flex-grow p-6 overflow-auto">
-                <?= $content; ?>
-            </main>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 py-4 bg-gray-100">
+            <a href="/worker/inventory"
+                class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/worker/inventory') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-cogs"></i> Inventario
+            </a>
+            <a href="/worker/work-orders"
+                class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/worker/work-orders') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-briefcase"></i> Órdenes de trabajo
+            </a>
         </div>
-    </div>
+    </header>
 
-    <!-- Javascript, add class d-none to alert-msg after 5 seconds if it exists -->
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 pt-8 pb-16">
+        <?php if (Session::has('success')): ?>
+            <div id="alert-msg"
+                class="bg-green-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                role="alert">
+                <span class="inline-block mr-2">
+                    <!-- Success Icon (Font Awesome) -->
+                    <i class="fas fa-check-circle w-5 h-5 text-white"></i>
+                </span>
+                <?= htmlspecialchars(Session::get('success')); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (Session::has('error')): ?>
+            <div id="alert-msg-error"
+                class="bg-red-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                role="alert">
+                <span class="inline-block mr-2">
+                    <!-- Error Icon (Font Awesome) -->
+                    <i class="fas fa-exclamation-circle w-5 h-5 text-white"></i>
+                </span>
+                <strong class="font-bold">Error:</strong> <?= htmlspecialchars(Session::get('error')); ?>
+            </div>
+        <?php endif; ?>
+
+        <?= $content; ?>
+    </main>
+
+    <script src="/assets/js/worker.js?v=<?= time(); ?>"></script>
     <script>
-        setTimeout(() => {
-            const alertMsg = document.getElementById('alert-msg');
+        document.addEventListener("DOMContentLoaded", function () {
+            // Show alerts with animation (Success and Error messages)
+            const alertMsg = document.querySelector("#alert-msg");
+            const alertMsgError = document.querySelector("#alert-msg-error");
+
             if (alertMsg) {
-                alertMsg.classList.add('hidden');
+                setTimeout(() => {
+                    alertMsg.classList.remove("hidden", "opacity-0");
+                    alertMsg.classList.add("opacity-100");
+                }, 100);
+
+                setTimeout(() => {
+                    alertMsg.classList.add("opacity-0");
+                    alertMsg.classList.remove("opacity-100");
+                    setTimeout(() => {
+                        alertMsg.classList.add("hidden");
+                    }, 500);
+                }, 3500);
             }
-        }, 3500);
+
+            if (alertMsgError) {
+                setTimeout(() => {
+                    alertMsgError.classList.add("opacity-0");
+                    alertMsgError.classList.remove("opacity-100");
+                    setTimeout(() => {
+                        alertMsgError.classList.add("hidden");
+                    }, 500);
+                }, 3500);
+            }
+
+            // Mobile menu toggle functionality
+            const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+            const mobileMenu = document.getElementById("mobile-menu");
+
+            mobileMenuToggle.addEventListener("click", function () {
+                mobileMenu.classList.toggle("hidden");
+            });
+        });
     </script>
 
 </body>

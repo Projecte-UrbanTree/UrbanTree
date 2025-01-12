@@ -141,7 +141,6 @@ class WorkOrderController
                 $work_order->date = $postData['date'];
                 $work_order->save();
 
-                // Eliminar relaciones de usuarios
                 foreach ($work_order->users() as $user) {
                     $workOrderUser = WorkOrderUser::findBy(['work_order_id' => $work_order->getId(), 'user_id' => $user->getId()], true);
                     if ($workOrderUser) {
@@ -149,7 +148,6 @@ class WorkOrderController
                     }
                 }
 
-                // Eliminar bloques, tareas y zonas
                 foreach ($work_order->blocks() as $block) {
                     foreach ($block->tasks() as $task) {
                         $task->delete(true);
@@ -163,7 +161,6 @@ class WorkOrderController
                     $block->delete(true);
                 }
 
-                // Crear relaciones de usuarios
                 foreach (explode(',', $postData['userIds']) as $userId) {
                     $workOrderUser = new WorkOrderUser();
                     $workOrderUser->work_order_id = (int) $work_order->getId();
@@ -171,7 +168,6 @@ class WorkOrderController
                     $workOrderUser->save();
                 }
 
-                // Crear bloques, tareas y zonas
                 foreach ($postData['blocks'] as $blockData) {
                     $block = new WorkOrderBlock();
                     $block->work_order_id = (int) $work_order->getId();
@@ -214,7 +210,6 @@ class WorkOrderController
         $work_order = WorkOrder::find($id);
 
         if ($work_order) {
-            // Eliminar relaciones de usuarios
             foreach ($work_order->users() as $user) {
                 $workOrderUser = WorkOrderUser::findBy(['work_order_id' => $work_order->getId(), 'user_id' => $user->getId()], true);
                 if ($workOrderUser) {

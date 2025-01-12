@@ -174,9 +174,15 @@ abstract class BaseModel
                 if (is_string($value) && strtoupper($value) === "NOT NULL") {
                     // Handle NOT NULL condition
                     $conditions[] = "{$key} IS NOT NULL";
-                } elseif ($value === null || strtoupper($value) === "NULL") {
+                } elseif ($value === null || is_string($value) && strtoupper($value) === "NULL") {
                     // Handle NULL condition
                     $conditions[] = "{$key} IS NULL";
+                } elseif (is_array($value)) {
+                    // Handle IN condition
+                    $placeholders = implode(', ', array_map(fn($val) => ":{$key}_{$val}", array_keys($value)));
+                    $conditions[] = "{$key} IN ({$placeholders})";
+                    foreach ($value as $k => $v)
+                        $params["{$key}_{$k}"] = $v;
                 } else {
                     // Handle standard equality
                     $conditions[] = "{$key} = :{$key}";
