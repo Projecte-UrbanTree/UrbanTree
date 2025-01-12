@@ -18,13 +18,10 @@ class WorkOrderBlockZone extends BaseModel
         $work_order_block_zone->id = $data['id'];
         $work_order_block_zone->work_orders_block_id = $data['work_orders_block_id'];
         $work_order_block_zone->zone_id = $data['zone_id'];
-        $work_order_block_zone->deleted_at = $data['deleted_at'] ?? null;
+        $work_order_block_zone->created_at = $data['created_at'];
+        $work_order_block_zone->updated_at = $data['updated_at'];
+        $work_order_block_zone->deleted_at = $data['deleted_at'];
 
         return $work_order_block_zone;
-    }
-
-    protected static function hasSoftDelete(): bool
-    {
-        return true;
     }
 }

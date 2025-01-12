@@ -116,11 +116,11 @@ abstract class BaseModel
     }
 
     // Delete a record from the table
-    public function delete(): void
+    public function delete($force = false): void
     {
         $table = static::getTableName();
 
-        if (static::hasSoftDelete())
+        if (static::hasSoftDelete() && !$force)
             $query = "UPDATE {$table} SET deleted_at = NOW() WHERE id = :id";
         else
             $query = "DELETE FROM {$table} WHERE id = :id";
@@ -344,14 +344,6 @@ abstract class BaseModel
         if (!isset($this->id))
             $this->id = Database::connect()->lastInsertId();
     }
-
-    public function deleteForce(): void
-    {
-        $table = static::getTableName();
-        $query = "DELETE FROM {$table} WHERE id = :id";
-        Database::prepareAndExecute($query, ['id' => $this->id]);
-    }
-
 
     //* Abstract methods to enforce subclass implementation
     abstract protected static function getTableName(): string;

@@ -145,22 +145,22 @@ class WorkOrderController
                 foreach ($work_order->users() as $user) {
                     $workOrderUser = WorkOrderUser::findBy(['work_order_id' => $work_order->getId(), 'user_id' => $user->getId()], true);
                     if ($workOrderUser) {
-                        $workOrderUser->deleteForce();
+                        $workOrderUser->delete(true);
                     }
                 }
 
                 // Eliminar bloques, tareas y zonas
                 foreach ($work_order->blocks() as $block) {
                     foreach ($block->tasks() as $task) {
-                        $task->deleteForce();
+                        $task->delete(true);
                     }
                     foreach ($block->zones() as $zone) {
                         $blockZone = WorkOrderBlockZone::findBy(['work_orders_block_id' => $block->getId(), 'zone_id' => $zone->getId()], true);
                         if ($blockZone) {
-                            $blockZone->deleteForce();
+                            $blockZone->delete(true);
                         }
                     }
-                    $block->deleteForce();
+                    $block->delete(true);
                 }
 
                 // Crear relaciones de usuarios
