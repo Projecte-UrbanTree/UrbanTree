@@ -1,28 +1,18 @@
 # Api success response:
 
-# {
-#   "status": "success",
-#   "data": {
-#     "id": 123,
-#     "name": "John Doe",
-#     "email": "john.doe@example.com"
-#   }
-# }
+from typing import List, TypeVar, Union
 
 
-# Error response:
-# {
-#   "status": "error",
-#   "message": "Validation failed",
-#   "errors": {
-#     "email": "Invalid email format",
-#     "password": "Password must be at least 8 characters long"
-#   }
-# }
+T = TypeVar("T")
 
-# Unique error response:
-# {
-#   "status": "error",
-#   "message": "Resource not found",
-#   "code": 404
-# }
+
+class ApiResponse:
+    status: str
+    details: Union[T, List[T]]
+
+
+class ErrorResponse:
+    status: str
+    message: str
+    errors: Union[T, List[T]]
+    code: int
