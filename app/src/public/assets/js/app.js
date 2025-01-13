@@ -1,19 +1,65 @@
 // func to active the button if detect changes in the form
+document.addEventListener("DOMContentLoaded", function () {
+    const inputs = document.querySelectorAll("#accountForm input");
+    inputs.forEach((input) => {
+        input.addEventListener("input", checkChanges);
+    });
+});
+
 function checkChanges() {
-    const inputs = document.querySelectorAll("input");
     const button = document.getElementById("button-save");
 
-    const changesDetected = Array.from(inputs).some(
-        (input) => input.value !== input.getAttribute("data-original-value")
-    );
+    const nameField = document.getElementById("first-name");
+    const surnameField = document.getElementById("surname");
+
+    const nameChanged =
+        nameField.value !== nameField.getAttribute("data-original-value");
+    const surnameChanged =
+        surnameField.value !== surnameField.getAttribute("data-original-value");
+
+    const currentPassword = document
+        .getElementById("current-password")
+        .value.trim();
+
+    const newPassword = document.getElementById("new-password").value.trim();
+
+    const confirmPassword = document
+        .getElementById("confirm-password")
+        .value.trim();
+
+    const passwordChanged =
+        currentPassword !== "" || newPassword !== "" || confirmPassword !== "";
+
+    const isPasswordValid = !passwordChanged || (passwordChanged && currentPassword.length > 0);
+
+    const changesDetected = (nameChanged || surnameChanged || passwordChanged) && isPasswordValid;
+
 
     button.disabled = !changesDetected;
-    button.classList.toggle("bg-gray-400", !changesDetected);
-    button.classList.toggle("cursor-not-allowed", !changesDetected);
-    button.classList.toggle("text-gray-500", !changesDetected);
-    button.classList.toggle("bg-green-500", changesDetected);
-    button.classList.toggle("hover:bg-green-600", changesDetected);
-    button.classList.toggle("text-white", changesDetected);
+
+    if (changesDetected) {
+        button.classList.remove(
+            "bg-gray-400",
+            "cursor-not-allowed",
+            "text-gray-500"
+        );
+        button.classList.add(
+            "bg-green-500",
+            "hover:bg-green-600",
+            "text-white"
+        );
+    } else {
+        button.classList.add(
+            "bg-gray-400",
+            "cursor-not-allowed",
+            "text-gray-500"
+        );
+        button.classList.remove(
+            "bg-green-500",
+            "hover:bg-green-600",
+            "text-white"
+        );
+    }
 }
 
 // Function to POST on set-contract and then update the session values
