@@ -1,7 +1,6 @@
 <?php
 
 use App\Core\Session;
-use App\Models\User;
 
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $currentContract = Session::get('current_contract');
@@ -172,6 +171,7 @@ $currentContract = Session::get('current_contract');
     </main>
 
     <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
+    <script src="/assets/js/validations.js?v=<?= time(); ?>"></script>
     <script src="/assets/js/work-orders.js?v=<?= time(); ?>"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {

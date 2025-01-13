@@ -10,7 +10,7 @@
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Creando nuevo tipo de elemento</h2>
 
-    <form action="/admin/element-type/store" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form id="elementTypeForm" action="/admin/element-type/store" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Error Messages -->
         <div id="errorMessages"
             class="hidden col-span-1 md:col-span-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"></div>
