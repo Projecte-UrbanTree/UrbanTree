@@ -33,8 +33,8 @@ class AccountController
             exit;
         }
 
-        $user->name = isset($postData['name']) ? trim($postData['name']) : $user->name;
-        $user->surname = isset($postData['surname']) ? trim($postData['surname']) : $user->surname;
+        $user->name = isset($postData['name']) ?? $user->name;
+        $user->surname = isset($postData['surname']) ?? $user->surname;
 
         // save current data fields
         $currentPassword = isset($postData['current_password']) ? trim($postData['current_password']) : '';
@@ -67,6 +67,7 @@ class AccountController
 
 
         }
+
 
         $user->save();
 
