@@ -549,6 +549,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    const updateZoneColorInDatabase = async (zoneId, color) => {
+        try {
+            const response = await fetch(`/api/map/zones/color`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ id: zoneId, color: color }),
+            });
+
+            const result = await response.json();
+            if (result.status !== "success") {
+                alert(`Error: ${result.message}`);
+            }
+        } catch (error) {
+            console.error("Update Zone Color Error", error);
+            alert("Error al actualizar el color de la zona.");
+        }
+    };
+
     const updateZoneColor = (color, zoneId) => {
         console.log("Updating zone color to: ", color);
         const zone = zonesData.zones.find((zone) => zone.id === zoneId);
@@ -560,6 +580,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 hexToRgbaString(color, 0.8)
             );
         }
+        updateZoneColorInDatabase(zoneId, color);
     };
 
     const hexToRgbaString = (hex, alpha = 1) => {

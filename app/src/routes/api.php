@@ -32,6 +32,10 @@ return [
             'controller' => MapController::class,
             'method' => 'updateZoneName',
         ],
+        '/api/map/zones/color' => [
+            'controller' => MapController::class,
+            'method' => 'updateZoneColor',
+        ],
     ],
     'DELETE' => [
         '/api/map/zones' => [

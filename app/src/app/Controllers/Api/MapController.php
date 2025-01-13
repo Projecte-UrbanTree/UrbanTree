@@ -160,6 +160,23 @@ class MapController
         exit;
     }
 
+    public function updateZoneColor($postData)
+    {
+        try {
+            $zone = Zone::find($postData['id']);
+            if ($zone) {
+                $zone->color = $postData['color'];
+                $zone->save();
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Zone not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
     public function getTreeTypes($queryParams)
     {
         header('Content-Type: application/json');
