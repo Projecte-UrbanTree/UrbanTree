@@ -17,4 +17,11 @@ return [
             'middlewares' => [WorkerMiddleware::class],
         ],
     ],
+    'POST' => [
+        '/worker/work-orders/update-status' => [
+            'controller' => WorkOrderController::class,
+            'method' => 'updateStatus',
+            'middlewares' => [WorkerMiddleware::class],
+        ],
+    ],
 ];

@@ -139,6 +139,7 @@ create table work_orders (
     id int auto_increment primary key,
     contract_id int not null,
     date date not null,
+    status int default 0,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,

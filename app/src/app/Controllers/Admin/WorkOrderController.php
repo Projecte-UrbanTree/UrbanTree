@@ -239,4 +239,22 @@ class WorkOrderController
         header('Location: /admin/work-orders');
         exit;
     }
+
+    public function updateStatus($id){
+        $work_order = WorkOrder::find($id);
+
+        $allTasksCompleted = true;
+
+        foreach ($workOrder->blocks() as $block) {
+            foreach ($block->tasks() as $task) {
+                if ($task->status == 0) {
+                    $allTasksCompleted = false;
+                    break 2;
+                }
+            }
+        }
+
+        $work_order->status = $allTasksCompleted ? 1 : 0;
+        $work_order->save();
+    }
 }
