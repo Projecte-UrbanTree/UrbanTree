@@ -13,6 +13,7 @@ use App\Models\WorkOrderBlock;
 use App\Models\WorkOrderBlockTask;
 use App\Models\WorkOrderUser;
 use App\Models\WorkOrderBlockZone;
+use App\Models\ElementType;
 
 class WorkOrderController
 {
@@ -35,6 +36,7 @@ class WorkOrderController
         $users = User::findAll(['role' => 1]);
         $zones = Zone::findAll(['name' => 'not null']);
         $tree_types = TreeType::findAll();
+        $element_types = ElementType::findAll();
         View::render([
             'view' => 'Admin/WorkOrder/Create',
             'title' => 'Nueva Orden de Trabajo',
@@ -44,6 +46,7 @@ class WorkOrderController
                 'zones' => $zones,
                 'task_types' => $task_types,
                 'tree_types' => $tree_types,
+                'element_types' => $element_types,
             ],
         ]);
     }
@@ -81,8 +84,9 @@ class WorkOrderController
                     $task = new WorkOrderBlockTask();
                     $task->work_orders_block_id = (int) $block->getId();
                     $task->task_id = (int) $taskData['taskType'];
+                    $task->element_type_id = (int) ($taskData['elementType']);
                     $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
-                    $task->status = 1; // Default status
+                    $task->status = 0; // Default status
                     $task->save();
                 }
             }
@@ -116,6 +120,7 @@ class WorkOrderController
         $users = User::findAll(['role' => 1]);
         $zones = Zone::findAll(['name' => 'not null']);
         $tree_types = TreeType::findAll();
+        $element_types = ElementType::findAll();
 
         View::render([
             'view' => 'Admin/WorkOrder/Edit',
@@ -127,6 +132,7 @@ class WorkOrderController
                 'zones' => $zones,
                 'task_types' => $task_types,
                 'tree_types' => $tree_types,
+                'element_types' => $element_types,
             ],
         ]);
     }
@@ -185,8 +191,9 @@ class WorkOrderController
                         $task = new WorkOrderBlockTask();
                         $task->work_orders_block_id = (int) $block->getId();
                         $task->task_id = (int) $taskData['taskType'];
+                        $task->element_type_id = (int) ($taskData['elementType']);
                         $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
-                        $task->status = 1; // Default status
+                        $task->status = 0; // Default status
                         $task->save();
                     }
                 }
@@ -238,23 +245,5 @@ class WorkOrderController
 
         header('Location: /admin/work-orders');
         exit;
-    }
-
-    public function updateStatus($id){
-        $work_order = WorkOrder::find($id);
-
-        $allTasksCompleted = true;
-
-        foreach ($workOrder->blocks() as $block) {
-            foreach ($block->tasks() as $task) {
-                if ($task->status == 0) {
-                    $allTasksCompleted = false;
-                    break 2;
-                }
-            }
-        }
-
-        $work_order->status = $allTasksCompleted ? 1 : 0;
-        $work_order->save();
     }
 }

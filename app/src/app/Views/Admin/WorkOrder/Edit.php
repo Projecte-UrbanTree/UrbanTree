@@ -20,10 +20,11 @@ function mapWithId($items, $getIdMethod)
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Editar órden de trabajo</h2>
-    <form id="workOrderForm" action="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/update" method="POST"
-        class="space-y-6">
-        
-        <div id="errorMessages" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"></div>
+    <form id="workOrderForm" action="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/update"
+        method="POST" class="space-y-6">
+
+        <div id="errorMessages" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        </div>
 
         <div>
             <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
@@ -102,6 +103,19 @@ function mapWithId($items, $getIdMethod)
                                             <option value="<?= htmlspecialchars($task_type->getId()) ?>"
                                                 <?= $task_type->getId() == $task->task_id ? 'selected' : '' ?>>
                                                 <?= htmlspecialchars($task_type->name) ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="flex-auto">
+                                    <select name="blocks[<?= $blockIndex ?>][tasks][<?= $taskIndex ?>][elementType]"
+                                        id="elementType_<?= $blockIndex ?>_<?= $taskIndex ?>"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Seleccione un tipo de elemento</option>
+                                        <?php foreach ($element_types as $element_type) { ?>
+                                            <option value="<?= htmlspecialchars($element_type->getId()) ?>"
+                                                <?= $element_type->getId() == $task->element_type_id ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($element_type->name) ?>
                                             </option>
                                         <?php } ?>
                                     </select>
@@ -218,4 +232,5 @@ function mapWithId($items, $getIdMethod)
 <script>
     const taskTypes = <?= json_encode(mapWithId($task_types, 'getId')); ?>;
     const treeTypes = <?= json_encode(mapWithId($tree_types, 'getId')); ?>;
+    const elementTypes = <?= json_encode(mapWithId($element_types, 'getId')); ?>;
 </script>

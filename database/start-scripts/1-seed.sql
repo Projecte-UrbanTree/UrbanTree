@@ -31,9 +31,9 @@ INSERT INTO tree_types (family, genus, species) VALUES
 
 --* Tasks
 INSERT INTO task_types (name, description) VALUES
-('Podar árboles', 'Tarea de poda general'),
-('Riego de árboles', 'Riego programado'),
-('Fertilización', 'Fertilización básica');
+('Podar', 'Tarea de poda general'),
+('Riego', 'Riego programado'),
+('Abono', 'Fertilización básica');
 
 --* Points
 INSERT INTO points (latitude, longitude) VALUES
@@ -102,8 +102,8 @@ INSERT INTO work_orders_blocks_zones (work_orders_block_id, zone_id) VALUES
 (2, 2),
 (3, 3);
 
-INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_id) VALUES
-(1, 1, 1),
-(1, 2, 2),
-(2, 2, NULL),
-(3, 3, NULL);
+INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_id, element_type_id) VALUES
+(1, 1, 1, 1),
+(1, 2, 2, 2),
+(2, 2, NULL,3),
+(3, 3, NULL, 2);

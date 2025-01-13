@@ -8,7 +8,7 @@ class WorkOrder extends BaseModel
 {
     public int $contract_id;
     public string $date;
-    public int $status = 0;
+    public int $status;
 
     protected static function getTableName(): string
     {
