@@ -823,9 +823,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(result => {
             if (result.status === 'success') {
                 alert('Descripción del elemento actualizada correctamente.');
-                elementModal.classList.add("hidden");
-                clearMap();
-                fetchZones();
             } else {
                 alert(`Error: ${result.message}`);
             }
