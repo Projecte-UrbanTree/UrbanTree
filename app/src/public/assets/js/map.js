@@ -788,9 +788,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 elementModal.classList.remove("hidden");
 
                 const descriptionInput = document.getElementById('element-description-input');
+                const originalDescription = data.description || "";
                 descriptionInput.addEventListener('blur', () => {
                     const newDescription = descriptionInput.value;
-                    updateElementDescription(data.id, newDescription);
+                    if (newDescription !== originalDescription) {
+                        updateElementDescription(data.id, newDescription);
+                    }
                 });
 
                 document.getElementById("element-modal-close").addEventListener("click", () => {
@@ -803,8 +806,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             })
             .catch(error => {
-                console.error("Fetch Element Error", error);
-                alert("Error fetching element data.");
+                console.error("Error al obtener los datos del elemento", error);
+                alert("Error al obtener los datos del elemento.");
             });
     }
 
