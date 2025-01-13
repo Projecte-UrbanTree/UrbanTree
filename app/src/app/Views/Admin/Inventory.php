@@ -17,34 +17,34 @@
 <!-- Element Modal -->
 <div id="element-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
     <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
-        <h2 id="element-modal-title" class="text-xl font-bold mb-4">Element Information</h2>
+        <h2 id="element-modal-title" class="text-xl font-bold mb-4">Información del Elemento</h2>
         <p id="element-modal-content" class="text-gray-700"></p>
-        <button id="element-modal-close" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Close</button>
+        <button id="element-modal-close" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Cerrar</button>
     </div>
 </div>
 
 <!-- Create Element Modal -->
 <div id="create-element-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
     <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
-        <h2 class="text-xl font-bold mb-4">Add Element</h2>
+        <h2 class="text-xl font-bold mb-4">Agregar Elemento</h2>
         <form id="create-element-form">
             <div class="mb-4">
-                <label for="element-type" class="block text-gray-700">Element Type</label>
+                <label for="element-type" class="block text-gray-700">Tipo de Elemento</label>
                 <select id="element-type" class="w-full p-2 border rounded">
                 </select>
             </div>
             <div class="mb-4">
-                <label for="element-description" class="block text-gray-700">Description</label>
+                <label for="element-description" class="block text-gray-700">Descripción</label>
                 <textarea id="element-description" class="w-full p-2 border rounded"></textarea>
             </div>
             <div class="mb-4 hidden" id="tree-type-container">
-                <label for="element-tree-type" class="block text-gray-700">Tree Type</label>
+                <label for="element-tree-type" class="block text-gray-700">Tipo de Árbol</label>
                 <select id="element-tree-type" class="w-full p-2 border rounded">
                 </select>
             </div>
             <div class="flex justify-end">
-                <button type="button" id="create-element-cancel" class="mr-2 bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add</button>
+                <button type="button" id="create-element-cancel" class="mr-2 bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Agregar</button>
             </div>
         </form>
     </div>

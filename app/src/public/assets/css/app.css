@@ -100,6 +100,7 @@ h6 {
     }
 
     #toggle-inventory {
+        z-index: 1000;
         display: block;
     }
 }
