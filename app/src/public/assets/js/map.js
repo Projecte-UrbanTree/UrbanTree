@@ -10,6 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const createButton = document.getElementById("create-control");
     const finishButton = document.getElementById("finish-control");
 
+    const cancelZoneButton = document.createElement("button");
+    cancelZoneButton.id = "cancel-zone-control";
+    cancelZoneButton.className = "hidden text-sm text-gray-700 flex flex-col items-center";
+    cancelZoneButton.innerHTML = "<i class='fas fa-times-circle'></i> Cancelar creación";
+    document.getElementById("submenu").appendChild(cancelZoneButton);
+
     let editor_mode = "none";
     let editor_status = "none";
 
@@ -39,6 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
             activeButton.classList.remove("text-gray-700");
             activeButton.classList.add("font-semibold", "text-primary");
 
+            if (editor_status === "create") {
+                editor_status = "none";
+                createButton.classList.remove("font-semibold", "text-primary");
+                createButton.classList.add("text-gray-700");
+                finishButton.classList.add("hidden");
+                cancelZoneButton.classList.add("hidden");
+                elementButton.classList.remove("text-gray-300");
+                elementButton.classList.add("text-gray-700");
+                elementButton.removeAttribute("disabled");
+                alert("Modo de creación desactivado.");
+            }
+
             if (mode === "zone") {
                 editor_mode = "zone";
                 createButton.innerHTML =
@@ -56,10 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     createButton.addEventListener("click", () => {
-        if (editor_mode === "zone") {
+        if (editor_status === "create") {
+            editor_status = "none";
+            createButton.classList.remove("font-semibold", "text-primary");
+            createButton.classList.add("text-gray-700");
+            finishButton.classList.add("hidden");
+            cancelZoneButton.classList.add("hidden");
+            elementButton.classList.remove("text-gray-300");
+            elementButton.classList.add("text-gray-700");
+            elementButton.removeAttribute("disabled");
+            alert("Modo de creación desactivado.");
+        } else if (editor_mode === "zone") {
             editor_status = "create";
             zonePoints = [];
             finishButton.classList.remove("hidden");
+            cancelZoneButton.classList.remove("hidden");
             createButton.classList.remove("text-gray-700");
             createButton.classList.add("text-gray-300");
             createButton.setAttribute("disabled", "true");
@@ -69,8 +98,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
             alert("Marca los puntos de la zona en el mapa.");
         } else if (editor_mode === "element") {
+            editor_status = "create";
+            createButton.classList.add("font-semibold", "text-primary");
             alert("Haz clic en el mapa para añadir un elemento.");
         }
+    });
+
+    cancelZoneButton.addEventListener("click", () => {
+        editor_status = "none";
+        zonePoints = [];
+        tempMarkers.forEach((marker) => marker.remove());
+        tempMarkers = [];
+        finishButton.classList.add("hidden");
+        cancelZoneButton.classList.add("hidden");
+        createButton.classList.remove("text-gray-300");
+        createButton.classList.add("text-gray-700");
+        createButton.removeAttribute("disabled");
+        elementButton.classList.remove("text-gray-300");
+        elementButton.classList.add("text-gray-700");
+        elementButton.removeAttribute("disabled");
+        alert("Creación de zona cancelada.");
     });
 
     const getNextZoneId = () => {
