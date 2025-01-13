@@ -22,7 +22,6 @@ class WorkOrderController
             $work_orders_user = WorkOrderUser::findAll(['user_id' => $userId]);
             $work_order_ids = array_column($work_orders_user, 'work_order_id');
 
-        $work_orders = $work_order_ids
             $work_orders = $work_order_ids
                 ? WorkOrder::findAll(['id' => $work_order_ids, 'date' => $date])
                 : [];
