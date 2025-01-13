@@ -16,6 +16,10 @@ return [
             'controller' => MapController::class,
             'method' => 'getTreeTypes',
         ],
+        '/api/map/elements/:id' => [
+            'controller' => MapController::class,
+            'method' => 'getElement',
+        ],
     ],
     'POST' => [
         '/api/map/zones' => [
@@ -41,6 +45,10 @@ return [
         '/api/map/zones' => [
             'controller' => MapController::class,
             'method' => 'deleteZone',
+        ],
+        '/api/map/elements/:id' => [
+            'controller' => MapController::class,
+            'method' => 'deleteElement',
         ],
     ],
 ];

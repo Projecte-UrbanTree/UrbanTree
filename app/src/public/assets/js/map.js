@@ -687,25 +687,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return colorPickerContainer;
     };
 
-    window.deleteElement = (elementId) => {
-        for (const zone of zonesData.zones) {
-            for (const type of zone.element_types) {
-                const elementIndex = type.elements.findIndex(
-                    (el) => el.id === elementId
-                );
-                if (elementIndex !== -1) {
-                    type.elements.splice(elementIndex, 1);
-                    removeMarkersForElementType(zone, type);
-                    addMarkersForElementType(zone, type);
-                    renderZones(zonesData.zones);
-                    alert(`Elemento ${elementId} eliminado exitosamente.`);
-                    return;
-                }
-            }
-        }
-        console.error(`Elemento con ID ${elementId} no encontrado.`);
-    };
-
     const removeZoneFeatures = (zoneId) => {
         const polygonLayerId = `zone-polygon-layer-${zoneId}`;
         const polygonSourceId = `zone-polygon-${zoneId}`;
@@ -770,9 +751,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function showElementModal(el) {
-        elementModalTitle.innerText = `Element ${el.id}`;
-        elementModalContent.innerText = `Description: ${el.description || "No description available."}`;
-        elementModal.classList.remove("hidden");
+        fetch(`/api/map/elements/${el.id}`)
+            .then(response => response.json())
+            .then(data => {
+                elementModalTitle.innerText = `Element ${data.id}`;
+                elementModalContent.innerHTML = `
+                    <p>Description: ${data.description || "No description available."}</p>
+                    <p>Type: ${data.element_type.name}</p>
+                    <p>Zone: ${data.zone.name}</p>
+                    <p>Coordinates: ${data.point.latitude}, ${data.point.longitude}</p>
+                    ${data.tree_type ? `<p>Tree Type: ${data.tree_type.species}</p>` : ""}
+                    <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300">Delete Element</button>
+                `;
+                elementModal.classList.remove("hidden");
+
+                document.getElementById("delete-element-btn").addEventListener("click", async () => {
+                    try {
+                        const response = await fetch(`/api/map/elements/${data.id}`, {
+                            method: "DELETE",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        });
+
+                        const result = await response.json();
+                        if (result.status === "success") {
+                            alert("Element deleted successfully.");
+                            fetchZones();
+                            elementModal.classList.add("hidden");
+                        } else {
+                            alert(`Error: ${result.message}`);
+                        }
+                    } catch (error) {
+                        console.error("Delete Element Error", error);
+                        alert("Error deleting element.");
+                    }
+                });
+            })
+            .catch(error => {
+                console.error("Fetch Element Error", error);
+                alert("Error fetching element data.");
+            });
     }
 
     const createElementModal = document.getElementById("create-element-modal");
