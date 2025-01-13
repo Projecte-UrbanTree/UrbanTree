@@ -236,7 +236,7 @@ create table sensors (
     foreign key (contract_id) references contracts(id),
     foreign key (zone_id) references zones(id),
     foreign key (point_id) references points(id),
-    constraint UC_Sensor unique (contract_id, zone_id)
+    constraint UC_Sensor unique (contract_id, zone_id, point_id)
 );
 
 create table sensor_history (
