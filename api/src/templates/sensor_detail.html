@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Detalles del Sensor - {{ settings.APP_NAME }}</title>
+        <link
+            href="../static/sensor_detail.css"
+            type="text/css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@300;400;600&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <header>
+            <h1>Estado de Salud de Sensores</h1>
+            <p>Consulta el estado actual de todos los sensores.</p>
+        </header>
+
+        <div class="container">
+            <h2>Detalles del Sensor: {{ sensor.model }}</h2>
+            <p><strong>ID:</strong> {{ sensor.id }}</p>
+            <p><strong>Modelo:</strong> {{ sensor.model }}</p>
+            <p>
+                <strong>Estado:</strong> {% if sensor.is_active %}Activo{% else
+                %}Inactivo{% endif %}
+            </p>
+            <p><strong>ID del Contrato:</strong> {{ sensor.contract_id }}</p>
+            <p><strong>ID de la Zona:</strong> {{ sensor.zone_id }}</p>
+            <p><strong>ID del Punto:</strong> {{ sensor.point_id }}</p>
+
+            <h3>Historial del Sensor:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Temperatura</th>
+                        <th>Humedad</th>
+                        <th>Inclinación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for history in sensor_history %}
+                    <tr>
+                        <td>{{ history.created_at }}</td>
+                        <td>{{ history.temperature }} °C</td>
+                        <td>{{ history.humidity }} %</td>
+                        <td>{{ history.inclination }} °</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="/sensors">Volver a la lista de sensores</a>
+        </div>
+    </body>
+</html>

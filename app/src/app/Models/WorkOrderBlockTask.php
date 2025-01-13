@@ -5,11 +5,8 @@ namespace App\Models;
 class WorkOrderBlockTask extends BaseModel
 {
     public int $work_orders_block_id;
-
     public int $task_id;
-
     public ?int $tree_type_id;
-
     public int $status;
 
     protected static function getTableName(): string

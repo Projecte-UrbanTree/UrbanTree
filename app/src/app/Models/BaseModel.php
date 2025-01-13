@@ -116,11 +116,11 @@ abstract class BaseModel
     }
 
     // Delete a record from the table
-    public function delete(): void
+    public function delete($force = false): void
     {
         $table = static::getTableName();
 
-        if (static::hasSoftDelete())
+        if (static::hasSoftDelete() && !$force)
             $query = "UPDATE {$table} SET deleted_at = NOW() WHERE id = :id";
         else
             $query = "DELETE FROM {$table} WHERE id = :id";

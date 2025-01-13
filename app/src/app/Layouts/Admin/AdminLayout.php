@@ -46,17 +46,21 @@ $currentContract = Session::get('current_contract');
 
             <!-- Navigation Links (Visible only on large screens) -->
             <div class="hidden md:flex space-x-6">
-                <a href="/admin" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
+                <a href="/admin"
+                    class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
                     <i class="fas fa-tachometer-alt"></i> Gestión
                 </a>
-                <a href="/admin/inventory" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
+                <a href="/admin/inventory"
+                    class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
                     <i class="fas fa-cogs"></i> Inventario
                 </a>
             </div>
 
             <!-- Profile and Contract Dropdown -->
             <div class="flex items-center gap-4">
-                <select id="contractBtn" name="contractBtn" class="bg-white text-sm rounded-md p-2 text-right focus:outline-none" onchange="setCurrentContract(this.value)">
+                <select id="contractBtn" name="contractBtn"
+                    class="bg-white text-sm rounded-md p-2 text-right focus:outline-none"
+                    onchange="setCurrentContract(this.value)">
                     <?php
                     foreach ($contracts as $contract) {
                         echo '<option value="' . $contract->getId() . '"' . ($currentContract == $contract->getId() ? ' selected' : '') . '>' . $contract->name . '</option>';
@@ -66,13 +70,18 @@ $currentContract = Session::get('current_contract');
                 </select>
                 <div class="relative">
                     <!-- Letters avatar -->
-                    <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer" onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
-                        <?= strtoupper(substr($_SESSION['user']['name'], 0, 1) . substr($_SESSION['user']['surname'], 0, 1)); ?>
+                    <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer"
+                        onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
+                        <?= strtoupper(substr(Session::get('user')['name'], 0, 1) . substr(Session::get('user')['surname'], 0, 1)); ?>
                     </div>
-                    <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
-                        <a href="/admin/account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuración de la cuenta</a>
+                    <div id="profile-dropdown"
+                        class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
+                        <a href="/admin/account"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuración de la
+                            cuenta</a>
                         <a href="/license" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Licencia</a>
-                        <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cerrar sesión</a>
+                        <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cerrar
+                            sesión</a>
                     </div>
                 </div>
             </div>
@@ -80,43 +89,53 @@ $currentContract = Session::get('current_contract');
 
         <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="hidden md:hidden px-4 py-4 bg-gray-100">
-            <a href="/admin" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
+            <a href="/admin"
+                class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tachometer-alt"></i> Gestión
             </a>
-            <a href="/admin/inventory" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
+            <a href="/admin/inventory"
+                class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-cogs"></i> Inventario
             </a>
         </div>
     </header>
 
     <!-- Submenu -->
-    <div id="submenu" class="md:flex overflow-x-auto flex-nowrap whitespace-nowrap items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
+    <div id="submenu"
+        class="md:flex overflow-x-auto flex-nowrap whitespace-nowrap items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
         <div class="submenu text-center flex items-center space-x-6 mx-auto">
-            <a href="/admin/contracts" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/contract') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/contracts"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/contract') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-file-contract block"></i>
                 Contratos
             </a>
-            <a href="/admin/work-orders" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/work-order') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/work-orders"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/work-order') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-briefcase block"></i>
                 Órdenes de trabajo
             </a>
-            <a href="/admin/element-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/element-type') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/element-types"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/element-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-cube block"></i>
                 Tipos de elemento
             </a>
-            <a href="/admin/tree-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/tree-type') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/tree-types"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/tree-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tree block"></i>
                 Tipos de árbol
             </a>
-            <a href="/admin/task-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/task-types"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tasks block"></i>
                 Tipos de tarea
             </a>
-            <a href="/admin/users" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/user') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/users"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/user') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-users block"></i>
                 Usuarios
             </a>
-            <a href="/admin/stats" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/stats') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/stats"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/stats') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-chart-bar block"></i>
                 Estadísticas
             </a>
@@ -126,7 +145,9 @@ $currentContract = Session::get('current_contract');
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 pt-8 pb-16">
         <?php if (Session::has('success')): ?>
-            <div id="alert-msg" class="bg-green-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out" role="alert">
+            <div id="alert-msg"
+                class="bg-green-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                role="alert">
                 <span class="inline-block mr-2">
                     <!-- Success Icon (Font Awesome) -->
                     <i class="fas fa-check-circle w-5 h-5 text-white"></i>
@@ -136,7 +157,9 @@ $currentContract = Session::get('current_contract');
         <?php endif; ?>
 
         <?php if (Session::has('error')): ?>
-            <div id="alert-msg-error" class="bg-red-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out" role="alert">
+            <div id="alert-msg-error"
+                class="bg-red-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                role="alert">
                 <span class="inline-block mr-2">
                     <!-- Error Icon (Font Awesome) -->
                     <i class="fas fa-exclamation-circle w-5 h-5 text-white"></i>
@@ -149,8 +172,9 @@ $currentContract = Session::get('current_contract');
     </main>
 
     <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
+    <script src="/assets/js/work-orders.js?v=<?= time(); ?>"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             // Show alerts with animation (Success and Error messages)
             const alertMsg = document.querySelector("#alert-msg");
             const alertMsgError = document.querySelector("#alert-msg-error");
@@ -184,7 +208,7 @@ $currentContract = Session::get('current_contract');
             const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
             const mobileMenu = document.getElementById("mobile-menu");
 
-            mobileMenuToggle.addEventListener("click", function() {
+            mobileMenuToggle.addEventListener("click", function () {
                 mobileMenu.classList.toggle("hidden");
             });
         });
