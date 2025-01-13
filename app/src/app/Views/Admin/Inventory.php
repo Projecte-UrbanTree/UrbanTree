@@ -37,6 +37,11 @@
                 <label for="element-description" class="block text-gray-700">Description</label>
                 <textarea id="element-description" class="w-full p-2 border rounded"></textarea>
             </div>
+            <div class="mb-4 hidden" id="tree-type-container">
+                <label for="element-tree-type" class="block text-gray-700">Tree Type</label>
+                <select id="element-tree-type" class="w-full p-2 border rounded">
+                </select>
+            </div>
             <div class="flex justify-end">
                 <button type="button" id="create-element-cancel" class="mr-2 bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add</button>

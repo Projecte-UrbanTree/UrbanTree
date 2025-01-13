@@ -45,6 +45,12 @@
             <input type="color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700" id="color-input" name="color" value="#2563eb" title="Choose your color">
         </div>
 
+        <!-- Requires Tree Type -->
+        <div class="col-span-1 md:col-span-2 flex items-center">
+            <input type="checkbox" id="requires_tree_type" name="requires_tree_type" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-2">
+            <label for="requires_tree_type" class="block text-sm font-medium text-gray-700">Requiere tipo de árbol</label>
+        </div>
+
         <!-- Submit Button -->
         <div class="col-span-1 md:col-span-2 flex justify-end">
             <button type="submit"

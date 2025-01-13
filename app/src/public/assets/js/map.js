@@ -97,6 +97,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     finishButton.addEventListener("click", async () => {
         if (editor_mode === "zone" && editor_status === "create") {
+            if (zonePoints.length < 4) {
+                alert("Una zona debe tener al menos cuatro puntos.");
+                return;
+            }
+
             if (zonesCollide(zonePoints)) {
                 alert("La nueva zona colisiona con una zona existente.");
                 return;
@@ -688,7 +693,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const createElementForm = document.getElementById("create-element-form");
     const createElementType = document.getElementById("element-type");
     const createElementDescription = document.getElementById("element-description");
+    const createElementTreeType = document.getElementById("element-tree-type");
+    const treeTypeContainer = document.getElementById("tree-type-container");
     const createElementCancel = document.getElementById("create-element-cancel");
+
+    let elementTypes = [];
+    let treeTypes = [];
 
     createElementCancel.addEventListener("click", () => {
         createElementModal.classList.add("hidden");
@@ -698,13 +708,16 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const elementType = createElementType.value;
         const description = createElementDescription.value;
+        const treeTypeId = createElementTreeType.value;
         const [lng, lat] = selectedZone.point;
 
         const bodyData = {
             zone_id: selectedZone.id,
             element_type_id: elementType,
+            description: description,
             latitude: lat,
             longitude: lng,
+            tree_type_id: treeTypeId
         };
 
         try {
@@ -723,32 +736,75 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
             console.error("Create Element Error", error);
         }
-
     });
 
     async function loadElementTypes() {
         try {
             const response = await fetch("/api/map/elementtypes");
             if (!response.ok) throw new Error("Error fetching element types");
-            return await response.json();
+            elementTypes = await response.json();
         } catch (error) {
             console.error(error);
-            return [];
+            elementTypes = [];
+        }
+    }
+
+    async function loadTreeTypes() {
+        try {
+            const response = await fetch("/api/map/treetypes");
+            if (!response.ok) throw new Error("Error fetching tree types");
+            treeTypes = await response.json();
+        } catch (error) {
+            console.error(error);
+            treeTypes = [];
         }
     }
 
     function showCreateElementModal(zone, point) {
         selectedZone = { id: zone.id, point: point };
-        loadElementTypes().then((types) => {
-            createElementType.innerHTML = "";
-            types.forEach((t) => {
-                const option = document.createElement("option");
-                option.value = t.id;
-                option.text = t.name;
-                createElementType.appendChild(option);
-            });
-            createElementModal.classList.remove("hidden");
+        createElementType.innerHTML = "";
+        elementTypes.forEach((t) => {
+            const option = document.createElement("option");
+            option.value = t.id;
+            option.text = t.name;
+            createElementType.appendChild(option);
         });
+
+        const selectedType = elementTypes.find(t => t.id === parseInt(createElementType.value));
+        if (selectedType.requires_tree_type) {
+            createElementTreeType.innerHTML = "";
+            treeTypes.forEach((tree) => {
+                const option = document.createElement("option");
+                option.value = tree.id;
+                option.text = tree.species;
+                createElementTreeType.appendChild(option);
+            });
+            treeTypeContainer.classList.remove("hidden");
+        } else {
+            treeTypeContainer.classList.add("hidden");
+        }
+
+        createElementModal.classList.remove("hidden");
     }
+
+    createElementType.addEventListener("change", () => {
+        const selectedTypeId = parseInt(createElementType.value);
+        const selectedType = elementTypes.find(t => t.id === selectedTypeId);
+        if (selectedType.requires_tree_type) {
+            createElementTreeType.innerHTML = "";
+            treeTypes.forEach((tree) => {
+                const option = document.createElement("option");
+                option.value = tree.id;
+                option.text = tree.species;
+                createElementTreeType.appendChild(option);
+            });
+            treeTypeContainer.classList.remove("hidden");
+        } else {
+            treeTypeContainer.classList.add("hidden");
+        }
+    });
+
+    loadElementTypes();
+    loadTreeTypes();
 });
 

@@ -7,6 +7,7 @@ use App\Core\Session;
 use App\Models\Zone;
 use App\Models\Point;
 use App\Models\ElementType;
+use App\Models\TreeType;
 use Exception;
 
 class MapController
@@ -110,6 +111,7 @@ class MapController
             $element->zone_id = $postData['zone_id'];
             $element->element_type_id = $postData['element_type_id'];
             $element->point_id = $point->getId();
+            $element->description = $postData['description'];
             $element->save();
 
             $point->element_id = $element->getId();
@@ -134,6 +136,7 @@ class MapController
                 'description' => $type->description,
                 'icon' => $type->icon,
                 'color' => $type->color,
+                'requires_tree_type' => $type->requires_tree_type,
             ];
         }
         echo json_encode($data);
@@ -154,6 +157,23 @@ class MapController
         } catch (Exception $e) {
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
+        exit;
+    }
+
+    public function getTreeTypes($queryParams)
+    {
+        header('Content-Type: application/json');
+        $treeTypes = TreeType::findAll();
+        $data = [];
+        foreach ($treeTypes as $treeType) {
+            $data[] = [
+                'id' => $treeType->getId(),
+                'family' => $treeType->family,
+                'genus' => $treeType->genus,
+                'species' => $treeType->species,
+            ];
+        }
+        echo json_encode($data);
         exit;
     }
 }

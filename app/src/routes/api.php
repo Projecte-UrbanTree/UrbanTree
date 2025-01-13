@@ -11,7 +11,11 @@ return [
         '/api/map/elementtypes' => [
             'controller' => MapController::class,
             'method' => 'getElementTypes',
-        ]
+        ],
+        '/api/map/treetypes' => [
+            'controller' => MapController::class,
+            'method' => 'getTreeTypes',
+        ],
     ],
     'POST' => [
         '/api/map/zones' => [
@@ -21,7 +25,7 @@ return [
         '/api/map/elements' => [
             'controller' => MapController::class,
             'method' => 'createElement',
-        ]
+        ],
     ],
     'PUT' => [
         '/api/map/zones/name' => [
@@ -33,6 +37,6 @@ return [
         '/api/map/zones' => [
             'controller' => MapController::class,
             'method' => 'deleteZone',
-        ]
+        ],
     ],
 ];
