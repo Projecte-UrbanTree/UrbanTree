@@ -822,7 +822,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(result => {
             if (result.status === 'success') {
-                alert('Element description updated successfully.');
+                alert('Descripción del elemento actualizada correctamente.');
                 elementModal.classList.add("hidden");
                 clearMap();
                 fetchZones();
@@ -831,8 +831,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
         .catch(error => {
-            console.error('Update Element Description Error', error);
-            alert('Error updating element description.');
+            console.error('Error al actualizar la descripción del elemento', error);
+            alert('Error al actualizar la descripción del elemento.');
         });
     }
 
@@ -860,7 +860,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(result => {
             if (result.status === 'success') {
-                alert('Element deleted successfully.');
+                alert('Elemento eliminado correctamente.');
                 elementModal.classList.add("hidden");
                 clearMap();
                 fetchZones();
@@ -869,8 +869,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
         .catch(error => {
-            console.error('Delete Element Error', error);
-            alert('Error deleting element.');
+            console.error('Error al eliminar el elemento', error);
+            alert('Error al eliminar el elemento.');
         });
     }
 
