@@ -441,8 +441,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const deleteButton = document.createElement("button");
         deleteButton.className =
             "bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300";
-        deleteButton.innerText = "Eliminar";
-        deleteButton.onclick = () => deleteZone(zone.id);
+        deleteButton.innerHTML = "<i class='fas fa-trash-alt'></i> Eliminar";
+        deleteButton.onclick = () => {
+            if (confirm("¿Estás seguro de que deseas eliminar esta zona?")) {
+                deleteZone(zone.id);
+            }
+        };
 
         zoneFooter.appendChild(deleteButton);
 
@@ -494,10 +498,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             zone.element_types.forEach((type) => {
-                const typeCheckbox = document.querySelector(
-                    `input[data-zone-id="${zone.id}"][data-type-id="${type.id}"]`
+                const typeIcon = document.querySelector(
+                    `i[data-zone-id="${zone.id}"][data-type-id="${type.id}"]`
                 );
-                if (typeCheckbox.checked) addMarkersForElementType(zone, type);
+                if (typeIcon && typeIcon.classList.contains("fa-eye")) {
+                    addMarkersForElementType(zone, type);
+                }
             });
         }
     }
@@ -946,6 +952,42 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } catch (error) {
             console.error("Create Element Error", error);
+        }
+    }
+
+    async function createZone(newZone) {
+        try {
+            const response = await fetch("/api/map/zones", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newZone),
+            });
+
+            const result = await response.json();
+            console.log("Zone creation result:", result);
+
+            fetchZones();
+
+            tempMarkers.forEach((marker) => marker.remove());
+            tempMarkers = [];
+
+            editor_status = "none";
+            zonePoints = [];
+            finishButton.classList.add("hidden");
+            createButton.classList.remove("text-gray-300");
+            createButton.classList.add("text-gray-700");
+            createButton.removeAttribute("disabled");
+            elementButton.classList.remove("text-gray-300");
+            elementButton.classList.add("text-gray-700");
+            elementButton.removeAttribute("disabled");
+
+            alert("Zona creada exitosamente.");
+
+        } catch (error) {
+            console.error(error);
+            alert(`Error al crear la zona: ${error.message}`);
         }
     }
 
