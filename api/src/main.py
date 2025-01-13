@@ -78,7 +78,9 @@ async def get_sensor_history(
     sensor: Sensor = db.query(Sensor).filter(Sensor.id == sensor_id).first()
 
     if sensor is None:
-        return templates.TemplateResponse("not_found.html", {"request": request, "settings": settings})
+        return templates.TemplateResponse(
+            "not_found.html", {"request": request, "settings": settings}
+        )
 
     sensor_history: SensorHistory = (
         db.query(SensorHistory).filter(SensorHistory.sensor_id == sensor_id).all()
@@ -88,6 +90,10 @@ async def get_sensor_history(
     sensor_history.sort(key=lambda x: x.created_at, reverse=True)
     return templates.TemplateResponse(
         "sensor_detail.html",
-        {"request": request, "settings": settings, "sensor": sensor, "sensor_history": sensor_history},
+        {
+            "request": request,
+            "settings": settings,
+            "sensor": sensor,
+            "sensor_history": sensor_history,
+        },
     )
-

@@ -1,6 +1,10 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
+
+if TYPE_CHECKING:
+    from .element_model import Element
 
 
 class Sensor(SQLModel, table=True):
@@ -8,13 +12,14 @@ class Sensor(SQLModel, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
 
-    contract_id: int = Field(index=True)
     zone_id: int = Field(index=True)
     point_id: int = Field(index=True)
     model: str | None = Field(default=None, index=True)
     is_active: bool | None = Field(default=None, index=True)
 
     histories: list["SensorHistory"] = Relationship(back_populates="sensor")
+
+    contract_id: int = Field(index=True)
 
 
 class SensorHistoryBase(SQLModel):
