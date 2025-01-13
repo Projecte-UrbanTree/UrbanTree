@@ -46,7 +46,7 @@ return [
             'controller' => MapController::class,
             'method' => 'deleteZone',
         ],
-        '/api/map/elements/:id' => [
+        '/api/map/elements' => [
             'controller' => MapController::class,
             'method' => 'deleteElement',
         ],

@@ -761,37 +761,57 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p>Zone: ${data.zone.name}</p>
                     <p>Coordinates: ${data.point.latitude}, ${data.point.longitude}</p>
                     ${data.tree_type ? `<p>Tree Type: ${data.tree_type.species}</p>` : ""}
-                    <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300">Delete Element</button>
+                    <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300" data-element-id="${data.id}">Delete Element</button>
                 `;
                 elementModal.classList.remove("hidden");
 
-                document.getElementById("delete-element-btn").addEventListener("click", async () => {
-                    try {
-                        const response = await fetch(`/api/map/elements/${data.id}`, {
-                            method: "DELETE",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                        });
-
-                        const result = await response.json();
-                        if (result.status === "success") {
-                            alert("Element deleted successfully.");
-                            fetchZones();
-                            elementModal.classList.add("hidden");
-                        } else {
-                            alert(`Error: ${result.message}`);
-                        }
-                    } catch (error) {
-                        console.error("Delete Element Error", error);
-                        alert("Error deleting element.");
-                    }
+                document.getElementById("delete-element-btn").addEventListener("click", (event) => {
+                    const elementId = event.target.getAttribute('data-element-id');
+                    deleteElement(elementId);
                 });
             })
             .catch(error => {
                 console.error("Fetch Element Error", error);
                 alert("Error fetching element data.");
             });
+    }
+
+    function clearMap() {
+        Object.keys(markers).forEach(zoneId => {
+            Object.values(markers[zoneId]).flat().forEach(marker => marker.remove());
+        });
+        markers = {};
+
+        if (zonesData.zones) {
+            zonesData.zones.forEach(zone => {
+                removeZoneFeatures(zone.id);
+            });
+        }
+    }
+
+    function deleteElement(elementId) {
+        fetch(`/api/map/elements`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ id: elementId }),
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'success') {
+                alert('Element deleted successfully.');
+                elementModal.classList.add("hidden");
+                clearMap();
+                fetchZones();
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        })
+        .catch(error => {
+            console.error('Delete Element Error', error);
+            alert('Error deleting element.');
+        });
     }
 
     const createElementModal = document.getElementById("create-element-modal");

@@ -148,12 +148,12 @@ class MapController
         exit;
     }
 
-    public function deleteElement($id, $postData)
+    public function deleteElement($postData)
     {
         header('Content-Type: application/json');
 
         try {
-            $elementId = $id;
+            $elementId = $postData['id'];
             $element = Element::find($elementId);
             if ($element) {
                 $element->delete();
