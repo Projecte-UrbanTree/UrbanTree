@@ -80,8 +80,8 @@ create table element_types (
     name varchar(255) not null,
     description varchar(255),
     requires_tree_type boolean not null default false,
-    icon varchar(255), -- New column for icon
-    color varchar(7), -- New column for color
+    icon varchar(255),
+    color varchar(7),
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp
@@ -92,8 +92,8 @@ create table zones (
     id int auto_increment primary key,
     contract_id int not null,
     name varchar(255),
-    color varchar(7), -- New column for color
-    description varchar(255), -- New column for description
+    color varchar(7),
+    description varchar(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
@@ -105,12 +105,12 @@ create table points (
     id int auto_increment primary key,
     latitude decimal(10, 7) not null,
     longitude decimal(10, 7) not null,
-    zone_id int null, -- Nullable column for zone relationship
-    element_id int null, -- Nullable column for element relationship
+    zone_id int null,
+    element_id int null,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (zone_id) references zones(id), -- Foreign key for zone relationship
+    foreign key (zone_id) references zones(id),
     constraint UC_Point unique (latitude, longitude)
 );
 
@@ -122,6 +122,7 @@ create table elements (
     zone_id int not null,
     point_id int unique,
     tree_type_id int,
+    description varchar(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
