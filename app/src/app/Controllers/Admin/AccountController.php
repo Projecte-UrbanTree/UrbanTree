@@ -33,13 +33,12 @@ class AccountController
             exit;
         }
 
-        $user->name = isset($postData['name']) ?? $user->name;
-        $user->surname = isset($postData['surname']) ?? $user->surname;
+        $user->name = trim($postData['name']) ?? $user->name;
+        $user->surname = trim($postData['surname']) ?? $user->surname;
 
-        // save current data fields
-        $currentPassword = isset($postData['current_password']) ? trim($postData['current_password']) : '';
-        $newPassword = isset($postData['password']) ? trim($postData['password']) : '';
-        $confirmPassword = isset($postData['password_confirmation']) ? trim($postData['password_confirmation']) : '';
+        $currentPassword = trim($postData['current_password']);
+        $newPassword = trim($postData['password']);
+        $confirmPassword = trim($postData['password_confirmation']);
 
         $isChangingPassword = !empty($currentPassword) || !empty($newPassword) || !empty($confirmPassword);
 
@@ -63,9 +62,6 @@ class AccountController
             }
 
             $user->password = password_hash($newPassword, PASSWORD_BCRYPT);
-        } else {
-
-
         }
 
 
