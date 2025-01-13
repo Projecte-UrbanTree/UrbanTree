@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .setLngLat([lng, lat])
                 .addTo(map);
             tempMarkers.push(marker);
-        } else if (editor_mode === "element") {
+        } else if (editor_mode === "element" && editor_status === "create") {
             console.log("Element mode clicked.");
             const { lng, lat } = e.lngLat;
             const point = turf.point([lng, lat]);
@@ -496,7 +496,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 .addTo(map);
 
             marker.getElement().addEventListener('click', () => {
-                showElementModal(el);
+                if (editor_mode !== "element" || editor_status !== "create") {
+                    showElementModal(el);
+                }
             });
 
             markers[zone.id][type.id].push(marker);
