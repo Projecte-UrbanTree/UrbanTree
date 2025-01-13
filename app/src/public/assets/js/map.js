@@ -825,6 +825,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    const toggleInventoryButton = document.getElementById("toggle-inventory");
+    const inventorySidebar = document.querySelector(".inventory");
+    const mapContainer = document.querySelector(".map");
+
+    toggleInventoryButton.addEventListener("click", () => {
+        inventorySidebar.classList.toggle("hidden");
+        inventorySidebar.classList.toggle("w-5/6");
+        mapContainer.classList.toggle("w-1/6");
+    });
+
     loadElementTypes();
     loadTreeTypes();
 });

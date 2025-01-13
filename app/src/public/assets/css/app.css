@@ -83,3 +83,24 @@ h6 {
     animation: fadeInOut 1.5s infinite ease-in-out;
 }
 
+@media (max-width: 768px) {
+    .map {
+        width: 100%;
+    }
+
+    .inventory {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: white;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    #toggle-inventory {
+        display: block;
+    }
+}
+
