@@ -73,9 +73,7 @@ class MapController
                 throw new Exception("Cannot create zone if contract is -1.");
             }
             $zone = new Zone();
-            if ($contractId != -1) {
-                $zone->contract_id = $contractId;
-            }
+            $zone->contract_id = $contractId;
             $zone->name = $postData['name'];
             $zone->color = $postData['color'];
             $zone->description = $postData['description'];
@@ -126,9 +124,7 @@ class MapController
             $point->save();
 
             $element = new \App\Models\Element();
-            if ($contractId != -1) {
-                $element->contract_id = $contractId;
-            }
+            $element->contract_id = $contractId;
             $element->zone_id = $postData['zone_id'];
             $element->element_type_id = $postData['element_type_id'];
             $element->point_id = $point->getId();

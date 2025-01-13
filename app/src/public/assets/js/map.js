@@ -816,6 +816,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (result.status === "success") {
                 alert("Elemento guardado en la base de datos");
                 fetchZones();
+                createElementModal.classList.add("hidden");
+                createElementForm.reset();
             } else {
                 alert(`Error: ${result.message}`);
             }
