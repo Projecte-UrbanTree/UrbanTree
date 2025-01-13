@@ -19,6 +19,18 @@ document.addEventListener("DOMContentLoaded", () => {
     let editor_mode = "none";
     let editor_status = "none";
 
+    const contractSelect = document.getElementById("contractBtn");
+    if (contractSelect && contractSelect.value === "-1") {
+        zoneButton.classList.add("text-gray-300");
+        zoneButton.disabled = true;
+        elementButton.classList.add("text-gray-300");
+        elementButton.disabled = true;
+        createButton.classList.add("text-gray-300");
+        createButton.disabled = true;
+        finishButton.classList.add("text-gray-300");
+        finishButton.disabled = true;
+    }
+
     window.setEditorMode = function (mode) {
         const activeButton = document.getElementById(`${mode}-control`);
 
@@ -283,9 +295,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderZones = (zones) => {
         inventoryContainer.innerHTML = "";
         if (zones.length === 0) {
-            const emptyMessage = document.createElement("p");
-            emptyMessage.className = "text-gray-500 text-center mt-4";
-            emptyMessage.innerText = "No hay zonas creadas.";
+            const emptyMessage = document.createElement("div");
+            emptyMessage.className = "text-gray-500 text-center p-6 bg-gray-100 rounded-lg shadow-md flex flex-col items-center";
+            emptyMessage.innerHTML = `
+                <i class="fas fa-exclamation-circle text-4xl mb-4"></i>
+                <p class="text-lg font-semibold">No hay zonas creadas.</p>
+                <p class="text-sm">Por favor, crea una nueva zona para comenzar.</p>
+            `;
             inventoryContainer.appendChild(emptyMessage);
         } else {
             zones.forEach((zone) => {

@@ -16,7 +16,12 @@ class MapController
     {
         header('Content-Type: application/json');
 
-        $zones = Zone::findAll();
+        $contractId = Session::get('current_contract');
+        if ($contractId == -1) {
+            $zones = Zone::findAll();
+        } else {
+            $zones = Zone::findAll(['contract_id' => $contractId]);
+        }
         $data = ['zones' => []];
 
         foreach ($zones as $zone) {
@@ -33,7 +38,11 @@ class MapController
 
             $elementTypes = ElementType::findAll();
             foreach ($elementTypes as $elementType) {
-                $elements = $elementType->elements(['zone_id' => $zone->getId()]);
+                if ($contractId == -1) {
+                    $elements = $elementType->elements(['zone_id' => $zone->getId()]);
+                } else {
+                    $elements = $elementType->elements(['zone_id' => $zone->getId(), 'contract_id' => $contractId]);
+                }
                 $zoneData['element_types'][] = [
                     'id' => $elementType->getId(),
                     'icon' => $elementType->icon,
@@ -59,8 +68,14 @@ class MapController
     public function createZone($postData)
     {
         try {
+            $contractId = Session::get('current_contract');
+            if ($contractId == -1) {
+                throw new Exception("Cannot create zone if contract is -1.");
+            }
             $zone = new Zone();
-            $zone->contract_id = Session::get('current_contract');
+            if ($contractId != -1) {
+                $zone->contract_id = $contractId;
+            }
             $zone->name = $postData['name'];
             $zone->color = $postData['color'];
             $zone->description = $postData['description'];
@@ -101,13 +116,19 @@ class MapController
     public function createElement($postData)
     {
         try {
+            $contractId = Session::get('current_contract');
+            if ($contractId == -1) {
+                throw new \Exception("Cannot create element if contract is -1.");
+            }
             $point = new \App\Models\Point();
             $point->latitude = $postData['latitude'];
             $point->longitude = $postData['longitude'];
             $point->save();
 
             $element = new \App\Models\Element();
-            $element->contract_id = \App\Core\Session::get('current_contract');
+            if ($contractId != -1) {
+                $element->contract_id = $contractId;
+            }
             $element->zone_id = $postData['zone_id'];
             $element->element_type_id = $postData['element_type_id'];
             $element->point_id = $point->getId();
