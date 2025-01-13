@@ -17,7 +17,7 @@
     <!-- Tailwind custom JavaScript file (local) -->
     <script src="/assets/js/tailwind.js"></script>
     <!-- FontAwesome CDN for icons -->
-    <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f03c46a869.js" crossorigin="anonymous"></script>
     <!-- CookieConsent Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css">
 </head>
