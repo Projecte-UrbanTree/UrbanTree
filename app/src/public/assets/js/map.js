@@ -774,7 +774,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(data => {
                 elementModalTitle.innerText = `Element ${data.id}`;
                 elementModalContent.innerHTML = `
-                    <p>Description: ${data.description || "No description available."}</p>
+                    <p>Description: <input type="text" id="element-description-input" value="${data.description || ""}"></p>
                     <p>Type: ${data.element_type.name}</p>
                     <p>Zone: ${data.zone.name}</p>
                     <p>Coordinates: ${data.point.latitude}, ${data.point.longitude}</p>
@@ -782,6 +782,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300" data-element-id="${data.id}">Delete Element</button>
                 `;
                 elementModal.classList.remove("hidden");
+
+                const descriptionInput = document.getElementById('element-description-input');
+                descriptionInput.addEventListener('blur', () => {
+                    const newDescription = descriptionInput.value;
+                    updateElementDescription(data.id, newDescription);
+                });
 
                 document.getElementById("delete-element-btn").addEventListener("click", (event) => {
                     const elementId = event.target.getAttribute('data-element-id');
@@ -792,6 +798,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Fetch Element Error", error);
                 alert("Error fetching element data.");
             });
+    }
+
+    function updateElementDescription(elementId, newDescription) {
+        fetch(`/api/map/elements/description`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: elementId, description: newDescription }),
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'success') {
+                alert('Element description updated successfully.');
+                elementModal.classList.add("hidden");
+                clearMap();
+                fetchZones();
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        })
+        .catch(error => {
+            console.error('Update Element Description Error', error);
+            alert('Error updating element description.');
+        });
     }
 
     function clearMap() {

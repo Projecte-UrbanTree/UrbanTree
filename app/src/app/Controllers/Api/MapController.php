@@ -268,4 +268,23 @@ class MapController
         }
         exit;
     }
+
+    public function updateElementDescription($postData)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $element = Element::find($postData['id']);
+            if ($element) {
+                $element->description = $postData['description'];
+                $element->save();
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Element not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
 }
