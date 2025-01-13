@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inventoryContainer.innerHTML = "";
         if (zones.length === 0) {
             const emptyMessage = document.createElement("div");
-            emptyMessage.className = "text-gray-500 text-center p-6 bg-gray-100 rounded-lg shadow-md flex flex-col items-center";
+            emptyMessage.className = "text-gray-700 text-center p-6 bg-gray-100 rounded-lg flex flex-col items-center";
             emptyMessage.innerHTML = `
                 <i class="fas fa-exclamation-circle text-4xl mb-4"></i>
                 <p class="text-lg font-semibold">No hay zonas creadas.</p>
