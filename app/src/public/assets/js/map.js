@@ -772,14 +772,18 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(`/api/map/elements/${el.id}`)
             .then(response => response.json())
             .then(data => {
-                elementModalTitle.innerText = `Element ${data.id}`;
+                elementModalTitle.innerText = `Elemento ${data.id}`;
                 elementModalContent.innerHTML = `
-                    <p>Description: <input type="text" id="element-description-input" value="${data.description || ""}"></p>
-                    <p>Type: ${data.element_type.name}</p>
-                    <p>Zone: ${data.zone.name}</p>
-                    <p>Coordinates: ${data.point.latitude}, ${data.point.longitude}</p>
-                    ${data.tree_type ? `<p>Tree Type: ${data.tree_type.species}</p>` : ""}
-                    <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300" data-element-id="${data.id}">Delete Element</button>
+                    <div class="space-y-2">
+                        <p><strong><i class="fas fa-map-marker-alt"></i> Zona:</strong> ${data.zone.name}</p>
+                        <p><strong><i class="${data.element_type.icon}"></i> Tipo:</strong> ${data.element_type.name}</p>
+                        ${data.element_type.requires_tree_type && data.tree_type ? `<p><strong><i class="fas fa-tree"></i> Especie:</strong> ${data.tree_type.species}</p>` : ""}
+                        <p><strong><i class="fas fa-map-pin"></i> Coordenadas:</strong> ${data.point.latitude}, ${data.point.longitude}</p>
+                        <p><strong><i class="fas fa-align-left"></i> Descripción:</strong> <textarea id="element-description-input" class="border rounded p-1 w-full">${data.description || ""}</textarea></p>
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300" data-element-id="${data.id}">Eliminar elemento</button>
+                    </div>
                 `;
                 elementModal.classList.remove("hidden");
 
@@ -787,6 +791,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 descriptionInput.addEventListener('blur', () => {
                     const newDescription = descriptionInput.value;
                     updateElementDescription(data.id, newDescription);
+                });
+
+                document.getElementById("element-modal-close").addEventListener("click", () => {
+                    elementModal.classList.add("hidden");
                 });
 
                 document.getElementById("delete-element-btn").addEventListener("click", (event) => {

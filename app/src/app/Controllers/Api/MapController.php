@@ -136,6 +136,7 @@ class MapController
             $element->element_type_id = $postData['element_type_id'];
             $element->point_id = $point->getId();
             $element->description = $postData['description'];
+            $element->tree_type_id = $postData['tree_type_id'] ?? null;
             $element->save();
 
             $point->element_id = $element->getId();
