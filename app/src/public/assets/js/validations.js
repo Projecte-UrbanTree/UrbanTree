@@ -25,6 +25,11 @@ class Validator {
                 regex: /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|CREATE|TRUNCATE|EXEC|UNION|OR|AND)\b|--|;|\/\*|\*\/|@@|@|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)/i,
                 explanation: "El campo contiene patrones no permitidos.",
             },
+            {
+                name: "emailFormat",
+                regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                explanation: "El campo debe ser un correo electrónico válido.",
+            },
         ];
     }
 
@@ -85,6 +90,22 @@ class Validator {
                   `${fieldName}: El valor no puede ser mayor a ${max}.`
               );
     }
+
+    validateMatchingFields(value1, value2, fieldName) {
+        return value1 === value2
+            ? true
+            : this.createErrorElement(
+                  `${fieldName}: Los campos no coinciden.`
+              );
+    }
+
+    validateMinLength(value, minLength, fieldName) {
+        return value.length >= minLength
+            ? true
+            : this.createErrorElement(
+                  `${fieldName}: El campo debe tener al menos ${minLength} caracteres.`
+              );
+    }
 }
 
 class FormValidator {
@@ -116,10 +137,12 @@ class FormValidator {
             const elements = document.querySelectorAll(`[id^="${field.id}"]`);
             elements.forEach((element) => {
                 const fieldName = this.getFieldName(element.id);
-                const value = element ? element.value.trim() : null;
-                const max = element ? parseFloat(element.max) : null;
+                const value = element.value.trim();
 
                 for (const check of field.checks) {
+                    const max = check.max ?? parseFloat(element.max);
+                    const minLength = check.minLength ?? parseInt(element.minLength);
+
                     let validation;
                     switch (check.type) {
                         case "empty":
@@ -158,6 +181,23 @@ class FormValidator {
                             validation = this.validator.validateMaxValue(
                                 value,
                                 max,
+                                fieldName
+                            );
+                            break;
+                        case "match":
+                            const matchValue = document
+                                .getElementById(check.matchFieldId)
+                                .value.trim();
+                            validation = this.validator.validateMatchingFields(
+                                value,
+                                matchValue,
+                                fieldName
+                            );
+                            break;
+                        case "minLength":
+                            validation = this.validator.validateMinLength(
+                                value,
+                                minLength,
                                 fieldName
                             );
                             break;
@@ -287,6 +327,102 @@ new FormValidator("taskTypeForm", [
         checks: [
             { type: "empty" },
             { type: "regex", regexName: "lettersAndSpaces" },
+        ],
+    },
+]);
+
+new FormValidator("userForm", [
+    {
+        id: "company",
+        checks: [
+            { type: "empty" },
+            { type: "regex", regexName: "lettersAndSpaces" },
+        ],
+    },
+    {
+        id: "name",
+        checks: [
+            { type: "empty" },
+            { type: "regex", regexName: "lettersAndSpaces" },
+        ],
+    },
+    {
+        id: "surname",
+        checks: [
+            { type: "empty" },
+            { type: "regex", regexName: "lettersAndSpaces" },
+        ],
+    },
+    {
+        id: "dni",
+        checks: [{ type: "empty" }],
+    },
+    {
+        id: "email",
+        checks: [
+            { type: "empty" },
+            { type: "regex", regexName: "emailFormat" },
+        ],
+    },
+    {
+        id: "role",
+        checks: [{ type: "empty" }],
+    },
+    {
+        id: "password",
+        checks: [{ type: "empty" }],
+    },
+]);
+
+new FormValidator("elementTypeForm", [
+    {
+        id: "name",
+        checks: [
+            { type: "empty" },
+            { type: "regex", regexName: "lettersAndSpaces" },
+        ],
+    },
+    {
+        id: "description",
+        checks: [{ type: "empty" }],
+    },
+]);
+
+new FormValidator("accountForm", [
+    {
+        id: "name",
+        checks: [
+            { type: "empty" },
+            { type: "regex", regexName: "lettersAndSpaces" },
+        ],
+    },
+    {
+        id: "surname",
+        checks: [
+            { type: "empty" },
+            { type: "regex", regexName: "lettersAndSpaces" },
+        ],
+    },
+    {
+        id: "current_password",
+        checks: [{ type: "empty" }],
+    },
+    {
+        id: "password",
+        checks: [
+            { type: "empty" },
+            { type: "minLength", minLength: 8 },
+        ],
+    },
+    {
+        id: "password_confirmation",
+        checks: [
+            { type: "empty" },
+            { type: "minLength", minLength: 8 },
+            {
+                type: "match",
+                matchFieldId: "password",
+            },
         ],
     },
 ]);

@@ -22,7 +22,7 @@ function mapWithId($items, $getIdMethod)
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Editar órden de trabajo</h2>
     <form id="workOrderForm" action="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/update" method="POST"
         class="space-y-6">
-        
+
         <div id="errorMessages" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"></div>
 
         <div>

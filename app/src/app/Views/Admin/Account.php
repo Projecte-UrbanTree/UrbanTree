@@ -2,7 +2,7 @@
     <!-- Main Configuration Card -->
     <div class="bg-white rounded-lg p-6 border border-gray-200">
         <h2 class="text-2xl font-semibold mb-5">Configuración de cuenta</h2>
-        <form action="/admin/account" method="POST">
+        <form action="/admin/account" method="POST" id="accountForm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Left Side: Personal Information -->
                 <div class="flex flex-col gap-6">
@@ -74,7 +74,8 @@
                             id="new-password"
                             name="password"
                             class="px-3 py-2 border rounded-md text-gray-600"
-                            oninput="checkChanges()">
+                            oninput="checkChanges()"
+                            minlength="8">
                     </div>
 
                     <div class="flex flex-col gap-4">
@@ -84,7 +85,8 @@
                             id="confirm-password"
                             name="password_confirmation"
                             class="px-3 py-2 border rounded-md text-gray-600"
-                            oninput="checkChanges()">
+                            oninput="checkChanges()"
+                            minlength="8">
                     </div>
                     <p class="text-xs text-gray-600 mt-2">La contraseña solo se actualizará si se establece una nueva.</p>
                 </div>
