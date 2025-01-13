@@ -5,6 +5,7 @@ from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
     from .element_model import Element
+    from .contract_model import Contract
 
 
 class Sensor(SQLModel, table=True):
@@ -20,6 +21,7 @@ class Sensor(SQLModel, table=True):
     histories: list["SensorHistory"] = Relationship(back_populates="sensor")
 
     contract_id: int = Field(index=True)
+    contract: "Contract" = Relationship(back_populates="sensors")
 
 
 class SensorHistoryBase(SQLModel):
