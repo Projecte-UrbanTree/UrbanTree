@@ -3,17 +3,26 @@ function checkChanges() {
     const inputs = document.querySelectorAll("input");
     const button = document.getElementById("button-save");
 
-    const changesDetected = Array.from(inputs).some(
-        (input) => input.value !== input.getAttribute("data-original-value")
-    );
+    const changesDetected = Array.from(inputs).some(input => {
+        const originalValue = input.getAttribute("data-original-value");
+        if (originalValue !== null) {
+            return input.value !== originalValue;
+        } else {
+            // verificar el campo por si no hay data
+            return input.value.trim() !== '';
+        }
+    });
 
     button.disabled = !changesDetected;
-    button.classList.toggle("bg-gray-400", !changesDetected);
-    button.classList.toggle("cursor-not-allowed", !changesDetected);
-    button.classList.toggle("text-gray-500", !changesDetected);
-    button.classList.toggle("bg-green-500", changesDetected);
-    button.classList.toggle("hover:bg-green-600", changesDetected);
-    button.classList.toggle("text-white", changesDetected);
+    
+    
+    if (changesDetected) {
+        button.classList.remove("bg-gray-400", "cursor-not-allowed", "text-gray-500");
+        button.classList.add("bg-green-500", "hover:bg-green-600", "text-white");
+    } else {
+        button.classList.add("bg-gray-400", "cursor-not-allowed", "text-gray-500");
+        button.classList.remove("bg-green-500", "hover:bg-green-600", "text-white");
+    }
 }
 
 // Function to POST on set-contract and then update the session values
