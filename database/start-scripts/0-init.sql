@@ -8,7 +8,7 @@ create table photos (
     deleted_at timestamp
 );
 
---* Users, contracts and machines
+--* Users
 create table users (
     id int auto_increment primary key,
     company varchar(255),
@@ -25,6 +25,7 @@ create table users (
     foreign key (photo_id) references photos(id)
 );
 
+--* Contracts
 create table contracts (
     id int auto_increment primary key,
     name varchar(255) not null,
@@ -38,6 +39,7 @@ create table contracts (
     deleted_at timestamp
 );
 
+--* Machines
 create table machines (
     id int auto_increment primary key,
     name varchar(255),
@@ -50,7 +52,7 @@ create table machines (
     constraint UC_MachineType unique (name, max_basket_size)
 );
 
---* Tree, task and pruning types
+--* Tree
 create table tree_types (
     id int auto_increment primary key,
     family varchar(255) not null,
@@ -62,6 +64,7 @@ create table tree_types (
     constraint UC_TreeType unique (family, genus, species)
 );
 
+--* Tasks
 create table task_types (
     id int auto_increment primary key,
     name varchar(255) unique,
@@ -71,6 +74,7 @@ create table task_types (
     deleted_at timestamp
 );
 
+--* Element Types
 create table element_types (
     id int auto_increment primary key,
     name varchar(255) not null,
@@ -83,7 +87,7 @@ create table element_types (
     deleted_at timestamp
 );
 
---* Zones and elements
+--* Zones
 create table zones (
     id int auto_increment primary key,
     contract_id int not null,
@@ -96,6 +100,7 @@ create table zones (
     foreign key (contract_id) references contracts(id)
 );
 
+--* Points
 create table points (
     id int auto_increment primary key,
     latitude decimal(10, 7) not null,
@@ -109,6 +114,7 @@ create table points (
     constraint UC_Point unique (latitude, longitude)
 );
 
+--* Elements
 create table elements (
     id int auto_increment primary key,
     element_type_id int not null,
@@ -140,7 +146,7 @@ create table incidences (
     foreign key (photo_id) references photos(id)
 );
 
---* Work orders, tasks and reports
+--* Work orders
 create table work_orders (
     id int auto_increment primary key,
     contract_id int not null,
@@ -151,6 +157,7 @@ create table work_orders (
     foreign key (contract_id) references contracts(id)
 );
 
+--* Work orders users
 create table work_orders_users (
     id int auto_increment primary key,
     work_order_id int not null,
@@ -163,6 +170,7 @@ create table work_orders_users (
     constraint UC_WorkOrderUser unique (work_order_id, user_id)
 );
 
+--* Work orders blocks
 create table work_orders_blocks (
     id int auto_increment primary key,
     work_order_id int not null,
@@ -173,6 +181,7 @@ create table work_orders_blocks (
     foreign key (work_order_id) references work_orders(id)
 );
 
+--* Work orders blocks zones
 create table work_orders_blocks_zones (
     id int auto_increment primary key,
     work_orders_block_id int not null,
@@ -185,6 +194,7 @@ create table work_orders_blocks_zones (
     constraint UC_WorkOrderBlockZone unique (work_orders_block_id, zone_id)
 );
 
+--* Work orders blocks tasks
 create table work_orders_blocks_tasks (
     id int auto_increment primary key,
     work_orders_block_id int not null,
@@ -199,6 +209,7 @@ create table work_orders_blocks_tasks (
     foreign key (tree_type_id) references tree_types(id)
 );
 
+--* Work reports
 create table work_reports (
     id int auto_increment primary key,
     work_order_id int unique,
@@ -210,6 +221,7 @@ create table work_reports (
     foreign key (work_order_id) references work_orders(id)
 );
 
+--* Work report photos
 create table work_report_photos (
     id int auto_increment primary key,
     work_report_id int not null,
@@ -222,7 +234,7 @@ create table work_report_photos (
     constraint UC_WorkReportPhoto unique (work_report_id, photo_id)
 );
 
---* Sensors and sensor history
+--* Sensors
 create table sensors (
     id int auto_increment primary key,
     contract_id int not null,
@@ -239,6 +251,7 @@ create table sensors (
     constraint UC_Sensor unique (contract_id, zone_id, point_id)
 );
 
+--* Sensor History
 create table sensor_history (
     id int auto_increment primary key,
     sensor_id int not null,
