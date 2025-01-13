@@ -38,7 +38,7 @@ class Router
         // Automatically detect the content type
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 
-        if ($requestMethod == 'POST') {
+        if (in_array($requestMethod, ['POST', 'PUT', 'DELETE'])) {
             if (strpos($contentType, 'application/json') !== false) {
                 // Read the raw POST data
                 $rawData = file_get_contents('php://input');
@@ -95,7 +95,7 @@ class Router
                     return;
                 }
 
-                if ($requestMethod === 'POST') {
+                if (in_array($requestMethod, ['POST', 'PUT', 'DELETE'])) {
                     $arguments = array_merge($params, ['postData' => $postData]);
                     $this->callRoute($routeInfo, $arguments);
                     return;
@@ -107,8 +107,6 @@ class Router
 
         $this->abort(404, '¡No se ha encontrado la página!');
     }
-
-
 
     public function redirect(string $uri, int $statusCode = 302): void
     {

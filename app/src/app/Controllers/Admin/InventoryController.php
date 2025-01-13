@@ -12,20 +12,11 @@ class InventoryController
 {
     public function index($queryParams)
     {
-        $users = User::count();
-        $contracts = Contract::count();
-        $elements = Element::count();
-        $workorders = WorkOrder::count();
         View::render([
             'view' => 'Admin/Inventory',
-            'title' => 'Tablero',
+            'title' => 'Inventario',
             'layout' => 'Admin/AdminInventoryLayout',
-            'data' => [
-                'users' => $users,
-                'contracts' => $contracts,
-                'elements' => $elements,
-                'workorders' => $workorders,
-            ],
+            'data' => [],
         ]);
     }
 }
