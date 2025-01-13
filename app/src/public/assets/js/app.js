@@ -1,27 +1,64 @@
 // func to active the button if detect changes in the form
+document.addEventListener("DOMContentLoaded", function () {
+    const inputs = document.querySelectorAll("#accountForm input");
+    inputs.forEach((input) => {
+        input.addEventListener("input", checkChanges);
+    });
+});
+
 function checkChanges() {
-    const inputs = document.querySelectorAll("input");
     const button = document.getElementById("button-save");
 
-    const changesDetected = Array.from(inputs).some(input => {
-        const originalValue = input.getAttribute("data-original-value");
-        if (originalValue !== null) {
-            return input.value !== originalValue;
-        } else {
-            // verificar el campo por si no hay data
-            return input.value.trim() !== '';
-        }
-    });
+    const nameField = document.getElementById("first-name");
+    const surnameField = document.getElementById("surname");
+
+    const nameChanged =
+        nameField.value !== nameField.getAttribute("data-original-value");
+    const surnameChanged =
+        surnameField.value !== surnameField.getAttribute("data-original-value");
+
+    const currentPassword = document
+        .getElementById("current-password")
+        .value.trim();
+
+    const newPassword = document.getElementById("new-password").value.trim();
+
+    const confirmPassword = document
+        .getElementById("confirm-password")
+        .value.trim();
+
+    const passwordChanged =
+        currentPassword !== "" || newPassword !== "" || confirmPassword !== "";
+
+    const isPasswordValid = !passwordChanged || (passwordChanged && currentPassword.length > 0);
+
+    const changesDetected = (nameChanged || surnameChanged || passwordChanged) && isPasswordValid;
+
 
     button.disabled = !changesDetected;
-    
-    
+
     if (changesDetected) {
-        button.classList.remove("bg-gray-400", "cursor-not-allowed", "text-gray-500");
-        button.classList.add("bg-green-500", "hover:bg-green-600", "text-white");
+        button.classList.remove(
+            "bg-gray-400",
+            "cursor-not-allowed",
+            "text-gray-500"
+        );
+        button.classList.add(
+            "bg-green-500",
+            "hover:bg-green-600",
+            "text-white"
+        );
     } else {
-        button.classList.add("bg-gray-400", "cursor-not-allowed", "text-gray-500");
-        button.classList.remove("bg-green-500", "hover:bg-green-600", "text-white");
+        button.classList.add(
+            "bg-gray-400",
+            "cursor-not-allowed",
+            "text-gray-500"
+        );
+        button.classList.remove(
+            "bg-green-500",
+            "hover:bg-green-600",
+            "text-white"
+        );
     }
 }
 

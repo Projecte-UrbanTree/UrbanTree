@@ -6,7 +6,6 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Left Side: Personal Information -->
                 <div class="flex flex-col gap-6">
-                    <!-- Name and Surname -->
                     <div class="flex flex-col gap-4">
                         <label for="first-name" class="text-sm font-semibold text-gray-700">First Name</label>
                         <input
@@ -15,10 +14,10 @@
                             name="name"
                             value="<?= $user->name ?>"
                             data-original-value="<?= $user->name ?>"
-                            class="px-3 py-2 border rounded-md text-gray-600"
-                            oninput="checkChanges()">
+                            class="px-3 py-2 border rounded-md text-gray-600">
                     </div>
 
+                    
                     <div class="flex flex-col gap-4">
                         <label for="surname" class="text-sm font-semibold text-gray-700">Surname</label>
                         <input
@@ -27,8 +26,7 @@
                             name="surname"
                             value="<?= $user->surname ?>"
                             data-original-value="<?= $user->surname ?>"
-                            class="px-3 py-2 border rounded-md text-gray-600"
-                            oninput="checkChanges()">
+                            class="px-3 py-2 border rounded-md text-gray-600">
                     </div>
 
                     <!-- DNI (disabled) -->
@@ -56,36 +54,37 @@
 
                 <!-- Right Side: Password Change -->
                 <div class="flex flex-col gap-6">
-                    <!-- Password Change Section -->
                     <div class="flex flex-col gap-4">
                         <label for="current-password" class="text-sm font-semibold text-gray-700">Contraseña actual</label>
                         <input
                             type="password"
                             id="current-password"
                             name="current_password"
-                            class="px-3 py-2 border rounded-md text-gray-600"
-                            oninput="checkChanges()">
+                            data-original-value=""
+                            class="px-3 py-2 border rounded-md text-gray-600">
                     </div>
 
+                    
                     <div class="flex flex-col gap-4">
                         <label for="new-password" class="text-sm font-semibold text-gray-700">Nueva contraseña</label>
                         <input
                             type="password"
                             id="new-password"
                             name="password"
+                            data-original-value=""
                             class="px-3 py-2 border rounded-md text-gray-600"
-                            oninput="checkChanges()"
                             minlength="8">
                     </div>
 
+                    
                     <div class="flex flex-col gap-4">
                         <label for="confirm-password" class="text-sm font-semibold text-gray-700">Confirmar contraseña</label>
                         <input
                             type="password"
                             id="confirm-password"
                             name="password_confirmation"
+                            data-original-value=""
                             class="px-3 py-2 border rounded-md text-gray-600"
-                            oninput="checkChanges()"
                             minlength="8">
                     </div>
                     <p class="text-xs text-gray-600 mt-2">La contraseña solo se actualizará si se establece una nueva.</p>
