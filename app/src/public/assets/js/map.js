@@ -401,21 +401,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const zoneControls = document.createElement("div");
         zoneControls.className = "flex items-center space-x-4";
 
-        const showHideLabel = document.createElement("label");
-        showHideLabel.className = "flex items-center space-x-2 cursor-pointer";
-        showHideLabel.innerHTML = `
-            <input type="checkbox" class="rounded-full border-gray-300" checked>
-            <i class="fas fa-eye text-gray-700"></i>
-        `;
-        const showHideCheckbox = showHideLabel.querySelector("input");
-        showHideCheckbox.dataset.zoneId = zone.id;
-        showHideCheckbox.addEventListener("change", (e) =>
-            handleZoneToggle(e, zone)
-        );
+        const showHideIcon = document.createElement("i");
+        showHideIcon.className = "fas fa-eye text-gray-700 cursor-pointer";
+        showHideIcon.dataset.zoneId = zone.id;
+        showHideIcon.addEventListener("click", (e) => handleZoneToggle(e, zone));
 
         const colorPicker = createColorPicker(zone.id, zone.color);
 
-        zoneControls.appendChild(showHideLabel);
+        zoneControls.appendChild(showHideIcon);
         zoneControls.appendChild(colorPicker);
 
         zoneHeader.appendChild(zoneTitleContainer);
@@ -461,26 +454,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return zoneItem;
     }
 
-    function createElementTypeItem(zone, type) {
-        const elementTypeItem = document.createElement("div");
-        elementTypeItem.className =
-            "flex items-center justify-between p-2 bg-gray-50 rounded-lg hover:bg-gray-200 transition ease-in-out duration-300";
-        const elementCount = type.elements.length;
-        elementTypeItem.innerHTML = `
-            <span class="text-gray-700"><i class="${type.icon} text-xl mr-2"></i> ${type.name} (${elementCount} elementos)</span>
-            <input type="checkbox" checked class="rounded-full border-gray-300" data-zone-id="${zone.id}" data-type-id="${type.id}">
-        `;
-        const checkbox = elementTypeItem.querySelector(
-            "input[type='checkbox']"
-        );
-        checkbox.addEventListener("change", (e) =>
-            handleElementTypeToggle(e, zone, type)
-        );
-        return elementTypeItem;
-    }
-
     function handleZoneToggle(event, zone) {
-        const isChecked = event.target.checked;
+        const showHideIcon = event.target;
+        const isVisible = showHideIcon.classList.contains("fa-eye");
         const elementTypesContainer = document.querySelector(
             `#element-types-zone-${zone.id}`
         );
@@ -488,10 +464,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let hiddenMessageDiv = zoneItem.querySelector(".zone-hidden-message");
 
-        if (isChecked) {
+        if (isVisible) {
+            elementTypesContainer.style.display = "none";
+            const polygonLayerId = `zone-polygon-layer-${zone.id}`;
+            map.setLayoutProperty(polygonLayerId, "visibility", "none");
+
+            showHideIcon.classList.remove("fa-eye");
+            showHideIcon.classList.add("fa-eye-slash");
+
+            if (!hiddenMessageDiv) {
+                hiddenMessageDiv = document.createElement("div");
+                hiddenMessageDiv.className =
+                    "zone-hidden-message text-gray-700 mt-2 p-4";
+                hiddenMessageDiv.innerHTML = "Zona actualmente oculta.";
+                zoneItem.insertBefore(hiddenMessageDiv, zoneItem.querySelector(".flex.justify-end.mt-4"));
+            }
+
+            removeMarkersForZone(zone);
+        } else {
             elementTypesContainer.style.display = "block";
             const polygonLayerId = `zone-polygon-layer-${zone.id}`;
             map.setLayoutProperty(polygonLayerId, "visibility", "visible");
+
+            showHideIcon.classList.remove("fa-eye-slash");
+            showHideIcon.classList.add("fa-eye");
 
             if (hiddenMessageDiv) {
                 hiddenMessageDiv.remove();
@@ -503,28 +499,40 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
                 if (typeCheckbox.checked) addMarkersForElementType(zone, type);
             });
-        } else {
-            elementTypesContainer.style.display = "none";
-            const polygonLayerId = `zone-polygon-layer-${zone.id}`;
-            map.setLayoutProperty(polygonLayerId, "visibility", "none");
-
-            if (!hiddenMessageDiv) {
-                hiddenMessageDiv = document.createElement("div");
-                hiddenMessageDiv.className =
-                    "zone-hidden-message text-gray-700 mt-2 p-4";
-                hiddenMessageDiv.innerHTML = "Zona actualmente oculta.";
-                zoneItem.insertBefore(hiddenMessageDiv, zoneItem.querySelector(".flex.justify-end.mt-4"));
-            }
-
-            removeMarkersForZone(zone);
         }
     }
 
+    function createElementTypeItem(zone, type) {
+        const elementTypeItem = document.createElement("div");
+        elementTypeItem.className =
+            "flex items-center justify-between p-2 bg-gray-50 rounded-lg hover:bg-gray-200 transition ease-in-out duration-300";
+        const elementCount = type.elements.length;
+        elementTypeItem.innerHTML = `
+            <span class="text-gray-700"><i class="${type.icon} text-xl mr-2"></i> ${type.name} (${elementCount} elementos)</span>
+        `;
+
+        const showHideIcon = document.createElement("i");
+        showHideIcon.className = "fas fa-eye text-gray-700 cursor-pointer";
+        showHideIcon.dataset.zoneId = zone.id;
+        showHideIcon.dataset.typeId = type.id;
+        showHideIcon.addEventListener("click", (e) => handleElementTypeToggle(e, zone, type));
+
+        elementTypeItem.appendChild(showHideIcon);
+        return elementTypeItem;
+    }
+
     function handleElementTypeToggle(event, zone, type) {
-        if (event.target.checked) {
-            addMarkersForElementType(zone, type);
-        } else {
+        const showHideIcon = event.target;
+        const isVisible = showHideIcon.classList.contains("fa-eye");
+
+        if (isVisible) {
             removeMarkersForElementType(zone, type);
+            showHideIcon.classList.remove("fa-eye");
+            showHideIcon.classList.add("fa-eye-slash");
+        } else {
+            addMarkersForElementType(zone, type);
+            showHideIcon.classList.remove("fa-eye-slash");
+            showHideIcon.classList.add("fa-eye");
         }
     }
 
