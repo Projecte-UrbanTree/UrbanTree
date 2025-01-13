@@ -881,6 +881,27 @@ document.addEventListener("DOMContentLoaded", () => {
         createElementModal.classList.remove("hidden");
     }
 
+    async function createElement(bodyData) {
+        try {
+            const response = await fetch("/api/map/elements", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(bodyData),
+            });
+            const result = await response.json();
+            if (result.status === "success") {
+                alert("Elemento guardado en la base de datos");
+                fetchZones();
+                createElementModal.classList.add("hidden");
+                createElementForm.reset();
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        } catch (error) {
+            console.error("Create Element Error", error);
+        }
+    }
+
     if (contractSelect && contractSelect.value === "-1") {
         zoneButton.classList.add("text-gray-300");
         zoneButton.disabled = true;
