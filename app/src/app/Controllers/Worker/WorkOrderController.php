@@ -7,6 +7,7 @@ use App\Core\View;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderBlockTask;
 use App\Models\WorkOrderUser;
+use App\Models\WorkReport;
 
 class WorkOrderController
 {
@@ -15,6 +16,7 @@ class WorkOrderController
         $date = $queryParams['date'] ?? date('Y-m-d');
         $userId = Session::get('user')['id'];
         $workOrderId = $queryParams['work_order_id'] ?? null;
+        $work_report = WorkReport::findAll();
 
         if ($workOrderId) {
             $work_orders = WorkOrder::findAll(['id' => $workOrderId]);
@@ -34,6 +36,7 @@ class WorkOrderController
             'data' => [
                 'date' => $date,
                 'work_orders' => $work_orders,
+                'work_report' => $work_report,
             ],
         ]);
     }
@@ -79,5 +82,10 @@ class WorkOrderController
 
         header('Location: /worker/work-orders?date=' . $postData['date']);
         exit;
+    }
+
+    public function storeReport()
+    {
+
     }
 }

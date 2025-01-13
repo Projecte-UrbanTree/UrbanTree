@@ -23,5 +23,10 @@ return [
             'method' => 'updateStatus',
             'middlewares' => [WorkerMiddleware::class],
         ],
+        '/worker/work-orders/store-report' => [
+            'controller' => WorkOrderController::class,
+            'method' => 'storeReport',
+            'middlewares' => [WorkerMiddleware::class],
+        ],
     ],
 ];

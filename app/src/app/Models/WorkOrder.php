@@ -29,9 +29,9 @@ class WorkOrder extends BaseModel
         return $work_order;
     }
 
-    public function report(): WorkReport
+    public function report(): ?WorkReport
     {
-        return $this->hasOne(WorkReport::class, 'id');
+        return $this->hasOne(WorkReport::class, 'work_order_id');
     }
 
     public function contract(): Contract
