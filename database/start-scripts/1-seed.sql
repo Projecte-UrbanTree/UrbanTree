@@ -64,14 +64,14 @@ INSERT INTO points (latitude, longitude, zone_id, element_id) VALUES
 --* Elements
 INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type_id) VALUES
 (1, 1, 1, 1, 1),
-(1, 1, 1, 12, NULL),
-(1, 1, 1, 13, NULL),
-(1, 1, 1, 14, NULL),
+(1, 1, 1, 12, 1),
+(1, 1, 1, 13, 1),
+(1, 1, 1, 14, 1),
 (3, 1, 1, 15, NULL),
 (2, 1, 1, 16, NULL),
-(1, 1, 1, 17, NULL),
-(1, 1, 1, 18, NULL),
-(1, 1, 1, 19, NULL);
+(1, 1, 1, 17, 1),
+(1, 1, 1, 18, 1),
+(1, 1, 1, 19, 1);
 
 --* Incidences
 INSERT INTO incidences (element_id, name, description) VALUES
