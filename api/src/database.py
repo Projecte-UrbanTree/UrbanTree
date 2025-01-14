@@ -1,4 +1,6 @@
-from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel import Session, SQLModel, create_engine, select
+
+from src.models.sensor_model import Sensor
 
 from .config import settings
 

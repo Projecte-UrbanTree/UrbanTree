@@ -2,7 +2,7 @@ from sentry_sdk.crons import monitor
 from sqlmodel import select
 
 from src.database import get_session
-from src.models import SensorHistory
+from src.models.sensor_history_model import SensorHistory
 from src.utils.file_loader import load_json_file
 
 
