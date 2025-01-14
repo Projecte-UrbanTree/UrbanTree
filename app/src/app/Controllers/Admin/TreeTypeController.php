@@ -40,7 +40,7 @@ class TreeTypeController
         if ($tree_type->getId())
             Session::set('success', 'Especie creado correctamente');
         else
-            Session::set('error', 'El especie no se pudo crear');
+            Session::set('error', 'La especie no se pudo crear');
 
         header('Location: /admin/tree-types');
         exit;

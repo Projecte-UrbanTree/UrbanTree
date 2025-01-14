@@ -38,7 +38,7 @@
                                 <i class="fas fa-pencil"></i>
                             </a>
                             <a href="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/delete"
-                                onclick="return confirm('¿Desea eliminar el especie <?= htmlspecialchars($tree_type->species); ?>?');"
+                                onclick="return confirm('¿Desea eliminar la especie <?= htmlspecialchars($tree_type->species); ?>?');"
                                 class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
                                 title="Eliminar" aria-label="Eliminar especie <?= htmlspecialchars($tree_type->species); ?>">
                                 <i class="fas fa-trash-alt"></i>
