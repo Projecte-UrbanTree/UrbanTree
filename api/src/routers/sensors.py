@@ -13,6 +13,7 @@ router = APIRouter(prefix="/api/sensors", tags=["Sensors"])
 @router.get("/", response_model=ApiResponse[List[Sensor]])
 async def get_sensors(db: Session = Depends(get_session)):
     sensors = db.exec(select(Sensor)).all()
+
     return ApiResponse(status="success", details=sensors)
 
 

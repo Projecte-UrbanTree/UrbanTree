@@ -1,20 +1,14 @@
-import os
 from contextlib import asynccontextmanager
-from typing import List
 
 import sentry_sdk
 import sentry_sdk.crons
-from fastapi import Depends, FastAPI, Request
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from sqlmodel import Session, select
+from fastapi import FastAPI
 
 from src.routers import pages, sensors
 
-from .config import settings
-from .database import create_db_and_tables, get_session
-from .models.sensor_model import Sensor, SensorHistory
-from .services.scheduler_service import scheduler
+from src.config import settings
+from src.database import create_db_and_tables
+from src.services.scheduler_service import scheduler
 
 # Initialize Sentry SDK
 sentry_sdk.init(
