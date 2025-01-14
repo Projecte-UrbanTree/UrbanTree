@@ -71,12 +71,6 @@ INSERT INTO work_reports (work_order_id, observation, spent_fuel) VALUES
 (2, 'Observación de la orden 2', 60.0),
 (3, 'Observación de la orden 3', 70.0);
 
---* Machines
-INSERT INTO machines (name, max_basket_size, work_report_id) VALUES
-('Cesta elevadora', 200.00, 1),
-('Plataforma elevadora', 300.0, 2),
-('Tijera elevadora', 400.00, 3);
-
 --* Sensors
 INSERT INTO sensors (zone_id, contract_id, point_id, model, is_active) VALUES
 (1, 1, 1, 'Sensor Modelo A', TRUE),
@@ -107,3 +101,21 @@ INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_i
 (1, 2, 2, 2),
 (2, 2, NULL,3),
 (3, 3, NULL, 2);
+
+INSERT INTO type_resources (id, category, description)
+VALUES 
+    (1, 'Vehiculo', 'Resources that are in written book format'),
+    (2, 'Consumibles', 'Instructional or educational video content'),
+    (3, 'Maquinaria', 'Written articles or blogs for learning');
+
+INSERT INTO resources (id, name, description, type_resource_id)
+VALUES
+    (1, 'Vechiculo A', NULL, 1),
+    (2, 'jocs infantils', NULL, 2),
+    (3, 'Corta Cesped', NULL, 3);
+
+INSERT INTO work_report_resources (id, work_report_id, resource_id)
+VALUES
+    (1, 1, 1),
+    (2, 2, 2),
+    (3, 3, 3);

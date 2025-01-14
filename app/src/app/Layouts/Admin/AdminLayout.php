@@ -129,6 +129,16 @@ $currentContract = Session::get('current_contract');
                 <i class="fas fa-tasks block"></i>
                 Tipos de tarea
             </a>
+            <a href="/admin/resources"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-tasks block"></i>
+                Recursos
+            </a>
+            <a href="/admin/type-resources"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-tasks block"></i>
+                Tipo de Recursos
+            </a>
             <a href="/admin/users"
                 class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/user') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-users block"></i>

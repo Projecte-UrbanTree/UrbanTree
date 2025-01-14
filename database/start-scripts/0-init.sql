@@ -190,10 +190,6 @@ create table work_reports (
     work_order_id int unique,
     observation varchar(255),
     spent_fuel decimal,
-    vehicle varchar(255),
-    waste_management varchar(255),
-    phytosanitary varchar(255),
-    consumables varchar(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
@@ -212,18 +208,37 @@ create table work_report_photos (
     constraint UC_WorkReportPhoto unique (work_report_id, photo_id)
 );
 
-create table machines (
+--* Resources and type resources
+create table type_resources(
     id int auto_increment primary key,
-    name varchar(255),
-    max_basket_size float not null,
-    photo_id int,
-    work_report_id int,
+    category varchar(255) not null,
+    description varchar(255),
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp
+);
+
+create table resources(
+    id int auto_increment primary key,
+    name varchar(255) not null,
+    description varchar(255) null,
+    type_resource_id int not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (photo_id) references photos(id),
+    foreign key (type_resource_id) references type_resources(id)
+);
+
+create table work_report_resources(
+    id int auto_increment primary key,
+    work_report_id int not null,
+    resource_id int not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
     foreign key (work_report_id) references work_reports(id),
-    constraint UC_MachineType unique (name, max_basket_size)
+    foreign key (resource_id) references resources(id),
+    constraint UC_WorkReportResource unique (work_report_id, resource_id)
 );
 
 --* Sensors and sensor history
