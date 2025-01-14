@@ -18,4 +18,4 @@ class Sensor(SQLModel, table=True):
     histories: List["SensorHistory"] = Relationship(back_populates="sensor")
 
     class Config:
-        orm_mode = True
+        from_attributes = True
