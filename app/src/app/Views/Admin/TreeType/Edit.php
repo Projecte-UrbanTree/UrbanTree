@@ -8,7 +8,7 @@
 </div>
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Editando tipo de árbol</h2>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Editando especie</h2>
 
     <form id="treeTypeForm" action="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/update" method="POST"
         class="grid grid-cols-1 md:grid-cols-2 gap-6">

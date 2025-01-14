@@ -1,6 +1,6 @@
 <div class="mb-4 flex justify-end">
     <a href="/admin/tree-type/create" class="px-4 py-2 bg-gray-700 text-white shadow-sm hover:bg-gray-500 transition-all duration-200 rounded">
-        <i class="fas fa-plus mr-2"></i> Nuevo tipo de árbol
+        <i class="fas fa-plus mr-2"></i> Nuevo especie
     </a>
 </div>
 <!-- Tree Types Table -->
@@ -34,13 +34,13 @@
                         <div class="flex justify-center space-x-3">
                             <a href="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/edit"
                                 class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
-                                title="Editar" aria-label="Editar tipo de árbol <?= htmlspecialchars($tree_type->species); ?>">
+                                title="Editar" aria-label="Editar especie <?= htmlspecialchars($tree_type->species); ?>">
                                 <i class="fas fa-pencil"></i>
                             </a>
                             <a href="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/delete"
-                                onclick="return confirm('¿Desea eliminar el tipo de árbol <?= htmlspecialchars($tree_type->species); ?>?');"
+                                onclick="return confirm('¿Desea eliminar el especie <?= htmlspecialchars($tree_type->species); ?>?');"
                                 class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
-                                title="Eliminar" aria-label="Eliminar tipo de árbol <?= htmlspecialchars($tree_type->species); ?>">
+                                title="Eliminar" aria-label="Eliminar especie <?= htmlspecialchars($tree_type->species); ?>">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>

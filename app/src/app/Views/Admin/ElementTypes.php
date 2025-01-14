@@ -10,7 +10,7 @@
             <tr class="h-12">
                 <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Nombre</th>
                 <th scope="col" class="px-4 py-3 font-medium">Descripción</th>
-                <th scope="col" class="px-4 py-3 font-medium">Requiere tipo de árbol</th>
+                <th scope="col" class="px-4 py-3 font-medium">Requiere especie</th>
                 <th scope="col" class="px-4 py-3 font-medium">Icono</th>
                 <th scope="col" class="px-4 py-3 font-medium">Color</th>
                 <th scope="col" class="px-4 py-3 font-medium">Elementos</th>

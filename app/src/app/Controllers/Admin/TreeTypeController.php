@@ -23,7 +23,7 @@ class TreeTypeController
     {
         View::render([
             'view' => 'Admin/TreeType/Create',
-            'title' => 'Nuevo Tipo de Árbol',
+            'title' => 'Nuevo Especie',
             'layout' => 'Admin/AdminLayout',
         ]);
     }
@@ -38,9 +38,9 @@ class TreeTypeController
         $tree_type->save();
 
         if ($tree_type->getId())
-            Session::set('success', 'Tipo de árbol creado correctamente');
+            Session::set('success', 'Especie creado correctamente');
         else
-            Session::set('error', 'El tipo de árbol no se pudo crear');
+            Session::set('error', 'El especie no se pudo crear');
 
         header('Location: /admin/tree-types');
         exit;
@@ -51,14 +51,14 @@ class TreeTypeController
         $tree_type = TreeType::find($id);
 
         if (!$tree_type) {
-            Session::set('error', 'Tipo de árbol no encontrado');
+            Session::set('error', 'Especie no encontrado');
             header('Location: /admin/tree-types');
             exit;
         }
 
         View::render([
             'view' => 'Admin/TreeType/Edit',
-            'title' => 'Editando Tipo de Árbol',
+            'title' => 'Editando Especie',
             'layout' => 'Admin/AdminLayout',
             'data' => ['tree_type' => $tree_type],
         ]);
@@ -75,9 +75,9 @@ class TreeTypeController
 
             $tree_type->save();
 
-            Session::set('success', 'Tipo de árbol actualizado correctamente');
+            Session::set('success', 'Especie actualizado correctamente');
         } else
-            Session::set('error', 'Tipo de árbol no encontrado');
+            Session::set('error', 'Especie no encontrado');
 
         header('Location: /admin/tree-types');
         exit;
@@ -89,9 +89,9 @@ class TreeTypeController
 
         if ($tree_type) {
             $tree_type->delete();
-            Session::set('success', 'Tipo de árbol eliminado correctamente');
+            Session::set('success', 'Especie eliminado correctamente');
         } else
-            Session::set('error', 'Tipo de árbol no encontrado');
+            Session::set('error', 'Especie no encontrado');
 
         header('Location: /admin/tree-types');
         exit;

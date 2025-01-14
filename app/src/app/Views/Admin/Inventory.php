@@ -41,7 +41,7 @@
                 <textarea id="element-description" class="w-full p-2 border rounded"></textarea>
             </div>
             <div class="mb-4 hidden" id="tree-type-container">
-                <label for="element-tree-type" class="block text-gray-700">Tipo de Árbol</label>
+                <label for="element-tree-type" class="block text-gray-700">Especie</label>
                 <select id="element-tree-type" class="w-full p-2 border rounded"></select>
             </div>
             <div class="flex justify-end">
