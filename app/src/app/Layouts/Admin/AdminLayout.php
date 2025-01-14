@@ -121,7 +121,7 @@ $currentContract = Session::get('current_contract');
             <a href="/admin/tree-types"
                 class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/tree-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tree block"></i>
-                Tipos de árbol
+                Especies
             </a>
             <a href="/admin/task-types"
                 class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">

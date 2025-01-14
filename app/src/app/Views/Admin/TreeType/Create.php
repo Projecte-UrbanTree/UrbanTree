@@ -3,12 +3,12 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
-        <span>Volver a tipos de árbol</span>
+        <span>Volver a especies</span>
     </a>
 </div>
 
 <div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Creando nuevo especie</h2>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Creando nueva especie</h2>
 
     <form id="treeTypeForm" action="/admin/tree-type/store" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Error Messages -->
@@ -43,7 +43,7 @@
         <div class="col-span-1 md:col-span-2 flex justify-end">
             <button type="submit"
                 class="px-4 py-2 bg-blue-500 text-white shadow-sm hover:bg-blue-600 transition-all duration-200 rounded">
-                Crear nuevo especie
+                Crear nueva especie
             </button>
         </div>
     </form>

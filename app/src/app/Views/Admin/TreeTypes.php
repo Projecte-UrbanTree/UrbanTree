@@ -1,6 +1,6 @@
 <div class="mb-4 flex justify-end">
     <a href="/admin/tree-type/create" class="px-4 py-2 bg-gray-700 text-white shadow-sm hover:bg-gray-500 transition-all duration-200 rounded">
-        <i class="fas fa-plus mr-2"></i> Nuevo especie
+        <i class="fas fa-plus mr-2"></i> Nueva especie
     </a>
 </div>
 <!-- Tree Types Table -->
