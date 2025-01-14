@@ -8,7 +8,7 @@ T = TypeVar("T")
 
 class ApiResponse:
     status: str
-    details: Union[T, List[T]]
+    details: Union[T, List[T], None] = None
 
 
 class ErrorResponse:
