@@ -1,25 +1,21 @@
-from typing import TYPE_CHECKING
-
+from typing import TYPE_CHECKING, Optional, List
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from .element_model import Element
     from .sensor_history_model import SensorHistory
-    from .contract_model import Contract
 
 
 class Sensor(SQLModel, table=True):
     __tablename__ = "sensors"
 
-    id: int | None = Field(default=None, primary_key=True)
-
+    id: Optional[int] = Field(default=None, primary_key=True)
+    contract_id: int = Field(foreign_key="contracts.id", index=True)
     zone_id: int = Field(index=True)
-    point_id: int = Field(index=True)
-    model: str | None = Field(default=None, index=True)
-    is_active: bool | None = Field(default=None, index=True)
+    point_id: int = Field(index=True, unique=True)
+    model: Optional[str] = Field(default=None)
+    is_active: Optional[bool] = Field(default=None)
 
-    histories: list["SensorHistory"] = Relationship(back_populates="sensor")
+    histories: List["SensorHistory"] = Relationship(back_populates="sensor")
 
-    contract_id: int = Field(index=True)
-    contract: "Contract" = Relationship(back_populates="sensors")
-
+    class Config:
+        orm_mode = True
