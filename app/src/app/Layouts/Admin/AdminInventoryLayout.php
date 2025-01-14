@@ -94,7 +94,7 @@ $currentContract = Session::get('current_contract');
                 <i class="fas fa-toolbox"></i> Gestión
             </a>
             <a href="/admin/inventory" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
-                <i class="fas fa-archieve"></i> Inventario
+                <i class="fas fa-box-archive"></i> Inventario
             </a>
         </div>
     </header>

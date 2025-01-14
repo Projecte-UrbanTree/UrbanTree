@@ -51,7 +51,7 @@ $currentContract = Session::get('current_contract');
                 </a>
                 <a href="/admin/inventory"
                     class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
-                    <i class="fas fa-archive"></i> Inventario
+                    <i class="fas fa-box-archive"></i> Inventario
                 </a>
             </div>
 
