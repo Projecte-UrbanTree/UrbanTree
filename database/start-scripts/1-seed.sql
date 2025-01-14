@@ -11,12 +11,6 @@ INSERT INTO contracts (name, start_date, end_date, invoice_proposed, invoice_agr
 ('Administración General del Estado', '2026-01-01', '2021-12-31', 2000.00, 1800.00, 1800.00),
 ('Ayuntamiento de Carlet', '2021-01-01', '2026-12-31', 3000.00, 2700.00, 2700.00);
 
---* Machines
-INSERT INTO machines (name, max_basket_size) VALUES
-('Cesta elevadora', 200.00),
-('Plataforma elevadora', 300.00),
-('Tijera elevadora', 400.00);
-
 --* Element Types
 INSERT INTO element_types (name, description, requires_tree_type) VALUES
 ('Árbol', 'Elemento tipo árbol', true),
@@ -76,6 +70,12 @@ INSERT INTO work_reports (work_order_id, observation, spent_fuel) VALUES
 (1, 'Observación de la orden 1', 50.0),
 (2, 'Observación de la orden 2', 60.0),
 (3, 'Observación de la orden 3', 70.0);
+
+--* Machines
+INSERT INTO machines (name, max_basket_size, work_report_id) VALUES
+('Cesta elevadora', 200.00, 1),
+('Plataforma elevadora', 300.0, 2),
+('Tijera elevadora', 400.00, 3);
 
 --* Sensors
 INSERT INTO sensors (zone_id, contract_id, point_id, model, is_active) VALUES

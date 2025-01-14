@@ -53,6 +53,12 @@ return [
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
+        // === Machine GET Routes
+        '/admin/machines' => [
+            'controller' => MachineController::class,
+            'method' => 'index',
+            'middlewares' => [AdminMiddleware::class],
+        ],
         // === WorkOrders GET Routes
         '/admin/work-orders' => [
             'controller' => WorkOrderController::class,

@@ -38,18 +38,6 @@ create table contracts (
     deleted_at timestamp
 );
 
-create table machines (
-    id int auto_increment primary key,
-    name varchar(255),
-    max_basket_size float not null,
-    photo_id int,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp,
-    deleted_at timestamp,
-    foreign key (photo_id) references photos(id),
-    constraint UC_MachineType unique (name, max_basket_size)
-);
-
 --* Tree, task and pruning types
 create table tree_types (
     id int auto_increment primary key,
@@ -202,7 +190,10 @@ create table work_reports (
     work_order_id int unique,
     observation varchar(255),
     spent_fuel decimal,
-    km decimal,
+    vehicle varchar(255),
+    waste_management varchar(255),
+    phytosanitary varchar(255),
+    consumables varchar(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
@@ -219,6 +210,20 @@ create table work_report_photos (
     foreign key (work_report_id) references work_reports(id),
     foreign key (photo_id) references photos(id),
     constraint UC_WorkReportPhoto unique (work_report_id, photo_id)
+);
+
+create table machines (
+    id int auto_increment primary key,
+    name varchar(255),
+    max_basket_size float not null,
+    photo_id int,
+    work_report_id int,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
+    foreign key (photo_id) references photos(id),
+    foreign key (work_report_id) references work_reports(id),
+    constraint UC_MachineType unique (name, max_basket_size)
 );
 
 --* Sensors and sensor history
