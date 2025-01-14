@@ -23,15 +23,6 @@ h6 {
     height: calc(100vh - 72px - 66px);
 }
 
-/* Return Button */
-#returnBtn {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 1000;
-    border-radius: 50%;
-}
-
 .inventory-map {
     display: flex;
     width: 100%;
