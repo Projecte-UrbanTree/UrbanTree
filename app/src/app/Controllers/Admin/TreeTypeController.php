@@ -38,7 +38,7 @@ class TreeTypeController
         $tree_type->save();
 
         if ($tree_type->getId())
-            Session::set('success', 'Especie creado correctamente');
+            Session::set('success', 'Especie creada correctamente');
         else
             Session::set('error', 'La especie no se pudo crear');
 
@@ -51,7 +51,7 @@ class TreeTypeController
         $tree_type = TreeType::find($id);
 
         if (!$tree_type) {
-            Session::set('error', 'Especie no encontrado');
+            Session::set('error', 'Especie no encontrada');
             header('Location: /admin/tree-types');
             exit;
         }
@@ -75,9 +75,9 @@ class TreeTypeController
 
             $tree_type->save();
 
-            Session::set('success', 'Especie actualizado correctamente');
+            Session::set('success', 'Especie actualizada correctamente');
         } else
-            Session::set('error', 'Especie no encontrado');
+            Session::set('error', 'Especie no encontrada');
 
         header('Location: /admin/tree-types');
         exit;
@@ -89,9 +89,9 @@ class TreeTypeController
 
         if ($tree_type) {
             $tree_type->delete();
-            Session::set('success', 'Especie eliminado correctamente');
+            Session::set('success', 'Especie eliminada correctamente');
         } else
-            Session::set('error', 'Especie no encontrado');
+            Session::set('error', 'Especie no encontrada');
 
         header('Location: /admin/tree-types');
         exit;
