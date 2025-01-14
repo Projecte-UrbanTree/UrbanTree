@@ -12,17 +12,15 @@ router = APIRouter(prefix="/api/sensors", tags=["Sensors"])
 
 @router.get("/", response_model=ApiResponse[List[Sensor]])
 async def get_sensors(db: Session = Depends(get_session)):
-    sensors: List[Sensor] = db.exec(select(Sensor)).all()
-    return ApiResponse(status=ApiResponse.status, detail=sensors)
+    sensors = db.exec(select(Sensor)).all()
+    return ApiResponse(status="success", details=sensors)
 
 
-@router.get("{sensor_id}")
+@router.get("/{sensor_id}")
 async def get_sensor(sensor_id: int, db: Session = Depends(get_session)):
     sensor: Sensor = db.get(Sensor, sensor_id)
 
     if not sensor:
-        return ErrorResponse(
-            status=ErrorResponse.status, code=404, message="Sensor not found"
-        )
+        return ErrorResponse(status="error", code=404, message="Sensor not found")
 
-    return ApiResponse(status=ApiResponse.status, details=sensor)
+    return ApiResponse(status="success", details=sensor)
