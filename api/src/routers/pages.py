@@ -7,16 +7,15 @@ from sqlmodel import Session, select
 from ..database import get_session
 from ..models.sensor_model import Sensor, SensorHistory
 
-# Configurar Jinja2
+
 templates = Jinja2Templates(
     directory=os.path.join(os.path.dirname(__file__), "../templates")
 )
 
-# Crear el router
+
 router = APIRouter()
 
 
-# Ruta principal
 @router.get("/")
 def hello():
     return "Hello, Docker!"
