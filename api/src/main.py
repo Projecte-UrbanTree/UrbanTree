@@ -51,4 +51,4 @@ app.include_router(sensors.router)
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy"}
+    return {"status": "healthy", "version": settings.IMAGE_VERSION or "dev"}
