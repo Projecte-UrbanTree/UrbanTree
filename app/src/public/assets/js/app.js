@@ -530,7 +530,7 @@ function updateBlock() {
 document.addEventListener("DOMContentLoaded", () => {
     const blocksContainer = document.getElementById("blocksContainer");
 
-    if (blocksContainer.querySelectorAll(".workorder-block").length === 0) {
+    if (blocksContainer && blocksContainer.querySelectorAll(".workorder-block").length === 0) {
         addBlock();
     }
 });
