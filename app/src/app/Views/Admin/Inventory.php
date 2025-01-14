@@ -4,14 +4,14 @@
         <div id="map" class="h-full"></div>
     </div>
     <!-- Inventory Sidebar -->
-    <div class="inventory w-full md:w-1/3 px-4 border-l border-gray-300 overflow-y-auto hidden md:block">
-        <div id="filters" class="space-y-4"></div>
+    <div class="inventory w-full md:w-1/3 px-4 border-l border-gray-300 overflow-y-auto hidden md:block py-4 md:py-0">
+        <div id="filters"></div>
     </div>
 </div>
 
 <!-- Toggle Button for Mobile -->
-<button id="toggle-inventory" class="fixed bottom-8 right-8 bg-primary text-white px-4 py-2 rounded md:hidden">
-    <i class="fas fa-cogs"></i>
+<button id="toggle-inventory" class="fixed bottom-8 left-8 bg-white text-black px-4 py-2 rounded shadow md:hidden">
+    <i class="fas fa-layer-group"></i>
 </button>
 
 <!-- Element Modal -->
@@ -41,7 +41,7 @@
                 <textarea id="element-description" class="w-full p-2 border rounded"></textarea>
             </div>
             <div class="mb-4 hidden" id="tree-type-container">
-                <label for="element-tree-type" class="block text-gray-700">Tipo de Árbol</label>
+                <label for="element-tree-type" class="block text-gray-700">Especie</label>
                 <select id="element-tree-type" class="w-full p-2 border rounded"></select>
             </div>
             <div class="flex justify-end">
