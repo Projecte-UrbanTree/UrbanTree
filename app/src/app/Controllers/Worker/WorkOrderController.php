@@ -53,30 +53,6 @@ class WorkOrderController
 
                 $block = $task->block();
                 $work_order = WorkOrder::find($block->work_order_id);
-                if ($work_order) {
-                    $allTasksCompleted = true;
-                    $hasInProgress = false;
-
-                    foreach ($work_order->blocks() as $block) {
-                        foreach ($block->tasks() as $task) {
-                            if ($task->status == 1) {
-                                $hasInProgress = true;
-                            } elseif ($task->status == 0) {
-                                $allTasksCompleted = false;
-                            }
-                        }
-                    }
-
-                    if ($allTasksCompleted) {
-                        $work_order->status = 2; // Complete (Green)
-                    } elseif ($hasInProgress) {
-                        $work_order->status = 1; // In Progress (Orange)
-                    } else {
-                        $work_order->status = 0; // Not Started  (Red)
-                    }
-
-                    $work_order->save();
-                }
             }
         }
 

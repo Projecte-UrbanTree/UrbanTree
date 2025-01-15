@@ -129,14 +129,14 @@ $currentContract = Session::get('current_contract');
                 Tipos de tarea
             </a>
             <a href="/admin/resources"
-                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
-                <i class="fas fa-tasks block"></i>
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/resources') !== false ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-box block"></i>
                 Recursos
             </a>
             <a href="/admin/type-resources"
-                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
-                <i class="fas fa-tasks block"></i>
-                Tipo de Recursos
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/type-resources') !== false ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-solid fa-layer-group block"></i>
+                Tipos de recursos
             </a>
             <a href="/admin/users"
                 class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/user') !== false ? 'font-semibold' : ''; ?>">
@@ -184,7 +184,7 @@ $currentContract = Session::get('current_contract');
     <script src="/assets/js/validations.js?v=<?= time(); ?>"></script>
     <script src="/assets/js/work-orders.js?v=<?= time(); ?>"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             // Show alerts with animation (Success and Error messages)
             const alertMsg = document.querySelector("#alert-msg");
             const alertMsgError = document.querySelector("#alert-msg-error");
@@ -218,7 +218,7 @@ $currentContract = Session::get('current_contract');
             const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
             const mobileMenu = document.getElementById("mobile-menu");
 
-            mobileMenuToggle.addEventListener("click", function() {
+            mobileMenuToggle.addEventListener("click", function () {
                 mobileMenu.classList.toggle("hidden");
             });
         });

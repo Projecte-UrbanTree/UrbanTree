@@ -85,7 +85,6 @@ class WorkOrderController
                     $task->work_orders_block_id = (int) $block->getId();
                     $task->task_id = (int) $taskData['taskType'];
                     $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
-                    $task->status = 0; // Default status
                     $task->save();
                 }
             }
@@ -192,7 +191,6 @@ class WorkOrderController
                         $task->task_id = (int) $taskData['taskType'];
                         $task->element_type_id = (int) $taskData['elementType'];
                         $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
-                        $task->status = 0; // Default status
                         $task->save();
                     }
                 }

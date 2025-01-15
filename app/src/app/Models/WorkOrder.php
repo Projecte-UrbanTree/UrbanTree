@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Core\Database;
-
 class WorkOrder extends BaseModel
 {
     public int $contract_id;
+
     public string $date;
-    public int $status = 0;
 
     protected static function getTableName(): string
     {
@@ -21,7 +19,6 @@ class WorkOrder extends BaseModel
         $work_order->id = $data['id'];
         $work_order->contract_id = $data['contract_id'];
         $work_order->date = $data['date'];
-        $work_order->status = $data['status'];
         $work_order->created_at = $data['created_at'];
         $work_order->updated_at = $data['updated_at'];
         $work_order->deleted_at = $data['deleted_at'];
@@ -47,5 +44,14 @@ class WorkOrder extends BaseModel
     public function blocks(): array
     {
         return $this->hasMany(WorkOrderBlock::class, 'work_order_id');
+    }
+
+    public function status()
+    {
+        $tasks = array_merge(...array_map(fn($block) => $block->tasks(), $this->blocks()));
+        $completed = count(array_filter($tasks, fn($task) => $task->status == 1));
+        $total = count($tasks);
+
+        return $completed === $total ? 2 : ($completed > 0 ? 1 : 0);
     }
 }

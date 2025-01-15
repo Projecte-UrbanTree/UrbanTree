@@ -23,10 +23,9 @@ class ResourceController
             ]
         ]);
     }
-    
+
     public function create($queryParams)
     {
-        $resources = Resource::findAll();
         $resource_types = TypeResource::findAll();
 
         View::render([
@@ -34,7 +33,6 @@ class ResourceController
             'title' => 'Crear Recurso',
             'layout' => 'Admin/AdminLayout',
             'data' => [
-                'resources' => $resources,
                 'resource_types' => $resource_types
             ]
         ]);
@@ -45,7 +43,7 @@ class ResourceController
         $resource = new Resource();
         $resource->name = $postData['name'];
         $resource->description = $postData['description'];
-        $resource->type_resource_id = (int)$postData['type_resource_id'];
+        $resource->type_resource_id = (int) $postData['type_resource_id'];
         $resource->save();
         var_dump($resource);
 
@@ -57,6 +55,7 @@ class ResourceController
         header('Location: /admin/resources');
         exit;
     }
+
     public function edit($id, $queryParams)
     {
         $resource = Resource::find($id);
@@ -78,7 +77,8 @@ class ResourceController
             ]
         ]);
     }
-    function update($id, $postData)
+
+    public function update($id, $postData)
     {
         if (empty($postData['type_resource_id'])) {
             Session::set('error', 'El tipo de recurso es obligatorio');
@@ -100,6 +100,7 @@ class ResourceController
         header('Location: /admin/resources');
         exit;
     }
+
     public function destroy($id, $queryParams)
     {
         $resource = Resource::find($id);

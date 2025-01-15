@@ -13,7 +13,7 @@ class TypeResourceController
         $type_resources = TypeResource::findAll();
         View::render([
             'view' => 'Admin/TypeResources',
-            'title' => 'Recursos',
+            'title' => 'Tipos de Recursos',
             'layout' => 'Admin/AdminLayout',
             'data' => ['type_resources' => $type_resources],
         ]);
@@ -50,7 +50,7 @@ class TypeResourceController
         $type_resource = TypeResource::find($id);
         View::render([
             'view' => 'Admin/TypeResource/Edit',
-            'title' => 'Editar Tipo de Recurso',
+            'title' => 'Editando Tipo de Recurso',
             'layout' => 'Admin/AdminLayout',
             'data' => ['type_resource' => $type_resource],
         ]);
@@ -70,7 +70,7 @@ class TypeResourceController
                 Session::set('error', 'El tipo de recurso no se pudo actualizar');
             }
         } else {
-            Session::set('error', 'El tipo de recurso no se pudo actualizar');
+            Session::set('error', 'El tipo de recurso no se pudo encontrar');
         }
 
         header('Location: /admin/type-resources');
@@ -85,7 +85,7 @@ class TypeResourceController
             $type_resource->delete();
             Session::set('success', 'Tipo de recurso eliminado correctamente');
         } else {
-            Session::set('error', 'El tipo de recurso no se pudo eliminar');
+            Session::set('error', 'El tipo de recurso no se pudo encontrar');
         }
 
         header('Location: /admin/type-resources');

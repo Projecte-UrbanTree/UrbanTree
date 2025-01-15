@@ -44,13 +44,13 @@
                             ?>
                         </td>
                         <td class="px-4 py-3">
-                            <?php if ($work_order->status == 0) { ?>
+                            <?php if ($work_order->status() == 0) { ?>
                                 <span class="px-2 py-1 text-sm font-medium text-white bg-red-500 rounded-full">No
                                     iniciado</span>
-                            <?php } elseif ($work_order->status == 1) { ?>
+                            <?php } elseif ($work_order->status() == 1) { ?>
                                 <span class="px-2 py-1 text-sm font-medium text-white bg-orange-500 rounded-full">En
                                     progreso</span>
-                            <?php } elseif ($work_order->status == 2) { ?>
+                            <?php } elseif ($work_order->status() == 2) { ?>
                                 <span
                                     class="px-2 py-1 text-sm font-medium text-white bg-green-500 rounded-full">Completado</span>
                             <?php } ?>
