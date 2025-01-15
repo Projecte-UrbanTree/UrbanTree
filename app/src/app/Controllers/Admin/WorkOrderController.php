@@ -62,29 +62,29 @@ class WorkOrderController
             // Create user relationships
             foreach (explode(',', $postData['userIds']) as $userId) {
                 $workOrderUser = new WorkOrderUser();
-                $workOrderUser->work_order_id = (int) $work_order->getId();
-                $workOrderUser->user_id = (int) $userId;
+                $workOrderUser->work_order_id = $work_order->getId();
+                $workOrderUser->user_id = $userId;
                 $workOrderUser->save();
             }
 
             foreach ($postData['blocks'] as $blockData) {
                 $block = new WorkOrderBlock();
-                $block->work_order_id = (int) $work_order->getId();
+                $block->work_order_id = $work_order->getId();
                 $block->notes = $blockData['notes'];
                 $block->save();
 
                 foreach (explode(',', $blockData['zonesIds']) as $zoneId) {
                     $blockZone = new WorkOrderBlockZone();
-                    $blockZone->work_orders_block_id = (int) $block->getId();
-                    $blockZone->zone_id = (int) $zoneId;
+                    $blockZone->work_orders_block_id = $block->getId();
+                    $blockZone->zone_id = $zoneId;
                     $blockZone->save();
                 }
 
                 foreach ($blockData['tasks'] as $taskData) {
                     $task = new WorkOrderBlockTask();
-                    $task->work_orders_block_id = (int) $block->getId();
-                    $task->task_id = (int) $taskData['taskType'];
-                    $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
+                    $task->work_orders_block_id = $block->getId();
+                    $task->task_id = $taskData['taskType'];
+                    $task->tree_type_id = !empty($taskData['species']) ? $taskData['species'] : null;
                     $task->save();
                 }
             }
@@ -102,7 +102,6 @@ class WorkOrderController
             header('Location: /admin/work-order/create');
             exit;
         }
-
     }
 
     public function edit($id, $queryParams)
@@ -167,30 +166,30 @@ class WorkOrderController
 
                 foreach (explode(',', $postData['userIds']) as $userId) {
                     $workOrderUser = new WorkOrderUser();
-                    $workOrderUser->work_order_id = (int) $work_order->getId();
-                    $workOrderUser->user_id = (int) $userId;
+                    $workOrderUser->work_order_id = $work_order->getId();
+                    $workOrderUser->user_id = $userId;
                     $workOrderUser->save();
                 }
 
                 foreach ($postData['blocks'] as $blockData) {
                     $block = new WorkOrderBlock();
-                    $block->work_order_id = (int) $work_order->getId();
+                    $block->work_order_id = $work_order->getId();
                     $block->notes = $blockData['notes'];
                     $block->save();
 
                     foreach (explode(',', $blockData['zonesIds']) as $zoneId) {
                         $blockZone = new WorkOrderBlockZone();
-                        $blockZone->work_orders_block_id = (int) $block->getId();
-                        $blockZone->zone_id = (int) $zoneId;
+                        $blockZone->work_orders_block_id = $block->getId();
+                        $blockZone->zone_id = $zoneId;
                         $blockZone->save();
                     }
 
                     foreach ($blockData['tasks'] as $taskData) {
                         $task = new WorkOrderBlockTask();
-                        $task->work_orders_block_id = (int) $block->getId();
-                        $task->task_id = (int) $taskData['taskType'];
-                        $task->element_type_id = (int) $taskData['elementType'];
-                        $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
+                        $task->work_orders_block_id = $block->getId();
+                        $task->task_id = $taskData['taskType'];
+                        $task->element_type_id = $taskData['elementType'];
+                        $task->tree_type_id = !empty($taskData['species']) ? $taskData['species'] : null;
                         $task->save();
                     }
                 }

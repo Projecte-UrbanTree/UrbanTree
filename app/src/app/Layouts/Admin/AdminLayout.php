@@ -133,8 +133,8 @@ $currentContract = Session::get('current_contract');
                 <i class="fas fa-box block"></i>
                 Recursos
             </a>
-            <a href="/admin/type-resources"
-                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/type-resources') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/resource-types"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/resource-types') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-solid fa-layer-group block"></i>
                 Tipos de recursos
             </a>
@@ -184,7 +184,7 @@ $currentContract = Session::get('current_contract');
     <script src="/assets/js/validations.js?v=<?= time(); ?>"></script>
     <script src="/assets/js/work-orders.js?v=<?= time(); ?>"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Show alerts with animation (Success and Error messages)
             const alertMsg = document.querySelector("#alert-msg");
             const alertMsgError = document.querySelector("#alert-msg-error");
@@ -218,7 +218,7 @@ $currentContract = Session::get('current_contract');
             const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
             const mobileMenu = document.getElementById("mobile-menu");
 
-            mobileMenuToggle.addEventListener("click", function () {
+            mobileMenuToggle.addEventListener("click", function() {
                 mobileMenu.classList.toggle("hidden");
             });
         });

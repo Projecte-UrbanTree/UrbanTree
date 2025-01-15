@@ -1,22 +1,26 @@
-<div class="p-2 md:p-6">
-    <div class="mb-4 flex justify-end">
-        <a href="/admin/work-order/create"
-            class="px-4 py-2 bg-gray-700 text-white shadow-sm hover:bg-gray-500 transition-all duration-200 rounded">
-            <i class="fas fa-plus mr-2"></i> Nueva órden de trabajo
-        </a>
-    </div>
-    <div class="relative overflow-x-auto rounded-lg">
-        <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
-            <thead class="bg-gray-700 text-white">
-                <tr class="h-12">
-                    <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Orden de Trabajo</th>
-                    <th scope="col" class="px-4 py-3 font-medium">Fecha</th>
-                    <th scope="col" class="px-4 py-3 font-medium">Operarios</th>
-                    <th scope="col" class="px-4 py-3 font-medium">Estatus</th>
-                    <th scope="col" class="px-4 py-3 text-center font-medium w-32 rounded-tr-lg">Acciones</th>
+<div class="mb-4 flex justify-end">
+    <a href="/admin/work-order/create"
+        class="px-4 py-2 bg-gray-700 text-white shadow-sm hover:bg-gray-500 transition-all duration-200 rounded">
+        <i class="fas fa-plus mr-2"></i> Nueva órden de trabajo
+    </a>
+</div>
+<div class="relative overflow-x-auto rounded-lg">
+    <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
+        <thead class="bg-gray-700 text-white">
+            <tr class="h-12">
+                <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Orden de Trabajo</th>
+                <th scope="col" class="px-4 py-3 font-medium">Fecha</th>
+                <th scope="col" class="px-4 py-3 font-medium">Operarios</th>
+                <th scope="col" class="px-4 py-3 font-medium">Estatus</th>
+                <th scope="col" class="px-4 py-3 text-center font-medium w-32 rounded-tr-lg">Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+            <?php if (empty($work_orders)) { ?>
+                <tr>
+                    <td colspan="5" class="px-4 py-3 text-center text-gray-500">No hay órdenes de trabajo disponibles.</td>
                 </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
+            <?php } else { ?>
                 <?php foreach ($work_orders as $index => $work_order) { ?>
                     <tr class="hover:bg-gray-50 transition-colors duration-300">
                         <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
@@ -119,7 +123,7 @@
                         </td>
                     </tr>
                 <?php } ?>
-            </tbody>
-        </table>
-    </div>
+            <?php } ?>
+        </tbody>
+    </table>
 </div>
