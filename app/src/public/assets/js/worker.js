@@ -12,7 +12,8 @@ function changeDate(days) {
 
 function updateUrl(newDate) {
     if (isValidDate(newDate)) {
-        const newUrl = `${window.location.pathname}?date=${newDate}`;
+        const encodedDate = encodeURIComponent(newDate);
+        const newUrl = `${window.location.pathname}?date=${encodedDate}`;
         window.location.href = newUrl;
     } else {
         console.error("Invalid date input");
