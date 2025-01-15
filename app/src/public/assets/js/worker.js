@@ -7,9 +7,17 @@ function changeDate(days) {
     currentDate.setDate(currentDate.getDate() + days);
     dateInput.value = currentDate.toISOString().split("T")[0];
 
-    const newUrl = `${window.location.pathname}?date=${dateInput.value}`;
+    updateUrl(dateInput.value);
+}
+
+function updateUrl(newDate) {
+    const newUrl = `${window.location.pathname}?date=${newDate}`;
     window.location.href = newUrl;
 }
 
 prevDay.addEventListener("click", () => changeDate(-1));
 nextDay.addEventListener("click", () => changeDate(1));
+
+dateInput.addEventListener("change", () => {
+    updateUrl(dateInput.value);
+});
