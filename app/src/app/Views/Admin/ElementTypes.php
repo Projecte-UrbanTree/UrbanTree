@@ -19,48 +19,48 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-            <?php if (empty($work_orders)) { ?>
+                <?php if (empty($work_orders)) { ?>
                     <tr>
                         <td colspan="7" class="px-4 py-3 text-center text-gray-500">No hay elementos disponibles.</td>
                     </tr>
                 <?php } else { ?>
-                <?php foreach ($element_types as $element_type) { ?>
-                    <tr class="hover:bg-gray-50 transition-colors duration-300">
-                        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
-                            <?= htmlspecialchars($element_type->name); ?>
-                        </th>
-                        <td class="px-4 py-3">
-                            <?= htmlspecialchars($element_type->description); ?>
-                        </td>
-                        <td class="px-4 py-3">
-                            <?= $element_type->requires_tree_type ? "Sí" : "No"; ?>
-                        </td>
-                        <td class="px-4 py-3">
-                            <i class="<?= htmlspecialchars($element_type->icon); ?>"></i>
-                        </td>
-                        <td class="px-4 py-3">
-                            <span style="color: <?= htmlspecialchars($element_type->color); ?>;">■</span>
-                        </td>
-                        <td class="px-4 py-3">
-                            <?= count($element_type->elements()); ?>
-                        </td>
-                        <td class="px-4 py-3 text-center">
-                            <div class="flex justify-center space-x-3">
-                                <a href="/admin/element-type/<?= htmlspecialchars($element_type->getId()); ?>/edit"
-                                    class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
-                                    title="Editar" aria-label="Editar tipo de elemento <?= htmlspecialchars($element_type->name); ?>">
-                                    <i class="fas fa-pencil"></i>
-                                </a>
-                                <a href="/admin/element-type/<?= htmlspecialchars($element_type->getId()); ?>/delete"
-                                    onclick="return confirm('¿Desea eliminar el tipo de elemento <?= htmlspecialchars($element_type->name); ?>?');"
-                                    class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
-                                    title="Eliminar" aria-label="Eliminar tipo de elemento <?= htmlspecialchars($element_type->name); ?>">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                <?php } ?>
+                    <?php foreach ($element_types as $element_type) { ?>
+                        <tr class="hover:bg-gray-50 transition-colors duration-300">
+                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                                <?= htmlspecialchars($element_type->name); ?>
+                            </th>
+                            <td class="px-4 py-3">
+                                <?= htmlspecialchars($element_type->description); ?>
+                            </td>
+                            <td class="px-4 py-3">
+                                <?= $element_type->requires_tree_type ? "Sí" : "No"; ?>
+                            </td>
+                            <td class="px-4 py-3">
+                                <i class="<?= htmlspecialchars($element_type->icon); ?>"></i>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span style="color: <?= htmlspecialchars($element_type->color); ?>;">■</span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <?= count($element_type->elements()); ?>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <div class="flex justify-center space-x-3">
+                                    <a href="/admin/element-type/<?= htmlspecialchars($element_type->getId()); ?>/edit"
+                                        class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
+                                        title="Editar" aria-label="Editar tipo de elemento <?= htmlspecialchars($element_type->name); ?>">
+                                        <i class="fas fa-pencil"></i>
+                                    </a>
+                                    <a href="/admin/element-type/<?= htmlspecialchars($element_type->getId()); ?>/delete"
+                                        onclick="return confirm('¿Desea eliminar el tipo de elemento <?= htmlspecialchars($element_type->name); ?>?');"
+                                        class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
+                                        title="Eliminar" aria-label="Eliminar tipo de elemento <?= htmlspecialchars($element_type->name); ?>">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 <?php } ?>
             </tbody>
         </table>

@@ -17,42 +17,42 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-            <?php if (empty($work_orders)) { ?>
+                <?php if (empty($work_orders)) { ?>
                     <tr>
                         <td colspan="5" class="px-4 py-3 text-center text-gray-500">No hay árboles disponibles.</td>
                     </tr>
                 <?php } else { ?>
-                <?php foreach ($tree_types as $tree_type) { ?>
-                    <tr class="hover:bg-gray-50 transition-colors duration-300">
-                        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
-                            <?= htmlspecialchars($tree_type->species); ?>
-                        </th>
-                        <td class="px-4 py-3">
-                            <?= htmlspecialchars($tree_type->genus); ?>
-                        </td>
-                        <td class="px-4 py-3">
-                            <?= htmlspecialchars($tree_type->family); ?>
-                        </td>
-                        <td class="px-4 py-3">
-                            <?= count($tree_type->elements()); ?>
-                        </td>
-                        <td class="px-4 py-3 text-center">
-                            <div class="flex justify-center space-x-3">
-                                <a href="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/edit"
-                                    class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
-                                    title="Editar" aria-label="Editar tipo de árbol <?= htmlspecialchars($tree_type->species); ?>">
-                                    <i class="fas fa-pencil"></i>
-                                </a>
-                                <a href="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/delete"
-                                    onclick="return confirm('¿Desea eliminar el tipo de árbol <?= htmlspecialchars($tree_type->species); ?>?');"
-                                    class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
-                                    title="Eliminar" aria-label="Eliminar tipo de árbol <?= htmlspecialchars($tree_type->species); ?>">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                <?php } ?>
+                    <?php foreach ($tree_types as $tree_type) { ?>
+                        <tr class="hover:bg-gray-50 transition-colors duration-300">
+                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                                <?= htmlspecialchars($tree_type->species); ?>
+                            </th>
+                            <td class="px-4 py-3">
+                                <?= htmlspecialchars($tree_type->genus); ?>
+                            </td>
+                            <td class="px-4 py-3">
+                                <?= htmlspecialchars($tree_type->family); ?>
+                            </td>
+                            <td class="px-4 py-3">
+                                <?= count($tree_type->elements()); ?>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <div class="flex justify-center space-x-3">
+                                    <a href="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/edit"
+                                        class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
+                                        title="Editar" aria-label="Editar tipo de árbol <?= htmlspecialchars($tree_type->species); ?>">
+                                        <i class="fas fa-pencil"></i>
+                                    </a>
+                                    <a href="/admin/tree-type/<?= htmlspecialchars($tree_type->getId()); ?>/delete"
+                                        onclick="return confirm('¿Desea eliminar el tipo de árbol <?= htmlspecialchars($tree_type->species); ?>?');"
+                                        class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
+                                        title="Eliminar" aria-label="Eliminar tipo de árbol <?= htmlspecialchars($tree_type->species); ?>">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 <?php } ?>
             </tbody>
         </table>
