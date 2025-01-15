@@ -16,12 +16,8 @@ function updateUrl(newDate) {
         window.location.href = newUrl;
     } else {
         console.error("Invalid date input");
+        // Handle invalid date input (e.g., show an error message or reset the input)
     }
-}
-
-function isValidDate(dateString) {
-    const date = new Date(dateString);
-    return !isNaN(date.getTime());
 }
 
 prevDay.addEventListener("click", () => changeDate(-1));
@@ -30,3 +26,8 @@ nextDay.addEventListener("click", () => changeDate(1));
 dateInput.addEventListener("change", () => {
     updateUrl(dateInput.value);
 });
+
+function isValidDate(dateString) {
+    const date = new Date(dateString);
+    return !isNaN(date.getTime());
+}
