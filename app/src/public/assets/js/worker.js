@@ -11,8 +11,17 @@ function changeDate(days) {
 }
 
 function updateUrl(newDate) {
-    const newUrl = `${window.location.pathname}?date=${newDate}`;
-    window.location.href = newUrl;
+    if (isValidDate(newDate)) {
+        const newUrl = `${window.location.pathname}?date=${newDate}`;
+        window.location.href = newUrl;
+    } else {
+        console.error("Invalid date input");
+    }
+}
+
+function isValidDate(dateString) {
+    const date = new Date(dateString);
+    return !isNaN(date.getTime());
 }
 
 prevDay.addEventListener("click", () => changeDate(-1));
