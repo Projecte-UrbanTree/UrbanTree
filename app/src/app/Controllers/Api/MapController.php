@@ -3,7 +3,6 @@
 namespace App\Controllers\Api;
 
 use App\Core\Session;
-
 use App\Models\Element;
 use App\Models\Zone;
 use App\Models\Point;
@@ -34,7 +33,7 @@ class MapController
                 'points' => array_map(function ($point) {
                     return [$point->latitude, $point->longitude];
                 }, $zone->points()),
-                'element_types' => [],
+                'elementTypes' => [],
             ];
 
             $elementTypes = ElementType::findAll();
@@ -44,7 +43,7 @@ class MapController
                 } else {
                     $elements = $elementType->elements(['zone_id' => $zone->getId(), 'contract_id' => $contractId]);
                 }
-                $zoneData['element_types'][] = [
+                $zoneData['elementTypes'][] = [
                     'id' => $elementType->getId(),
                     'icon' => $elementType->icon,
                     'color' => $elementType->color,
@@ -132,17 +131,27 @@ class MapController
 
             $element = new Element();
             $element->contract_id = $contractId;
-            $element->zone_id = $postData['zone_id'];
-            $element->element_type_id = $postData['element_type_id'];
+            $element->zone_id = $postData['zoneId'];
+            $element->element_type_id = $postData['elementTypeId'];
             $element->point_id = $point->getId();
             $element->description = $postData['description'];
-            $element->tree_type_id = $postData['tree_type_id'] ?? null;
+            $element->tree_type_id = $postData['treeTypeId'] ?? null;
             $element->save();
 
             $point->element_id = $element->getId();
             $point->save();
 
-            echo json_encode(['status' => 'success', 'element_id' => $element->getId()]);
+            $elementData = [
+                'id' => $element->getId(),
+                'latitude' => $element->point()->latitude,
+                'longitude' => $element->point()->longitude,
+                'zoneId' => $element->zone_id,
+                'elementTypeId' => $element->element_type_id,
+                'description' => $element->description,
+                'treeTypeId' => $element->tree_type_id,
+            ];
+
+            echo json_encode(['status' => 'success', 'element' => $elementData]);
         } catch (\Exception $e) {
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
@@ -181,7 +190,7 @@ class MapController
                 'description' => $type->description,
                 'icon' => $type->icon,
                 'color' => $type->color,
-                'requires_tree_type' => $type->requires_tree_type,
+                'requiresTreeType' => $type->requires_tree_type,
             ];
         }
         echo json_encode($data);
@@ -226,6 +235,25 @@ class MapController
         exit;
     }
 
+    public function updateZoneDescription($postData)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $zone = Zone::find($postData['id']);
+            if ($zone) {
+                $zone->description = $postData['description'];
+                $zone->save();
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Zone not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
     public function getTreeTypes($queryParams)
     {
         header('Content-Type: application/json');
@@ -255,10 +283,10 @@ class MapController
                 $data = [
                     'id' => $element->getId(),
                     'description' => $element->description,
-                    'element_type' => $element->elementType(),
+                    'elementType' => $element->elementType(),
                     'zone' => $element->zone(),
                     'point' => $element->point(),
-                    'tree_type' => $element->treeType(),
+                    'treeType' => $element->treeType(),
                 ];
                 echo json_encode($data);
             } else {

@@ -4,13 +4,13 @@
         <div id="map" class="h-full"></div>
     </div>
     <!-- Inventory Sidebar -->
-    <div class="inventory w-full md:w-1/3 px-4 border-l border-gray-300 overflow-y-auto hidden md:block py-4 md:py-0">
+    <div class="inventory-sidebar w-full md:w-1/3 px-4 border-l border-gray-300 overflow-y-auto hidden md:block py-4 md:py-0">
         <div id="filters"></div>
     </div>
 </div>
 
 <!-- Toggle Button for Mobile -->
-<button id="toggle-inventory" class="fixed bottom-8 left-8 bg-white text-black px-4 py-2 rounded shadow md:hidden">
+<button id="inventory-sidebar-toggle" class="fixed bottom-8 left-8 bg-white text-black px-4 py-2 rounded shadow md:hidden">
     <i class="fas fa-layer-group"></i>
 </button>
 
