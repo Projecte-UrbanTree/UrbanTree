@@ -13,6 +13,7 @@ use App\Models\WorkOrderBlock;
 use App\Models\WorkOrderBlockTask;
 use App\Models\WorkOrderUser;
 use App\Models\WorkOrderBlockZone;
+use App\Models\ElementType;
 
 class WorkOrderController
 {
@@ -35,6 +36,7 @@ class WorkOrderController
         $users = User::findAll(['role' => 1]);
         $zones = Zone::findAll(['name' => 'not null']);
         $tree_types = TreeType::findAll();
+        $element_types = ElementType::findAll();
         View::render([
             'view' => 'Admin/WorkOrder/Create',
             'title' => 'Nueva Orden de Trabajo',
@@ -44,6 +46,7 @@ class WorkOrderController
                 'zones' => $zones,
                 'task_types' => $task_types,
                 'tree_types' => $tree_types,
+                'element_types' => $element_types,
             ],
         ]);
     }
@@ -82,7 +85,6 @@ class WorkOrderController
                     $task->work_orders_block_id = (int) $block->getId();
                     $task->task_id = (int) $taskData['taskType'];
                     $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
-                    $task->status = 1; // Default status
                     $task->save();
                 }
             }
@@ -116,6 +118,7 @@ class WorkOrderController
         $users = User::findAll(['role' => 1]);
         $zones = Zone::findAll(['name' => 'not null']);
         $tree_types = TreeType::findAll();
+        $element_types = ElementType::findAll();
 
         View::render([
             'view' => 'Admin/WorkOrder/Edit',
@@ -127,6 +130,7 @@ class WorkOrderController
                 'zones' => $zones,
                 'task_types' => $task_types,
                 'tree_types' => $tree_types,
+                'element_types' => $element_types,
             ],
         ]);
     }
@@ -141,7 +145,6 @@ class WorkOrderController
                 $work_order->date = $postData['date'];
                 $work_order->save();
 
-                // Eliminar relaciones de usuarios
                 foreach ($work_order->users() as $user) {
                     $workOrderUser = WorkOrderUser::findBy(['work_order_id' => $work_order->getId(), 'user_id' => $user->getId()], true);
                     if ($workOrderUser) {
@@ -149,7 +152,6 @@ class WorkOrderController
                     }
                 }
 
-                // Eliminar bloques, tareas y zonas
                 foreach ($work_order->blocks() as $block) {
                     foreach ($block->tasks() as $task) {
                         $task->delete(true);
@@ -163,7 +165,6 @@ class WorkOrderController
                     $block->delete(true);
                 }
 
-                // Crear relaciones de usuarios
                 foreach (explode(',', $postData['userIds']) as $userId) {
                     $workOrderUser = new WorkOrderUser();
                     $workOrderUser->work_order_id = (int) $work_order->getId();
@@ -171,7 +172,6 @@ class WorkOrderController
                     $workOrderUser->save();
                 }
 
-                // Crear bloques, tareas y zonas
                 foreach ($postData['blocks'] as $blockData) {
                     $block = new WorkOrderBlock();
                     $block->work_order_id = (int) $work_order->getId();
@@ -189,8 +189,8 @@ class WorkOrderController
                         $task = new WorkOrderBlockTask();
                         $task->work_orders_block_id = (int) $block->getId();
                         $task->task_id = (int) $taskData['taskType'];
+                        $task->element_type_id = (int) $taskData['elementType'];
                         $task->tree_type_id = !empty($taskData['species']) ? (int) $taskData['species'] : null;
-                        $task->status = 1; // Default status
                         $task->save();
                     }
                 }
@@ -214,7 +214,6 @@ class WorkOrderController
         $work_order = WorkOrder::find($id);
 
         if ($work_order) {
-            // Eliminar relaciones de usuarios
             foreach ($work_order->users() as $user) {
                 $workOrderUser = WorkOrderUser::findBy(['work_order_id' => $work_order->getId(), 'user_id' => $user->getId()], true);
                 if ($workOrderUser) {
