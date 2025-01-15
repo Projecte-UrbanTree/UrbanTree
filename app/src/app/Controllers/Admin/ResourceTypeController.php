@@ -30,7 +30,7 @@ class ResourceTypeController
 
     public function store($postData)
     {
-        $resource_type = new ResourceType();
+        $resource_type = new ResourceType;
         $resource_type->name = $postData['name'];
         $resource_type->description = $postData['description'];
         $resource_type->save();

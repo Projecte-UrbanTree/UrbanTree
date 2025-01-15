@@ -34,11 +34,11 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
                 <option value="">Selecciona un tipo de recurso</option>
-                <?php foreach ($resource_types as $resource_type) : ?>
+                <?php foreach ($resource_types as $resource_type) { ?>
                     <option value="<?= $resource_type->getId(); ?>" <?= $resource_type->getId() === $resource->resource_type_id ? 'selected' : ''; ?>>
                         <?= $resource_type->name; ?>
                     </option>
-                <?php endforeach; ?>
+                <?php } ?>
             </select>
         </div>
 

@@ -5,8 +5,11 @@ namespace App\Models;
 class SensorHistory extends BaseModel
 {
     public int $sensor_id;
+
     public ?float $temperature;
+
     public ?int $humidity;
+
     public ?int $inclination;
 
     protected static function getTableName(): string
@@ -16,7 +19,7 @@ class SensorHistory extends BaseModel
 
     protected static function mapDataToModel($data): SensorHistory
     {
-        $sensor_history = new self();
+        $sensor_history = new self;
         $sensor_history->sensor_id = $data['sensor_id'];
         $sensor_history->temperature = $data['temperature'];
         $sensor_history->humidity = $data['humidity'];

@@ -17,7 +17,7 @@ class TreeType extends BaseModel
 
     protected static function mapDataToModel($data): TreeType
     {
-        $tree_type = new self();
+        $tree_type = new self;
         $tree_type->id = $data['id'];
         $tree_type->family = $data['family'];
         $tree_type->genus = $data['genus'];

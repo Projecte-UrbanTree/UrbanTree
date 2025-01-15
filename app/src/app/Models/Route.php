@@ -15,7 +15,7 @@ class Route extends BaseModel
 
     protected static function mapDataToModel($data): Route
     {
-        $route = new self();
+        $route = new self;
         $route->id = $data['id'];
         $route->distance = $data['distance'];
         $route->travel_time = $data['travel_time'];

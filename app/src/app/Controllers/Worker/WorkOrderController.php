@@ -56,12 +56,9 @@ class WorkOrderController
             }
         }
 
-        header('Location: /worker/work-orders?date=' . $postData['date']);
+        header('Location: /worker/work-orders?date='.$postData['date']);
         exit;
     }
 
-    public function storeReport()
-    {
-
-    }
+    public function storeReport() {}
 }

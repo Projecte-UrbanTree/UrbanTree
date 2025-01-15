@@ -4,6 +4,7 @@ function mapWithId($items, $getIdMethod)
     return array_map(function ($item) use ($getIdMethod) {
         $properties = get_object_vars($item);
         $properties['id'] = $item->$getIdMethod();
+
         return (object) $properties;
     }, $items);
 }
@@ -123,7 +124,7 @@ function mapWithId($items, $getIdMethod)
             <?php foreach ($users as $user) { ?>
                 <label class="flex items-center space-x-2">
                     <input type="checkbox" value="<?= htmlspecialchars($user->getId()); ?>" class="form-checkbox">
-                    <span><?= htmlspecialchars($user->name . " " . $user->surname); ?></span>
+                    <span><?= htmlspecialchars($user->name.' '.$user->surname); ?></span>
                 </label>
             <?php } ?>
         </div>

@@ -7,7 +7,7 @@
     <!-- Viewport settings to make the layout responsive on different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Page title dynamically generated from PHP -->
-    <title><?= $title . ' - ' . getenv('APP_NAME'); ?></title>
+    <title><?= $title.' - '.getenv('APP_NAME'); ?></title>
     <!-- Favicon link -->
     <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
     <!-- Tailwind CSS framework (via CDN) -->

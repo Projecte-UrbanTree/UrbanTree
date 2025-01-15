@@ -5,9 +5,13 @@ namespace App\Models;
 class WorkOrderBlockTask extends BaseModel
 {
     public int $work_orders_block_id;
+
     public int $task_id;
+
     public int $element_type_id;
+
     public ?int $tree_type_id;
+
     public int $status;
 
     protected static function getTableName(): string
@@ -17,7 +21,7 @@ class WorkOrderBlockTask extends BaseModel
 
     protected static function mapDataToModel($data): WorkOrderBlockTask
     {
-        $work_order_block_task = new self();
+        $work_order_block_task = new self;
         $work_order_block_task->id = $data['id'];
         $work_order_block_task->work_orders_block_id = $data['work_orders_block_id'];
         $work_order_block_task->task_id = $data['task_id'];

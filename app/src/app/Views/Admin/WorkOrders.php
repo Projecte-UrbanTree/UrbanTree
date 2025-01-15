@@ -33,7 +33,7 @@
                                         stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
-                            <?php echo "OT-" . htmlspecialchars($work_order->contract()->getId()); ?>
+                            <?php echo 'OT-'.htmlspecialchars($work_order->contract()->getId()); ?>
                         </th>
                         <td class="px-4 py-3">
                             <?= date('d/m/Y', strtotime($work_order->date)); ?>
@@ -41,11 +41,11 @@
                         <td class="px-4 py-3">
                             <?php
                             $users = [];
-                            foreach ($work_order->users() as $user) {
-                                $users[] = $user->name . " " . $user->surname;
-                            }
-                            echo implode(', ', $users);
-                            ?>
+                    foreach ($work_order->users() as $user) {
+                        $users[] = $user->name.' '.$user->surname;
+                    }
+                    echo implode(', ', $users);
+                    ?>
                         </td>
                         <td class="px-4 py-3">
                             <?php if ($work_order->status() == 0) { ?>
@@ -102,9 +102,9 @@
                                                     <ul>
                                                         <?php foreach ($block->tasks() as $blockTask) { ?>
                                                             <li>• <?php echo htmlspecialchars($blockTask->task()->name); ?>
-                                                                <?php echo htmlspecialchars(" " . $blockTask->elementType()->name); ?>
+                                                                <?php echo htmlspecialchars(' '.$blockTask->elementType()->name); ?>
                                                                 <?php if ($blockTask->treeType() != null) {
-                                                                    echo ": " . htmlspecialchars($blockTask->treeType()->species);
+                                                                    echo ': '.htmlspecialchars($blockTask->treeType()->species);
                                                                 } ?>
                                                             </li>
                                                         <?php } ?>
