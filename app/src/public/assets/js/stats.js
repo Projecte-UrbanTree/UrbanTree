@@ -143,19 +143,22 @@ var options = {
 var chart = new ApexCharts(document.querySelector("#app2"), options);
 chart.render();
 
-
-
+const workReports = [
+    { work_order_id: 1, observation: 'Observación de la orden 1', spent_fuel: 50.0, day: 'Dilluns' },
+    { work_order_id: 2, observation: 'Observación de la orden 2', spent_fuel: 60.0, day: 'Dimarts' },
+    { work_order_id: 3, observation: 'Observación de la orden 3', spent_fuel: 70.0, day: 'Dimecres' },
+];
 
 var options = {
     series: [
         {
             name: "Consum",
             data: [
-                taskList.filter(work_reports => work_reports.spent_fuel === 'Dilluns').reduce((acc, task) => acc + task.hours, 0),
-                taskList.filter(work_reports => work_reports.spent_fuel === 'Dimarts').reduce((acc, task) => acc + task.hours, 0),
-                taskList.filter(work_reports => work_reports.spent_fuel === 'Dimecres').reduce((acc, task) => acc + task.hours, 0),
-                taskList.filter(work_reports => work_reports.spent_fuel === 'Dijous').reduce((acc, task) => acc + task.hours, 0),
-                taskList.filter(work_reports => work_reports.spent_fuel === 'Divendres').reduce((acc, task) => acc + task.hours, 0),
+                workReports.filter(report => report.day === 'Dilluns').reduce((acc, report) => acc + report.spent_fuel, 0),
+                workReports.filter(report => report.day === 'Dimarts').reduce((acc, report) => acc + report.spent_fuel, 0),
+                workReports.filter(report => report.day === 'Dimecres').reduce((acc, report) => acc + report.spent_fuel, 0),
+                workReports.filter(report => report.day === 'Dijous').reduce((acc, report) => acc + report.spent_fuel, 0),
+                workReports.filter(report => report.day === 'Divendres').reduce((acc, report) => acc + report.spent_fuel, 0),
             ],
         },
     ],
