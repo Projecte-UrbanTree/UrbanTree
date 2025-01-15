@@ -60,8 +60,19 @@ class WorkOrderController
         exit;
     }
 
-    public function storeReport()
+    public function storeReport($postData)
     {
+        if (isset($postData['spent_time'])) {
+            foreach ($postData['spent_time'] as $taskId => $time) {
+                $task = WorkOrderBlockTask::find($taskId);
+                if ($task) {
+                    $task->spent_time = $time;
+                    $task->save();
+                }
+            }
+        }
 
+        header('Location: /worker/work-orders?work_order_id=' . $postData['work_order_id']);
+        exit;
     }
 }

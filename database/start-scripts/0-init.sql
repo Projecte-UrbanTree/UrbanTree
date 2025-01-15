@@ -191,7 +191,7 @@ create table work_orders_blocks_tasks (
     element_type_id int not null,
     tree_type_id int,
     status int default 0,
-    spent_time decimal,
+    spent_time TIME,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
