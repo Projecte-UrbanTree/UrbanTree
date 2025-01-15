@@ -31,7 +31,9 @@ INSERT INTO task_types (name, description) VALUES
 
 --* Zones
 INSERT INTO zones (name, contract_id, color, description) VALUES
-('Amposta A', 1, '#FF0000', 'Esta es una descripción de la zona 1.');
+('Amposta A', 1, '#FF0000', 'Esta es una descripción de la zona 1.'),
+('Amposta B', 1, '#00FF00', 'Esta es una descripción de la zona 2.'),
+('Amposta C', 1, '#0000FF', 'Esta es una descripción de la zona 3.');
 
 --* Points
 INSERT INTO points (latitude, longitude, zone_id, element_id) VALUES
@@ -73,7 +75,9 @@ INSERT INTO incidences (element_id, name, description) VALUES
 
 --* Work Orders
 INSERT INTO work_orders (contract_id, date) VALUES
-(1,"2021-01-01");
+(1, "2021-01-01"),
+(2, "2021-02-01"),
+(3, "2021-03-01");
 
 --* Work Orders Users
 INSERT INTO work_orders_users (work_order_id, user_id) VALUES
@@ -81,7 +85,9 @@ INSERT INTO work_orders_users (work_order_id, user_id) VALUES
 
 --* Work Reports
 INSERT INTO work_reports (work_order_id, observation, spent_fuel) VALUES
-(1, 'Observación de la orden 1', 50.0);
+(1, 'Observación de la orden 1', 50.0),
+(2, 'Observación de la orden 2', 60.0),
+(3, 'Observación de la orden 3', 70.0);
 
 --* Sensors
 INSERT INTO sensors (zone_id, contract_id, point_id, model, is_active) VALUES
@@ -97,7 +103,9 @@ INSERT INTO sensor_history (sensor_id, temperature, humidity, inclination) VALUE
 
 --* Work Orders Blocks
 INSERT INTO work_orders_blocks (work_order_id, notes) VALUES
-(1,"Notas de la orden 1");
+(1, "Notas de la orden 1"),
+(2, "Notas de la orden 2"),
+(3, "Notas de la orden 3");
 
 --* Work Orders Blocks Zones
 INSERT INTO work_orders_blocks_zones (work_orders_block_id, zone_id) VALUES
@@ -127,5 +135,5 @@ VALUES
 INSERT INTO work_report_resources (id, work_report_id, resource_id)
 VALUES
     (1, 1, 1),
-    (2, 2, 2),
-    (3, 3, 3);
+    (2, 1, 2),
+    (3, 1, 3);
