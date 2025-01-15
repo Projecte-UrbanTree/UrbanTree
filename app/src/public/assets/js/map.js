@@ -1,4 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const MODE = { NONE: "NONE", ZONE: "ZONE", ELEMENT: "ELEMENT" };
+    let currentMode = MODE.NONE;
+    let isCreating = false;
+    let markers = [];
+    let zonesData = [];
+    let zonePoints = [];
+    let tempMarkers = [];
+    let selectedZone = null;
+    let elementTypes = [];
+    let treeTypes = [];
+
     const preloader = document.getElementById("preloader");
     const zoneButton = document.getElementById("zone-control");
     const elementButton = document.getElementById("element-control");
@@ -18,23 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const createElementTreeType = document.getElementById("element-tree-type");
     const treeTypeContainer = document.getElementById("tree-type-container");
     const createElementCancel = document.getElementById("create-element-cancel");
-    const toggleInventoryButton = document.getElementById("toggle-inventory");
-    const inventorySidebar = document.querySelector(".inventory");
-    const mapContainer = document.querySelector(".map");
-
-    let editor_mode = "none";
-    let editor_status = "none";
-    let markers = {};
-    let zonesData = [];
-    let zonePoints = [];
-    let tempMarkers = [];
-    let selectedZone = null;
-    let elementTypes = [];
-    let treeTypes = [];
+    const inventorySidebarToggle = document.getElementById("inventory-sidebar-toggle");
+    const inventorySidebar = document.querySelector(".inventory-sidebar");
+    const mapWrapper = document.querySelector(".map");
 
     // Initialize the map
     mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW50cmVlIiwiYSI6ImNtNHI4MXNhaTAxc3gybHNpMWp3ejJldHcifQ.d94SBSjOt6Ylu4A8PKPFiQ";
-    const map = new mapboxgl.Map({
+    const mapContainer = new mapboxgl.Map({
         container: "map",
         center: [0.5826405437646912, 40.70973485628924],
         style: "mapbox://styles/mapbox/standard-satellite",
@@ -44,37 +45,65 @@ document.addEventListener("DOMContentLoaded", () => {
     // Event listeners
     elementModalClose.addEventListener("click", () => elementModal.classList.add("hidden"));
     createElementCancel.addEventListener("click", () => createElementModal.classList.add("hidden"));
-    toggleInventoryButton.addEventListener("click", () => {
+    inventorySidebarToggle.addEventListener("click", () => {
         inventorySidebar.classList.toggle("hidden");
         inventorySidebar.classList.toggle("w-5/6");
-        mapContainer.classList.toggle("w-1/6");
+        mapWrapper.classList.toggle("w-1/6");
     });
 
-    createButton.addEventListener("click", handleCreateButtonClick);
-    cancelZoneButton.addEventListener("click", handleCancelZoneButtonClick);
-    finishButton.addEventListener("click", handleFinishButtonClick);
-    createElementForm.addEventListener("submit", handleCreateElementFormSubmit);
-    createElementType.addEventListener("change", handleCreateElementTypeChange);
-    map.on("click", handleMapClick);
-    map.on("load", fetchZones);
+    createButton.addEventListener("click", handleCreateClick);
+    cancelZoneButton.addEventListener("click", handleCancelZoneCreation);
+    finishButton.addEventListener("click", handleFinishZoneCreation);
+    createElementForm.addEventListener("submit", handleElementFormSubmit);
+    createElementType.addEventListener("change", handleElementTypeChange);
+    mapContainer.on("click", handleMapClick);
+    mapContainer.on("load", loadZones);
+
+    zoneButton.addEventListener("click", () => {
+        console.log("Zone button clicked");
+        setMode(MODE.ZONE);
+    });
+
+    elementButton.addEventListener("click", () => {
+        console.log("Element button clicked");
+        setMode(MODE.ELEMENT);
+    });
+
+    const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    mobileMenuToggle.addEventListener("click", function() {
+        mobileMenu.classList.toggle("hidden");
+    });
 
     // Functions
+    function setActiveButton(activeButton) {
+        const buttons = [zoneButton, elementButton];
+        buttons.forEach(button => {
+            if (button === activeButton) {
+                button.classList.add("font-semibold", "text-primary");
+            } else {
+                button.classList.remove("font-semibold", "text-primary");
+            }
+        });
+    }
+
     function hidePreloader() {
         preloader.style.display = "none";
     }
 
-    function handleCreateButtonClick() {
-        if (editor_status === "create") {
-            deactivateCreateMode();
-        } else if (editor_mode === "zone") {
-            activateZoneCreateMode();
-        } else if (editor_mode === "element") {
-            activateElementCreateMode();
+    function handleCreateClick() {
+        if (isCreating) {
+            stopCreation();
+        } else if (currentMode === MODE.ZONE) {
+            startZoneCreation();
+        } else if (currentMode === MODE.ELEMENT) {
+            startElementCreation();
         }
     }
 
-    function handleCancelZoneButtonClick() {
-        editor_status = "none";
+    function handleCancelZoneCreation() {
+        isCreating = false;
         zonePoints = [];
         tempMarkers.forEach((marker) => marker.remove());
         tempMarkers = [];
@@ -89,32 +118,32 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Creación de zona cancelada.");
     }
 
-    function handleFinishButtonClick() {
-        if (editor_mode === "zone" && editor_status === "create") {
+    function handleFinishZoneCreation() {
+        if (currentMode === MODE.ZONE && isCreating) {
             if (zonePoints.length < 4) {
                 alert("Una zona debe tener al menos cuatro puntos.");
                 return;
             }
 
-            if (zonesCollide(zonePoints)) {
+            if (checkZoneCollision(zonePoints)) {
                 alert("La nueva zona colisiona con una zona existente.");
                 return;
             }
 
             const newZone = {
-                id: getNextZoneId(),
-                name: `Zona ${getNextZoneId()}`,
+                id: generateNextZoneId(),
+                name: `Zona ${generateNextZoneId()}`,
                 description: "",
                 color: "#FF0000",
                 points: zonePoints,
-                element_types: [],
+                elementTypes: [],
             };
 
-            createZone(newZone);
+            saveZone(newZone);
         }
     }
 
-    function handleCreateElementFormSubmit(e) {
+    async function handleElementFormSubmit(e) {
         e.preventDefault();
         const elementType = createElementType.value;
         const description = createElementDescription.value;
@@ -122,21 +151,62 @@ document.addEventListener("DOMContentLoaded", () => {
         const [lng, lat] = selectedZone.point;
 
         const bodyData = {
-            zone_id: selectedZone.id,
-            element_type_id: elementType,
+            zoneId: selectedZone.id,
+            elementTypeId: elementType,
             description: description,
             latitude: lat,
             longitude: lng,
-            tree_type_id: treeTypeId
+            treeTypeId: treeTypeId
         };
 
-        createElement(bodyData);
+        try {
+            const response = await fetch("/api/map/elements", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(bodyData),
+            });
+            const result = await response.json();
+            if (result.status === "success") {
+                alert("Elemento guardado en la base de datos");
+                addMarkerForNewElement(result.element);
+                createElementModal.classList.add("hidden");
+                createElementForm.reset();
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        } catch (error) {
+            console.error("Create Element Error", error);
+        }
     }
 
-    function handleCreateElementTypeChange() {
+    function addMarkerForNewElement(element) {
+        const zone = zonesData.zones.find(z => z.id === element.zoneId);
+        const type = zone.elementTypes.find(t => t.id === element.elementTypeId);
+
+        if (!markers[element.zoneId]) markers[element.zoneId] = {};
+        if (!markers[element.zoneId][element.elementTypeId]) markers[element.zoneId][element.elementTypeId] = [];
+
+        const markerElement = createMarkerElement(type.icon, type.color);
+        markerElement.dataset.elementId = element.id;
+
+        const marker = new mapboxgl.Marker({ element: markerElement })
+            .setLngLat([element.longitude, element.latitude])
+            .addTo(mapContainer);
+
+        marker.getElement().addEventListener('click', () => {
+            if (currentMode !== MODE.ELEMENT || !isCreating) {
+                showElementModal(element);
+            }
+        });
+
+        markers[element.zoneId][element.elementTypeId].push(marker);
+        type.elements.push(element);
+    }
+
+    function handleElementTypeChange() {
         const selectedTypeId = parseInt(createElementType.value);
         const selectedType = elementTypes.find(t => t.id === selectedTypeId);
-        if (selectedType.requires_tree_type) {
+        if (selectedType.requiresTreeType) {
             createElementTreeType.innerHTML = "";
             treeTypes.forEach((tree) => {
                 const option = document.createElement("option");
@@ -151,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function handleMapClick(e) {
-        if (editor_mode === "zone" && editor_status === "create") {
+        if (currentMode === MODE.ZONE && isCreating) {
             const { lng, lat } = e.lngLat;
             zonePoints.push([lng, lat]);
             console.log("Point added:", [lng, lat]);
@@ -162,10 +232,9 @@ document.addEventListener("DOMContentLoaded", () => {
             markerElement.innerText = zonePoints.length;
             const marker = new mapboxgl.Marker({ element: markerElement })
                 .setLngLat([lng, lat])
-                .addTo(map);
+                .addTo(mapContainer);
             tempMarkers.push(marker);
-        } else if (editor_mode === "element" && editor_status === "create") {
-            console.log("Element mode clicked.");
+        } else if (currentMode === MODE.ELEMENT && isCreating) {
             const { lng, lat } = e.lngLat;
             const point = turf.point([lng, lat]);
 
@@ -176,74 +245,43 @@ document.addEventListener("DOMContentLoaded", () => {
                 ]);
 
                 const polygon = turf.polygon([[...numericPoints, numericPoints[0]]]);
-                console.log("Checking point in polygon:", point, polygon);
                 return turf.booleanPointInPolygon(point, polygon);
             });
 
             if (zone) {
-                showCreateElementModal(zone, [lng, lat]);
+                showNewElementModal(zone, [lng, lat]);
             } else {
                 alert("El elemento debe estar dentro de una zona.");
             }
         }
     }
 
-    function setEditorMode(mode) {
-        const activeButton = document.getElementById(`${mode}-control`);
-
-        if (
-            activeButton.classList.contains("font-semibold") &&
-            activeButton.classList.contains("text-primary")
-        ) {
-            zoneButton.classList.remove("font-semibold", "text-primary");
-            zoneButton.classList.add("text-gray-700");
-
-            elementButton.classList.remove("font-semibold", "text-primary");
-            elementButton.classList.add("text-gray-700");
-
-            createButton.classList.remove("text-gray-700");
-            createButton.classList.add("text-gray-300");
-            createButton.setAttribute("disabled", "true");
-
-            editor_mode = "none";
+    function setMode(mode) {
+        if (currentMode === mode) {
+            currentMode = MODE.NONE;
+            setActiveButton(null);
+            if (isCreating) {
+                stopCreation();
+            }
         } else {
-            elementButton.classList.remove("font-semibold", "text-primary");
-            elementButton.classList.add("text-gray-700");
-            zoneButton.classList.remove("font-semibold", "text-primary");
-            zoneButton.classList.add("text-gray-700");
-            activeButton.classList.remove("text-gray-700");
-            activeButton.classList.add("font-semibold", "text-primary");
-
-            if (editor_status === "create") {
-                editor_status = "none";
-                createButton.classList.remove("font-semibold", "text-primary");
-                createButton.classList.add("text-gray-700");
-                finishButton.classList.add("hidden");
-                cancelZoneButton.classList.add("hidden");
-                elementButton.classList.remove("text-gray-300");
-                elementButton.classList.add("text-gray-700");
-                elementButton.removeAttribute("disabled");
-                alert("Modo de creación desactivado.");
+            currentMode = mode;
+            setActiveButton(mode === MODE.ZONE ? zoneButton : elementButton);
+            if (isCreating) {
+                stopCreation();
             }
-
-            if (mode === "zone") {
-                editor_mode = "zone";
-                createButton.innerHTML =
-                    "<i class='fas fa-plus-circle'></i> Crear nueva zona";
-            } else if (mode === "element") {
-                editor_mode = "element";
-                createButton.innerHTML =
-                    "<i class='fas fa-plus-circle'></i> Crear nuevo elemento";
-            }
-
             createButton.classList.remove("text-gray-300");
             createButton.classList.add("text-gray-700");
             createButton.removeAttribute("disabled");
+            if (mode === MODE.ZONE) {
+                createButton.innerHTML = '<i class="fas fa-plus-circle"></i> Crear nueva zona';
+            } else if (mode === MODE.ELEMENT) {
+                createButton.innerHTML = '<i class="fas fa-plus-circle"></i> Crear nuevo elemento';
+            }
         }
     }
 
-    function deactivateCreateMode() {
-        editor_status = "none";
+    function stopCreation() {
+        isCreating = false;
         createButton.classList.remove("font-semibold", "text-primary");
         createButton.classList.add("text-gray-700");
         finishButton.classList.add("hidden");
@@ -254,8 +292,8 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Modo de creación desactivado.");
     }
 
-    function activateZoneCreateMode() {
-        editor_status = "create";
+    function startZoneCreation() {
+        isCreating = true;
         zonePoints = [];
         finishButton.classList.remove("hidden");
         cancelZoneButton.classList.remove("hidden");
@@ -269,19 +307,19 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Marca los puntos de la zona en el mapa.");
     }
 
-    function activateElementCreateMode() {
-        editor_status = "create";
+    function startElementCreation() {
+        isCreating = true;
         createButton.classList.add("font-semibold", "text-primary");
         alert("Haz clic en el mapa para añadir un elemento.");
     }
 
-    function getNextZoneId() {
+    function generateNextZoneId() {
         if (!zonesData.zones || !zonesData.zones.length) return 1;
         const maxId = Math.max(...zonesData.zones.map((zone) => zone.id));
         return maxId + 1;
     }
 
-    function zonesCollide(newZonePoints) {
+    function checkZoneCollision(newZonePoints) {
         if (newZonePoints.length < 4) {
             return false;
         }
@@ -297,16 +335,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    async function fetchZones() {
+    async function loadZones() {
         try {
             const response = await fetch("/api/map/zones");
             if (!response.ok)
                 throw new Error("No se pudo cargar los datos de las zonas.");
             zonesData = await response.json();
-            renderZones(zonesData.zones);
+            updateInventory(zonesData.zones);
             zonesData.zones.forEach((zone) => {
-                zone.element_types.forEach((type) => {
-                    addMarkersForElementType(zone, type);
+                drawZonePolygonOnMap(zone);
+                zone.elementTypes.forEach((type) => {
+                    addMarkersForElementType(zone.id, type);
                 });
             });
 
@@ -319,7 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function renderZones(zones) {
+    function updateInventory(zones) {
         inventoryContainer.innerHTML = "";
         if (zones.length === 0) {
             const emptyMessage = document.createElement("div");
@@ -332,14 +371,13 @@ document.addEventListener("DOMContentLoaded", () => {
             inventoryContainer.appendChild(emptyMessage);
         } else {
             zones.forEach((zone) => {
-                const zoneItem = createZoneItem(zone);
+                const zoneItem = buildZoneInventoryItem(zone);
                 inventoryContainer.appendChild(zoneItem);
-                addZonePolygon(zone);
             });
         }
     }
 
-    function createZoneItem(zone) {
+    function buildZoneInventoryItem(zone) {
         const zoneItem = document.createElement("div");
         zoneItem.className = "bg-white border rounded-lg mb-4 p-4";
 
@@ -420,16 +458,36 @@ document.addEventListener("DOMContentLoaded", () => {
         zoneDescription.placeholder = "Descripción de la zona";
         zoneDescription.value = zone.description || "";
 
+        zoneDescription.addEventListener("blur", async () => {
+            try {
+                const response = await fetch("/api/map/zones/description", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ id: zone.id, description: zoneDescription.value }),
+                });
+
+                const result = await response.json();
+                if (result.status !== "success") {
+                    alert(`Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error("Update Zone Description Error", error);
+                alert("Error al actualizar la descripción de la zona.");
+            }
+        });
+
         const elementTypesContainer = document.createElement("div");
         elementTypesContainer.id = `element-types-zone-${zone.id}`;
 
-        if (zone.element_types.length === 0) {
+        if (zone.elementTypes.length === 0) {
             const emptyMessage = document.createElement("p");
             emptyMessage.className = "text-gray-500 italic text-sm";
             emptyMessage.innerText = "No hay elementos en esta zona.";
             elementTypesContainer.appendChild(emptyMessage);
         } else {
-            zone.element_types.forEach((type) => {
+            zone.elementTypes.forEach((type) => {
                 const elementTypeItem = createElementTypeItem(zone, type);
                 elementTypesContainer.appendChild(elementTypeItem);
             });
@@ -444,7 +502,7 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteButton.innerHTML = "<i class='fas fa-trash-alt'></i> Eliminar";
         deleteButton.onclick = () => {
             if (confirm("¿Estás seguro de que deseas eliminar esta zona?")) {
-                deleteZone(zone.id);
+                removeZone(zone.id);
             }
         };
 
@@ -471,7 +529,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isVisible) {
             elementTypesContainer.style.display = "none";
             const polygonLayerId = `zone-polygon-layer-${zone.id}`;
-            map.setLayoutProperty(polygonLayerId, "visibility", "none");
+            mapContainer.setLayoutProperty(polygonLayerId, "visibility", "none");
 
             showHideIcon.classList.remove("fa-eye");
             showHideIcon.classList.add("fa-eye-slash");
@@ -484,11 +542,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 zoneItem.insertBefore(hiddenMessageDiv, zoneItem.querySelector(".flex.justify-end.mt-4"));
             }
 
-            removeMarkersForZone(zone);
+            removeMarkersForZone(zone.id);
         } else {
             elementTypesContainer.style.display = "block";
             const polygonLayerId = `zone-polygon-layer-${zone.id}`;
-            map.setLayoutProperty(polygonLayerId, "visibility", "visible");
+            mapContainer.setLayoutProperty(polygonLayerId, "visibility", "visible");
 
             showHideIcon.classList.remove("fa-eye-slash");
             showHideIcon.classList.add("fa-eye");
@@ -497,12 +555,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 hiddenMessageDiv.remove();
             }
 
-            zone.element_types.forEach((type) => {
+            zone.elementTypes.forEach((type) => {
                 const typeIcon = document.querySelector(
                     `i[data-zone-id="${zone.id}"][data-type-id="${type.id}"]`
                 );
                 if (typeIcon && typeIcon.classList.contains("fa-eye")) {
-                    addMarkersForElementType(zone, type);
+                    addMarkersForElementType(zone.id, type);
                 }
             });
         }
@@ -532,69 +590,71 @@ document.addEventListener("DOMContentLoaded", () => {
         const isVisible = showHideIcon.classList.contains("fa-eye");
 
         if (isVisible) {
-            removeMarkersForElementType(zone, type);
+            removeMarkersForElementType(zone.id, type.id);
             showHideIcon.classList.remove("fa-eye");
             showHideIcon.classList.add("fa-eye-slash");
         } else {
-            addMarkersForElementType(zone, type);
+            addMarkersForElementType(zone.id, type);
             showHideIcon.classList.remove("fa-eye-slash");
             showHideIcon.classList.add("fa-eye");
         }
     }
 
-    function addMarkersForElementType(zone, type) {
-        if (!markers[zone.id]) markers[zone.id] = {};
-        if (!markers[zone.id][type.id]) markers[zone.id][type.id] = [];
+    function addMarkersForElementType(zoneId, type) {
+        if (!markers[zoneId]) markers[zoneId] = {};
+        if (!markers[zoneId][type.id]) markers[zoneId][type.id] = [];
 
         type.elements.forEach((el) => {
             const markerElement = createMarkerElement(type.icon, type.color);
+            markerElement.dataset.elementId = el.id;
+
             const marker = new mapboxgl.Marker({ element: markerElement })
                 .setLngLat([el.longitude, el.latitude])
-                .addTo(map);
+                .addTo(mapContainer);
 
             marker.getElement().addEventListener('click', () => {
-                if (editor_mode !== "element" || editor_status !== "create") {
+                if (currentMode !== MODE.ELEMENT || !isCreating) {
                     showElementModal(el);
                 }
             });
 
-            markers[zone.id][type.id].push(marker);
+            markers[zoneId][type.id].push(marker);
         });
     }
 
-    function removeMarkersForZone(zone) {
-        if (markers[zone.id]) {
-            Object.values(markers[zone.id])
+    function removeMarkersForZone(zoneId) {
+        if (markers[zoneId]) {
+            Object.values(markers[zoneId])
                 .flat()
                 .forEach((marker) => marker.remove());
-            delete markers[zone.id];
+            delete markers[zoneId];
         }
     }
 
-    function removeMarkersForElementType(zone, type) {
-        if (markers[zone.id] && markers[zone.id][type.id]) {
-            markers[zone.id][type.id].forEach((marker) => marker.remove());
-            markers[zone.id][type.id] = [];
+    function removeMarkersForElementType(zoneId, typeId) {
+        if (markers[zoneId] && markers[zoneId][typeId]) {
+            markers[zoneId][typeId].forEach((marker) => marker.remove());
+            markers[zoneId][typeId] = [];
         }
     }
 
     function createMarkerElement(icon, color) {
+        console.log("Creating marker element with icon:", icon);
         const markerElement = document.createElement("div");
         markerElement.style.cssText = `width: 40px; height: 40px; background-color: ${color}; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid white;`;
         markerElement.innerHTML = `<i class="${icon}" style="color: white; font-size: 20px;"></i>`;
         return markerElement;
     }
 
-    function addZonePolygon(zone) {
-        console.log("Adding polygon for zone: ", zone.id);
+    function drawZonePolygonOnMap(zone) {
         const polygonSourceId = `zone-polygon-${zone.id}`;
         const polygonLayerId = `zone-polygon-layer-${zone.id}`;
 
-        if (!map.isStyleLoaded()) {
-            map.on("styledata", () => {
+        if (!mapContainer.isStyleLoaded()) {
+            mapContainer.on("styledata", () => {
                 if (
-                    !map.getSource(polygonSourceId) &&
-                    !map.getLayer(polygonLayerId)
+                    !mapContainer.getSource(polygonSourceId) &&
+                    !mapContainer.getLayer(polygonLayerId)
                 ) {
                     addPolygonSourceAndLayer(
                         zone,
@@ -605,8 +665,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         } else {
             if (
-                !map.getSource(polygonSourceId) &&
-                !map.getLayer(polygonLayerId)
+                !mapContainer.getSource(polygonSourceId) &&
+                !mapContainer.getLayer(polygonLayerId)
             ) {
                 addPolygonSourceAndLayer(zone, polygonSourceId, polygonLayerId);
             }
@@ -618,11 +678,8 @@ document.addEventListener("DOMContentLoaded", () => {
         polygonSourceId,
         polygonLayerId
     ) {
-        console.log("Adding polygon source and layer for zone: ", zone.id);
-        console.log("Zone points:", zone.points);
-        console.log("Zone color:", zone.color);
-        if (!map.getSource(polygonSourceId)) {
-            map.addSource(polygonSourceId, {
+        if (!mapContainer.getSource(polygonSourceId)) {
+            mapContainer.addSource(polygonSourceId, {
                 type: "geojson",
                 data: {
                     type: "Feature",
@@ -641,8 +698,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        if (!map.getLayer(polygonLayerId)) {
-            map.addLayer({
+        if (!mapContainer.getLayer(polygonLayerId)) {
+            mapContainer.addLayer({
                 id: polygonLayerId,
                 type: "fill",
                 source: polygonSourceId,
@@ -655,16 +712,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function updateZoneColorInDatabase(zoneId, color) {
+    async function updateZoneColor(color, zoneId) {
+        const zone = zonesData.zones.find((zone) => zone.id === zoneId);
+        const polygonLayerId = `zone-polygon-layer-${zone.id}`;
+        if (mapContainer.getLayer(polygonLayerId)) {
+            mapContainer.setPaintProperty(
+                polygonLayerId,
+                "fill-color",
+                hexToRgbaString(color, 0.8)
+            );
+        }
         try {
-            const response = await fetch(`/api/map/zones/color`, {
+            const response = await fetch("/api/map/zones/color", {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: zoneId, color: color }),
             });
-
             const result = await response.json();
             if (result.status !== "success") {
                 alert(`Error: ${result.message}`);
@@ -673,20 +736,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Update Zone Color Error", error);
             alert("Error al actualizar el color de la zona.");
         }
-    }
-
-    function updateZoneColor(color, zoneId) {
-        console.log("Updating zone color to: ", color);
-        const zone = zonesData.zones.find((zone) => zone.id === zoneId);
-        const polygonLayerId = `zone-polygon-layer-${zone.id}`;
-        if (map.getLayer(polygonLayerId)) {
-            map.setPaintProperty(
-                polygonLayerId,
-                "fill-color",
-                hexToRgbaString(color, 0.8)
-            );
-        }
-        updateZoneColorInDatabase(zoneId, color);
     }
 
     function hexToRgbaString(hex, alpha = 1) {
@@ -728,24 +777,20 @@ document.addEventListener("DOMContentLoaded", () => {
         return colorPickerContainer;
     }
 
-    function removeZoneFeatures(zoneId) {
+    function removeZonePolygons(zoneId) {
         const polygonLayerId = `zone-polygon-layer-${zoneId}`;
         const polygonSourceId = `zone-polygon-${zoneId}`;
 
-        if (map.getLayer(polygonLayerId)) {
-            map.removeLayer(polygonLayerId);
-            console.log(`Polygon layer removed: ${polygonLayerId}`);
+        if (mapContainer.getLayer(polygonLayerId)) {
+            mapContainer.removeLayer(polygonLayerId);
         }
-        if (map.getSource(polygonSourceId)) {
-            map.removeSource(polygonSourceId);
-            console.log(`Polygon source removed: ${polygonSourceId}`);
+        if (mapContainer.getSource(polygonSourceId)) {
+            mapContainer.removeSource(polygonSourceId);
         }
-        map.triggerRepaint();
+        mapContainer.triggerRepaint();
     }
 
-    async function deleteZone(zoneId) {
-        console.log(`Attempting to delete zone with ID: ${zoneId}`);
-
+    async function removeZone(zoneId) {
         try {
             const response = await fetch("/api/map/zones", {
                 method: "DELETE",
@@ -759,20 +804,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const result = await response.json();
             if (result.status === "success") {
-                const zoneIndex = zonesData.zones.findIndex((z) => z.id === zoneId);
-                if (zoneIndex === -1) {
-                    console.error(`Zona con ID ${zoneId} no encontrada.`);
-                    return;
-                }
-
-                zonesData.zones.splice(zoneIndex, 1);
-                console.log(`Zone with ID: ${zoneId} removed from zonesData`);
-
-                removeMarkersForZone({ id: zoneId });
-                removeZoneFeatures(zoneId);
-
-                renderZones(zonesData.zones);
                 alert(`Zona ${zoneId} eliminada exitosamente.`);
+                reloadMap();
             } else {
                 alert(result.message);
             }
@@ -790,8 +823,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 elementModalContent.innerHTML = `
                     <div class="space-y-2">
                         <p><strong><i class="fas fa-map-marker-alt"></i> Zona:</strong> ${data.zone.name}</p>
-                        <p><strong><i class="${data.element_type.icon}"></i> Tipo:</strong> ${data.element_type.name}</p>
-                        ${data.element_type.requires_tree_type && data.tree_type ? `<p><strong><i class="fas fa-tree"></i> Especie:</strong> ${data.tree_type.species}</p>` : ""}
+                        <p><strong><i class="${data.elementType.icon}"></i> Tipo:</strong> ${data.elementType.name}</p>
+                        ${data.elementType.requires_tree_type && data.tree_type ? `<p><strong><i class="fas fa-tree"></i> Especie:</strong> ${data.tree_type.species}</p>` : ""}
                         <p><strong><i class="fas fa-map-pin"></i> Coordenadas:</strong> ${data.point.latitude}, ${data.point.longitude}</p>
                         <p><strong><i class="fas fa-align-left"></i> Descripción:</strong> <textarea id="element-description-input" class="border rounded p-1 w-full">${data.description || ""}</textarea></p>
                     </div>
@@ -848,14 +881,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function clearMap() {
-        Object.keys(markers).forEach(zoneId => {
-            Object.values(markers[zoneId]).flat().forEach(marker => marker.remove());
-        });
-        markers = {};
-
+        markers = [];
         if (zonesData.zones) {
             zonesData.zones.forEach(zone => {
-                removeZoneFeatures(zone.id);
+                removeZonePolygons(zone.id);
             });
         }
     }
@@ -873,8 +902,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (result.status === 'success') {
                 alert('Elemento eliminado correctamente.');
                 elementModal.classList.add("hidden");
-                clearMap();
-                fetchZones();
+                removeElementMarker(elementId);
+                console.log('Element removed:', elementId);
             } else {
                 alert(`Error: ${result.message}`);
             }
@@ -885,7 +914,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    async function loadElementTypes() {
+    function removeElementMarker(elementId) {
+        for (const zoneId in markers) {
+            for (const typeId in markers[zoneId]) {
+                const markerIndex = markers[zoneId][typeId].findIndex(marker => marker.getElement().dataset.elementId == elementId);
+                if (markerIndex !== -1) {
+                    const marker = markers[zoneId][typeId][markerIndex];
+                    marker.remove();
+                    markers[zoneId][typeId].splice(markerIndex, 1);
+                    const zone = zonesData.zones.find(z => z.id == zoneId);
+                    const type = zone.elementTypes.find(t => t.id == typeId);
+                    const elementIndex = type.elements.findIndex(el => el.id == elementId);
+                    if (elementIndex !== -1) {
+                        type.elements.splice(elementIndex, 1);
+                    }
+                    return;
+                }
+            }
+        }
+    }
+
+    async function fetchElementTypes() {
         try {
             const response = await fetch("/api/map/elementtypes");
             if (!response.ok) throw new Error("Error fetching element types");
@@ -896,7 +945,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function loadTreeTypes() {
+    async function fetchTreeTypes() {
         try {
             const response = await fetch("/api/map/treetypes");
             if (!response.ok) throw new Error("Error fetching tree types");
@@ -907,7 +956,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function showCreateElementModal(zone, point) {
+    function showNewElementModal(zone, point) {
         selectedZone = { id: zone.id, point: point };
         createElementType.innerHTML = "";
         elementTypes.forEach((t) => {
@@ -918,7 +967,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const selectedType = elementTypes.find(t => t.id === parseInt(createElementType.value));
-        if (selectedType.requires_tree_type) {
+        if (selectedType.requiresTreeType) {
             createElementTreeType.innerHTML = "";
             treeTypes.forEach((tree) => {
                 const option = document.createElement("option");
@@ -934,28 +983,7 @@ document.addEventListener("DOMContentLoaded", () => {
         createElementModal.classList.remove("hidden");
     }
 
-    async function createElement(bodyData) {
-        try {
-            const response = await fetch("/api/map/elements", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(bodyData),
-            });
-            const result = await response.json();
-            if (result.status === "success") {
-                alert("Elemento guardado en la base de datos");
-                fetchZones();
-                createElementModal.classList.add("hidden");
-                createElementForm.reset();
-            } else {
-                alert(`Error: ${result.message}`);
-            }
-        } catch (error) {
-            console.error("Create Element Error", error);
-        }
-    }
-
-    async function createZone(newZone) {
+    async function saveZone(newZone) {
         try {
             const response = await fetch("/api/map/zones", {
                 method: "POST",
@@ -966,14 +994,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             const result = await response.json();
-            console.log("Zone creation result:", result);
 
-            fetchZones();
+            loadZones();
 
             tempMarkers.forEach((marker) => marker.remove());
             tempMarkers = [];
 
-            editor_status = "none";
+            isCreating = false;
             zonePoints = [];
             finishButton.classList.add("hidden");
             createButton.classList.remove("text-gray-300");
@@ -989,6 +1016,11 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error(error);
             alert(`Error al crear la zona: ${error.message}`);
         }
+    }
+
+    function reloadMap() {
+        clearMap();
+        loadZones();
     }
 
     if (contractSelect && contractSelect.value === "-1") {
@@ -1007,9 +1039,8 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelZoneButton.innerHTML = "<i class='fas fa-times-circle'></i> Cancelar creación";
     document.getElementById("submenu").appendChild(cancelZoneButton);
 
-    window.setEditorMode = setEditorMode;
+    window.setMode = setMode;
 
-    loadElementTypes();
-    loadTreeTypes();
+    fetchElementTypes();
+    fetchTreeTypes();
 });
-

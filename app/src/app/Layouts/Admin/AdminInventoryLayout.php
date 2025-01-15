@@ -101,11 +101,11 @@ $currentContract = Session::get('current_contract');
 
     <!-- Submenu -->
     <div id="submenu" class="flex overflow-x-auto whitespace-nowrap justify-center items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
-        <button id="zone-control" class="text-sm text-gray-700 flex flex-col items-center" onclick="setEditorMode('zone')">
+        <button id="zone-control" class="text-sm text-gray-700 flex flex-col items-center">
             <i class="fas fa-brush"></i>
             Editor de zonas
         </button>
-        <button id="element-control" class="text-sm text-gray-700 flex flex-col items-center" onclick="setEditorMode('element')">
+        <button id="element-control" class="text-sm text-gray-700 flex flex-col items-center">
             <i class="fas fa-jar-wheat"></i>
             Editor de elementos
         </button>
@@ -123,6 +123,11 @@ $currentContract = Session::get('current_contract');
         <button id="finish-control" class="hidden text-sm text-gray-700 flex flex-col items-center">
             <i class="fas fa-check-circle"></i>
             Finalizar creación
+        </button>
+
+        <!-- Cancel Zone Creation Button -->
+        <button id="cancel-zone-control" class="hidden text-sm text-gray-700 flex flex-col items-center">
+            <i class='fas fa-times-circle'></i> Cancelar creación
         </button>
 
     </div>
