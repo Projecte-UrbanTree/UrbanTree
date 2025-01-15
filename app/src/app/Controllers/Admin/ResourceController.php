@@ -46,7 +46,6 @@ class ResourceController
         $resource->description = $postData['description'];
         $resource->resource_type_id = (int) $postData['resource_type_id'];
         $resource->save();
-        die(var_dump($resource));
 
         if ($resource->getId())
             Session::set('success', 'Recurso creado correctamente');
