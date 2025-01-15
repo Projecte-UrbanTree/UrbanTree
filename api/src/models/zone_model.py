@@ -1,11 +1,14 @@
 # models/zone_model.py
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, List, Optional
 from sqlmodel import Field, Relationship, SQLModel
+
 
 if TYPE_CHECKING:
     from .contract_model import Contract
+    from .sensor_model import Sensor
+
 
 class ZoneBase(SQLModel):
     contract_id: int = Field(foreign_key="contracts.id", nullable=False)
@@ -16,12 +19,16 @@ class ZoneBase(SQLModel):
     updated_at: Optional[datetime]
     deleted_at: Optional[datetime]
 
+
 class Zone(ZoneBase, table=True):
     __tablename__ = "zones"
 
     id: int | None = Field(default=None, primary_key=True)
 
     contract: "Contract" = Relationship(back_populates="zones")
+
+    sensors: List["Sensor"] = Relationship(back_populates="zone")
+
 
 class ZoneCreate(ZoneBase):
     pass

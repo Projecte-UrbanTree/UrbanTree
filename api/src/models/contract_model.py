@@ -1,9 +1,11 @@
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional, List
+from typing import Optional, List, TYPE_CHECKING
 from sqlmodel import Field, Relationship, SQLModel
+
 
 if TYPE_CHECKING:
     from .sensor_model import Sensor
+    from .zone_model import Zone
 
 
 class Contract(SQLModel, table=True):
@@ -19,3 +21,6 @@ class Contract(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: Optional[datetime]
     deleted_at: Optional[datetime]
+
+    sensors: List["Sensor"] = Relationship(back_populates="contract")
+    zones: List["Zone"] = Relationship(back_populates="contract")

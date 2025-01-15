@@ -28,9 +28,8 @@
                 <strong>Estado:</strong> {% if sensor.is_active %}Activo{% else
                 %}Inactivo{% endif %}
             </p>
-            <p><strong>ID del Contrato:</strong> {{ sensor.contract_id }}</p>
-            <p><strong>ID de la Zona:</strong> {{ sensor.zone_id }}</p>
-            <p><strong>ID del Punto:</strong> {{ sensor.point_id }}</p>
+            <p><strong>Contrato:</strong> {{ sensor.contract.name }}</p>
+            <p><strong>Zona:</strong> {{ sensor.zone.name }}</p>
 
             <h3>Historial del Sensor:</h3>
             <table>
