@@ -17,6 +17,11 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
+            <?php if (empty($work_orders)) { ?>
+                    <tr>
+                        <td colspan="5" class="px-4 py-3 text-center text-gray-500">No hay árboles disponibles.</td>
+                    </tr>
+                <?php } else { ?>
                 <?php foreach ($tree_types as $tree_type) { ?>
                     <tr class="hover:bg-gray-50 transition-colors duration-300">
                         <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
@@ -47,6 +52,7 @@
                             </div>
                         </td>
                     </tr>
+                <?php } ?>
                 <?php } ?>
             </tbody>
         </table>
