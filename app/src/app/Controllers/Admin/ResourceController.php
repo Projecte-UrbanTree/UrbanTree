@@ -23,6 +23,7 @@ class ResourceController
             ]
         ]);
     }
+    
     public function create($queryParams)
     {
         $resources = Resource::findAll();
@@ -38,19 +39,15 @@ class ResourceController
             ]
         ]);
     }
+
     public function store($postData)
     {
-        if (empty($postData['type_resource_id'])) {
-            Session::set('error', 'El tipo de recurso es obligatorio');
-            header('Location: /admin/resource/create');
-            exit;
-        }
-
         $resource = new Resource();
         $resource->name = $postData['name'];
         $resource->description = $postData['description'];
-        $resource->type_resource_id = $postData['type_resource_id'];
+        $resource->type_resource_id = (int)$postData['type_resource_id'];
         $resource->save();
+        var_dump($resource);
 
         if ($resource->getId())
             Session::set('success', 'Recurso creado correctamente');

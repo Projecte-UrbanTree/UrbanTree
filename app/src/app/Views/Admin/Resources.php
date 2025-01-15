@@ -33,11 +33,10 @@
                                 <a href="/admin/resource/<?= htmlspecialchars($resource->getId()); ?>/edit"
                                     class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
                                     title="Editar"
-                                    aria-label="Editar tipo de elemento <?= htmlspecialchars($resource->name); ?>">
-                                    <i class="fas il"></i>
+                                    aria-label="Editar tipo de recurso <?php echo htmlspecialchars($resource->getId()); ?>?');"><i class="fas fa-pencil"></i>
                                 </a>
                                 <a href="/admin/resource/<?= htmlspecialchars($resource->getId()); ?>/delete"
-                                    onclick="return confirm('¿Desea eliminar el tipo de elemento <?= htmlspecialchars($resource->name); ?>?');"
+                                    onclick="return confirm('¿Desea eliminar el tipo de elemento <?php echo htmlspecialchars($resource->getId()); ?>?');"
                                     class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
                                     title="Eliminar"
                                     aria-label="Eliminar tipo de elemento <?= htmlspecialchars($resource->name); ?>">

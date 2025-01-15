@@ -29,14 +29,14 @@
                                 <a href="/admin/type-resource/<?= htmlspecialchars($type_resource->getId()); ?>/edit"
                                     class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
                                     title="Editar"
-                                    aria-label="Editar tipo de recurso <?= htmlspecialchars($type_resource->category); ?>">
+                                    aria-label="Editar tipo de recurso <?= htmlspecialchars($type_resource->getId()); ?>">
                                     <i class="fas fa-pencil"></i>
                                 </a>
                                 <a href="/admin/type-resource/<?= htmlspecialchars($type_resource->getId()); ?>/delete"
                                     onclick="return confirm('¿Desea eliminar el tipo de recurso <?= htmlspecialchars($type_resource->category); ?>?');"
                                     class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
                                     title="Eliminar"
-                                    aria-label="Eliminar tipo de recurso <?= htmlspecialchars($type_resource->category); ?>">
+                                    aria-label="Eliminar tipo de recurso <?= htmlspecialchars($type_resource->getId()); ?>">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>

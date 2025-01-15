@@ -8,7 +8,7 @@ class WorkOrder extends BaseModel
 {
     public int $contract_id;
     public string $date;
-    public int $status;
+    public int $status = 0;
 
     protected static function getTableName(): string
     {
@@ -29,9 +29,9 @@ class WorkOrder extends BaseModel
         return $work_order;
     }
 
-    public function report(): ?WorkReport
+    public function report(): WorkReport
     {
-        return $this->hasOne(WorkReport::class, 'work_order_id');
+        return $this->hasOne(WorkReport::class, 'id');
     }
 
     public function contract(): Contract
