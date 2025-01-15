@@ -5,9 +5,13 @@ namespace App\Models;
 class ElementType extends BaseModel
 {
     public ?string $name;
+
     public ?string $description;
+
     public ?bool $requires_tree_type;
+
     public ?string $icon;
+
     public ?string $color;
 
     protected static function getTableName(): string
@@ -17,7 +21,7 @@ class ElementType extends BaseModel
 
     protected static function mapDataToModel($data): ElementType
     {
-        $element_type = new self();
+        $element_type = new self;
         $element_type->id = $data['id'];
         $element_type->name = $data['name'];
         $element_type->description = $data['description'];
@@ -35,6 +39,7 @@ class ElementType extends BaseModel
     public function elements(array $conditions = []): array
     {
         $conditions['element_type_id'] = $this->id;
+
         return Element::findAll($conditions);
     }
 }

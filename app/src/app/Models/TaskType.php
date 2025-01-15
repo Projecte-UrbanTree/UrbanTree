@@ -13,7 +13,7 @@ class TaskType extends BaseModel
 
     protected static function mapDataToModel($data): TaskType
     {
-        $task_type = new self();
+        $task_type = new self;
         $task_type->id = $data['id'];
         $task_type->name = $data['name'];
         $task_type->created_at = $data['created_at'];

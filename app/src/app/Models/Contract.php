@@ -23,7 +23,7 @@ class Contract extends BaseModel
 
     protected static function mapDataToModel($data): Contract
     {
-        $contract = new self();
+        $contract = new self;
         $contract->id = $data['id'];
         $contract->name = $data['name'];
         $contract->start_date = $data['start_date'];

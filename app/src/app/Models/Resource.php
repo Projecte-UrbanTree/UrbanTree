@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Models;
-
 class Resource extends BaseModel
 {
     public string $name;
+
     public int $resource_type_id;
+
     public ?string $description;
 
     protected static function getTableName(): string
@@ -17,7 +17,7 @@ class Resource extends BaseModel
 
     protected static function mapDataToModel($data): Resource
     {
-        $resource = new self();
+        $resource = new self;
         $resource->id = $data['id'];
         $resource->name = $data['name'];
         $resource->description = $data['description'];

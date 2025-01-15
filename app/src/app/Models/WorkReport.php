@@ -5,7 +5,9 @@ namespace App\Models;
 class WorkReport extends BaseModel
 {
     public int $work_order_id;
+
     public ?string $observation;
+
     public ?float $spent_fuel;
 
     protected static function getTableName(): string
@@ -15,7 +17,7 @@ class WorkReport extends BaseModel
 
     protected static function mapDataToModel($data): WorkReport
     {
-        $work_report = new self();
+        $work_report = new self;
         $work_report->id = $data['id'];
         $work_report->work_order_id = $data['work_order_id'];
         $work_report->observation = $data['observation'];

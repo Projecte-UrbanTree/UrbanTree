@@ -15,7 +15,7 @@ class WorkOrder extends BaseModel
 
     protected static function mapDataToModel($data): WorkOrder
     {
-        $work_order = new self();
+        $work_order = new self;
         $work_order->id = $data['id'];
         $work_order->contract_id = $data['contract_id'];
         $work_order->date = $data['date'];
@@ -48,8 +48,8 @@ class WorkOrder extends BaseModel
 
     public function status()
     {
-        $tasks = array_merge(...array_map(fn($block) => $block->tasks(), $this->blocks()));
-        $completed = count(array_filter($tasks, fn($task) => $task->status == 1));
+        $tasks = array_merge(...array_map(fn ($block) => $block->tasks(), $this->blocks()));
+        $completed = count(array_filter($tasks, fn ($task) => $task->status == 1));
         $total = count($tasks);
 
         return $completed === $total ? 2 : ($completed > 0 ? 1 : 0);

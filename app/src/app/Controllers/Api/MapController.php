@@ -4,10 +4,10 @@ namespace App\Controllers\Api;
 
 use App\Core\Session;
 use App\Models\Element;
-use App\Models\Zone;
-use App\Models\Point;
 use App\Models\ElementType;
+use App\Models\Point;
 use App\Models\TreeType;
+use App\Models\Zone;
 use Exception;
 
 class MapController
@@ -72,9 +72,9 @@ class MapController
         try {
             $contractId = Session::get('current_contract');
             if ($contractId == -1) {
-                throw new Exception("Cannot create zone if contract is -1.");
+                throw new Exception('Cannot create zone if contract is -1.');
             }
-            $zone = new Zone();
+            $zone = new Zone;
             $zone->contract_id = $contractId;
             $zone->name = $postData['name'];
             $zone->color = $postData['color'];
@@ -82,7 +82,7 @@ class MapController
             $zone->save();
 
             foreach ($postData['points'] as $pointData) {
-                $point = new Point();
+                $point = new Point;
                 $point->latitude = $pointData[0];
                 $point->longitude = $pointData[1];
                 $point->zone_id = $zone->getId();
@@ -122,14 +122,14 @@ class MapController
         try {
             $contractId = Session::get('current_contract');
             if ($contractId == -1) {
-                throw new \Exception("Cannot create element if contract is -1.");
+                throw new \Exception('Cannot create element if contract is -1.');
             }
-            $point = new Point();
+            $point = new Point;
             $point->latitude = $postData['latitude'];
             $point->longitude = $postData['longitude'];
             $point->save();
 
-            $element = new Element();
+            $element = new Element;
             $element->contract_id = $contractId;
             $element->zone_id = $postData['zoneId'];
             $element->element_type_id = $postData['elementTypeId'];

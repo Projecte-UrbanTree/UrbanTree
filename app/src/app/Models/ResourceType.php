@@ -4,8 +4,8 @@ namespace App\Models;
 
 class ResourceType extends BaseModel
 {
-
     public string $name;
+
     public string $description;
 
     protected static function getTableName(): string
@@ -15,7 +15,7 @@ class ResourceType extends BaseModel
 
     protected static function mapDataToModel($data): self
     {
-        $resource_type = new self();
+        $resource_type = new self;
         $resource_type->id = $data['id'];
         $resource_type->name = $data['name'];
         $resource_type->description = $data['description'];

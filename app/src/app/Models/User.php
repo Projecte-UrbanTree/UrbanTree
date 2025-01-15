@@ -32,7 +32,7 @@ class User extends BaseModel
 
     protected static function mapDataToModel($data): User
     {
-        $user = new self();
+        $user = new self;
         $user->id = $data['id'];
         $user->company = $data['company'];
         $user->name = $data['name'];

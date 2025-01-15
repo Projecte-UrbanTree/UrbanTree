@@ -19,7 +19,7 @@ class Incidence extends BaseModel
 
     public static function mapDataToModel($data): Incidence
     {
-        $incidence = new self();
+        $incidence = new self;
         $incidence->id = $data['id'];
         $incidence->element_id = $data['element_id'];
         $incidence->name = $data['name'];

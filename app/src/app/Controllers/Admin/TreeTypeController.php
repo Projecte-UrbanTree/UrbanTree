@@ -30,17 +30,18 @@ class TreeTypeController
 
     public function store($postData)
     {
-        $tree_type = new TreeType();
+        $tree_type = new TreeType;
         $tree_type->family = $postData['family'];
         $tree_type->genus = $postData['genus'];
         $tree_type->species = $postData['species'];
 
         $tree_type->save();
 
-        if ($tree_type->getId())
+        if ($tree_type->getId()) {
             Session::set('success', 'Especie creada correctamente');
-        else
+        } else {
             Session::set('error', 'La especie no se pudo crear');
+        }
 
         header('Location: /admin/tree-types');
         exit;
@@ -50,7 +51,7 @@ class TreeTypeController
     {
         $tree_type = TreeType::find($id);
 
-        if (!$tree_type) {
+        if (! $tree_type) {
             Session::set('error', 'Especie no encontrada');
             header('Location: /admin/tree-types');
             exit;
@@ -76,8 +77,9 @@ class TreeTypeController
             $tree_type->save();
 
             Session::set('success', 'Especie actualizada correctamente');
-        } else
+        } else {
             Session::set('error', 'Especie no encontrada');
+        }
 
         header('Location: /admin/tree-types');
         exit;
@@ -90,8 +92,9 @@ class TreeTypeController
         if ($tree_type) {
             $tree_type->delete();
             Session::set('success', 'Especie eliminada correctamente');
-        } else
+        } else {
             Session::set('error', 'Especie no encontrada');
+        }
 
         header('Location: /admin/tree-types');
         exit;

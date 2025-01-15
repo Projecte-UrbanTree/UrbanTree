@@ -20,8 +20,8 @@ class ResourceController
             'layout' => 'Admin/AdminLayout',
             'data' => [
                 'resources' => $resources,
-                'resource_types' => $resource_types
-            ]
+                'resource_types' => $resource_types,
+            ],
         ]);
     }
 
@@ -34,23 +34,24 @@ class ResourceController
             'title' => 'Crear Recurso',
             'layout' => 'Admin/AdminLayout',
             'data' => [
-                'resource_types' => $resource_types
-            ]
+                'resource_types' => $resource_types,
+            ],
         ]);
     }
 
     public function store($postData)
     {
-        $resource = new Resource();
+        $resource = new Resource;
         $resource->name = $postData['name'];
         $resource->description = $postData['description'];
         $resource->resource_type_id = $postData['resource_type_id'];
         $resource->save();
 
-        if ($resource->getId())
+        if ($resource->getId()) {
             Session::set('success', 'Recurso creado correctamente');
-        else
+        } else {
             Session::set('error', 'El recurso no se pudo crear');
+        }
 
         header('Location: /admin/resources');
         exit;
@@ -60,7 +61,7 @@ class ResourceController
     {
         $resource = Resource::find($id);
 
-        if (!$resource) {
+        if (! $resource) {
             Session::set('error', 'Recurso no encontrado');
             header('Location: /admin/resources');
             exit;
@@ -73,8 +74,8 @@ class ResourceController
             'layout' => 'Admin/AdminLayout',
             'data' => [
                 'resource' => $resource,
-                'resource_types' => $resource_types
-            ]
+                'resource_types' => $resource_types,
+            ],
         ]);
     }
 
@@ -82,7 +83,7 @@ class ResourceController
     {
         if (empty($postData['resource_type_id'])) {
             Session::set('error', 'El tipo de recurso es obligatorio');
-            header('Location: /admin/resource/' . $id . '/edit');
+            header('Location: /admin/resource/'.$id.'/edit');
             exit;
         }
 
@@ -92,10 +93,11 @@ class ResourceController
         $resource->resource_type_id = $postData['resource_type_id'];
         $resource->save();
 
-        if ($resource->getId())
+        if ($resource->getId()) {
             Session::set('success', 'Recurso actualizado correctamente');
-        else
+        } else {
             Session::set('error', 'Recurso no encontrado');
+        }
 
         header('Location: /admin/resources');
         exit;
@@ -108,9 +110,9 @@ class ResourceController
         if ($resource) {
             $resource->delete();
             Session::set('success', 'Recurso eliminado correctamente');
-        } else
+        } else {
             Session::set('error', 'Recurso no encontrado');
-
+        }
 
         header('Location: /admin/resources');
         exit;

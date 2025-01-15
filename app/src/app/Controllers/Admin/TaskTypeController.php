@@ -30,15 +30,16 @@ class TaskTypeController
 
     public function store($postData)
     {
-        $task_type = new TaskType();
+        $task_type = new TaskType;
         $task_type->name = $postData['name'];
 
         $task_type->save();
 
-        if ($task_type->getId())
+        if ($task_type->getId()) {
             Session::set('success', 'Tipo de tarea creado correctamente');
-        else
+        } else {
             Session::set('error', 'El tipo de tarea no se pudo crear');
+        }
 
         header('Location: /admin/task-types');
         exit;
@@ -48,7 +49,7 @@ class TaskTypeController
     {
         $task_type = TaskType::find($id);
 
-        if (!$task_type) {
+        if (! $task_type) {
             Session::set('error', 'Tipo de tarea no encontrado');
             header('Location: /admin/task-types');
             exit;
@@ -87,8 +88,9 @@ class TaskTypeController
         if ($task_type) {
             $task_type->delete();
             Session::set('success', 'Tipo de tarea eliminado correctamente');
-        } else
+        } else {
             Session::set('error', 'Tipo de tarea no encontrado');
+        }
 
         header('Location: /admin/task-types');
         exit;

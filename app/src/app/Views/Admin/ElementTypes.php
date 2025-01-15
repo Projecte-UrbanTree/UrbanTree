@@ -32,7 +32,7 @@
                             <?= htmlspecialchars($element_type->description); ?>
                         </td>
                         <td class="px-4 py-3">
-                            <?= $element_type->requires_tree_type ? "Sí" : "No"; ?>
+                            <?= $element_type->requires_tree_type ? 'Sí' : 'No'; ?>
                         </td>
                         <td class="px-4 py-3">
                             <i class="<?= htmlspecialchars($element_type->icon); ?>"></i>
