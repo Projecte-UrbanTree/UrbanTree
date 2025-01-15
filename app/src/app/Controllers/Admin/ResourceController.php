@@ -95,7 +95,7 @@ class ResourceController
         if ($resource->getId())
             Session::set('success', 'Recurso actualizado correctamente');
         else
-            Session::set('error', 'El recurso no encontrado');
+            Session::set('error', 'Recurso no encontrado');
 
         header('Location: /admin/resources');
         exit;
