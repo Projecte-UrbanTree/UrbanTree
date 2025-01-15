@@ -5,9 +5,7 @@ namespace App\Models;
 class WorkReport extends BaseModel
 {
     public int $work_order_id;
-
     public ?string $observation;
-
     public ?float $spent_fuel;
 
     protected static function getTableName(): string
@@ -32,10 +30,5 @@ class WorkReport extends BaseModel
     public function workOrder(): WorkOrder
     {
         return $this->belongsTo(WorkOrder::class, 'work_order_id');
-    }
-
-    public function photos()
-    {
-        return $this->belongsToMany(Photo::class, 'work_report_photos', 'work_report_id', 'photo_id');
     }
 }

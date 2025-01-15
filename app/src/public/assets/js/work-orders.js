@@ -87,6 +87,11 @@ treeTypes.forEach((tree_type) => {
     speciesOptions += `<option value="${tree_type.id}">${tree_type.species}</option>`;
 });
 
+let elementTypeOptions = `<option value="" selected>Seleccione un elemento</option>`;
+elementTypes.forEach((element_type) => {
+    elementTypeOptions += `<option value="${element_type.id}">${element_type.name}</option>`;
+});
+
 function updateBlock() {
     const blocks = document.querySelectorAll("#blocksContainer .workorder-block");
     blocks.forEach((block, index) => {
@@ -126,6 +131,7 @@ function updateBlock() {
 
             const taskTypeSelect = taskRow.querySelector("select[name^='blocks'][name*='[taskType]']");
             const speciesSelect = taskRow.querySelector("select[name^='blocks'][name*='[species]']");
+            const elementTypeSelect = taskRow.querySelector("select[name^='blocks'][name*='[elementType]']");
 
             if (taskTypeSelect) {
                 taskTypeSelect.name = `blocks[${index}][tasks][${taskIndex}][taskType]`;
@@ -135,6 +141,11 @@ function updateBlock() {
             if (speciesSelect) {
                 speciesSelect.name = `blocks[${index}][tasks][${taskIndex}][species]`;
                 speciesSelect.id = `species_${index}_${taskIndex}`;
+            }
+
+            if (elementTypeSelect) {
+                elementTypeSelect.name = `blocks[${index}][tasks][${taskIndex}][elementType]`;
+                elementTypeSelect.id = `elementType_${index}_${taskIndex}`;
             }
         });
     });
@@ -178,6 +189,12 @@ function addBlock() {
                     <select name="blocks[${blockCount}][tasks][0][taskType]" id="taskType_${blockCount}_0"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                         ${taskTypeOptions}
+                    </select>
+                </div>
+                <div class="flex-auto">
+                    <select name="blocks[${blockCount}][tasks][0][elementType]" id="elementType_${blockCount}_0"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                        ${elementTypeOptions}
                     </select>
                 </div>
                 <div class="flex-auto flex items-center space-x-2">
@@ -226,6 +243,12 @@ function addTask(button) {
             <select name="blocks[${blockIndex}][tasks][${taskCount}][taskType]" id="taskType_${blockIndex}_${taskCount}"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 ${taskTypeOptions}
+            </select>
+        </div>
+        <div class="flex-auto">
+            <select name="blocks[${blockIndex}][tasks][${taskCount}][elementType]" id="elementType_${blockIndex}_${taskCount}"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                ${elementTypeOptions}
             </select>
         </div>
         <div class="flex-auto flex items-center space-x-2">

@@ -47,11 +47,11 @@ $currentContract = Session::get('current_contract');
             <div class="hidden md:flex space-x-6">
                 <a href="/admin"
                     class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
-                    <i class="fas fa-tachometer-alt"></i> Gestión
+                    <i class="fas fa-toolbox"></i> Gestión
                 </a>
                 <a href="/admin/inventory"
                     class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
-                    <i class="fas fa-cogs"></i> Inventario
+                    <i class="fas fa-box-archive"></i> Inventario
                 </a>
             </div>
 
@@ -90,11 +90,11 @@ $currentContract = Session::get('current_contract');
         <div id="mobile-menu" class="hidden md:hidden px-4 py-4 bg-gray-100">
             <a href="/admin"
                 class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
-                <i class="fas fa-tachometer-alt"></i> Gestión
+                <i class="fas fa-toolbox"></i> Gestión
             </a>
             <a href="/admin/inventory"
                 class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
-                <i class="fas fa-cogs"></i> Inventario
+                <i class="fas fa-box-archive"></i> Inventario
             </a>
         </div>
     </header>
@@ -121,12 +121,22 @@ $currentContract = Session::get('current_contract');
             <a href="/admin/tree-types"
                 class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/tree-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tree block"></i>
-                Tipos de árbol
+                Especies
             </a>
             <a href="/admin/task-types"
                 class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tasks block"></i>
                 Tipos de tarea
+            </a>
+            <a href="/admin/resources"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/resources') !== false ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-box block"></i>
+                Recursos
+            </a>
+            <a href="/admin/type-resources"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/type-resources') !== false ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-solid fa-layer-group block"></i>
+                Tipos de recursos
             </a>
             <a href="/admin/users"
                 class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/user') !== false ? 'font-semibold' : ''; ?>">

@@ -57,10 +57,10 @@ $currentContract = Session::get('current_contract');
             <!-- Navigation Links (Visible only on large screens) -->
             <div class="hidden md:flex space-x-6">
                 <a href="/admin" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
-                    <i class="fas fa-tachometer-alt"></i> Gestión
+                    <i class="fas fa-toolbox"></i> Gestión
                 </a>
                 <a href="/admin/inventory" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
-                    <i class="fas fa-cogs"></i> Inventario
+                    <i class="fas fa-box-archive"></i> Inventario
                 </a>
             </div>
 
@@ -91,22 +91,22 @@ $currentContract = Session::get('current_contract');
         <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="hidden md:hidden px-4 py-4 bg-gray-100">
             <a href="/admin" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
-                <i class="fas fa-tachometer-alt"></i> Gestión
+                <i class="fas fa-toolbox"></i> Gestión
             </a>
             <a href="/admin/inventory" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
-                <i class="fas fa-cogs"></i> Inventario
+                <i class="fas fa-box-archive"></i> Inventario
             </a>
         </div>
     </header>
 
     <!-- Submenu -->
     <div id="submenu" class="flex overflow-x-auto whitespace-nowrap justify-center items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
-        <button id="zone-control" class="text-sm text-gray-700 flex flex-col items-center" onclick="setEditorMode('zone')">
-            <i class="fas fa-map-marker-alt"></i>
+        <button id="zone-control" class="text-sm text-gray-700 flex flex-col items-center">
+            <i class="fas fa-brush"></i>
             Editor de zonas
         </button>
-        <button id="element-control" class="text-sm text-gray-700 flex flex-col items-center" onclick="setEditorMode('element')">
-            <i class="fas fa-puzzle-piece"></i>
+        <button id="element-control" class="text-sm text-gray-700 flex flex-col items-center">
+            <i class="fas fa-jar-wheat"></i>
             Editor de elementos
         </button>
 
@@ -125,10 +125,12 @@ $currentContract = Session::get('current_contract');
             Finalizar creación
         </button>
 
+        <!-- Cancel Zone Creation Button -->
+        <button id="cancel-zone-control" class="hidden text-sm text-gray-700 flex flex-col items-center">
+            <i class='fas fa-times-circle'></i> Cancelar creación
+        </button>
+
     </div>
-
-
-
 
     <!-- Main Content -->
     <main class="flex grow">

@@ -39,19 +39,6 @@ create table contracts (
     deleted_at timestamp
 );
 
---* Machines
-create table machines (
-    id int auto_increment primary key,
-    name varchar(255),
-    max_basket_size float not null,
-    photo_id int,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp,
-    deleted_at timestamp,
-    foreign key (photo_id) references photos(id),
-    constraint UC_MachineType unique (name, max_basket_size)
-);
-
 --* Tree
 create table tree_types (
     id int auto_increment primary key,
@@ -152,6 +139,7 @@ create table work_orders (
     id int auto_increment primary key,
     contract_id int not null,
     date date not null,
+    status int default 0,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
@@ -200,14 +188,17 @@ create table work_orders_blocks_tasks (
     id int auto_increment primary key,
     work_orders_block_id int not null,
     task_id int not null,
+    element_type_id int not null,
     tree_type_id int,
     status int default 0,
+    spent_time decimal,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
     foreign key (work_orders_block_id) references work_orders_blocks(id),
     foreign key (task_id) references task_types(id),
-    foreign key (tree_type_id) references tree_types(id)
+    foreign key (tree_type_id) references tree_types(id),
+    foreign key (element_type_id) references element_types(id)
 );
 
 --* Work reports
@@ -234,6 +225,41 @@ create table work_report_photos (
     foreign key (photo_id) references photos(id),
     constraint UC_WorkReportPhoto unique (work_report_id, photo_id)
 );
+
+--* Resources and type resources
+create table type_resources(
+    id int auto_increment primary key,
+    category varchar(255) not null,
+    description varchar(255),
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp
+);
+
+create table resources(
+    id int auto_increment primary key,
+    name varchar(255) not null,
+    description varchar(255) null,
+    type_resource_id int not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
+    foreign key (type_resource_id) references type_resources(id)
+);
+
+create table work_report_resources(
+    id int auto_increment primary key,
+    work_report_id int not null,
+    resource_id int not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
+    foreign key (work_report_id) references work_reports(id),
+    foreign key (resource_id) references resources(id),
+    constraint UC_WorkReportResource unique (work_report_id, resource_id)
+);
+
+
 
 --* Sensors
 create table sensors (

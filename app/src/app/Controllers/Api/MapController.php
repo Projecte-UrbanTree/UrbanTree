@@ -3,7 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Core\Session;
-
+use App\Models\Element;
 use App\Models\Zone;
 use App\Models\Point;
 use App\Models\ElementType;
@@ -33,7 +33,7 @@ class MapController
                 'points' => array_map(function ($point) {
                     return [$point->latitude, $point->longitude];
                 }, $zone->points()),
-                'element_types' => [],
+                'elementTypes' => [],
             ];
 
             $elementTypes = ElementType::findAll();
@@ -43,7 +43,7 @@ class MapController
                 } else {
                     $elements = $elementType->elements(['zone_id' => $zone->getId(), 'contract_id' => $contractId]);
                 }
-                $zoneData['element_types'][] = [
+                $zoneData['elementTypes'][] = [
                     'id' => $elementType->getId(),
                     'icon' => $elementType->icon,
                     'color' => $elementType->color,
@@ -67,6 +67,8 @@ class MapController
 
     public function createZone($postData)
     {
+        header('Content-Type: application/json');
+
         try {
             $contractId = Session::get('current_contract');
             if ($contractId == -1) {
@@ -96,6 +98,8 @@ class MapController
 
     public function deleteZone($postData)
     {
+        header('Content-Type: application/json');
+
         try {
             $zoneId = $postData['id'];
             $zone = Zone::find($zoneId);
@@ -113,29 +117,61 @@ class MapController
 
     public function createElement($postData)
     {
+        header('Content-Type: application/json');
+
         try {
             $contractId = Session::get('current_contract');
             if ($contractId == -1) {
                 throw new \Exception("Cannot create element if contract is -1.");
             }
-            $point = new \App\Models\Point();
+            $point = new Point();
             $point->latitude = $postData['latitude'];
             $point->longitude = $postData['longitude'];
             $point->save();
 
-            $element = new \App\Models\Element();
+            $element = new Element();
             $element->contract_id = $contractId;
-            $element->zone_id = $postData['zone_id'];
-            $element->element_type_id = $postData['element_type_id'];
+            $element->zone_id = $postData['zoneId'];
+            $element->element_type_id = $postData['elementTypeId'];
             $element->point_id = $point->getId();
             $element->description = $postData['description'];
+            $element->tree_type_id = $postData['treeTypeId'] ?? null;
             $element->save();
 
             $point->element_id = $element->getId();
             $point->save();
 
-            echo json_encode(['status' => 'success', 'element_id' => $element->getId()]);
+            $elementData = [
+                'id' => $element->getId(),
+                'latitude' => $element->point()->latitude,
+                'longitude' => $element->point()->longitude,
+                'zoneId' => $element->zone_id,
+                'elementTypeId' => $element->element_type_id,
+                'description' => $element->description,
+                'treeTypeId' => $element->tree_type_id,
+            ];
+
+            echo json_encode(['status' => 'success', 'element' => $elementData]);
         } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
+    public function deleteElement($postData)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $elementId = $postData['id'];
+            $element = Element::find($elementId);
+            if ($element) {
+                $element->delete();
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Element not found']);
+            }
+        } catch (Exception $e) {
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
         exit;
@@ -144,7 +180,8 @@ class MapController
     public function getElementTypes($queryParams)
     {
         header('Content-Type: application/json');
-        $types = \App\Models\ElementType::findAll();
+
+        $types = ElementType::findAll();
         $data = [];
         foreach ($types as $type) {
             $data[] = [
@@ -153,7 +190,7 @@ class MapController
                 'description' => $type->description,
                 'icon' => $type->icon,
                 'color' => $type->color,
-                'requires_tree_type' => $type->requires_tree_type,
+                'requiresTreeType' => $type->requires_tree_type,
             ];
         }
         echo json_encode($data);
@@ -162,6 +199,8 @@ class MapController
 
     public function updateZoneName($postData)
     {
+        header('Content-Type: application/json');
+
         try {
             $zone = Zone::find($postData['id']);
             if ($zone) {
@@ -179,6 +218,8 @@ class MapController
 
     public function updateZoneColor($postData)
     {
+        header('Content-Type: application/json');
+
         try {
             $zone = Zone::find($postData['id']);
             if ($zone) {
@@ -194,9 +235,29 @@ class MapController
         exit;
     }
 
+    public function updateZoneDescription($postData)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $zone = Zone::find($postData['id']);
+            if ($zone) {
+                $zone->description = $postData['description'];
+                $zone->save();
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Zone not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
     public function getTreeTypes($queryParams)
     {
         header('Content-Type: application/json');
+
         $treeTypes = TreeType::findAll();
         $data = [];
         foreach ($treeTypes as $treeType) {
@@ -208,6 +269,51 @@ class MapController
             ];
         }
         echo json_encode($data);
+        exit;
+    }
+
+    public function getElement($id, $queryParams)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $elementId = $id;
+            $element = Element::find($elementId);
+            if ($element) {
+                $data = [
+                    'id' => $element->getId(),
+                    'description' => $element->description,
+                    'elementType' => $element->elementType(),
+                    'zone' => $element->zone(),
+                    'point' => $element->point(),
+                    'treeType' => $element->treeType(),
+                ];
+                echo json_encode($data);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Element not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
+    public function updateElementDescription($postData)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $element = Element::find($postData['id']);
+            if ($element) {
+                $element->description = $postData['description'];
+                $element->save();
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Element not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
         exit;
     }
 }

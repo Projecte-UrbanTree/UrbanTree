@@ -7,9 +7,26 @@ body {
 }
 
 main {
-    min-height: calc(100% - 72px - 66px); /* Allow scrolling */
+    min-height: calc(100% - 72px - 66px); 
+}
+body {
+    background-color: rgb(249, 250, 251); 
+    position: relative;
 }
 
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/images/background-pattern.svg");
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    opacity: 0.195;
+}
 h1,
 h2,
 h3,
@@ -21,15 +38,6 @@ h6 {
 
 .h-screen-app {
     height: calc(100vh - 72px - 66px);
-}
-
-/* Return Button */
-#returnBtn {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 1000;
-    border-radius: 50%;
 }
 
 .inventory-map {
@@ -104,4 +112,3 @@ h6 {
         display: block;
     }
 }
-

@@ -48,7 +48,7 @@
         <!-- Requires Tree Type -->
         <div class="col-span-1 md:col-span-2 flex items-center">
             <input type="checkbox" id="requires_tree_type" name="requires_tree_type" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-2">
-            <label for="requires_tree_type" class="block text-sm font-medium text-gray-700">Requiere tipo de árbol</label>
+            <label for="requires_tree_type" class="block text-sm font-medium text-gray-700">Requiere especie</label>
         </div>
 
         <!-- Submit Button -->

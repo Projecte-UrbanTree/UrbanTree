@@ -115,4 +115,5 @@ function mapWithId($items, $getIdMethod)
 <script>
     const taskTypes = <?= json_encode(mapWithId($task_types, 'getId')); ?>;
     const treeTypes = <?= json_encode(mapWithId($tree_types, 'getId')); ?>;
+    const elementTypes = <?= json_encode(mapWithId($element_types, 'getId')); ?>;
 </script>
