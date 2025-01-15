@@ -20,7 +20,7 @@
         <tbody class="divide-y divide-gray-200 bg-white">
             <?php if (empty($element_types)) { ?>
                 <tr>
-                    <td colspan="5" class="px-4 py-3 text-center text-gray-500">No hay elementos disponibles.</td>
+                    <td colspan="7" class="px-4 py-3 text-center text-gray-500">No hay tipos elementos disponibles.</td>
                 </tr>
             <?php } else { ?>
                 <?php foreach ($element_types as $element_type) { ?>
