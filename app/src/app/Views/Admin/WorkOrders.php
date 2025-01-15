@@ -16,8 +16,13 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-                <?php foreach ($work_orders as $index => $work_order) { ?>
-                    <tr class="hover:bg-gray-50 transition-colors duration-300">
+                <?php if (empty($work_orders)) { ?>
+                    <tr>
+                        <td colspan="4" class="px-4 py-3 text-center text-gray-500">No hay partes de trabajo disponibles.</td>
+                    </tr>
+                <?php } else { ?>
+                    <?php foreach ($work_orders as $index => $work_order) { ?>
+                        <tr class="hover:bg-gray-50 transition-colors duration-300">
                         <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
                             <button id="accordionButton<?php echo $index; ?>" onclick="toggleAccordion(<?php echo $index; ?>)"
                                 aria-expanded="false" class="text-gray-500 hover:text-gray-700 focus:outline-none mr-2">
@@ -109,6 +114,7 @@
                             <?php } ?>
                         </td>
                     </tr>
+                <?php } ?>
                 <?php } ?>
             </tbody>
         </table>
