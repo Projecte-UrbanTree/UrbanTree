@@ -22,7 +22,7 @@
                         <?= htmlspecialchars($resource->name); ?>
                     </th>
                     <td class="px-4 py-3">
-                        <?= htmlspecialchars($resource->ResourceType()->name); ?>
+                        <?= htmlspecialchars($resource->resourceType()->name); ?>
                     </td>
                     <td class="px-4 py-3">
                         <?= htmlspecialchars($resource->description ? $resource->description : 'N/A'); ?>

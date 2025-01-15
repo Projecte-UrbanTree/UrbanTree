@@ -29,7 +29,7 @@ class Resource extends BaseModel
         return $resource;
     }
 
-    public function ResourceType()
+    public function resourceType()
     {
         return $this->belongsTo(ResourceType::class, 'resource_type_id');
     }

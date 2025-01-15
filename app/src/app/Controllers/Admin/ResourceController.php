@@ -44,7 +44,7 @@ class ResourceController
         $resource = new Resource();
         $resource->name = $postData['name'];
         $resource->description = $postData['description'];
-        $resource->resource_type_id = (int) $postData['resource_type_id'];
+        $resource->resource_type_id = $postData['resource_type_id'];
         $resource->save();
 
         if ($resource->getId())

@@ -29,7 +29,7 @@ class WorkReportResource extends BaseModel
     {
         return $this->belongsTo(WorkReport::class, 'work_report_id');
     }
-    public function ResourceType()
+    public function resourceType()
     {
         return $this->belongsTo(ResourceType::class, 'type_resources_id');
     }
