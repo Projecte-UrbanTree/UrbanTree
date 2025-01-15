@@ -16,9 +16,9 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
-            <?php if (empty($task_types)) { ?>
+            <?php if (empty($tree_types)) { ?>
                 <tr>
-                    <td colspan="5" class="px-4 py-3 text-center text-gray-500">No hay tipos de tarea disponibles.</td>
+                    <td colspan="5" class="px-4 py-3 text-center text-gray-500">No hay especies disponibles.</td>
                 </tr>
             <?php } else { ?>
                 <?php foreach ($tree_types as $tree_type) { ?>
