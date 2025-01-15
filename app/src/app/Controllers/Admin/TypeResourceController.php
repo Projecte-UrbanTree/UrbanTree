@@ -85,7 +85,7 @@ class TypeResourceController
             $type_resource->delete();
             Session::set('success', 'Tipo de recurso eliminado correctamente');
         } else {
-            Session::set('error', 'El tipo de recurso no se pudo encontrar');
+            Session::set('error', 'El tipo de recurso no encontrado');
         }
 
         header('Location: /admin/type-resources');
