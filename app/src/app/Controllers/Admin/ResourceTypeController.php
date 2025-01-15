@@ -4,25 +4,25 @@ namespace App\Controllers\Admin;
 
 use App\Core\Session;
 use App\Core\View;
-use App\Models\TypeResource;
+use App\Models\ResourceType;
 
-class TypeResourceController
+class ResourceTypeController
 {
     public function index($queryParams)
     {
-        $type_resources = TypeResource::findAll();
+        $resource_types = ResourceType::findAll();
         View::render([
-            'view' => 'Admin/TypeResources',
+            'view' => 'Admin/ResourceTypes',
             'title' => 'Tipos de Recursos',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['type_resources' => $type_resources],
+            'data' => ['resource_types' => $resource_types],
         ]);
     }
 
     public function create($queryParams)
     {
         View::render([
-            'view' => 'Admin/TypeResource/Create',
+            'view' => 'Admin/ResourceType/Create',
             'title' => 'Nuevo Tipo de Recurso',
             'layout' => 'Admin/AdminLayout',
         ]);
@@ -30,41 +30,41 @@ class TypeResourceController
 
     public function store($postData)
     {
-        $type_resource = new TypeResource();
-        $type_resource->category = $postData['category'];
-        $type_resource->description = $postData['description'];
-        $type_resource->save();
+        $resource_type = new ResourceType();
+        $resource_type->name = $postData['name'];
+        $resource_type->description = $postData['description'];
+        $resource_type->save();
 
-        if ($type_resource->getId()) {
+        if ($resource_type->getId()) {
             Session::set('success', 'Tipo de recurso creado correctamente');
         } else {
             Session::set('error', 'El tipo de recurso no se pudo crear');
         }
 
-        header('Location: /admin/type-resources');
+        header('Location: /admin/resource-types');
         exit;
     }
 
     public function edit($id, $queryParams)
     {
-        $type_resource = TypeResource::find($id);
+        $resource_type = ResourceType::find($id);
         View::render([
-            'view' => 'Admin/TypeResource/Edit',
+            'view' => 'Admin/ResourceType/Edit',
             'title' => 'Editando Tipo de Recurso',
             'layout' => 'Admin/AdminLayout',
-            'data' => ['type_resource' => $type_resource],
+            'data' => ['resource_type' => $resource_type],
         ]);
     }
 
     public function update($id, $postData)
     {
-        $type_resource = TypeResource::find($id);
-        if ($type_resource) {
-            $type_resource->category = $postData['category'];
-            $type_resource->description = $postData['description'];
-            $type_resource->save();
+        $resource_type = ResourceType::find($id);
+        if ($resource_type) {
+            $resource_type->name = $postData['name'];
+            $resource_type->description = $postData['description'];
+            $resource_type->save();
 
-            if ($type_resource->getId()) {
+            if ($resource_type->getId()) {
                 Session::set('success', 'Tipo de recurso actualizado correctamente');
             } else {
                 Session::set('error', 'El tipo de recurso no se pudo actualizar');
@@ -73,22 +73,21 @@ class TypeResourceController
             Session::set('error', 'Tipo de recurso no encontrado');
         }
 
-        header('Location: /admin/type-resources');
+        header('Location: /admin/resource-types');
         exit;
-
     }
 
     public function destroy($id, $queryParams)
     {
-        $type_resource = TypeResource::find($id);
-        if ($type_resource) {
-            $type_resource->delete();
+        $resource_type = ResourceType::find($id);
+        if ($resource_type) {
+            $resource_type->delete();
             Session::set('success', 'Tipo de recurso eliminado correctamente');
         } else {
             Session::set('error', 'Tipo de recurso no encontrado');
         }
 
-        header('Location: /admin/type-resources');
+        header('Location: /admin/resource-types');
         exit;
     }
 }

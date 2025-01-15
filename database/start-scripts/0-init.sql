@@ -227,9 +227,9 @@ create table work_report_photos (
 );
 
 --* Resources and type resources
-create table type_resources(
+create table resource_type(
     id int auto_increment primary key,
-    category varchar(255) not null,
+    name varchar(255) not null,
     description varchar(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp,
@@ -240,11 +240,11 @@ create table resources(
     id int auto_increment primary key,
     name varchar(255) not null,
     description varchar(255) null,
-    type_resource_id int not null,
+    resource_type_id int not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    foreign key (type_resource_id) references type_resources(id)
+    foreign key (resource_type_id) references resource_type(id)
 );
 
 create table work_report_resources(

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 class WorkReportResource extends BaseModel
@@ -28,8 +29,8 @@ class WorkReportResource extends BaseModel
     {
         return $this->belongsTo(WorkReport::class, 'work_report_id');
     }
-    public function typeResource()
+    public function ResourceType()
     {
-        return $this->belongsTo(TypeResource::class, 'type_resources_id');
+        return $this->belongsTo(ResourceType::class, 'type_resources_id');
     }
 }

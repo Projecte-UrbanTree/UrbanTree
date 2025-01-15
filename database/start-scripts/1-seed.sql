@@ -120,13 +120,13 @@ INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_i
 (2, 2, NULL,3),
 (3, 3, NULL, 2);
 
-INSERT INTO type_resources (id, category, description)
-VALUES 
+INSERT INTO resource_type (id, name, description)
+VALUES
     (1, 'Vehiculo', 'Resources that are in written book format'),
     (2, 'Consumibles', 'Instructional or educational video content'),
     (3, 'Maquinaria', 'Written articles or blogs for learning');
 
-INSERT INTO resources (id, name, description, type_resource_id)
+INSERT INTO resources (id, name, description, resource_type_id)
 VALUES
     (1, 'Vechiculo A', NULL, 1),
     (2, 'jocs infantils', NULL, 2),
