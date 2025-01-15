@@ -70,7 +70,7 @@ class TypeResourceController
                 Session::set('error', 'El tipo de recurso no se pudo actualizar');
             }
         } else {
-            Session::set('error', 'El tipo de recurso no se pudo encontrar');
+            Session::set('error', 'El tipo de recurso no encontrado');
         }
 
         header('Location: /admin/type-resources');
