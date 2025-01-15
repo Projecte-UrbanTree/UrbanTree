@@ -1,12 +1,32 @@
-/* Importing Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-
 /* Global Styles */
 html,
 body {
+    height: 100%;
+    margin: 0;
     font-family: "Poppins", sans-serif;
 }
 
+main {
+    min-height: calc(100% - 72px - 66px); 
+}
+body {
+    background-color: rgb(249, 250, 251); 
+    position: relative;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/images/background-pattern.svg");
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    opacity: 0.195;
+}
 h1,
 h2,
 h3,
@@ -16,11 +36,79 @@ h6 {
     font-family: "Montserrat", sans-serif;
 }
 
-#returnBtn {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 1000;
-    border-radius: 50%;
+.h-screen-app {
+    height: calc(100vh - 72px - 66px);
 }
 
+.inventory-map {
+    display: flex;
+    width: 100%;
+    height: calc(100% - 72px - 66px);
+    padding: 1rem;
+}
+
+/* Mapbox overrides */
+.mapboxgl-popup-close-button {
+    right: 16px !important;
+    top: 16px !important;
+}
+
+/* Preloader fade-in-out animation */
+@keyframes fade-in-out {
+    0%,
+    100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Preloader Styles */
+#preloader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    z-index: 9999; /* Ensure it's on top of everything */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+/* Fade animation */
+@keyframes fadeInOut {
+    0%,
+    100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.fade-animation {
+    animation: fadeInOut 1.5s infinite ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .map {
+        width: 100%;
+    }
+
+    .inventory {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: white;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    #toggle-inventory {
+        z-index: 1000;
+        display: block;
+    }
+}

@@ -15,6 +15,7 @@ Executa el següent comandament:
 ```bash
 docker-compose up --build --watch --remove-orphans
 ```
+Testos: `docker-compose -f compose.test.yml up --build --watch --remove-orphans`
 
 Executar-ho crearà els contenidors necessaris per al projecte i posarà en marxa el projecte!
 

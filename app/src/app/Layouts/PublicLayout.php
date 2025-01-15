@@ -17,7 +17,7 @@
     <!-- Tailwind custom JavaScript file (local) -->
     <script src="/assets/js/tailwind.js"></script>
     <!-- FontAwesome CDN for icons -->
-    <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f03c46a869.js" crossorigin="anonymous"></script>
     <!-- CookieConsent Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css">
 </head>
@@ -38,9 +38,9 @@
     </div>
 
     <!-- Return Button -->
-    <div id="returnBtn">
+    <div class="bottom-8 right-8 fixed">
         <a href="javascript:history.back()" class="bg-primary hover:bg-primaryDark text-white py-2 px-4 rounded-lg">
-            <i class="fa-solid fa-rotate-left"></i> Volver atrás
+            <i class="fa-solid fa-angle-left mr-1"></i> Volver atrás
         </a>
     </div>
 
