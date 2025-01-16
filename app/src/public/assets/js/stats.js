@@ -114,11 +114,7 @@ var options = {
 var chart = new ApexCharts(document.querySelector("#app2"), options);
 chart.render();
 
-const workReports = [
-    { work_order_id: 1, observation: 'Observación de la orden 1', spent_fuel: 50.0, day: 'Dilluns' },
-    { work_order_id: 2, observation: 'Observación de la orden 2', spent_fuel: 60.0, day: 'Dimarts' },
-    { work_order_id: 3, observation: 'Observación de la orden 3', spent_fuel: 70.0, day: 'Dimecres' },
-];
+
 
 var options = {
     series: [

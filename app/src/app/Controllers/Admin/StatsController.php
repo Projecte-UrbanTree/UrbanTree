@@ -20,6 +20,9 @@ class StatsController
 
 		$tasks = array_filter($tasks, function ($task) use ($current_contract, $startOfWeek, $endOfWeek) {
 			$taskDate = $task->workOrderBlock()->workOrder()->date;
+			if ($current_contract == -1) {
+				return $taskDate >= $startOfWeek && $taskDate <= $endOfWeek;
+			}
 			return $task->workOrderBlock()->workOrder()->contract_id == $current_contract && $taskDate >= $startOfWeek && $taskDate <= $endOfWeek;
 		});
 
@@ -54,9 +57,12 @@ class StatsController
 		// }, $days);
 
 		$workReports = WorkReport::findAll();
-		$fuelConsumption = array_map(function ($day) use ($workReports) {
-			return array_reduce(array_filter($workReports, function ($report) use ($day) {
-				return date('l', strtotime($report->workOrder()->date)) == $day;
+		$fuelConsumption = array_map(function ($day) use ($workReports, $current_contract) {
+			return array_reduce(array_filter($workReports, function ($report) use ($day, $current_contract) {
+				if ($current_contract == -1) {
+					return date('l', strtotime($report->workOrder()->date)) == $day;
+				}
+				return date('l', strtotime($report->workOrder()->date)) == $day && $report->workOrder()->contract_id == $current_contract;
 			}), function ($carry, $report) {
 				return $carry + $report->spent_fuel;
 			}, 0);
