@@ -13,7 +13,7 @@ class Role extends BaseModel
 
     protected static function mapDataToModel($data): Role
     {
-        $role = new self();
+        $role = new self;
         $role->id = $data['id'];
         $role->name = $data['name'];
         $role->created_at = $data['created_at'];

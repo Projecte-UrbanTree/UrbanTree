@@ -17,7 +17,7 @@
             class="hidden col-span-1 md:col-span-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
         </div>
 
-        <!-- Element Name -->
+        <!-- Resource Name -->
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
             <input type="text" id="name" name="name" placeholder="Introduce el nombre del recurso"
@@ -25,20 +25,17 @@
                 required>
         </div>
 
-        <!-- Category Dropdown -->
+        <!-- Resource Type Dropdown -->
         <div>
-            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
-            <select id="category" name="category" required
+            <label for="resource_type_id" class="block text-sm font-medium text-gray-700 mb-1">Tipo de recurso</label>
+            <select id="resource_type_id" name="resource_type_id"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                onchange="document.getElementById('categoryId').value = this.value;">
-                <option value="" disabled selected>Seleccione una categoría</option>
-                <?php foreach ($resources as $resource) { ?>
-                    <option value="<?= htmlspecialchars($resource->typeResource()->category); ?>">
-                        <?= htmlspecialchars($resource->typeResource()->category); ?>
-                    </option>
+                required>
+                <option value="">Selecciona un tipo de recurso</option>
+                <?php foreach ($resource_types as $resource_type) { ?>
+                    <option value="<?= $resource_type->getId(); ?>"><?= $resource_type->name; ?></option>
                 <?php } ?>
             </select>
-            <input type="hidden" id="categoryId" name="categoryId">
         </div>
 
         <!-- Resource Description -->
@@ -53,7 +50,7 @@
         <div class="col-span-1 md:col-span-2 flex justify-end">
             <button type="submit"
                 class="px-4 py-2 bg-blue-500 text-white shadow-sm hover:bg-blue-600 transition-all duration-200 rounded">
-                Crear nuevo tipo de elemento
+                Crear nuevo recurso
             </button>
         </div>
     </form>

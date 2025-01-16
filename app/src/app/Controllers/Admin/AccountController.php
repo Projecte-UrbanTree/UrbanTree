@@ -17,17 +17,16 @@ class AccountController
             'title' => 'Configuración de cuenta',
             'layout' => 'Admin/AdminLayout',
             'data' => [
-                'user' => $user
-            ]
+                'user' => $user,
+            ],
         ]);
     }
-
 
     public function update($postData)
     {
         $user = User::find(Session::get('user')['id']);
 
-        if (!$user) {
+        if (! $user) {
             Session::set('error', 'Usuario no encontrado');
             header('Location: /admin/account');
             exit;
@@ -40,7 +39,7 @@ class AccountController
         $newPassword = trim($postData['password']);
         $confirmPassword = trim($postData['password_confirmation']);
 
-        $isChangingPassword = !empty($currentPassword) || !empty($newPassword) || !empty($confirmPassword);
+        $isChangingPassword = ! empty($currentPassword) || ! empty($newPassword) || ! empty($confirmPassword);
 
         if ($isChangingPassword) {
             if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
@@ -55,7 +54,7 @@ class AccountController
                 exit;
             }
 
-            if (!password_verify($currentPassword, $user->password)) {
+            if (! password_verify($currentPassword, $user->password)) {
                 Session::set('error', 'La contraseña actual es incorrecta.');
                 header('Location: /admin/account');
                 exit;
@@ -63,7 +62,6 @@ class AccountController
 
             $user->password = password_hash($newPassword, PASSWORD_BCRYPT);
         }
-
 
         $user->save();
 

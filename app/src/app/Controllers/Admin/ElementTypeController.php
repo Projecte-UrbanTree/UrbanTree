@@ -30,7 +30,7 @@ class ElementTypeController
 
     public function store($postData)
     {
-        $element_type = new ElementType();
+        $element_type = new ElementType;
         $element_type->name = $postData['name'];
         $element_type->description = $postData['description'];
         $element_type->icon = $postData['icon'];
@@ -38,10 +38,11 @@ class ElementTypeController
 
         $element_type->save();
 
-        if ($element_type->getId())
+        if ($element_type->getId()) {
             Session::set('success', 'Tipo de elemento creado correctamente');
-        else
+        } else {
             Session::set('error', 'El tipo de elemento no se pudo crear');
+        }
 
         header('Location: /admin/element-types');
         exit;
@@ -51,7 +52,7 @@ class ElementTypeController
     {
         $element_type = ElementType::find($id);
 
-        if (!$element_type) {
+        if (! $element_type) {
             Session::set('error', 'Tipo de elemento no encontrado');
             header('Location: /admin/element-types');
             exit;
@@ -78,8 +79,9 @@ class ElementTypeController
             $element_type->save();
 
             Session::set('success', 'Tipo de elemento actualizado correctamente');
-        } else
+        } else {
             Session::set('error', 'Tipo de elemento no encontrado');
+        }
 
         header('Location: /admin/element-types');
         exit;
@@ -92,8 +94,9 @@ class ElementTypeController
         if ($element_type) {
             $element_type->delete();
             Session::set('success', 'Tipo de elemento eliminado correctamente');
-        } else
+        } else {
             Session::set('error', 'Tipo de elemento no encontrado');
+        }
 
         header('Location: /admin/element-types');
         exit;

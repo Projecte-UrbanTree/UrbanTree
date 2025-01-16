@@ -8,7 +8,7 @@ class CustomerMiddleware implements MiddlewareInterface
 {
     public function handle($request, $next)
     {
-        if (!Session::get('user')) {
+        if (! Session::get('user')) {
             header('Location: /auth/login');
             exit;
         }

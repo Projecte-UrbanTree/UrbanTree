@@ -6,9 +6,9 @@ use App\Core\Session;
 use App\Core\View;
 use App\Models\Contract;
 use App\Models\Element;
+use App\Models\ElementType;
 use App\Models\TreeType;
 use App\Models\Zone;
-use App\Models\ElementType;
 
 class ElementController
 {
@@ -45,7 +45,7 @@ class ElementController
 
     public function store($postData)
     {
-        $element = new Element();
+        $element = new Element;
 
         $element->element_type_id = $postData['element_type_id'];
         $element->zone_id = $postData['zone_id'];
@@ -54,10 +54,11 @@ class ElementController
 
         $element->save();
 
-        if ($element->getId())
+        if ($element->getId()) {
             Session::set('success', 'Elemento creado correctamente');
-        else
+        } else {
             Session::set('error', 'El elemento no se pudo crear');
+        }
 
         header('Location: /admin/elements');
         exit;
@@ -67,7 +68,7 @@ class ElementController
     {
         $element = Element::find($id);
 
-        if (!$element) {
+        if (! $element) {
             Session::set('error', 'Elemento no encontrado');
             header('Location: /admin/elements');
             exit;
@@ -105,8 +106,9 @@ class ElementController
             $element->save();
 
             Session::set('success', 'Elemento actualizado correctamente');
-        } else
+        } else {
             Session::set('error', 'Elemento no encontrado');
+        }
 
         header('Location: /admin/elements');
         exit;
@@ -119,9 +121,9 @@ class ElementController
         if ($element) {
             $element->delete();
             Session::set('success', 'Elemento eliminado correctamente');
-        } else
+        } else {
             Session::set('error', 'Elemento no encontrado');
-
+        }
 
         header('Location: /admin/elements');
         exit;

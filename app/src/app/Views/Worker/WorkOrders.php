@@ -26,7 +26,7 @@
                     <p class="text-lg font-semibold">Usuarios asignados:</p>
                     <input type="text" readonly
                         class="text-center border border-gray-300 rounded-md py-2 px-4 w-full mt-2 bg-gray-100"
-                        value="<?= implode(', ', array_map(fn($user) => $user->name . ' ' . $user->surname, $work_order->users())) ?>" />
+                        value="<?= implode(', ', array_map(fn ($user) => $user->name.' '.$user->surname, $work_order->users())) ?>" />
                 </div>
 
                 <?php $blockCounter = 1; ?>
@@ -45,7 +45,7 @@
                                             <?= $blockTask->status == 1 ? 'checked' : '' ?> />
                                         <span>
                                             <?= htmlspecialchars($blockTask->task()->name) ?>
-                                            <?php echo htmlspecialchars(" " . $blockTask->elementType()->name); ?>
+                                            <?php echo htmlspecialchars(' '.$blockTask->elementType()->name); ?>
                                             <?php if ($blockTask->treeType() != null): ?>
                                                 : <?= htmlspecialchars($blockTask->treeType()->species) ?>
                                             <?php endif; ?>

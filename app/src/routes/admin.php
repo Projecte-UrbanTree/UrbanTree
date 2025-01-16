@@ -7,13 +7,13 @@ use App\Controllers\Admin\ElementController;
 use App\Controllers\Admin\ElementTypeController;
 use App\Controllers\Admin\IncidenceController;
 use App\Controllers\Admin\InventoryController;
+use App\Controllers\Admin\ResourceController;
+use App\Controllers\Admin\ResourceTypeController;
 use App\Controllers\Admin\TaskTypeController;
 use App\Controllers\Admin\TreeTypeController;
 use App\Controllers\Admin\UserController;
 use App\Controllers\Admin\WorkOrderController;
 use App\Controllers\Admin\ZoneController;
-use App\Controllers\Admin\ResourceController;
-use App\Controllers\Admin\TypeResourceController;
 use App\Middlewares\AdminMiddleware;
 
 return [
@@ -197,24 +197,24 @@ return [
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
-        // === TypeResource GET Routes
-        '/admin/type-resources' => [
-            'controller' => TypeResourceController::class,
+        // === ResourceType GET Routes
+        '/admin/resource-types' => [
+            'controller' => ResourceTypeController::class,
             'method' => 'index',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/type-resource/create' => [
-            'controller' => TypeResourceController::class,
+        '/admin/resource-type/create' => [
+            'controller' => ResourceTypeController::class,
             'method' => 'create',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/type-resource/:id/edit' => [
-            'controller' => TypeResourceController::class,
+        '/admin/resource-type/:id/edit' => [
+            'controller' => ResourceTypeController::class,
             'method' => 'edit',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/type-resource/:id/delete' => [
-            'controller' => TypeResourceController::class,
+        '/admin/resource-type/:id/delete' => [
+            'controller' => ResourceTypeController::class,
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
@@ -295,13 +295,13 @@ return [
             'middlewares' => [AdminMiddleware::class],
         ],
         // === TypeResources POST Routes
-        '/admin/type-resource/store' => [
-            'controller' => TypeResourceController::class,
+        '/admin/resource-type/store' => [
+            'controller' => ResourceTypeController::class,
             'method' => 'store',
             'middlewares' => [AdminMiddleware::class],
         ],
-        '/admin/type-resource/:id/update' => [
-            'controller' => TypeResourceController::class,
+        '/admin/resource-type/:id/update' => [
+            'controller' => ResourceTypeController::class,
             'method' => 'update',
             'middlewares' => [AdminMiddleware::class],
         ],

@@ -2,13 +2,8 @@ function toggleAccordion(index) {
     const contentRow = document.getElementById("accordionContent" + index);
     const path = document.getElementById("accordionPath" + index);
 
-    if (contentRow.classList.contains("hidden")) {
-        contentRow.classList.remove("hidden");
-        path.setAttribute("d", "M5 9l7 7 7-7");
-    } else {
-        contentRow.classList.add("hidden");
-        path.setAttribute("d", "M9 5l7 7-7 7");
-    }
+    contentRow.classList.toggle("hidden");
+    path.setAttribute("d", contentRow.classList.contains("hidden") ? "M9 5l7 7-7 7" : "M5 9l7 7 7-7");
 }
 
 let currentInputId = null;
@@ -16,20 +11,13 @@ let currentInputId = null;
 function openModal(modalId, inputId) {
     currentInputId = inputId;
     const input = document.getElementById(inputId);
-    const selectedValues = input.value.split(",").map((val) => val.trim());
+    const selectedValues = input.value.split(",").map(val => val.trim());
 
     const modal = document.getElementById(modalId);
     const checkboxes = modal.querySelectorAll('input[type="checkbox"]');
 
-    checkboxes.forEach((checkbox) => {
-        checkbox.checked = false;
-    });
-
-    checkboxes.forEach((checkbox) => {
-        const label = checkbox.nextElementSibling.textContent.trim();
-        if (selectedValues.includes(label)) {
-            checkbox.checked = true;
-        }
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = selectedValues.includes(checkbox.nextElementSibling.textContent.trim());
     });
 
     modal.classList.remove("hidden");
@@ -43,54 +31,36 @@ function saveSelection(modalId) {
     const modal = document.getElementById(modalId);
     const checkboxes = modal.querySelectorAll('input[type="checkbox"]:checked');
 
-    // Get selected names and IDs
-    const selectedNames = Array.from(checkboxes).map((checkbox) =>
-        checkbox.nextElementSibling.textContent.trim()
-    );
-    const selectedIds = Array.from(checkboxes).map(
-        (checkbox) => checkbox.value
-    );
+    const selectedNames = Array.from(checkboxes).map(checkbox => checkbox.nextElementSibling.textContent.trim());
+    const selectedIds = Array.from(checkboxes).map(checkbox => checkbox.value);
 
     if (currentInputId) {
         const input = document.getElementById(currentInputId);
-        input.value = selectedNames.join(", "); // Display names in the visible input
+        input.value = selectedNames.join(", ");
 
         if (currentInputId === "workersInput") {
-            const hiddenInput = document.getElementById("userIdsInput");
-            hiddenInput.value = selectedIds.join(","); // Store IDs in the hidden input
-        }
-
-        if (currentInputId.startsWith("zonesInput_")) {
+            document.getElementById("userIdsInput").value = selectedIds.join(",");
+        } else if (currentInputId.startsWith("zonesInput_")) {
             const blockIndex = currentInputId.split("_")[1];
-            const hiddenInput = document.getElementById(
-                `zonesIdsInput_${blockIndex}`
-            );
-            hiddenInput.value = selectedIds.join(","); // Store IDs in the hidden input
+            document.getElementById(`zonesIdsInput_${blockIndex}`).value = selectedIds.join(",");
         }
     }
-
-    modal.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-        checkbox.checked = false;
-    });
 
     closeModal(modalId);
     currentInputId = null;
 }
 
-let taskTypeOptions = `<option value="" disabled selected>Seleccione una tarea</option>`;
-taskTypes.forEach((task_type) => {
-    taskTypeOptions += `<option value="${task_type.id}">${task_type.name}</option>`;
-});
+const taskTypeOptions = generateOptions(taskTypes, "Seleccione una tarea");
+const speciesOptions = generateOptions(treeTypes, "Opcional");
+const elementTypeOptions = generateOptions(elementTypes, "Seleccione un elemento");
 
-let speciesOptions = `<option value="" selected>Opcional</option>`;
-treeTypes.forEach((tree_type) => {
-    speciesOptions += `<option value="${tree_type.id}">${tree_type.species}</option>`;
-});
-
-let elementTypeOptions = `<option value="" selected>Seleccione un elemento</option>`;
-elementTypes.forEach((element_type) => {
-    elementTypeOptions += `<option value="${element_type.id}">${element_type.name}</option>`;
-});
+function generateOptions(items, defaultText) {
+    let options = `<option value="" disabled selected>${defaultText}</option>`;
+    items.forEach(item => {
+        options += `<option value="${item.id}">${item.name || item.species}</option>`;
+    });
+    return options;
+}
 
 function updateBlock() {
     const blocks = document.querySelectorAll("#blocksContainer .workorder-block");
@@ -98,129 +68,107 @@ function updateBlock() {
         block.dataset.blockIndex = index;
         block.querySelector(".block-number").textContent = index + 1;
 
-        const zoneInput = block.querySelector("[id^='zonesInput_']");
-        const zoneLabel = block.querySelector(`label[for^='zonesInput_']`);
-        if (zoneInput && zoneLabel) {
-            const newId = `zonesInput_${index}`;
-            zoneInput.id = newId;
-            zoneInput.setAttribute(
-                "onclick",
-                `openModal('modalZones', '${newId}')`
-            );
-            zoneLabel.setAttribute("for", newId);
-        }
-
-        const hiddenZoneInput = block.querySelector("[id^='zonesIdsInput_']");
-        if (hiddenZoneInput) {
-            hiddenZoneInput.id = `zonesIdsInput_${index}`;
-            hiddenZoneInput.name = `blocks[${index}][zonesIds]`;
-        }
-
-        const notesTextarea = block.querySelector("[id^='notes_']");
-        const notesLabel = block.querySelector(`label[for^='notes_']`);
-        if (notesTextarea && notesLabel) {
-            const newId = `notes_${index}`;
-            notesTextarea.id = newId;
-            notesTextarea.name = `blocks[${index}][notes]`;
-            notesLabel.setAttribute("for", newId);
-        }
+        updateElement(block, "zonesInput_", index, "zonesIdsInput_", "blocks", "zonesIds");
+        updateElement(block, "notes_", index, "notes_", "blocks", "notes");
 
         const taskRows = block.querySelectorAll(".task-row");
         taskRows.forEach((taskRow, taskIndex) => {
             taskRow.dataset.taskIndex = taskIndex;
-
-            const taskTypeSelect = taskRow.querySelector("select[name^='blocks'][name*='[taskType]']");
-            const speciesSelect = taskRow.querySelector("select[name^='blocks'][name*='[species]']");
-            const elementTypeSelect = taskRow.querySelector("select[name^='blocks'][name*='[elementType]']");
-
-            if (taskTypeSelect) {
-                taskTypeSelect.name = `blocks[${index}][tasks][${taskIndex}][taskType]`;
-                taskTypeSelect.id = `taskType_${index}_${taskIndex}`;
-            }
-
-            if (speciesSelect) {
-                speciesSelect.name = `blocks[${index}][tasks][${taskIndex}][species]`;
-                speciesSelect.id = `species_${index}_${taskIndex}`;
-            }
-
-            if (elementTypeSelect) {
-                elementTypeSelect.name = `blocks[${index}][tasks][${taskIndex}][elementType]`;
-                elementTypeSelect.id = `elementType_${index}_${taskIndex}`;
-            }
+            updateTaskRow(taskRow, index, taskIndex);
         });
     });
+}
+
+function updateElement(block, inputPrefix, index, hiddenInputPrefix, blockName, elementName) {
+    const input = block.querySelector(`[id^='${inputPrefix}']`);
+    const label = block.querySelector(`label[for^='${inputPrefix}']`);
+    if (input && label) {
+        const newId = `${inputPrefix}${index}`;
+        input.id = newId;
+        // Only set onclick attribute if the input is not a textarea
+        if (input.tagName.toLowerCase() !== 'textarea') {
+            input.setAttribute("onclick", `openModal('modalZones', '${newId}')`);
+        }
+        label.setAttribute("for", newId);
+    }
+
+    const hiddenInput = block.querySelector(`[id^='${hiddenInputPrefix}']`);
+    if (hiddenInput) {
+        hiddenInput.id = `${hiddenInputPrefix}${index}`;
+        hiddenInput.name = `${blockName}[${index}][${elementName}]`;
+    }
+}
+
+function updateTaskRow(taskRow, blockIndex, taskIndex) {
+    updateTaskElement(taskRow, "taskType", blockIndex, taskIndex);
+    updateTaskElement(taskRow, "elementType", blockIndex, taskIndex);
+    updateTaskElement(taskRow, "species", blockIndex, taskIndex);
+}
+
+function updateTaskElement(taskRow, elementName, blockIndex, taskIndex) {
+    const element = taskRow.querySelector(`select[name^='blocks'][name*='[${elementName}]']`);
+    if (element) {
+        element.name = `blocks[${blockIndex}][tasks][${taskIndex}][${elementName}]`;
+        element.id = `${elementName}_${blockIndex}_${taskIndex}`;
+    }
 }
 
 function addBlock() {
     const blocksContainer = document.getElementById("blocksContainer");
     const blockCount = blocksContainer.children.length;
-    const zoneInputId = `zonesInput_${blockCount}`;
-    const notesId = `notes_${blockCount}`;
 
     const block = document.createElement("div");
-    block.className =
-        "workorder-block border border-gray-300 rounded-lg shadow p-4 bg-gray-50 mb-4";
+    block.className = "workorder-block border border-gray-300 rounded-lg shadow p-6 bg-gray-50 mb-6";
     block.dataset.blockIndex = blockCount;
 
     block.innerHTML = `
-        <div class="flex justify-between items-center">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Bloque <span class="block-number">${blockCount + 1
-        }</span></h3>
-            <button type="button" onclick="removeBlock(this)"
-                class="text-red-500 hover:text-red-700 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-gray-800">Bloque <span class="block-number">${blockCount + 1}</span></h3>
+            <button type="button" onclick="removeBlock(this)" class="text-red-500 hover:text-red-700 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                 </svg>
             </button>
         </div>
-        <div>
-            <label for="${zoneInputId}" class="block text-sm font-medium text-gray-700 mb-1">Zonas</label>
-            <input type="text" id="${zoneInputId}" readonly onclick="openModal('modalZones', '${zoneInputId}')"
-                placeholder="Seleccionar Zonas"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-pointer focus:outline-none">
+        <div class="mb-4">
+            <label for="zonesInput_${blockCount}" class="block text-sm font-medium text-gray-700 mb-1">Zonas</label>
+            <input type="text" id="zonesInput_${blockCount}" readonly onclick="openModal('modalZones', 'zonesInput_${blockCount}')" placeholder="Seleccionar Zonas" class="w-full px-4 py-2 border border-gray-300 rounded-lg cursor-pointer focus:outline-none">
             <input type="hidden" name="blocks[${blockCount}][zonesIds]" id="zonesIdsInput_${blockCount}">
         </div>
-        <div class="tasksContainer space-y-4">
+        <div class="tasksContainer space-y-4 mb-4">
             <h3 class="text-lg font-semibold text-gray-800 my-3">Seleccionar Tareas</h3>
-                <div class="task-row flex space-x-4 items-end" data-task-index="0">
+            <div class="task-row flex space-x-4 items-end" data-task-index="0">
                 <div class="flex-auto">
-                    <select name="blocks[${blockCount}][tasks][0][taskType]" id="taskType_${blockCount}_0"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                    <label for="taskType_${blockCount}_0" class="block text-sm font-medium text-gray-700 mb-1">Tarea</label>
+                    <select name="blocks[${blockCount}][tasks][0][taskType]" id="taskType_${blockCount}_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                         ${taskTypeOptions}
                     </select>
                 </div>
                 <div class="flex-auto">
-                    <select name="blocks[${blockCount}][tasks][0][elementType]" id="elementType_${blockCount}_0"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                    <label for="elementType_${blockCount}_0" class="block text-sm font-medium text-gray-700 mb-1">Elemento</label>
+                    <select name="blocks[${blockCount}][tasks][0][elementType]" id="elementType_${blockCount}_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                         ${elementTypeOptions}
                     </select>
                 </div>
-                <div class="flex-auto flex items-center space-x-2">
-                    <span class="block text-lg font-semibold text-gray-800">Species</span>
-                    <select name="blocks[${blockCount}][tasks][0][species]" id="species_${blockCount}_0"
-                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                <div class="flex-auto">
+                    <label for="species_${blockCount}_0" class="block text-sm font-medium text-gray-700 mb-1">Species</label>
+                    <select name="blocks[${blockCount}][tasks][0][species]" id="species_${blockCount}_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                         ${speciesOptions}
                     </select>
                 </div>
-                <button type="button" onclick="removeTaskRow(this)"
-                    class="text-red-500 hover:text-red-700 focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                <button type="button" onclick="removeTaskRow(this)" class="text-red-500 hover:text-red-700 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                     </svg>
                 </button>
             </div>
         </div>
-        <button type="button" onclick="addTask(this)" class="btn-create mt-4">
+        <button type="button" onclick="addTask(this)" class="px-4 py-2 bg-green-500 text-white shadow-sm hover:bg-green-600 transition-all duration-200 rounded">
             Añadir Tarea
         </button>
         <div class="mt-4">
-            <label for="${notesId}" class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
-            <textarea name="blocks[${blockCount}][notes]" id="${notesId}" rows="4" placeholder="Añadir notas aquí..."
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
+            <label for="notes_${blockCount}" class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+            <textarea name="blocks[${blockCount}][notes]" id="notes_${blockCount}" rows="4" placeholder="Añadir notas aquí..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
         </div>
     `;
 
@@ -240,30 +188,26 @@ function addTask(button) {
 
     taskRow.innerHTML = `
         <div class="flex-auto">
-            <select name="blocks[${blockIndex}][tasks][${taskCount}][taskType]" id="taskType_${blockIndex}_${taskCount}"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            <label for="taskType_${blockIndex}_${taskCount}" class="block text-sm font-medium text-gray-700 mb-1">Tarea</label>
+            <select name="blocks[${blockIndex}][tasks][${taskCount}][taskType]" id="taskType_${blockIndex}_${taskCount}" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 ${taskTypeOptions}
             </select>
         </div>
         <div class="flex-auto">
-            <select name="blocks[${blockIndex}][tasks][${taskCount}][elementType]" id="elementType_${blockIndex}_${taskCount}"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            <label for="elementType_${blockIndex}_${taskCount}" class="block text-sm font-medium text-gray-700 mb-1">Elemento</label>
+            <select name="blocks[${blockIndex}][tasks][${taskCount}][elementType]" id="elementType_${blockIndex}_${taskCount}" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 ${elementTypeOptions}
             </select>
         </div>
-        <div class="flex-auto flex items-center space-x-2">
-            <span class="block text-lg font-semibold text-gray-800">Species</span>
-            <select name="blocks[${blockIndex}][tasks][${taskCount}][species]" id="species_${blockIndex}_${taskCount}"
-                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+        <div class="flex-auto">
+            <label for="species_${blockIndex}_${taskCount}" class="block text-sm font-medium text-gray-700 mb-1">Species</label>
+            <select name="blocks[${blockIndex}][tasks][${taskCount}][species]" id="species_${blockIndex}_${taskCount}" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 ${speciesOptions}
             </select>
         </div>
-        <button type="button" onclick="removeTaskRow(this)"
-            class="text-red-500 hover:text-red-700 focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+        <button type="button" onclick="removeTaskRow(this)" class="text-red-500 hover:text-red-700 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
             </svg>
         </button>
     `;
@@ -290,8 +234,7 @@ function removeTaskRow(button) {
         return;
     }
 
-    const row = button.parentNode;
-    row.remove();
+    button.closest(".task-row").remove();
     updateBlock();
 }
 
@@ -304,7 +247,6 @@ function removeBlock(button) {
         return;
     }
 
-    const block = button.parentNode.parentNode;
-    block.remove();
+    button.closest(".workorder-block").remove();
     updateBlock();
 }

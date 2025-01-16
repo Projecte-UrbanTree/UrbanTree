@@ -15,7 +15,7 @@ class Photo extends BaseModel
 
     protected static function mapDataToModel($data): Photo
     {
-        $photo = new self();
+        $photo = new self;
         $photo->id = $data['id'];
         $photo->name = $data['name'];
         $photo->path = $data['path'];

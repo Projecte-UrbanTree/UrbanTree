@@ -1,12 +1,13 @@
 <?php
-namespace App\Models;
 
-use App\Models;
+namespace App\Models;
 
 class Resource extends BaseModel
 {
     public string $name;
-    public int $type_resource_id;
+
+    public int $resource_type_id;
+
     public ?string $description;
 
     protected static function getTableName(): string
@@ -16,11 +17,11 @@ class Resource extends BaseModel
 
     protected static function mapDataToModel($data): Resource
     {
-        $resource = new self();
+        $resource = new self;
         $resource->id = $data['id'];
         $resource->name = $data['name'];
         $resource->description = $data['description'];
-        $resource->type_resource_id = $data['type_resource_id'];
+        $resource->resource_type_id = $data['resource_type_id'];
         $resource->created_at = $data['created_at'];
         $resource->updated_at = $data['updated_at'];
         $resource->deleted_at = $data['deleted_at'];
@@ -28,8 +29,8 @@ class Resource extends BaseModel
         return $resource;
     }
 
-    public function typeResource()
+    public function resourceType()
     {
-        return $this->belongsTo(TypeResource::class, 'type_resource_id');
+        return $this->belongsTo(ResourceType::class, 'resource_type_id');
     }
 }

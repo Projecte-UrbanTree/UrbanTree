@@ -23,7 +23,7 @@ class Element extends BaseModel
 
     protected static function mapDataToModel($data): Element
     {
-        $element = new self();
+        $element = new self;
         $element->id = $data['id'];
         $element->element_type_id = $data['element_type_id'];
         $element->contract_id = $data['contract_id'];

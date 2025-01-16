@@ -5,8 +5,11 @@ namespace App\Models;
 class Zone extends BaseModel
 {
     public int $contract_id;
+
     public ?string $name;
+
     public ?string $color;
+
     public ?string $description;
 
     protected static function getTableName(): string
@@ -16,7 +19,7 @@ class Zone extends BaseModel
 
     protected static function mapDataToModel($data): Zone
     {
-        $zone = new self();
+        $zone = new self;
         $zone->id = $data['id'];
         $zone->contract_id = $data['contract_id'];
         $zone->name = $data['name'];
