@@ -29,7 +29,7 @@ class AuthController
         $email = $postData['email'] ?? null;
         $password = $postData['password'] ?? null;
 
-        if (!$email || !$password) {
+        if (! $email || ! $password) {
             // Redirect back with error if fields are missing
             Session::set('error', 'Por favor, ingresa tu email y contraseña.');
             header('Location: /auth/login');
@@ -39,7 +39,7 @@ class AuthController
         // Check if the user exists and password matches
         $user = User::findBy(['email' => $email], true);
 
-        if (!$user || !password_verify($password, $user->password)) {
+        if (! $user || ! password_verify($password, $user->password)) {
             // Redirect back with error if authentication fails
             Session::set('error', 'Has ingresado un email o contraseña incorrectos.');
             header('Location: /auth/login');
@@ -55,7 +55,7 @@ class AuthController
                     break;
                 }
             }
-            if (!isset($contract_id)) {
+            if (! isset($contract_id)) {
                 $contract_id = -1;
             }
         } else {

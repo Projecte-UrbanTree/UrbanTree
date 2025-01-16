@@ -19,14 +19,17 @@ abstract class BaseModel
     {
         $table = static::getTableName();
         $fields = array_keys($records[0]);
-        $placeholders = array_map(fn($field) => ":{$field}", $fields);
+        $placeholders = array_map(fn ($field) => ":{$field}", $fields);
 
-        $query = "INSERT INTO {$table} (" . implode(", ", $fields) . ") VALUES ";
-        $query .= implode(", ", array_fill(0, count($records), "(" . implode(", ", $placeholders) . ")"));
+        $query = "INSERT INTO {$table} (".implode(', ', $fields).') VALUES ';
+        $query .= implode(', ', array_fill(0, count($records), '('.implode(', ', $placeholders).')'));
 
         $params = [];
-        foreach ($records as $index => $record) foreach ($record as $key => $value)
+        foreach ($records as $index => $record) {
+            foreach ($record as $key => $value) {
                 $params["{$key}_{$index}"] = $value;
+            }
+        }
 
         Database::prepareAndExecute($query, $params);
     }
@@ -37,13 +40,14 @@ abstract class BaseModel
         $relatedTable = $relatedModel::getTableName();
         $foreignKeyValue = $this->{$foreignKey};
 
-        if ($foreignKeyValue === null)
+        if ($foreignKeyValue === null) {
             return null;
+        }
 
         $query = "SELECT * FROM {$relatedTable} WHERE {$ownerKey} = :foreignKeyValue LIMIT 1";
         $results = Database::prepareAndExecute($query, ['foreignKeyValue' => $foreignKeyValue]);
 
-        return !empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
+        return ! empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
 
     // Many-to-Many relationship
@@ -73,13 +77,15 @@ abstract class BaseModel
         ";
 
         // Add soft delete condition if enabled
-        if ($applySoftDelete && method_exists($relatedModel, 'hasSoftDelete') && $relatedModel::hasSoftDelete())
+        if ($applySoftDelete && method_exists($relatedModel, 'hasSoftDelete') && $relatedModel::hasSoftDelete()) {
             $query .= " AND {$relatedTable}.deleted_at IS NULL";
+        }
 
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
 
-        if (!is_array($results))
+        if (! is_array($results)) {
             $results = [];
+        }
 
         // Process results
         return array_map(function ($row) use ($relatedModel, $withPivot) {
@@ -88,7 +94,7 @@ abstract class BaseModel
             if ($withPivot) {
                 // Attach pivot data as a property
                 $relatedInstance->pivot = array_filter($row, function ($key) use ($relatedModel) {
-                    return !property_exists($relatedModel, $key);
+                    return ! property_exists($relatedModel, $key);
                 }, ARRAY_FILTER_USE_KEY);
             }
 
@@ -99,11 +105,11 @@ abstract class BaseModel
     // Count the number of records in the table
     public static function count(array $conditions = []): ?int
     {
-        $query = "SELECT COUNT(*) as count FROM " . static::getTableName();
+        $query = 'SELECT COUNT(*) as count FROM '.static::getTableName();
         $params = [];
 
-        if (!empty($conditions)) {
-            $query .= " WHERE ";
+        if (! empty($conditions)) {
+            $query .= ' WHERE ';
             $query .= implode(' AND ', array_map(function ($key) {
                 return "$key = :$key";
             }, array_keys($conditions)));
@@ -112,18 +118,20 @@ abstract class BaseModel
         }
 
         $result = Database::prepareAndExecute($query, $params);
+
         return $result[0]['count'];
     }
 
     // Delete a record from the table
-    public function delete(): void
+    public function delete($force = false): void
     {
         $table = static::getTableName();
 
-        if (static::hasSoftDelete())
+        if (static::hasSoftDelete() && ! $force) {
             $query = "UPDATE {$table} SET deleted_at = NOW() WHERE id = :id";
-        else
+        } else {
             $query = "DELETE FROM {$table} WHERE id = :id";
+        }
 
         Database::prepareAndExecute($query, ['id' => $this->id]);
     }
@@ -131,11 +139,11 @@ abstract class BaseModel
     // Check if a record exists in the table
     public static function exists(array $conditions = []): bool
     {
-        $query = "SELECT COUNT(*) as count FROM " . static::getTableName();
+        $query = 'SELECT COUNT(*) as count FROM '.static::getTableName();
         $params = [];
 
-        if (!empty($conditions)) {
-            $query .= " WHERE ";
+        if (! empty($conditions)) {
+            $query .= ' WHERE ';
             $query .= implode(' AND ', array_map(function ($key) {
                 return "$key = :$key";
             }, array_keys($conditions)));
@@ -144,6 +152,7 @@ abstract class BaseModel
         }
 
         $result = Database::prepareAndExecute($query, $params);
+
         return $result[0]['count'] > 0;
     }
 
@@ -153,48 +162,58 @@ abstract class BaseModel
         $table = static::getTableName();
 
         $query = "SELECT * FROM {$table} WHERE id = :id";
-        if (static::hasSoftDelete())
+        if (static::hasSoftDelete()) {
             $query .= ' AND deleted_at IS NULL';
+        }
         $query .= ' LIMIT 1';
 
         $results = Database::prepareAndExecute($query, ['id' => $id]);
 
-        return !empty($results) ? static::mapDataToModel($results[0]) : null;
+        return ! empty($results) ? static::mapDataToModel($results[0]) : null;
     }
 
     // Fetch all records from the table
     public static function findAll(array $filters = [], bool $includeDeleted = false): array
     {
-        $query = "SELECT * FROM " . static::getTableName();
+        $query = 'SELECT * FROM '.static::getTableName();
         $params = [];
 
-        if (!empty($filters)) {
+        if (! empty($filters)) {
             $conditions = [];
             foreach ($filters as $key => $value) {
-                if (is_string($value) && strtoupper($value) === "NOT NULL") {
+                if (is_string($value) && strtoupper($value) === 'NOT NULL') {
                     // Handle NOT NULL condition
                     $conditions[] = "{$key} IS NOT NULL";
-                } elseif ($value === null || strtoupper($value) === "NULL") {
+                } elseif ($value === null || is_string($value) && strtoupper($value) === 'NULL') {
                     // Handle NULL condition
                     $conditions[] = "{$key} IS NULL";
+                } elseif (is_array($value)) {
+                    // Handle IN condition
+                    $placeholders = implode(', ', array_map(fn ($val) => ":{$key}_{$val}", array_keys($value)));
+                    $conditions[] = "{$key} IN ({$placeholders})";
+                    foreach ($value as $k => $v) {
+                        $params["{$key}_{$k}"] = $v;
+                    }
                 } else {
                     // Handle standard equality
                     $conditions[] = "{$key} = :{$key}";
                     $params[$key] = $value;
                 }
             }
-            $query .= " WHERE " . implode(' AND ', $conditions);
+            $query .= ' WHERE '.implode(' AND ', $conditions);
         }
 
-        if (method_exists(static::class, 'hasSoftDelete') && static::hasSoftDelete() && !$includeDeleted)
-            $query .= (empty($filters) ? " WHERE" : " AND") . " deleted_at IS NULL";
+        if (method_exists(static::class, 'hasSoftDelete') && static::hasSoftDelete() && ! $includeDeleted) {
+            $query .= (empty($filters) ? ' WHERE' : ' AND').' deleted_at IS NULL';
+        }
 
         $results = Database::prepareAndExecute($query, $params);
 
-        if (!is_array($results))
+        if (! is_array($results)) {
             $results = [];
+        }
 
-        return array_map(fn($row) => static::mapDataToModel($row), $results);
+        return array_map(fn ($row) => static::mapDataToModel($row), $results);
     }
 
     // Find a record by a specific column
@@ -212,34 +231,39 @@ abstract class BaseModel
 
         $query = "SELECT * FROM {$table} WHERE {$whereClause}";
 
-        if (static::hasSoftDelete())
-            $query .= " AND deleted_at IS NULL";
+        if (static::hasSoftDelete()) {
+            $query .= ' AND deleted_at IS NULL';
+        }
 
-        if ($single)
+        if ($single) {
             $query .= ' LIMIT 1';
+        }
 
         $results = Database::prepareAndExecute($query, $parameters);
 
-        if ($single)
-            return !empty($results) ? static::mapDataToModel($results[0]) : null;
+        if ($single) {
+            return ! empty($results) ? static::mapDataToModel($results[0]) : null;
+        }
 
-        if (empty($results))
+        if (empty($results)) {
             return [];
+        }
 
-        return array_map(fn($row) => static::mapDataToModel($row), $results);
+        return array_map(fn ($row) => static::mapDataToModel($row), $results);
     }
 
     // Fetch all soft deleted records
     public static function findSoftDeleted(): array
     {
-        if (!static::hasSoftDelete())
+        if (! static::hasSoftDelete()) {
             return [];
+        }
 
         $table = static::getTableName();
         $query = "SELECT * FROM {$table} WHERE deleted_at IS NOT NULL";
         $results = Database::prepareAndExecute($query);
 
-        return array_map(fn($row) => static::mapDataToModel($row), $results);
+        return array_map(fn ($row) => static::mapDataToModel($row), $results);
     }
 
     // One-to-One relationship
@@ -251,7 +275,7 @@ abstract class BaseModel
         $query = "SELECT * FROM $relatedTable WHERE $foreignKey = :localKeyValue LIMIT 1";
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
 
-        return !empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
+        return ! empty($results) ? $relatedModel::mapDataToModel($results[0]) : null;
     }
 
     // One-to-Many relationship
@@ -264,10 +288,11 @@ abstract class BaseModel
         $results = Database::prepareAndExecute($query, ['localKeyValue' => $localKeyValue]);
 
         // Ensure $results is an array
-        if (!is_array($results))
+        if (! is_array($results)) {
             $results = [];
+        }
 
-        return array_map(fn($row) => $relatedModel::mapDataToModel($row), $results);
+        return array_map(fn ($row) => $relatedModel::mapDataToModel($row), $results);
     }
 
     // Check if the table has a deleted_at column
@@ -276,10 +301,10 @@ abstract class BaseModel
         static $softDeleteCache = [];
         $table = static::getTableName();
 
-        if (!isset($softDeleteCache[$table])) {
+        if (! isset($softDeleteCache[$table])) {
             $query = "SHOW COLUMNS FROM {$table} LIKE 'deleted_at'";
             $result = Database::prepareAndExecute($query);
-            $softDeleteCache[$table] = !empty($result); // Cache the result
+            $softDeleteCache[$table] = ! empty($result); // Cache the result
         }
 
         return $softDeleteCache[$table];
@@ -289,18 +314,19 @@ abstract class BaseModel
     public static function paginate(int $page = 1, int $perPage = 10, array $conditions = []): ?array
     {
         $offset = ($page - 1) * $perPage;
-        $query = "SELECT * FROM " . static::getTableName();
+        $query = 'SELECT * FROM '.static::getTableName();
         $params = [];
 
-        if (!empty($conditions)) {
-            $query .= " WHERE " . implode(' AND ', array_map(fn($key) => "{$key} = :{$key}", array_keys($conditions)));
+        if (! empty($conditions)) {
+            $query .= ' WHERE '.implode(' AND ', array_map(fn ($key) => "{$key} = :{$key}", array_keys($conditions)));
             $params = $conditions;
         }
 
-        if (static::hasSoftDelete())
-            $query .= (empty($conditions) ? " WHERE" : " AND") . " deleted_at IS NULL";
+        if (static::hasSoftDelete()) {
+            $query .= (empty($conditions) ? ' WHERE' : ' AND').' deleted_at IS NULL';
+        }
 
-        $query .= " LIMIT :limit OFFSET :offset";
+        $query .= ' LIMIT :limit OFFSET :offset';
         $params['limit'] = $perPage;
         $params['offset'] = $offset;
 
@@ -327,26 +353,29 @@ abstract class BaseModel
         if (isset($this->id)) {
             // Update logic
             $fields = [];
-            foreach ($properties as $key => $value)
+            foreach ($properties as $key => $value) {
                 $fields[] = "{$key} = :{$key}";
-            $fields[] = "updated_at = NOW()";
-            $query = "UPDATE {$table} SET " . implode(", ", $fields) . " WHERE id = :id";
+            }
+            $fields[] = 'updated_at = NOW()';
+            $query = "UPDATE {$table} SET ".implode(', ', $fields).' WHERE id = :id';
             $properties['id'] = $this->id;
         } else {
             // Insert logic
             $fields = array_keys($properties);
-            $placeholders = array_map(fn($field) => ":{$field}", $fields);
-            $query = "INSERT INTO {$table} (" . implode(", ", $fields) . ") VALUES (" . implode(", ", $placeholders) . ")";
+            $placeholders = array_map(fn ($field) => ":{$field}", $fields);
+            $query = "INSERT INTO {$table} (".implode(', ', $fields).') VALUES ('.implode(', ', $placeholders).')';
         }
 
         Database::prepareAndExecute($query, $properties);
 
-        if (!isset($this->id))
+        if (! isset($this->id)) {
             $this->id = Database::connect()->lastInsertId();
+        }
     }
 
     //* Abstract methods to enforce subclass implementation
     abstract protected static function getTableName(): string;
+
     abstract protected static function mapDataToModel(array $data): object;
 
     //* Getters and Setters

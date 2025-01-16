@@ -17,46 +17,50 @@ class AccountController
             'title' => 'Configuración de cuenta',
             'layout' => 'Admin/AdminLayout',
             'data' => [
-                'user' => $user
-            ]
+                'user' => $user,
+            ],
         ]);
     }
-
 
     public function update($postData)
     {
         $user = User::find(Session::get('user')['id']);
 
-        if (!$user) {
+        if (! $user) {
             Session::set('error', 'Usuario no encontrado');
             header('Location: /admin/account');
             exit;
         }
 
-        $user->name = $postData['name'];
-        $user->surname = $postData['surname'];
+        $user->name = trim($postData['name']) ?? $user->name;
+        $user->surname = trim($postData['surname']) ?? $user->surname;
 
-        if (strlen($postData['current_password']) > 0) {
+        $currentPassword = trim($postData['current_password']);
+        $newPassword = trim($postData['password']);
+        $confirmPassword = trim($postData['password_confirmation']);
 
-            if (!password_verify($postData['current_password'], $user->password)) {
-                Session::set('error', 'Contraseña incorrecta');
+        $isChangingPassword = ! empty($currentPassword) || ! empty($newPassword) || ! empty($confirmPassword);
+
+        if ($isChangingPassword) {
+            if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
+                Session::set('error', 'Por favor, completa todos los campos de contraseña para cambiarla.');
                 header('Location: /admin/account');
                 exit;
             }
 
-            if (empty($postData['password']) || empty($postData['password_confirmation'])) {
-                Session::set('error', 'Completa los campos de contraseña');
+            if ($newPassword !== $confirmPassword) {
+                Session::set('error', 'Las nuevas contraseñas no coinciden.');
                 header('Location: /admin/account');
                 exit;
             }
 
-            if ($postData['password'] !== $postData['password_confirmation']) {
-                Session::set('error', 'Las contraseñas no coinciden');
+            if (! password_verify($currentPassword, $user->password)) {
+                Session::set('error', 'La contraseña actual es incorrecta.');
                 header('Location: /admin/account');
                 exit;
             }
 
-            $user->password = password_hash($postData['password'], PASSWORD_BCRYPT);
+            $user->password = password_hash($newPassword, PASSWORD_BCRYPT);
         }
 
         $user->save();

@@ -1,5 +1,7 @@
 <?php
+
 use App\Core\Session;
+
 ?>
 
 <?php $title = getenv('APP_NAME'); ?>

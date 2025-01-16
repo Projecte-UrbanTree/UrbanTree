@@ -17,7 +17,7 @@ class WorkReport extends BaseModel
 
     protected static function mapDataToModel($data): WorkReport
     {
-        $work_report = new self();
+        $work_report = new self;
         $work_report->id = $data['id'];
         $work_report->work_order_id = $data['work_order_id'];
         $work_report->observation = $data['observation'];
@@ -32,10 +32,5 @@ class WorkReport extends BaseModel
     public function workOrder(): WorkOrder
     {
         return $this->belongsTo(WorkOrder::class, 'work_order_id');
-    }
-
-    public function photos()
-    {
-        return $this->belongsToMany(Photo::class, 'work_report_photos', 'work_report_id', 'photo_id');
     }
 }

@@ -30,7 +30,7 @@ class UserController
 
     public function store($postData)
     {
-        $user = new User();
+        $user = new User;
         $user->company = $postData['company'];
         $user->name = $postData['name'];
         $user->surname = $postData['surname'];
@@ -38,17 +38,18 @@ class UserController
         $user->email = $postData['email'];
 
         // Check if password is not empty before updating
-        if (!empty($postData['password'])) {
+        if (! empty($postData['password'])) {
             $user->password = password_hash($postData['password'], PASSWORD_DEFAULT);
         }
 
         $user->role = $postData['role'];
         $user->save();
 
-        if ($user->getId())
+        if ($user->getId()) {
             Session::set('success', 'Usuario creado correctamente');
-        else
+        } else {
             Session::set('error', 'El usuario no se pudo crear');
+        }
 
         header('Location: /admin/users');
         exit;
@@ -58,7 +59,7 @@ class UserController
     {
         $user = User::find($id);
 
-        if (!$user) {
+        if (! $user) {
             Session::set('error', 'Usuario no encontrado');
             header('Location: /admin/users');
             exit;
@@ -75,6 +76,15 @@ class UserController
     public function update($id, $postData)
     {
         $user = User::find($id);
+
+        $admin_count = User::count(['role' => 2]);
+
+        if ($admin_count == 1 && $user->role == 2 && $user->role != $postData['role']) {
+            Session::set('error', 'No se puede cambiar el rol al único administrador');
+            header('Location: /admin/users');
+            exit;
+        }
+
         if ($user) {
             $user->company = $postData['company'];
             $user->name = $postData['name'];
@@ -85,8 +95,9 @@ class UserController
             $user->save();
 
             Session::set('success', 'Usuario actualizado correctamente');
-        } else
+        } else {
             Session::set('error', 'Usuario no encontrado');
+        }
 
         header('Location: /admin/users');
         exit;
@@ -95,11 +106,17 @@ class UserController
     public function destroy($id, $queryParams)
     {
         $user = User::find($id);
-        if ($user) {
+
+        // verify the role
+        $admin_count = User::count(['role' => 2]);
+        if ($admin_count == 1) {
+            Session::set('error', 'No se puede eliminar el único administrador');
+        } elseif ($user) {
             $user->delete();
             Session::set('success', 'Usuario eliminado correctamente');
-        } else
+        } else {
             Session::set('error', 'Usuario no encontrado');
+        }
 
         header('Location: /admin/users');
         exit;

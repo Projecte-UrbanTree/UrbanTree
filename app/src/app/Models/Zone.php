@@ -8,6 +8,10 @@ class Zone extends BaseModel
 
     public ?string $name;
 
+    public ?string $color;
+
+    public ?string $description;
+
     protected static function getTableName(): string
     {
         return 'zones';
@@ -15,10 +19,12 @@ class Zone extends BaseModel
 
     protected static function mapDataToModel($data): Zone
     {
-        $zone = new self();
+        $zone = new self;
         $zone->id = $data['id'];
         $zone->contract_id = $data['contract_id'];
         $zone->name = $data['name'];
+        $zone->color = $data['color']; // Map color
+        $zone->description = $data['description']; // Map description
         $zone->created_at = $data['created_at'];
         $zone->updated_at = $data['updated_at'];
         $zone->deleted_at = $data['deleted_at'];
@@ -26,9 +32,13 @@ class Zone extends BaseModel
         return $zone;
     }
 
-    // Relationship to elements
     public function elements(): array
     {
         return $this->hasMany(Element::class, 'zone_id');
+    }
+
+    public function points(): array
+    {
+        return $this->hasMany(Point::class, 'zone_id');
     }
 }

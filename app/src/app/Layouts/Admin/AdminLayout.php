@@ -1,7 +1,6 @@
 <?php
 
 use App\Core\Session;
-use App\Models\User;
 
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $currentContract = Session::get('current_contract');
@@ -15,7 +14,7 @@ $currentContract = Session::get('current_contract');
     <!-- Viewport settings to make the layout responsive on different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Page title dynamically generated from PHP -->
-    <title><?= $title . ' - ' . getenv('APP_NAME'); ?></title>
+    <title><?= $title.' - '.getenv('APP_NAME'); ?></title>
     <!-- Favicon link -->
     <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
     <!-- Tailwind CSS framework (via CDN) -->
@@ -25,7 +24,7 @@ $currentContract = Session::get('current_contract');
     <!-- Tailwind custom JavaScript file (local) -->
     <script src="/assets/js/tailwind.js"></script>
     <!-- FontAwesome CDN for icons -->
-    <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f03c46a869.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-gray-50">
@@ -46,33 +45,42 @@ $currentContract = Session::get('current_contract');
 
             <!-- Navigation Links (Visible only on large screens) -->
             <div class="hidden md:flex space-x-6">
-                <a href="/admin" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
-                    <i class="fas fa-tachometer-alt"></i> Gestión
+                <a href="/admin"
+                    class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
+                    <i class="fas fa-toolbox"></i> Gestión
                 </a>
-                <a href="/admin/inventory" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
-                    <i class="fas fa-cogs"></i> Inventario
+                <a href="/admin/inventory"
+                    class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
+                    <i class="fas fa-box-archive"></i> Inventario
                 </a>
             </div>
 
             <!-- Profile and Contract Dropdown -->
             <div class="flex items-center gap-4">
-                <select id="contractBtn" name="contractBtn" class="bg-white text-sm rounded-md p-2 text-right focus:outline-none" onchange="setCurrentContract(this.value)">
+                <select id="contractBtn" name="contractBtn"
+                    class="bg-white text-sm rounded-md p-2 text-right focus:outline-none"
+                    onchange="setCurrentContract(this.value)">
                     <?php
                     foreach ($contracts as $contract) {
-                        echo '<option value="' . $contract->getId() . '"' . ($currentContract == $contract->getId() ? ' selected' : '') . '>' . $contract->name . '</option>';
+                        echo '<option value="'.$contract->getId().'"'.($currentContract == $contract->getId() ? ' selected' : '').'>'.$contract->name.'</option>';
                     }
-                    echo '<option value="-1"' . ($currentContract == -1 ? ' selected' : '') . '>Todos los contratos</option>';
-                    ?>
+echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos los contratos</option>';
+?>
                 </select>
                 <div class="relative">
                     <!-- Letters avatar -->
-                    <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer" onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
-                        <?= strtoupper(substr($_SESSION['user']['name'], 0, 1) . substr($_SESSION['user']['surname'], 0, 1)); ?>
+                    <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer"
+                        onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
+                        <?= strtoupper(substr(Session::get('user')['name'], 0, 1).substr(Session::get('user')['surname'], 0, 1)); ?>
                     </div>
-                    <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
-                        <a href="/admin/account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuración de la cuenta</a>
+                    <div id="profile-dropdown"
+                        class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
+                        <a href="/admin/account"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuración de la
+                            cuenta</a>
                         <a href="/license" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Licencia</a>
-                        <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cerrar sesión</a>
+                        <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cerrar
+                            sesión</a>
                     </div>
                 </div>
             </div>
@@ -80,43 +88,63 @@ $currentContract = Session::get('current_contract');
 
         <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="hidden md:hidden px-4 py-4 bg-gray-100">
-            <a href="/admin" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
-                <i class="fas fa-tachometer-alt"></i> Gestión
+            <a href="/admin"
+                class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-toolbox"></i> Gestión
             </a>
-            <a href="/admin/inventory" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
-                <i class="fas fa-cogs"></i> Inventario
+            <a href="/admin/inventory"
+                class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/admin/inventory') ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-box-archive"></i> Inventario
             </a>
         </div>
     </header>
 
     <!-- Submenu -->
-    <div id="submenu" class="md:flex overflow-x-auto flex-nowrap whitespace-nowrap items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
+    <div id="submenu"
+        class="md:flex overflow-x-auto flex-nowrap whitespace-nowrap items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
         <div class="submenu text-center flex items-center space-x-6 mx-auto">
-            <a href="/admin/contracts" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/contract') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/contracts"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/contract') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-file-contract block"></i>
                 Contratos
             </a>
-            <a href="/admin/work-orders" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/work-order') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/work-orders"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/work-order') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-briefcase block"></i>
                 Órdenes de trabajo
             </a>
-            <a href="/admin/element-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/element-type') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/element-types"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/element-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-cube block"></i>
                 Tipos de elemento
             </a>
-            <a href="/admin/tree-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/tree-type') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/tree-types"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/tree-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tree block"></i>
-                Tipos de árbol
+                Especies
             </a>
-            <a href="/admin/task-types" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/task-types"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/task-type') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-tasks block"></i>
                 Tipos de tarea
             </a>
-            <a href="/admin/users" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/user') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/resources"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/resources') !== false ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-box block"></i>
+                Recursos
+            </a>
+            <a href="/admin/resource-types"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/resource-types') !== false ? 'font-semibold' : ''; ?>">
+                <i class="fas fa-solid fa-layer-group block"></i>
+                Tipos de recursos
+            </a>
+            <a href="/admin/users"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/user') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-users block"></i>
                 Usuarios
             </a>
-            <a href="/admin/stats" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/stats') !== false ? 'font-semibold' : ''; ?>">
+            <a href="/admin/stats"
+                class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= strpos($currentPath, '/admin/stats') !== false ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-chart-bar block"></i>
                 Estadísticas
             </a>
@@ -125,30 +153,36 @@ $currentContract = Session::get('current_contract');
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 pt-8 pb-16">
-        <?php if (Session::has('success')): ?>
-            <div id="alert-msg" class="bg-green-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out" role="alert">
+        <?php if (Session::has('success')) { ?>
+            <div id="alert-msg"
+                class="bg-green-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                role="alert">
                 <span class="inline-block mr-2">
                     <!-- Success Icon (Font Awesome) -->
                     <i class="fas fa-check-circle w-5 h-5 text-white"></i>
                 </span>
                 <?= htmlspecialchars(Session::get('success')); ?>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (Session::has('error')): ?>
-            <div id="alert-msg-error" class="bg-red-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out" role="alert">
+        <?php if (Session::has('error')) { ?>
+            <div id="alert-msg-error"
+                class="bg-red-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                role="alert">
                 <span class="inline-block mr-2">
                     <!-- Error Icon (Font Awesome) -->
                     <i class="fas fa-exclamation-circle w-5 h-5 text-white"></i>
                 </span>
                 <strong class="font-bold">Error:</strong> <?= htmlspecialchars(Session::get('error')); ?>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <?= $content; ?>
     </main>
 
     <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
+    <script src="/assets/js/validations.js?v=<?= time(); ?>"></script>
+    <script src="/assets/js/work-orders.js?v=<?= time(); ?>"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Show alerts with animation (Success and Error messages)

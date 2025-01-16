@@ -7,6 +7,8 @@ use App\Controllers\Admin\ElementController;
 use App\Controllers\Admin\ElementTypeController;
 use App\Controllers\Admin\IncidenceController;
 use App\Controllers\Admin\InventoryController;
+use App\Controllers\Admin\ResourceController;
+use App\Controllers\Admin\ResourceTypeController;
 use App\Controllers\Admin\StatsController;
 use App\Controllers\Admin\TaskTypeController;
 use App\Controllers\Admin\TreeTypeController;
@@ -121,14 +123,17 @@ return [
         '/admin/incidence' => [
             'controller' => IncidenceController::class,
             'method' => 'index',
+            'middlewares' => [AdminMiddleware::class],
         ],
         '/admin/incidence/create' => [
             'controller' => IncidenceController::class,
             'method' => 'get',
+            'middlewares' => [AdminMiddleware::class],
         ],
         '/admin/incidence/all' => [
             'controller' => IncidenceController::class,
             'method' => 'findall',
+            'middlewares' => [AdminMiddleware::class],
         ],
         // === Elements GET Routes
         '/admin/elements' => [
@@ -169,6 +174,48 @@ return [
         ],
         '/admin/element-type/:id/delete' => [
             'controller' => ElementTypeController::class,
+            'method' => 'destroy',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        // === Resources GET Routes
+        '/admin/resources' => [
+            'controller' => ResourceController::class,
+            'method' => 'index',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/resource/create' => [
+            'controller' => ResourceController::class,
+            'method' => 'create',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/resource/:id/edit' => [
+            'controller' => ResourceController::class,
+            'method' => 'edit',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/resource/:id/delete' => [
+            'controller' => ResourceController::class,
+            'method' => 'destroy',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        // === ResourceType GET Routes
+        '/admin/resource-types' => [
+            'controller' => ResourceTypeController::class,
+            'method' => 'index',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/resource-type/create' => [
+            'controller' => ResourceTypeController::class,
+            'method' => 'create',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/resource-type/:id/edit' => [
+            'controller' => ResourceTypeController::class,
+            'method' => 'edit',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/resource-type/:id/delete' => [
+            'controller' => ResourceTypeController::class,
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
@@ -253,6 +300,17 @@ return [
             'method' => 'update',
             'middlewares' => [AdminMiddleware::class],
         ],
+        // === TypeResources POST Routes
+        '/admin/resource-type/store' => [
+            'controller' => ResourceTypeController::class,
+            'method' => 'store',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/resource-type/:id/update' => [
+            'controller' => ResourceTypeController::class,
+            'method' => 'update',
+            'middlewares' => [AdminMiddleware::class],
+        ],
         // === WorkOrders POST Routes
         '/admin/work-order/store' => [
             'controller' => WorkOrderController::class,
@@ -322,6 +380,18 @@ return [
         '/admin/set-contract' => [
             'controller' => ContractController::class,
             'method' => 'setCurrentContract',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+
+        // Post Resources
+        '/admin/resource/store' => [
+            'controller' => ResourceController::class,
+            'method' => 'store',
+            'middlewares' => [AdminMiddleware::class],
+        ],
+        '/admin/resource/:id/update' => [
+            'controller' => ResourceController::class,
+            'method' => 'update',
             'middlewares' => [AdminMiddleware::class],
         ],
     ],

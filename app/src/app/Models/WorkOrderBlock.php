@@ -15,7 +15,7 @@ class WorkOrderBlock extends BaseModel
 
     protected static function mapDataToModel($data): WorkOrderBlock
     {
-        $work_order_block = new self();
+        $work_order_block = new self;
         $work_order_block->id = $data['id'];
         $work_order_block->work_order_id = $data['work_order_id'];
         $work_order_block->notes = $data['notes'];

@@ -38,7 +38,7 @@ class Router
         // Automatically detect the content type
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 
-        if ($requestMethod == 'POST') {
+        if (in_array($requestMethod, ['POST', 'PUT', 'DELETE'])) {
             if (strpos($contentType, 'application/json') !== false) {
                 // Read the raw POST data
                 $rawData = file_get_contents('php://input');
@@ -47,6 +47,7 @@ class Router
                 $postData = json_decode($rawData, true);
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $this->abort(400, 'Invalid JSON data');
+
                     return;
                 }
             } elseif (strpos($contentType, 'application/x-www-form-urlencoded') !== false) {
@@ -55,8 +56,9 @@ class Router
             }
         }
 
-        if (!in_array($requestMethod, self::HTTP_METHODS)) {
+        if (! in_array($requestMethod, self::HTTP_METHODS)) {
             $this->abort(405, 'Method Not Allowed');
+
             return;
         }
 
@@ -67,6 +69,7 @@ class Router
             $queryParameters = array_reduce($queryParameters, function ($carry, $item) {
                 [$key, $value] = explode('=', $item);
                 $carry[$key] = $value;
+
                 return $carry;
             }, []);
             $requestUri = explode('?', $requestUri)[0];
@@ -79,6 +82,7 @@ class Router
             } else {
                 $this->callRoute($this->routes[$requestMethod][$requestUri], ['postData' => $postData]);
             }
+
             return;
         }
 
@@ -92,12 +96,14 @@ class Router
                 if ($requestMethod === 'GET') {
                     $arguments = array_merge($params, ['queryParams' => $queryParameters]);
                     $this->callRoute($routeInfo, $arguments);
+
                     return;
                 }
 
-                if ($requestMethod === 'POST') {
+                if (in_array($requestMethod, ['POST', 'PUT', 'DELETE'])) {
                     $arguments = array_merge($params, ['postData' => $postData]);
                     $this->callRoute($routeInfo, $arguments);
+
                     return;
                 }
 
@@ -107,8 +113,6 @@ class Router
 
         $this->abort(404, '¡No se ha encontrado la página!');
     }
-
-
 
     public function redirect(string $uri, int $statusCode = 302): void
     {
@@ -126,13 +130,13 @@ class Router
 
     protected function callRoute(array $routeInfo, array $arguments = []): void
     {
-        if (!class_exists($routeInfo['controller'])) {
+        if (! class_exists($routeInfo['controller'])) {
             $this->abort(500, "Controller {$routeInfo['controller']} not found");
 
             return;
         }
 
-        if (!method_exists($routeInfo['controller'], $routeInfo['method'])) {
+        if (! method_exists($routeInfo['controller'], $routeInfo['method'])) {
             $this->abort(500, "Method {$routeInfo['method']} not found in controller {$routeInfo['controller']}");
 
             return;
@@ -142,30 +146,30 @@ class Router
             $this->handleMiddlewares($routeInfo['middlewares']);
         }
 
-        $controller = new $routeInfo['controller']();
+        $controller = new $routeInfo['controller'];
         $controller->{$routeInfo['method']}(...$arguments);
     }
 
     protected function handleMiddlewares(array $middlewares): void
     {
         foreach ($middlewares as $middlewareClass) {
-            if (!class_exists($middlewareClass)) {
+            if (! class_exists($middlewareClass)) {
                 throw new Exception("Middleware class {$middlewareClass} not found");
             }
 
-            $middleware = new $middlewareClass();
-            if (!$middleware instanceof MiddlewareInterface) {
+            $middleware = new $middlewareClass;
+            if (! $middleware instanceof MiddlewareInterface) {
                 throw new Exception("Middleware {$middlewareClass} must implement MiddlewareInterface");
             }
 
-            $middleware->handle($_REQUEST, fn() => null);
+            $middleware->handle($_REQUEST, fn () => null);
         }
     }
 
     protected function abort(int $statusCode, string $message): void
     {
         View::render([
-            'view' => "Error",
+            'view' => 'Error',
             'title' => "Error $statusCode",
             'layout' => 'PublicLayout',
             'data' => [
