@@ -7,10 +7,10 @@ body {
 }
 
 main {
-    min-height: calc(100% - 72px - 66px); 
+    min-height: calc(100% - 72px - 66px);
 }
 body {
-    background-color: rgb(249, 250, 251); 
+    background-color: rgb(249, 250, 251);
     position: relative;
 }
 
