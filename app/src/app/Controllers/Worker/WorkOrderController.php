@@ -8,6 +8,8 @@ use App\Models\WorkOrder;
 use App\Models\WorkOrderBlockTask;
 use App\Models\WorkOrderUser;
 use App\Models\WorkReport;
+use App\Models\Resource;
+use App\Models\WorkReportResource;
 
 class WorkOrderController
 {
@@ -17,6 +19,7 @@ class WorkOrderController
         $userId = Session::get('user')['id'];
         $workOrderId = $queryParams['work_order_id'] ?? null;
         $work_report = WorkReport::findAll();
+        $resources = Resource::findAll();
 
         if ($workOrderId) {
             $work_orders = WorkOrder::findAll(['id' => $workOrderId]);
@@ -37,6 +40,8 @@ class WorkOrderController
                 'date' => $date,
                 'work_orders' => $work_orders,
                 'work_report' => $work_report,
+                'resources' => $resources,
+                'spent_fuel' => $work_report->spent_fuel ?? 0.0,
             ],
         ]);
     }
@@ -56,19 +61,41 @@ class WorkOrderController
             }
         }
 
-        header('Location: /worker/work-orders?date='.$postData['date']);
-        exit;
+        if ($_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+            echo json_encode(['success' => true]);
+            exit;
+        } else {
+            header('Location: /worker/work-orders?date='.$postData['date']);
+            exit;
+        }
     }
 
     public function storeReport($postData)
-    {
-        if (isset($postData['spent_time'])) {
-            foreach ($postData['spent_time'] as $taskId => $time) {
-                $task = WorkOrderBlockTask::find($taskId);
-                if ($task) {
-                    $task->spent_time = $time;
-                    $task->save();
-                }
+    {   
+        foreach ($postData['spent_time'] as $taskId => $time) {
+            $task = WorkOrderBlockTask::find($taskId);
+            if ($task) {
+                $task->spent_time = $time;
+                $task->save();
+            }
+        }
+
+        $work_report = WorkReport::findBy(['work_order_id' => $postData['work_order_id']], true);
+        if (!$work_report) {
+            $work_report = new WorkReport();
+            $work_report->work_order_id = $postData['work_order_id'];
+        }
+
+        $work_report->spent_fuel = isset($postData['spent_fuel']) ? (float) $postData['spent_fuel'] : 0.0;
+        $work_report->save();
+
+        if (isset($postData['resource_id'])) {
+            var_dump($postData['resource_id']);
+            foreach ($postData['resource_id'] as $resourceId) {
+                $work_report_resource = new WorkReportResource();
+                $work_report_resource->work_report_id = $work_report->id;
+                $work_report_resource->resource_id = $resourceId;
+                $work_report_resource->save();
             }
         }
 

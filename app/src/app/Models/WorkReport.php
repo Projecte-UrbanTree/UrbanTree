@@ -8,7 +8,7 @@ class WorkReport extends BaseModel
 
     public ?string $observation;
 
-    public ?float $spent_fuel;
+    public float $spent_fuel;
 
     protected static function getTableName(): string
     {
@@ -21,7 +21,7 @@ class WorkReport extends BaseModel
         $work_report->id = $data['id'];
         $work_report->work_order_id = $data['work_order_id'];
         $work_report->observation = $data['observation'];
-        $work_report->spent_fuel = $data['spent_fuel'];
+        $work_report->spent_fuel = (float) $data['spent_fuel'];
         $work_report->created_at = $data['created_at'];
         $work_report->updated_at = $data['updated_at'];
         $work_report->deleted_at = $data['deleted_at'];
@@ -32,5 +32,10 @@ class WorkReport extends BaseModel
     public function workOrder(): WorkOrder
     {
         return $this->belongsTo(WorkOrder::class, 'work_order_id');
+    }
+
+    public function workReportResources()
+    {
+        return $this->hasMany(WorkReportResource::class, 'work_report_id');
     }
 }

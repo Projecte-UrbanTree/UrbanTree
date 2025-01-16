@@ -110,6 +110,11 @@ function updateTaskElement(taskRow, elementName, blockIndex, taskIndex) {
     if (element) {
         element.name = `blocks[${blockIndex}][tasks][${taskIndex}][${elementName}]`;
         element.id = `${elementName}_${blockIndex}_${taskIndex}`;
+
+        const label = taskRow.querySelector(`label[for^='${elementName}_']`);
+        if (label) {
+            label.setAttribute("for", element.id);
+        }
     }
 }
 

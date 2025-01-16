@@ -43,8 +43,8 @@ class Validator {
     validateEmptyField(value, fieldName) {
         return !value
             ? this.createErrorElement(
-                  `${fieldName}: El campo no puede estar vacío.`
-              )
+                `${fieldName}: El campo no puede estar vacío.`
+            )
             : true;
     }
 
@@ -70,8 +70,8 @@ class Validator {
     dateCannotBeAfter(startDate, endDate, fieldName) {
         return new Date(startDate) > new Date(endDate)
             ? this.createErrorElement(
-                  `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
-              )
+                `${fieldName}: La fecha inicial no puede ser posterior a la fecha final.`
+            )
             : true;
     }
 
@@ -79,32 +79,32 @@ class Validator {
         return parseFloat(value) > 0
             ? true
             : this.createErrorElement(
-                  `${fieldName}: El valor debe ser un número positivo.`
-              );
+                `${fieldName}: El valor debe ser un número positivo.`
+            );
     }
 
     validateMaxValue(value, max, fieldName) {
         return parseFloat(value) <= max
             ? true
             : this.createErrorElement(
-                  `${fieldName}: El valor no puede ser mayor a ${max}.`
-              );
+                `${fieldName}: El valor no puede ser mayor a ${max}.`
+            );
     }
 
     validateMatchingFields(value1, value2, fieldName) {
         return value1 === value2
             ? true
             : this.createErrorElement(
-                  `${fieldName}: Los campos no coinciden.`
-              );
+                `${fieldName}: Los campos no coinciden.`
+            );
     }
 
     validateMinLength(value, minLength, fieldName) {
         return value.length >= minLength
             ? true
             : this.createErrorElement(
-                  `${fieldName}: El campo debe tener al menos ${minLength} caracteres.`
-              );
+                `${fieldName}: El campo debe tener al menos ${minLength} caracteres.`
+            );
     }
 }
 
@@ -315,7 +315,6 @@ new FormValidator("workOrderForm", [
     {
         id: "notes_",
         checks: [
-            { type: "empty" },
             { type: "regex", regexName: "noSQLInjection" },
         ],
     },

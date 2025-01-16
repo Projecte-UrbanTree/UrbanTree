@@ -9,6 +9,7 @@
         <thead class="bg-gray-700 text-white">
             <tr class="h-12">
                 <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Orden de Trabajo</th>
+                <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Contrato</th>
                 <th scope="col" class="px-4 py-3 font-medium">Fecha</th>
                 <th scope="col" class="px-4 py-3 font-medium">Operarios</th>
                 <th scope="col" class="px-4 py-3 font-medium">Estatus</th>
@@ -33,8 +34,11 @@
                                         stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
-                            <?php echo 'OT-'.htmlspecialchars($work_order->contract()->getId()); ?>
+                            <?php echo 'OT-'.htmlspecialchars($work_order->getId()); ?>
                         </th>
+                        <td class="px-4 py-3">
+                            <?php echo htmlspecialchars($work_order->contract()->name); ?>
+                        </td>
                         <td class="px-4 py-3">
                             <?= date('d/m/Y', strtotime($work_order->date)); ?>
                         </td>

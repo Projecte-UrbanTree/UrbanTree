@@ -206,7 +206,7 @@ create table work_reports (
     id int auto_increment primary key,
     work_order_id int unique,
     observation varchar(255),
-    spent_fuel decimal,
+    spent_fuel float,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,

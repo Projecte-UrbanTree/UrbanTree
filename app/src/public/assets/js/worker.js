@@ -32,11 +32,32 @@ function isValidDate(dateString) {
     return !isNaN(date.getTime());
 }
 
-// Send two forms with one button click
-document.getElementById("btn-submit").addEventListener("click", function (event) {
-    event.preventDefault();
-    document.getElementById("work-orderForm").submit();
-    setTimeout(function () {
-        document.getElementById("work-reportForm").submit();
-    }, 200); // Adjust delay to ensure the first form is submitted
+document.querySelectorAll(".task-checkbox").forEach((checkbox) => {
+    checkbox.addEventListener("change", async (event) => {
+        const taskId = event.target.dataset.taskId;
+        const statusValue = event.target.checked ? 1 : 0;
+
+        const formData = new FormData();
+        formData.append(`tasks[${taskId}]`, statusValue);
+
+        try {
+            await fetch("/worker/work-orders/update-status", {
+                method: "POST",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                },
+                body: formData,
+            });
+
+        } catch (error) {
+            console.error("Network error:", error);
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selects = document.querySelectorAll('select[data-hs-select]');
+    selects.forEach((select) => {
+        new HsSelect(select);
+    });
 });
