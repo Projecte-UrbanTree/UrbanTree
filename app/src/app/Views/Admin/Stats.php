@@ -19,8 +19,9 @@ function mapWithId($items, $getIdMethod)
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-	const tasks = <?= json_encode($tasks); ?>;
-	const taskTypes = <?= json_encode($taskTypes); ?>;
-	const treeTypes = <?= json_encode($treeTypes); ?>;
+	const tasksDoneCount = <?= json_encode($tasksDoneCount); ?>;
+	const tasksNotDoneCount = <?= json_encode($tasksNotDoneCount); ?>;
+	const hoursWorked = <?= json_encode($hoursWorked); ?>;
+	const fuelConsumption = <?= json_encode($fuelConsumption); ?>;
 </script>
 <script src="/assets/js/stats.js?v=<?= time(); ?>"></script>
