@@ -20,7 +20,6 @@ class WorkOrderController
         $workOrderId = $queryParams['work_order_id'] ?? null;
         $work_report = WorkReport::findAll();
         $resources = Resource::findAll();
-        $work_report_resources = WorkReportResource::findAll();
 
         if ($workOrderId) {
             $work_orders = WorkOrder::findAll(['id' => $workOrderId]);
@@ -31,6 +30,24 @@ class WorkOrderController
             $work_orders = $work_order_ids
                 ? WorkOrder::findAll(['id' => $work_order_ids, 'date' => $date])
                 : [];
+        }
+
+        $work_report_resources = [];
+        foreach ($work_orders as $work_order) {
+            $report = $work_order->report();
+            if ($report) {
+                $list = WorkReportResource::findAll(['work_report_id' => $report->getId()]);
+                $work_report_resources[$work_order->getId()] = array_map(function($item) {
+                    $resource = $item->resource();
+                    return [
+                        'resource_id' => $item->resource_id,
+                        'resource_name' => $resource ? $resource->name : '',
+                        'resource_type' => $resource ? $resource->resourceType()->name : ''
+                    ];
+                }, $list);
+            } else {
+                $work_report_resources[$work_order->getId()] = [];
+            }
         }
 
         View::render([
@@ -73,7 +90,7 @@ class WorkOrderController
     }
 
     public function storeReport($postData)
-    {   
+    {
         foreach ($postData['spent_time'] as $taskId => $time) {
             $task = WorkOrderBlockTask::find($taskId);
             if ($task) {
@@ -92,16 +109,37 @@ class WorkOrderController
         $work_report->observation = $postData['observation'];
         $work_report->save();
 
-        if (isset($postData['resource_id'])) {
-            foreach ($postData['resource_id'] as $resourceId) {
+        $this->updateResources($work_report->getId(), $postData['resource_id'] ?? []);
+
+        header('Location: /worker/work-orders?work_order_id=' . $postData['work_order_id']);
+        exit;
+    }
+
+    private function updateResources($work_report_id, array $newResourceIds)
+    {
+        $existingResources = WorkReportResource::findAll(['work_report_id' => $work_report_id]);
+        $existingResourceIds = array_map(fn($res) => $res->resource_id, $existingResources);
+
+        $resourcesToDelete = array_diff($existingResourceIds, $newResourceIds);
+        foreach ($resourcesToDelete as $resourceId) {
+            $this->destroyResource($work_report_id, $resourceId);
+        }
+
+        foreach ($newResourceIds as $resourceId) {
+            if (!in_array($resourceId, $existingResourceIds)) {
                 $work_report_resource = new WorkReportResource();
-                $work_report_resource->work_report_id = $work_report->getId();
+                $work_report_resource->work_report_id = $work_report_id;
                 $work_report_resource->resource_id = $resourceId;
                 $work_report_resource->save();
             }
         }
+    }
 
-        header('Location: /worker/work-orders?work_order_id=' . $postData['work_order_id']);
-        exit;
+    public function destroyResource($work_report_id, $resource_id)
+    {
+        $work_report_resource = WorkReportResource::findBy(['work_report_id' => $work_report_id, 'resource_id' => $resource_id], true);
+        if ($work_report_resource) {
+            $work_report_resource->delete(true);
+        }
     }
 }

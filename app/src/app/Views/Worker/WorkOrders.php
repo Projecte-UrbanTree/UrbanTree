@@ -19,6 +19,8 @@
     <?php if (!empty($work_orders)): ?>
         <?php foreach ($work_orders as $work_order): ?>
             <?php $work_report = $work_order->report(); ?>
+            <?php $usedJson = htmlspecialchars(json_encode($work_report_resources[$work_order->getId()] ?? []), ENT_QUOTES); ?>
+            <div hidden id="used-res-<?= $work_order->getId(); ?>" data-used="<?= $usedJson ?>"></div>
 
             <div class="mt-6">
                 <p class="text-lg font-semibold">Usuarios asignados:</p>
@@ -131,7 +133,12 @@
                             </label>
 
                             <div class="relative">
-                                <button type="button" class="relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" onclick="toggleDropdown('dropdown-<?= htmlspecialchars($typeName) ?>')">
+                                <button
+                                    type="button"
+                                    class="relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    data-resource-type="<?= htmlspecialchars($typeName) ?>"
+                                    onclick="toggleDropdown('dropdown-<?= htmlspecialchars($typeName) ?>')"
+                                >
                                     <span id="selected-<?= htmlspecialchars($typeName) ?>">Seleccione recursos...</span>
                                     <svg class="absolute top-1/2 end-3 -translate-y-1/2 shrink-0 size-3.5 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/>

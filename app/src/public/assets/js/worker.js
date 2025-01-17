@@ -55,6 +55,15 @@ document.querySelectorAll(".task-checkbox").forEach((checkbox) => {
     });
 });
 
+document.querySelectorAll('[id^="used-res-"]').forEach(div => {
+    const usedResources = JSON.parse(div.getAttribute('data-used') || '[]');
+    usedResources.forEach(item => {
+        const rName = item.resource_name || '';
+        const typeName = item.resource_type || '';
+        toggleSelection(rName, item.resource_id, typeName);
+    });
+});
+
 function toggleDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
     dropdown.classList.toggle('hidden');
