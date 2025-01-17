@@ -55,9 +55,25 @@ document.querySelectorAll(".task-checkbox").forEach((checkbox) => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const selects = document.querySelectorAll('select[data-hs-select]');
-    selects.forEach((select) => {
-        new HsSelect(select);
-    });
-});
+function toggleDropdown(dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    dropdown.classList.toggle('hidden');
+}
+
+function toggleSelection(resourceName, resourceId, typeName) {
+    const selectedSpan = document.getElementById(`selected-${typeName}`);
+    const checkIcon = document.getElementById(`check-${resourceId}`);
+    const selectElement = document.getElementById(`resource_${typeName}`);
+    const optionElement = selectElement.querySelector(`option[value="${resourceId}"]`);
+
+    if (checkIcon.classList.contains('hidden')) {
+        checkIcon.classList.remove('hidden');
+        optionElement.selected = true;
+    } else {
+        checkIcon.classList.add('hidden');
+        optionElement.selected = false;
+    }
+
+    const selectedTexts = Array.from(selectElement.selectedOptions).map(o => o.text);
+    selectedSpan.textContent = selectedTexts.length ? selectedTexts.join(', ') : 'Seleccione recursos...';
+}

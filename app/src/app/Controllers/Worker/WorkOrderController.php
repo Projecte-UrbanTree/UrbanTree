@@ -20,6 +20,7 @@ class WorkOrderController
         $workOrderId = $queryParams['work_order_id'] ?? null;
         $work_report = WorkReport::findAll();
         $resources = Resource::findAll();
+        $work_report_resources = WorkReportResource::findAll();
 
         if ($workOrderId) {
             $work_orders = WorkOrder::findAll(['id' => $workOrderId]);
@@ -42,6 +43,7 @@ class WorkOrderController
                 'work_report' => $work_report,
                 'resources' => $resources,
                 'spent_fuel' => $work_report->spent_fuel ?? 0.0,
+                'work_report_resources' => $work_report_resources,
             ],
         ]);
     }
@@ -87,13 +89,13 @@ class WorkOrderController
         }
 
         $work_report->spent_fuel = isset($postData['spent_fuel']) ? (float) $postData['spent_fuel'] : 0.0;
+        $work_report->observation = $postData['observation'];
         $work_report->save();
 
         if (isset($postData['resource_id'])) {
-            var_dump($postData['resource_id']);
             foreach ($postData['resource_id'] as $resourceId) {
                 $work_report_resource = new WorkReportResource();
-                $work_report_resource->work_report_id = $work_report->id;
+                $work_report_resource->work_report_id = $work_report->getId();
                 $work_report_resource->resource_id = $resourceId;
                 $work_report_resource->save();
             }

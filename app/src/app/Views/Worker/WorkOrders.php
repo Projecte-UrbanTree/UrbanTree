@@ -130,18 +130,18 @@
                                 <?= htmlspecialchars($typeName) ?>
                             </label>
 
-                            <div x-data="{ open: false, selected: [] }" class="relative">
-                                <button @click="open = !open" type="button" class="relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <span x-text="selected.length > 0 ? selected.join(', ') : 'Seleccione recursos...'"></span>
+                            <div class="relative">
+                                <button type="button" class="relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" onclick="toggleDropdown('dropdown-<?= htmlspecialchars($typeName) ?>')">
+                                    <span id="selected-<?= htmlspecialchars($typeName) ?>">Seleccione recursos...</span>
                                     <svg class="absolute top-1/2 end-3 -translate-y-1/2 shrink-0 size-3.5 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/>
                                     </svg>
                                 </button>
-                                <div x-show="open" @click.away="open = false" class="mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto">
+                                <div id="dropdown-<?= htmlspecialchars($typeName) ?>" class="hidden mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto">
                                     <?php foreach ($resourcesList as $resource): ?>
-                                        <div @click="selected.includes('<?= htmlspecialchars($resource->name) ?>') ? selected = selected.filter(item => item !== '<?= htmlspecialchars($resource->name) ?>') : selected.push('<?= htmlspecialchars($resource->name) ?>')" :class="selected.includes('<?= htmlspecialchars($resource->name) ?>') ? 'bg-blue-100 text-blue-800' : ''" class="py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100">
+                                        <div onclick="toggleSelection('<?= htmlspecialchars($resource->name) ?>', '<?= htmlspecialchars($resource->getId()) ?>', '<?= htmlspecialchars($typeName) ?>')" class="py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100">
                                             <span><?= htmlspecialchars($resource->name) ?></span>
-                                            <span x-show="selected.includes('<?= htmlspecialchars($resource->name) ?>')" class="hidden hs-selected:block">
+                                            <span id="check-<?= htmlspecialchars($resource->getId()) ?>" class="hidden">
                                                 <svg class="shrink-0 size-3.5 text-blue-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                     <polyline points="20 6 9 17 4 12"/>
                                                 </svg>
@@ -149,7 +149,7 @@
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
-                                <select id="resource_<?= htmlspecialchars($typeName) ?>" name="resources[<?= htmlspecialchars($typeName) ?>][]" class="hidden" multiple>
+                                <select id="resource_<?= htmlspecialchars($typeName) ?>" name="resource_id[]" class="hidden" multiple>
                                     <?php foreach ($resourcesList as $resource): ?>
                                         <option value="<?= htmlspecialchars($resource->getId()) ?>"><?= htmlspecialchars($resource->name) ?></option>
                                     <?php endforeach; ?>
@@ -157,6 +157,11 @@
                             </div>
                         </div>
                     <?php endforeach; ?>
+                </div>
+
+                <div>
+                    <p class="text-lg font-semibold text-gray-800">Observaciones:</p>
+                    <textarea name="observation" class="block w-full p-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none mt-2" rows="4" placeholder="Escribe aquí tus observaciones..."><?= htmlspecialchars($work_report->observation) ?></textarea>
                 </div>
 
                 <button

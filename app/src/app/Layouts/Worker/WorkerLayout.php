@@ -26,9 +26,6 @@ $currentContract = Session::get('current_contract');
     <script src="/assets/js/tailwind.js"></script>
     <!-- FontAwesome CDN for icons -->
     <script src="https://kit.fontawesome.com/f80b94bd90.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-
 
 </head>
 
