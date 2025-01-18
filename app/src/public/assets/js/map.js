@@ -263,6 +263,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isCreating) {
                 stopCreation();
             }
+            createButton.classList.add("text-gray-300");
+            createButton.classList.remove("text-gray-700");
+            createButton.setAttribute("disabled", "true");
         } else {
             currentMode = mode;
             setActiveButton(mode === MODE.ZONE ? zoneButton : elementButton);
