@@ -72,7 +72,7 @@ echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos lo
                     <!-- Letters avatar -->
                     <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer"
                         onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
-                        <?= strtoupper(substr($_SESSION['user']['name'], 0, 1).substr($_SESSION['user']['surname'], 0, 1)); ?>
+                        <?= strtoupper(substr(Session::get('user')['name'], 0, 1).substr(Session::get('user')['surname'], 0, 1)); ?>
                     </div>
                     <div id="profile-dropdown"
                         class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
