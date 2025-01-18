@@ -25,9 +25,9 @@ INSERT INTO tree_types (family, genus, species) VALUES
 
 --* Tasks
 INSERT INTO task_types (name, description) VALUES
-('Podar árboles', 'Tarea de poda general'),
-('Riego de árboles', 'Riego programado'),
-('Fertilización', 'Fertilización básica');
+('Podar', 'Tarea de poda general'),
+('Regar', 'Riego programado'),
+('Fertilizar', 'Fertilización básica');
 
 --* Zones
 INSERT INTO zones (name, contract_id, color, description) VALUES
