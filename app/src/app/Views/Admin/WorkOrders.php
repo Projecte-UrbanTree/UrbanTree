@@ -9,7 +9,7 @@
         <thead class="bg-gray-700 text-white">
             <tr class="h-12">
                 <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Orden de Trabajo</th>
-                <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Contrato</th>
+                <th scope="col" class="px-4 py-3 font-medium">Contrato</th>
                 <th scope="col" class="px-4 py-3 font-medium">Fecha</th>
                 <th scope="col" class="px-4 py-3 font-medium">Operarios</th>
                 <th scope="col" class="px-4 py-3 font-medium">Estatus</th>
