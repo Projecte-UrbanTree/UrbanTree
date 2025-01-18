@@ -14,6 +14,8 @@ class WorkOrderBlockTask extends BaseModel
 
     public int $status;
 
+    public ?string $spent_time;
+
     protected static function getTableName(): string
     {
         return 'work_orders_blocks_tasks';
@@ -28,6 +30,7 @@ class WorkOrderBlockTask extends BaseModel
         $work_order_block_task->element_type_id = $data['element_type_id'];
         $work_order_block_task->tree_type_id = $data['tree_type_id'];
         $work_order_block_task->status = $data['status'];
+        $work_order_block_task->spent_time = $data['spent_time'] ?? null;
 
         return $work_order_block_task;
     }

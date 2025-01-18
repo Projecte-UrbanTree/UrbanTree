@@ -6,7 +6,7 @@ class WorkReportResource extends BaseModel
 {
     public int $work_report_id;
 
-    public int $type_resources_id;
+    public int $resource_id;
 
     protected static function getTableName(): string
     {
@@ -18,7 +18,7 @@ class WorkReportResource extends BaseModel
         $work_report_resource = new WorkReportResource;
         $work_report_resource->id = $data['id'];
         $work_report_resource->work_report_id = $data['work_report_id'];
-        $work_report_resource->type_resources_id = $data['type_resources_id'];
+        $work_report_resource->resource_id = $data['resource_id'];
         $work_report_resource->created_at = $data['created_at'];
         $work_report_resource->updated_at = $data['updated_at'];
         $work_report_resource->deleted_at = $data['deleted_at'];
@@ -31,8 +31,8 @@ class WorkReportResource extends BaseModel
         return $this->belongsTo(WorkReport::class, 'work_report_id');
     }
 
-    public function resourceType()
+    public function resource()
     {
-        return $this->belongsTo(ResourceType::class, 'type_resources_id');
+        return $this->belongsTo(Resource::class, 'resource_id');
     }
 }

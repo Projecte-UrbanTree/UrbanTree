@@ -15,6 +15,7 @@ class DatabaseTest extends TestCase
         // TODO: Conditionally skip the test if the environment is CI
         $this->markTestSkipped('Database tests are not supported on CI');
     }
+
     public function testConnection()
     {
         $connection = Database::connect();

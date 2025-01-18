@@ -84,6 +84,7 @@ class WorkOrderController
                     $task = new WorkOrderBlockTask;
                     $task->work_orders_block_id = $block->getId();
                     $task->task_id = $taskData['taskType'];
+                    $task->element_type_id = $taskData['elementType'];
                     $task->tree_type_id = ! empty($taskData['species']) ? $taskData['species'] : null;
                     $task->save();
                 }

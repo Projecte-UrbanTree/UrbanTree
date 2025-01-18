@@ -41,7 +41,7 @@ function mapWithId($items, $getIdMethod)
         <!-- Add Blocks Button -->
         <div class="col-span-1 md:col-span-2 flex justify-end">
             <button type="button" id="addBlocks" onclick="addBlock()" class="px-4 py-2 bg-green-500 text-white shadow-sm hover:bg-green-600 transition-all duration-200 rounded mt-4">
-                Agregar Bloques
+                Añadir Bloques
             </button>
         </div>
 
@@ -62,7 +62,7 @@ function mapWithId($items, $getIdMethod)
                     <input type="hidden" name="blocks[0][zonesIds]" id="zonesIdsInput_0">
                 </div>
                 <div class="tasksContainer space-y-4 mb-4">
-                    <h3 class="text-lg font-semibold text-gray-800 my-3">Seleccionar Tareas</h3>
+                    <h3 class="text-lg font-semibold text-gray-800 my-3">Tareas</h3>
                     <div class="task-row flex space-x-4 items-end" data-task-index="0">
                         <div class="flex-auto">
                             <label for="taskType_0_0" class="block text-sm font-medium text-gray-700 mb-1">Tarea</label>
@@ -85,7 +85,7 @@ function mapWithId($items, $getIdMethod)
                         <div class="flex-auto">
                             <label for="species_0_0" class="block text-sm font-medium text-gray-700 mb-1">Species</label>
                             <select name="blocks[0][tasks][0][species]" id="species_0_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
-                                <option value="" selected>Opcional</option>
+                                <option value="" selected>Sin definir (Opcional)</option>
                                 <?php foreach ($tree_types as $tree_type) { ?>
                                     <option value="<?= htmlspecialchars($tree_type->getId()) ?>"><?= htmlspecialchars($tree_type->species) ?></option>
                                 <?php } ?>

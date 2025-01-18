@@ -41,7 +41,7 @@ function mapWithId($items, $getIdMethod)
         <!-- Add Blocks Button -->
         <div class="col-span-1 md:col-span-2 flex justify-end">
             <button type="button" id="addBlocks" onclick="addBlock()" class="px-4 py-2 bg-green-500 text-white shadow-sm hover:bg-green-600 transition-all duration-200 rounded mt-4">
-                Agregar Bloques
+                Añadir Bloques
             </button>
         </div>
 
@@ -65,7 +65,7 @@ function mapWithId($items, $getIdMethod)
                         <input type="hidden" name="blocks[<?= $blockIndex ?>][zonesIds]" id="zonesIdsInput_<?= $blockIndex ?>" value="<?= htmlspecialchars(implode(',', array_map(fn ($zone) => $zone->getId(), $block->zones()))); ?>">
                     </div>
                     <div class="tasksContainer space-y-4 mb-4">
-                        <h3 class="text-lg font-semibold text-gray-800 my-3">Seleccionar Tareas</h3>
+                        <h3 class="text-lg font-semibold text-gray-800 my-3">Tareas</h3>
                         <?php foreach ($block->tasks() as $taskIndex => $task) { ?>
                             <div class="task-row flex space-x-4 items-end" data-task-index="<?= $taskIndex ?>">
                                 <div class="flex-auto">
