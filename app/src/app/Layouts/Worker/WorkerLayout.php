@@ -65,8 +65,8 @@ $currentContract = Session::get('current_contract');
                     foreach ($contracts as $contract) {
                         echo '<option value="'.$contract->getId().'"'.($currentContract == $contract->getId() ? ' selected' : '').'>'.$contract->name.'</option>';
                     }
-echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos los contratos</option>';
-?>
+                    echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos los contratos</option>';
+                    ?>
                 </select>
                 <div class="relative">
                     <!-- Letters avatar -->

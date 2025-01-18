@@ -48,7 +48,7 @@
                                     />
                                     <span>
                                         <?= htmlspecialchars($blockTask->task()->name) ?>
-                                        <?php echo htmlspecialchars(' '.$blockTask->elementType()->name); ?>
+                                        <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
                                         <?php if ($blockTask->treeType() != null) { ?>
                                             : <?= htmlspecialchars($blockTask->treeType()->species) ?>
                                         <?php } ?>
@@ -82,7 +82,7 @@
                                 <?php foreach ($block->tasks() as $blockTask) { ?>
                                     <li class="flex items-center space-x-2">
                                         <?= htmlspecialchars($blockTask->task()->name) ?>
-                                        <?php echo htmlspecialchars(' '.$blockTask->elementType()->name); ?>
+                                        <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
                                         <?php if ($blockTask->treeType() != null) { ?>
                                             : <?= htmlspecialchars($blockTask->treeType()->species) ?>
                                         <?php } ?>
@@ -105,7 +105,7 @@
                     <label for="spent_fuel">
                         <p class="text-lg font-semibold text-gray-800">Combustible:</p>
                     </label>
-                    <input 
+                    <input
                         type="number"
                         step="0.01"
                         id="spent_fuel"
