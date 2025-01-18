@@ -4,11 +4,11 @@ namespace App\Controllers\Worker;
 
 use App\Core\Session;
 use App\Core\View;
+use App\Models\Resource;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderBlockTask;
 use App\Models\WorkOrderUser;
 use App\Models\WorkReport;
-use App\Models\Resource;
 use App\Models\WorkReportResource;
 
 class WorkOrderController
@@ -37,12 +37,13 @@ class WorkOrderController
             $report = $work_order->report();
             if ($report) {
                 $list = WorkReportResource::findAll(['work_report_id' => $report->getId()]);
-                $work_report_resources[$work_order->getId()] = array_map(function($item) {
+                $work_report_resources[$work_order->getId()] = array_map(function ($item) {
                     $resource = $item->resource();
+
                     return [
                         'resource_id' => $item->resource_id,
                         'resource_name' => $resource ? $resource->name : '',
-                        'resource_type' => $resource ? $resource->resourceType()->name : ''
+                        'resource_type' => $resource ? $resource->resourceType()->name : '',
                     ];
                 }, $list);
             } else {
@@ -100,8 +101,8 @@ class WorkOrderController
         }
 
         $work_report = WorkReport::findBy(['work_order_id' => $postData['work_order_id']], true);
-        if (!$work_report) {
-            $work_report = new WorkReport();
+        if (! $work_report) {
+            $work_report = new WorkReport;
             $work_report->work_order_id = $postData['work_order_id'];
         }
 
@@ -111,14 +112,14 @@ class WorkOrderController
 
         $this->updateResources($work_report->getId(), $postData['resource_id'] ?? []);
 
-        header('Location: /worker/work-orders?work_order_id=' . $postData['work_order_id']);
+        header('Location: /worker/work-orders?work_order_id='.$postData['work_order_id']);
         exit;
     }
 
     private function updateResources($work_report_id, array $newResourceIds)
     {
         $existingResources = WorkReportResource::findAll(['work_report_id' => $work_report_id]);
-        $existingResourceIds = array_map(fn($res) => $res->resource_id, $existingResources);
+        $existingResourceIds = array_map(fn ($res) => $res->resource_id, $existingResources);
 
         $resourcesToDelete = array_diff($existingResourceIds, $newResourceIds);
         foreach ($resourcesToDelete as $resourceId) {
@@ -126,8 +127,8 @@ class WorkOrderController
         }
 
         foreach ($newResourceIds as $resourceId) {
-            if (!in_array($resourceId, $existingResourceIds)) {
-                $work_report_resource = new WorkReportResource();
+            if (! in_array($resourceId, $existingResourceIds)) {
+                $work_report_resource = new WorkReportResource;
                 $work_report_resource->work_report_id = $work_report_id;
                 $work_report_resource->resource_id = $resourceId;
                 $work_report_resource->save();

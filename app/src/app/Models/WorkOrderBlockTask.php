@@ -13,6 +13,7 @@ class WorkOrderBlockTask extends BaseModel
     public ?int $tree_type_id;
 
     public int $status;
+
     public ?string $spent_time;
 
     protected static function getTableName(): string

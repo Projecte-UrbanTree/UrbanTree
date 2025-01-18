@@ -16,8 +16,8 @@
         </button>
     </div>
 
-    <?php if (!empty($work_orders)): ?>
-        <?php foreach ($work_orders as $work_order): ?>
+    <?php if (! empty($work_orders)) { ?>
+        <?php foreach ($work_orders as $work_order) { ?>
             <?php $work_report = $work_order->report(); ?>
             <?php $usedJson = htmlspecialchars(json_encode($work_report_resources[$work_order->getId()] ?? []), ENT_QUOTES); ?>
             <div hidden id="used-res-<?= $work_order->getId(); ?>" data-used="<?= $usedJson ?>"></div>
@@ -30,7 +30,7 @@
             </div>
 
             <?php $blockCounter = 1; ?>
-            <?php foreach ($work_order->blocks() as $block): ?>
+            <?php foreach ($work_order->blocks() as $block) { ?>
                 <div class="mt-8 p-6 border rounded-lg shadow-md bg-white">
                     <p class="text-lg font-semibold text-gray-800">Bloque <?= $blockCounter++ ?></p>
 
@@ -38,7 +38,7 @@
                     <div>
                         <p class="text-lg font-semibold text-gray-800">Tipo de Tareas</p>
                         <ul class="list-disc list-inside">
-                            <?php foreach ($block->tasks() as $blockTask): ?>
+                            <?php foreach ($block->tasks() as $blockTask) { ?>
                                 <li class="flex items-center space-x-2">
                                     <input type="checkbox"
                                            class="task-checkbox form-checkbox text-blue-500 rounded-md focus:ring-2 focus:ring-blue-400"
@@ -49,12 +49,12 @@
                                     <span>
                                         <?= htmlspecialchars($blockTask->task()->name) ?>
                                         <?php echo htmlspecialchars(' '.$blockTask->elementType()->name); ?>
-                                        <?php if ($blockTask->treeType() != null): ?>
+                                        <?php if ($blockTask->treeType() != null) { ?>
                                             : <?= htmlspecialchars($blockTask->treeType()->species) ?>
-                                        <?php endif; ?>
+                                        <?php } ?>
                                     </span>
                                 </li>
-                            <?php endforeach; ?>
+                            <?php } ?>
                         </ul>
                     </div>
 
@@ -66,26 +66,26 @@
                         </p>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php } ?>
 
             <form id="work-reportForm-<?= $work_order->getId() ?>" method="POST" action="/worker/work-orders/store-report">
                 <input type="hidden" name="work_order_id" value="<?= $work_order->getId() ?>">
                 <h1 class="text-4xl font-bold my-6 text-gray-800">Parte de Trabajo</h1>
 
                 <?php $blockCounter = 1; ?>
-                <?php foreach ($work_order->blocks() as $block): ?>
+                <?php foreach ($work_order->blocks() as $block) { ?>
                     <div class="mt-8 p-6 border rounded-lg shadow-md bg-white">
                         <p class="text-lg font-semibold text-gray-800">Bloque <?= $blockCounter++ ?></p>
                         <div>
                             <p class="text-lg font-semibold text-gray-800">Tipo de Tareas</p>
                             <ul class="list-disc list-inside">
-                                <?php foreach ($block->tasks() as $blockTask): ?>
+                                <?php foreach ($block->tasks() as $blockTask) { ?>
                                     <li class="flex items-center space-x-2">
                                         <?= htmlspecialchars($blockTask->task()->name) ?>
-                                        <?php echo htmlspecialchars(" " . $blockTask->elementType()->name); ?>
-                                        <?php if ($blockTask->treeType() != null): ?>
+                                        <?php echo htmlspecialchars(' '.$blockTask->elementType()->name); ?>
+                                        <?php if ($blockTask->treeType() != null) { ?>
                                             : <?= htmlspecialchars($blockTask->treeType()->species) ?>
-                                        <?php endif; ?>
+                                        <?php } ?>
 
                                         <!-- Dedicated Hours -->
                                         <label for="spent_time-<?= $blockTask->getId() ?>"
@@ -96,11 +96,11 @@
                                                value="<?= $blockTask->spent_time ?>"
                                                class="text-center border border-gray-300 rounded-md py-1 px-2 w-20 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                                     </li>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </ul>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                <?php } ?>
                 <div>
                     <label for="spent_fuel">
                         <p class="text-lg font-semibold text-gray-800">Combustible:</p>
@@ -121,12 +121,12 @@
                     <p class="text-lg font-semibold text-gray-800">Recursos:</p>
                     <?php
                     $resourcesByType = [];
-                    foreach ($resources as $resource) {
-                        $resourcesByType[$resource->resourceType()->name][] = $resource;
-                    }
-                    ?>
+            foreach ($resources as $resource) {
+                $resourcesByType[$resource->resourceType()->name][] = $resource;
+            }
+            ?>
 
-                    <?php foreach ($resourcesByType as $typeName => $resourcesList): ?>
+                    <?php foreach ($resourcesByType as $typeName => $resourcesList) { ?>
                         <div class="mt-4">
                             <label for="resource_<?= htmlspecialchars($typeName) ?>" class="block text-gray-800 font-medium">
                                 <?= htmlspecialchars($typeName) ?>
@@ -145,7 +145,7 @@
                                     </svg>
                                 </button>
                                 <div id="dropdown-<?= htmlspecialchars($typeName) ?>" class="hidden mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto">
-                                    <?php foreach ($resourcesList as $resource): ?>
+                                    <?php foreach ($resourcesList as $resource) { ?>
                                         <div onclick="toggleSelection('<?= htmlspecialchars($resource->name) ?>', '<?= htmlspecialchars($resource->getId()) ?>', '<?= htmlspecialchars($typeName) ?>')" class="py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100">
                                             <span><?= htmlspecialchars($resource->name) ?></span>
                                             <span id="check-<?= htmlspecialchars($resource->getId()) ?>" class="hidden">
@@ -154,16 +154,16 @@
                                                 </svg>
                                             </span>
                                         </div>
-                                    <?php endforeach; ?>
+                                    <?php } ?>
                                 </div>
                                 <select id="resource_<?= htmlspecialchars($typeName) ?>" name="resource_id[]" class="hidden" multiple>
-                                    <?php foreach ($resourcesList as $resource): ?>
+                                    <?php foreach ($resourcesList as $resource) { ?>
                                         <option value="<?= htmlspecialchars($resource->getId()) ?>"><?= htmlspecialchars($resource->name) ?></option>
-                                    <?php endforeach; ?>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
-                    <?php endforeach; ?>
+                    <?php } ?>
                 </div>
 
                 <div>
@@ -180,8 +180,8 @@
                 </button>
             </form>
 
-        <?php endforeach; ?>
-    <?php else: ?>
+        <?php } ?>
+    <?php } else { ?>
         <p class="text-gray-600 mt-6">No hay órdenes de trabajo para esta fecha.</p>
-    <?php endif; ?>
+    <?php } ?>
 </div>

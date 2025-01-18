@@ -5,6 +5,7 @@ namespace App\Models;
 class WorkReportResource extends BaseModel
 {
     public int $work_report_id;
+
     public int $resource_id;
 
     protected static function getTableName(): string
