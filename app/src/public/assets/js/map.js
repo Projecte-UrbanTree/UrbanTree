@@ -69,13 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
         setMode(MODE.ELEMENT);
     });
 
-    const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
-    const mobileMenu = document.getElementById("mobile-menu");
-
-    mobileMenuToggle.addEventListener("click", function() {
-        mobileMenu.classList.toggle("hidden");
-    });
-
     // Functions
     function setActiveButton(activeButton) {
         const buttons = [zoneButton, elementButton];
