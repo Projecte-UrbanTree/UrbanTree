@@ -80,7 +80,7 @@
                         </td>
                     </tr>
                     <tr id="accordionContent<?= $index; ?>" class="hidden">
-                        <td colspan="5" class="py-4 px-4">
+                        <td colspan="6" class="py-4 px-4">
                             <?php foreach ($work_order->blocks() as $block) { ?>
                                 <div class="mb-6 border rounded-lg shadow-sm overflow-hidden">
                                     <table class="w-full text-sm text-left text-gray-700 bg-white divide-y divide-gray-200">
