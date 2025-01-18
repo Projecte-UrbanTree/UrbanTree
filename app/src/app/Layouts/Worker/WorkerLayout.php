@@ -53,8 +53,7 @@ $currentContract = Session::get('current_contract');
                 </a>
                 <a href="/worker/work-orders"
                     class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/worker/work-orders') ? 'font-semibold' : ''; ?>">
-                    <i class="fas fa-briefcase block"></i>
-                    Órdenes de trabajo
+                    <i class="fas fa-briefcase"></i> Órdenes de trabajo
                 </a>
             </div>
             <!-- Profile and Contract Dropdown -->
