@@ -8,7 +8,7 @@
     <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
         <thead class="bg-gray-700 text-white">
             <tr class="h-12">
-                <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Orden de Trabajo</th>
+                <th scope="col" class="px-4 py-3 font-medium rounded-tl-lg">Órden de trabajo</th>
                 <th scope="col" class="px-4 py-3 font-medium">Contrato</th>
                 <th scope="col" class="px-4 py-3 font-medium">Fecha</th>
                 <th scope="col" class="px-4 py-3 font-medium">Operarios</th>
@@ -87,7 +87,7 @@
                                         <thead class="bg-gray-50">
                                             <tr>
                                                 <th scope="col" class="px-4 py-3 font-medium">Zonas</th>
-                                                <th scope="col" class="px-4 py-3 font-medium">Tipo de Tareas</th>
+                                                <th scope="col" class="px-4 py-3 font-medium">Tareas</th>
                                                 <th scope="col" class="px-4 py-3 font-medium">Notas</th>
                                             </tr>
                                         </thead>
