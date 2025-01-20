@@ -1,8 +1,3 @@
-import os
-import sys
-
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
-
 from unittest.mock import patch
 
 import pytest
@@ -13,9 +8,8 @@ from src.database import (
     create_engine,
     drop_db_and_tables,
 )
-from src.services.sensor_service import check_sensor_task
-
 from api.src.models.sensor_model import SensorHistory
+from src.services.sensor_service import check_sensor_task
 
 
 # fixture for the in-memory database
