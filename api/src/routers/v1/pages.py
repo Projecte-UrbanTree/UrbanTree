@@ -1,17 +1,16 @@
 import os
 from typing import List
-from fastapi import APIRouter, Request, Depends
+
+from fastapi import APIRouter, Depends, Request
 from fastapi.templating import Jinja2Templates
-from sqlmodel import Session, select
 from sqlalchemy.orm import joinedload
-
+from sqlmodel import Session, select
 from src.database import get_session
-from src.models.sensor_model import Sensor
 from src.models.sensor_history_model import SensorHistory
-
+from src.models.sensor_model import Sensor
 
 templates = Jinja2Templates(
-    directory=os.path.join(os.path.dirname(__file__), "../templates")
+    directory=os.path.join(os.path.dirname(__file__), "../../templates")
 )
 
 
