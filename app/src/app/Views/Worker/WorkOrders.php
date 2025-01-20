@@ -168,8 +168,9 @@
 
                 <div>
                     <p class="text-lg font-semibold text-gray-800">Observaciones:</p>
-                    <textarea name="observation" class="block w-full p-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none mt-2" rows="4" placeholder="Escribe aquí tus observaciones..."><?= htmlspecialchars($work_report->observation) ?></textarea>
+                    <textarea name="observation" class="block w-full p-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none mt-2" rows="4" placeholder="Escribe aquí tus observaciones..."><?= htmlspecialchars($work_report->observation ?? '') ?></textarea>
                 </div>
+
 
                 <button
                     type="submit"
