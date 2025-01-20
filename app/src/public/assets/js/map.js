@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const inventorySidebarToggle = document.getElementById("inventory-sidebar-toggle");
     const inventorySidebar = document.querySelector(".inventory-sidebar");
     const mapWrapper = document.querySelector(".map");
+    const elementModalTabs = document.querySelectorAll(".element-modal-tab");
+    const elementModalTabContents = document.querySelectorAll(".element-modal-tab-content");
 
     // Initialize the map
     mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW50cmVlIiwiYSI6ImNtNHI4MXNhaTAxc3gybHNpMWp3ejJldHcifQ.d94SBSjOt6Ylu4A8PKPFiQ";
@@ -61,6 +63,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     zoneButton.addEventListener("click", () => setMode(MODE.ZONE));
     elementButton.addEventListener("click", () => setMode(MODE.ELEMENT));
+
+    elementModalTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            elementModalTabs.forEach(t => {
+                t.classList.remove("border-primary");
+                t.classList.add("border-transparent");
+            });
+            elementModalTabContents.forEach(tc => tc.classList.add("hidden"));
+
+            tab.classList.add("border-primary");
+            tab.classList.remove("border-transparent");
+            document.getElementById(tab.dataset.target).classList.remove("hidden");
+        });
+    });
 
     // Functions
     function setActiveButton(activeButton) {
@@ -808,18 +824,30 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(response => response.json())
             .then(data => {
                 elementModalTitle.innerText = `Elemento ${data.id}`;
-                elementModalContent.innerHTML = `
+                document.getElementById("element-modal-info").innerHTML = `
                     <div class="space-y-2">
                         <p><strong><i class="fas fa-map-marker-alt"></i> Zona:</strong> ${data.zone.name}</p>
                         <p><strong><i class="${data.elementType.icon}"></i> Tipo:</strong> ${data.elementType.name}</p>
                         ${data.elementType.requires_tree_type && data.tree_type ? `<p><strong><i class="fas fa-tree"></i> Especie:</strong> ${data.tree_type.species}</p>` : ""}
                         <p><strong><i class="fas fa-map-pin"></i> Coordenadas:</strong> ${data.point.latitude}, ${data.point.longitude}</p>
-                        <p><strong><i class="fas fa-align-left"></i> Descripción:</strong> <textarea id="element-description-input" class="border rounded p-1 w-full">${data.description || ""}</textarea></p>
+                        <p><strong><i class="fas fa-align-left"></i> Descripción:</strong> <textarea id="element-description-input" class="border rounded p-1 w-full" rows="5">${data.description || ""}</textarea></p>
                     </div>
                     <div class="mt-4 flex justify-end">
                         <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300" data-element-id="${data.id}">Eliminar elemento</button>
                     </div>
                 `;
+                document.getElementById("element-modal-incidences").innerHTML = `
+                    <div class="space-y-2">
+                        <h3 class="text-lg font-semibold">Incidencias</h3>
+                        <div id="incidences-list">
+                            <!-- Incidences will be injected here -->
+                        </div>
+                        <div class="flex justify-end">
+                            <button id="add-incidence-btn" class="bg-blue-500 text-white px-4 py-2 rounded">Añadir Incidencia</button>
+                        </div>
+                    </div>
+                `;
+                loadIncidences(data.id);
                 elementModal.classList.remove("hidden");
 
                 const descriptionInput = document.getElementById('element-description-input');
@@ -839,11 +867,167 @@ document.addEventListener("DOMContentLoaded", () => {
                     const elementId = event.target.getAttribute('data-element-id');
                     deleteElement(elementId);
                 });
+
+                document.getElementById("add-incidence-btn").addEventListener("click", () => {
+                    showAddIncidenceModal(data.id);
+                });
             })
             .catch(error => {
                 console.error("Error al obtener los datos del elemento", error);
                 alert("Error al obtener los datos del elemento.");
             });
+    }
+
+    function loadIncidences(elementId) {
+        fetch(`/api/map/elements/${elementId}/incidences`)
+            .then(response => response.json())
+            .then(data => {
+                const incidencesList = document.getElementById("incidences-list");
+                incidencesList.innerHTML = "";
+                if (data.length === 0) {
+                    const emptyMessage = document.createElement("p");
+                    emptyMessage.innerText = "No hay incidencias registradas.";
+                    incidencesList.appendChild(emptyMessage);
+                } else {
+                    data.forEach(incidence => {
+                        const incidenceItem = document.createElement("div");
+                        incidenceItem.className = "border rounded-lg p-4 mb-4 bg-white shadow-sm";
+                        incidenceItem.innerHTML = `
+                            <p class="text-lg font-semibold mb-2">Incidencia ${incidence.id}</p>
+                            <p class="mb-2"><strong><i class="fas fa-tag"></i> Nombre:</strong> ${incidence.name}</p>
+                            <p class="mb-2"><strong><i class="fas fa-calendar"></i> Fecha Creación:</strong> ${incidence.created_at || "N/A"}</p>
+                            <p class="mb-2"><strong><i class="fas fa-info-circle"></i> Estado:</strong> <span class="text-sm rounded px-2 py-1 ml-2 ${incidence.status === "closed" ? "bg-gray-700 text-white" : "bg-yellow-500 text-white"}">${incidence.status === "closed" ? '<i class="fas fa-lock mr-1"></i> Cerrado' : '<i class="fas fa-exclamation-triangle mr-1"></i> Abierta'}</span></p>
+                            <p class="mb-4"><strong><i class="fas fa-align-left"></i> Descripción:</strong> ${incidence.description || "N/A"}</p>
+                            <div class="flex justify-end space-x-2">
+                                <button class="bg-green-500 text-white px-4 py-2 rounded-lg toggle-status-btn" data-incidence-id="${incidence.id}">
+                                    Cambiar Estado
+                                </button>
+                                <button class="bg-red-500 text-white px-4 py-2 rounded-lg delete-incidence-btn" data-incidence-id="${incidence.id}">
+                                    Eliminar incidencia
+                                </button>
+                            </div>
+                        `;
+                        incidencesList.appendChild(incidenceItem);
+                    });
+
+                    document.querySelectorAll(".toggle-status-btn").forEach(button => {
+                        button.addEventListener("click", (event) => {
+                            const incidenceId = event.target.getAttribute('data-incidence-id');
+                            toggleIncidenceStatus(incidenceId, elementId);
+                        });
+                    });
+
+                    document.querySelectorAll(".delete-incidence-btn").forEach(button => {
+                        button.addEventListener("click", (event) => {
+                            const incidenceId = event.target.getAttribute('data-incidence-id');
+                            deleteIncidence(incidenceId, elementId);
+                        });
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error al cargar las incidencias", error);
+                alert("Error al cargar las incidencias.");
+            });
+    }
+
+    function showAddIncidenceModal(elementId) {
+        const incidenceModal = document.createElement("div");
+        incidenceModal.className = "fixed inset-0 flex items-center justify-center bg-black bg-opacity-50";
+        incidenceModal.innerHTML = `
+            <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
+                <h2 class="text-xl font-bold mb-4">Añadir Incidencia</h2>
+                <form id="add-incidence-form">
+                    <div class="mb-4">
+                        <label for="incidence-name" class="block text-gray-700">Nombre</label>
+                        <input type="text" id="incidence-name" class="w-full p-2 border rounded" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="incidence-description" class="block text-gray-700">Descripción</label>
+                        <textarea id="incidence-description" class="w-full p-2 border rounded"></textarea>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" id="cancel-add-incidence" class="mr-2 bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Añadir</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        document.body.appendChild(incidenceModal);
+
+        document.getElementById("cancel-add-incidence").addEventListener("click", () => {
+            document.body.removeChild(incidenceModal);
+        });
+
+        document.getElementById("add-incidence-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("incidence-name").value;
+            const description = document.getElementById("incidence-description").value;
+            addIncidence(elementId, { name, description });
+            document.body.removeChild(incidenceModal);
+        });
+    }
+
+    function addIncidence(elementId, incidenceData) {
+        fetch(`/api/map/elements/${elementId}/incidences`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(incidenceData),
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === "success") {
+                alert("Incidencia añadida correctamente.");
+                loadIncidences(elementId);
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        })
+        .catch(error => {
+            console.error("Error al añadir la incidencia", error);
+            alert("Error al añadir la incidencia.");
+        });
+    }
+
+    function deleteIncidence(incidenceId, elementId) {
+        fetch(`/api/map/incidences/${incidenceId}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === "success") {
+                alert("Incidencia eliminada correctamente.");
+                loadIncidences(elementId);
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        })
+        .catch(error => {
+            console.error("Error al eliminar la incidencia", error);
+            alert("Error al eliminar la incidencia.");
+        });
+    }
+
+    function toggleIncidenceStatus(incidenceId, elementId) {
+        fetch(`/api/map/incidences/${incidenceId}/status`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'success') {
+                alert('Estado de la incidencia cambiado correctamente.');
+                loadIncidences(elementId);
+            } else {
+                alert(result.message || 'Error al cambiar el estado de la incidencia');
+            }
+        })
+        .catch(error => {
+            console.error("Error al cambiar el estado de la incidencia", error);
+            alert("Error al cambiar el estado de la incidencia.");
+        });
     }
 
     function updateElementDescription(elementId, newDescription) {

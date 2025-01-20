@@ -20,6 +20,10 @@ return [
             'controller' => MapController::class,
             'method' => 'getElement',
         ],
+        '/api/map/elements/:id/incidences' => [
+            'controller' => MapController::class,
+            'method' => 'getIncidences',
+        ],
     ],
     'POST' => [
         '/api/map/zones' => [
@@ -29,6 +33,10 @@ return [
         '/api/map/elements' => [
             'controller' => MapController::class,
             'method' => 'createElement',
+        ],
+        '/api/map/elements/:id/incidences' => [
+            'controller' => MapController::class,
+            'method' => 'createIncidence',
         ],
     ],
     'PUT' => [
@@ -48,6 +56,10 @@ return [
             'controller' => MapController::class,
             'method' => 'updateZoneDescription',
         ],
+        '/api/map/incidences/:id/status' => [
+            'controller' => MapController::class,
+            'method' => 'toggleIncidenceStatus',
+        ],
     ],
     'DELETE' => [
         '/api/map/zones' => [
@@ -57,6 +69,10 @@ return [
         '/api/map/elements' => [
             'controller' => MapController::class,
             'method' => 'deleteElement',
+        ],
+        '/api/map/incidences/:id' => [
+            'controller' => MapController::class,
+            'method' => 'deleteIncidence',
         ],
     ],
 ];

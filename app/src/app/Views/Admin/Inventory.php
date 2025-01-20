@@ -16,14 +16,23 @@
 
 <!-- Element Modal -->
 <div id="element-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-2/3 h-3/5 overflow-y-auto">
         <div class="flex justify-between items-center mb-4">
-            <h2 id="element-modal-title" class="text-xl font-bold">Información del Elemento</h2>
+            <h2 id="element-modal-title" class="text-xl font-bold"></h2>
             <button id="element-modal-close" class="text-gray-500 hover:text-gray-700">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <div id="element-modal-content" class="text-gray-700 space-y-2"></div>
+        <div class="flex mb-4 border-b border-gray-200">
+            <button class="element-modal-tab px-4 py-2 text-gray-700 border-b-2 border-primary focus:outline-none" data-target="element-modal-info">Información</button>
+            <button class="element-modal-tab px-4 py-2 text-gray-700 border-b-2 border-transparent focus:outline-none" data-target="element-modal-incidences">Incidencias</button>
+        </div>
+        <div id="element-modal-info" class="element-modal-tab-content">
+            <!-- Information content will be injected here -->
+        </div>
+        <div id="element-modal-incidences" class="element-modal-tab-content hidden">
+            <!-- Incidences content will be injected here -->
+        </div>
     </div>
 </div>
 

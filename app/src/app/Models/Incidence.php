@@ -12,6 +12,10 @@ class Incidence extends BaseModel
 
     public ?int $photo_id;
 
+    public string $status = 'open';
+
+    public ?string $created_at;
+
     protected static function getTableName(): string
     {
         return 'incidences';
@@ -25,6 +29,8 @@ class Incidence extends BaseModel
         $incidence->name = $data['name'];
         $incidence->description = $data['description'];
         $incidence->photo_id = $data['photo_id'];
+        $incidence->status = $data['status'] ?? 'open';
+        $incidence->created_at = $data['created_at'] ?? null;
         $incidence->created_at = $data['created_at'];
         $incidence->updated_at = $data['updated_at'];
         $incidence->deleted_at = $data['deleted_at'];

@@ -8,6 +8,8 @@ use App\Models\ElementType;
 use App\Models\Point;
 use App\Models\TreeType;
 use App\Models\Zone;
+use App\Models\Incidence;
+use App\Core\Request;
 use Exception;
 
 class MapController
@@ -315,5 +317,73 @@ class MapController
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
         exit;
+    }
+
+    public function getIncidences($id, $queryParams)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $elementId = $id;
+            $incidences = Incidence::findAll(['element_id' => $elementId]);
+            $data = [];
+            foreach ($incidences as $incidence) {
+                $data[] = [
+                    'id' => $incidence->getId(),
+                    'name' => $incidence->name,
+                    'description' => $incidence->description,
+                    'status' => $incidence->status,
+                    'created_at' => $incidence->created_at,
+                ];
+            }
+            echo json_encode($data);
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
+    public function createIncidence($id, $postData)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $elementId = $id;
+            $incidence = new Incidence;
+            $incidence->element_id = $elementId;
+            $incidence->name = $postData['name'];
+            $incidence->description = $postData['description'];
+            $incidence->status = 'open';
+            $incidence->created_at = date('Y-m-d H:i:s');
+            $incidence->save();
+            echo json_encode(['status' => 'success', 'incidence' => $incidence]);
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
+    public function toggleIncidenceStatus($id, $postData)
+    {
+        $incidence = Incidence::find($id);
+        if ($incidence) {
+            $incidence->status = $incidence->status === 'open' ? 'closed' : 'open';
+            $incidence->save();
+            echo json_encode(['status' => 'success', 'incidence' => $incidence]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Incidencia no encontrada.']);
+        }
+        exit;
+    }
+
+    public function deleteIncidence($id, $postData)
+    {
+        $incidence = Incidence::find($id);
+        if ($incidence) {
+            $incidence->delete();
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Incidence not found']);
+        }
     }
 }
