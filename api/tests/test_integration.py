@@ -1,8 +1,12 @@
 import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
 import pytest
-from api.src.models.sensor_model import Sensor, SensorHistory, SensorHistoryCreate
 from src.utils.file_loader import load_json_file
+
+from api.src.models.sensor_model import Sensor, SensorHistory, SensorHistoryCreate
 
 
 @pytest.fixture(scope="module")
