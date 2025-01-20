@@ -23,6 +23,11 @@ class WorkOrderBlock extends BaseModel
         return $work_order_block;
     }
 
+    public function workOrder(): WorkOrder
+    {
+        return $this->belongsTo(WorkOrder::class, 'work_order_id');
+    }
+
     public function zones(): array
     {
         return $this->belongsToMany(Zone::class, 'work_orders_blocks_zones', 'work_orders_block_id', 'zone_id');

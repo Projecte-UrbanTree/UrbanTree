@@ -9,6 +9,7 @@ use App\Controllers\Admin\IncidenceController;
 use App\Controllers\Admin\InventoryController;
 use App\Controllers\Admin\ResourceController;
 use App\Controllers\Admin\ResourceTypeController;
+use App\Controllers\Admin\StatsController;
 use App\Controllers\Admin\TaskTypeController;
 use App\Controllers\Admin\TreeTypeController;
 use App\Controllers\Admin\UserController;
@@ -260,6 +261,11 @@ return [
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
+        '/admin/stats' => [
+            'middlewares' => [AdminMiddleware::class],
+            'controller' => StatsController::class,
+            'method' => 'index',
+        ]
     ],
     'POST' => [
         '/admin/user/store' => [
