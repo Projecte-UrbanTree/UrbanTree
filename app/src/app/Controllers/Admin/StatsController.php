@@ -48,13 +48,13 @@ class StatsController
 			}));
 		}, $days);
 
-		// $hoursWorked = array_map(function ($day) use ($tasks) {
-		// 	return array_reduce(array_filter($tasks, function ($task) use ($day) {
-		// 		return date('l', strtotime($task->workOrderBlock()->workOrder()->date)) == $day;
-		// 	}), function ($carry, $task) {
-		// 		return $carry + $task->hours;
-		// 	}, 0);
-		// }, $days);
+		$hoursWorked = array_map(function ($day) use ($tasks) {
+			return array_reduce(array_filter($tasks, function ($task) use ($day) {
+				return date('l', strtotime($task->workOrderBlock()->workOrder()->date)) == $day;
+			}), function ($carry, $task) {
+				return $carry + $task->spent_time;
+			}, 0);
+		}, $days);
 
 		$workReports = WorkReport::findAll();
 		$fuelConsumption = array_map(function ($day) use ($workReports, $current_contract) {
@@ -75,7 +75,7 @@ class StatsController
 			'data' => [
 				'tasksDoneCount' => $tasksDoneCount,
 				'tasksNotDoneCount' => $tasksNotDoneCount,
-				// 'hoursWorked' => $hoursWorked,
+				'hoursWorked' => $hoursWorked,
 				'fuelConsumption' => $fuelConsumption,
 			],
 		]);
