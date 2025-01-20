@@ -1017,8 +1017,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelZoneButton.innerHTML = "<i class='fas fa-times-circle'></i> Cancelar creación";
     document.getElementById("submenu").appendChild(cancelZoneButton);
 
-    window.setMode = setMode;
-
     fetchElementTypes();
     fetchTreeTypes();
 });
