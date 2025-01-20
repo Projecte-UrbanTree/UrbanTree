@@ -11,7 +11,7 @@ class SensorHistoryResponse(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class SensorResponse(BaseModel):
@@ -19,4 +19,4 @@ class SensorResponse(BaseModel):
     histories: List[SensorHistoryResponse] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
