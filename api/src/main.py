@@ -1,15 +1,14 @@
 from contextlib import asynccontextmanager
 
-from fastapi.staticfiles import StaticFiles
 import sentry_sdk
 import sentry_sdk.crons
 from fastapi import FastAPI
-
-from src.routers import pages, sensors
-
+from fastapi.staticfiles import StaticFiles
 from src.config import settings
 from src.database import create_db_and_tables
 from src.services.scheduler_service import scheduler
+
+from api.src.routers.v1 import pages, sensors
 
 # Initialize Sentry SDK
 sentry_sdk.init(
