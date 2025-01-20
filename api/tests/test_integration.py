@@ -1,7 +1,7 @@
 import os
 
 import pytest
-from api.src.models.sensor_model import Sensor, SensorHistory, SensorHistoryCreate
+from src.models.sensor_model import Sensor, SensorHistory
 from src.utils.file_loader import load_json_file
 
 

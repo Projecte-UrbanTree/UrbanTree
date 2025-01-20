@@ -8,7 +8,7 @@ from src.database import (
     create_engine,
     drop_db_and_tables,
 )
-from api.src.models.sensor_model import SensorHistory
+from src.models.sensor_model import SensorHistory
 from src.services.sensor_service import check_sensor_task
 
 
