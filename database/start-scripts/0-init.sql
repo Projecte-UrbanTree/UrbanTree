@@ -127,6 +127,7 @@ create table incidences (
     name varchar(255) not null,
     description varchar(255),
     photo_id int,
+    status varchar(20) not null default 'open',
     created_at timestamp default current_timestamp,
     updated_at timestamp,
     deleted_at timestamp,
