@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const API_CONNECTION = ["api_urbantree", "alumnat", "iesmontsia", "org"].join('.');
+
     const MODE = { NONE: "NONE", ZONE: "ZONE", ELEMENT: "ELEMENT" };
     let currentMode = MODE.NONE;
     let isCreating = false;
@@ -712,7 +714,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchSensorHistory(sensorId) {
         try {
             const response = await fetch(
-                `${window.location.protocol}//${window.location.hostname}:8001/api/v1/sensors/${sensorId}/history`
+                `${window.location.protocol}//${API_CONNECTION}/api/v1/sensors/${sensorId}/history`
             );
             const result = await response.json();
             if (result.status === "success") {
