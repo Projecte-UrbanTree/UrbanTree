@@ -1,15 +1,15 @@
 from typing import List, Union
+
 from fastapi import APIRouter, Depends
-from sqlmodel import Session, select
 from sqlalchemy.orm import joinedload
-from src.schemas.sensor_response import SensorResponse
-from src.models.sensor_history_model import SensorHistory
+from sqlmodel import Session, select
 from src.database import get_session
 from src.models.api_response_model import ApiResponse, ErrorResponse
+from src.models.sensor_history_model import SensorHistory
 from src.models.sensor_model import Sensor
+from src.schemas.sensor_response import SensorResponse
 
-
-router = APIRouter(prefix="/api/sensors", tags=["Sensors"])
+router = APIRouter(prefix="/api/v1/sensors", tags=["Sensors"])
 
 
 @router.get("/", response_model=ApiResponse[List[SensorResponse]])
