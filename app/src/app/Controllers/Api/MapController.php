@@ -34,7 +34,7 @@ class MapController
                 'name' => $zone->name,
                 'description' => $zone->description,
                 'points' => array_map(function ($point) {
-                    return [$point->latitude, $point->longitude]; // Ensure correct order
+                    return [$point->latitude, $point->longitude];
                 }, $zone->points()),
                 'elementTypes' => [],
             ];

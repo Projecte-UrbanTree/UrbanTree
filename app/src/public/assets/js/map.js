@@ -254,19 +254,19 @@ document.addEventListener("DOMContentLoaded", () => {
     function handleMapClick(e) {
         if (currentMode === MODE.ZONE && isCreating) {
             const { lng, lat } = e.lngLat;
-            zonePoints.push([lat, lng]); // Ensure correct order
+            zonePoints.push([lat, lng]);
 
             const markerElement = document.createElement("div");
             markerElement.style.cssText =
                 "width: 30px; height: 30px; background-color: red; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;";
             markerElement.innerText = zonePoints.length;
             const marker = new mapboxgl.Marker({ element: markerElement })
-                .setLngLat([lng, lat]) // Ensure correct order
+                .setLngLat([lng, lat])
                 .addTo(mapContainer);
             tempMarkers.push(marker);
         } else if (currentMode === MODE.ELEMENT && isCreating) {
             const { lng, lat } = e.lngLat;
-            const point = turf.point([lng, lat]); // Ensure correct order
+            const point = turf.point([lng, lat]);
 
             const zone = zonesData.zones.find((zone) => {
                 const numericPoints = zone.points.map(([latStr, lngStr]) => [
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (zone) {
-                showNewElementModal(zone, [lng, lat]); // Ensure correct order
+                showNewElementModal(zone, [lng, lat]);
             } else {
                 alert("El elemento debe estar dentro de una zona.");
             }
@@ -695,7 +695,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 markerElement.dataset.elementId = el.id;
 
                 const marker = new mapboxgl.Marker({ element: markerElement })
-                    .setLngLat([el.longitude, el.latitude]) // Ensure correct order
+                    .setLngLat([el.longitude, el.latitude])
                     .addTo(mapContainer);
 
                 marker.getElement().addEventListener("click", () => {
@@ -711,7 +711,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchSensorHistory(sensorId) {
         try {
-            const response = await fetch(`${window.location.protocol}//${window.location.hostname}:8001/api/v1/sensors/${sensorId}/history`);
+            const response = await fetch(
+                `${window.location.protocol}//${window.location.hostname}:8001/api/v1/sensors/${sensorId}/history`
+            );
             const result = await response.json();
             if (result.status === "success") {
                 const details = result.details;
@@ -993,9 +995,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
                 `;
-                document.getElementById(
-                    "element-modal-history"
-                ).innerHTML = `
+                document.getElementById("element-modal-history").innerHTML = `
                     <div class="space-y-2">
                         <h3 class="text-lg font-semibold">Historial de Tareas</h3>
                         <div id="history-list">
@@ -1371,7 +1371,8 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchElementTypes() {
         try {
             const response = await fetch("/api/map/elementtypes");
-            if (!response.ok) throw new Error("Error al obtener los tipos de elementos");
+            if (!response.ok)
+                throw new Error("Error al obtener los tipos de elementos");
             elementTypes = await response.json();
         } catch (error) {
             console.error("Error al obtener los tipos de elementos", error);
@@ -1382,7 +1383,8 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchTreeTypes() {
         try {
             const response = await fetch("/api/map/treetypes");
-            if (!response.ok) throw new Error("Error al obtener los tipos de árboles");
+            if (!response.ok)
+                throw new Error("Error al obtener los tipos de árboles");
             treeTypes = await response.json();
         } catch (error) {
             console.error("Error al obtener los tipos de árboles", error);
@@ -1479,4 +1481,3 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchElementTypes();
     fetchTreeTypes();
 });
-
