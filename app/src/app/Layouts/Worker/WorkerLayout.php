@@ -65,8 +65,8 @@ $currentContract = Session::get('current_contract');
                     foreach ($contracts as $contract) {
                         echo '<option value="'.$contract->getId().'"'.($currentContract == $contract->getId() ? ' selected' : '').'>'.$contract->name.'</option>';
                     }
-                    echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos los contratos</option>';
-                    ?>
+echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos los contratos</option>';
+?>
                 </select>
                 <div class="relative">
                     <!-- Letters avatar -->
@@ -104,7 +104,7 @@ $currentContract = Session::get('current_contract');
     <main class="max-w-7xl mx-auto px-4 pt-8 pb-16">
         <?php if (Session::has('success')) { ?>
             <div id="alert-msg"
-                class="bg-green-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                class="bg-green-400 text-white px-4 py-3 rounded mb-6 transform transition-all duration-500 ease-in-out"
                 role="alert">
                 <span class="inline-block mr-2">
                     <!-- Success Icon (Font Awesome) -->
@@ -116,7 +116,7 @@ $currentContract = Session::get('current_contract');
 
         <?php if (Session::has('error')) { ?>
             <div id="alert-msg-error"
-                class="bg-red-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                class="bg-red-400 text-white px-4 py-3 rounded mb-6 transform transition-all duration-500 ease-in-out"
                 role="alert">
                 <span class="inline-block mr-2">
                     <!-- Error Icon (Font Awesome) -->
@@ -131,7 +131,7 @@ $currentContract = Session::get('current_contract');
 
     <script src="/assets/js/worker.js?v=<?= time(); ?>"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Show alerts with animation (Success and Error messages)
             const alertMsg = document.querySelector("#alert-msg");
             const alertMsgError = document.querySelector("#alert-msg-error");
@@ -165,7 +165,7 @@ $currentContract = Session::get('current_contract');
             const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
             const mobileMenu = document.getElementById("mobile-menu");
 
-            mobileMenuToggle.addEventListener("click", function () {
+            mobileMenuToggle.addEventListener("click", function() {
                 mobileMenu.classList.toggle("hidden");
             });
         });

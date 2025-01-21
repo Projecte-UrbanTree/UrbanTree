@@ -155,7 +155,7 @@ echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos lo
     <main class="max-w-7xl mx-auto px-4 pt-8 pb-16">
         <?php if (Session::has('success')) { ?>
             <div id="alert-msg"
-                class="bg-green-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                class="bg-green-400 text-white px-4 py-3 rounded mb-6 transform transition-all duration-500 ease-in-out"
                 role="alert">
                 <span class="inline-block mr-2">
                     <!-- Success Icon (Font Awesome) -->
@@ -167,7 +167,7 @@ echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos lo
 
         <?php if (Session::has('error')) { ?>
             <div id="alert-msg-error"
-                class="bg-red-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                class="bg-red-400 text-white px-4 py-3 rounded mb-6 transform transition-all duration-500 ease-in-out"
                 role="alert">
                 <span class="inline-block mr-2">
                     <!-- Error Icon (Font Awesome) -->

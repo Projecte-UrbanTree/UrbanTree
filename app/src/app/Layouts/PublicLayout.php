@@ -32,14 +32,14 @@
         </div>
 
         <!-- Main Content (Dynamic) -->
-        <div class="max-w-6xl bg-white mx-auto rounded-lg p-2 md:p-6 mb-8 border border-gray-200">
+        <div class="max-w-6xl bg-white mx-auto rounded p-2 md:p-6 mb-8 border border-gray-200">
             <?= $content; ?>
         </div>
     </div>
 
     <!-- Return Button -->
     <div class="bottom-8 right-8 fixed">
-        <a href="javascript:history.back()" class="bg-primary hover:bg-primaryDark text-white py-2 px-4 rounded-lg">
+        <a href="javascript:history.back()" class="bg-primary hover:bg-primaryDark text-white py-2 px-4 rounded">
             <i class="fa-solid fa-angle-left mr-1"></i> Volver atrás
         </a>
     </div>

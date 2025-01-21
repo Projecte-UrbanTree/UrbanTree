@@ -5,8 +5,11 @@ namespace App\Controllers\Api;
 use App\Core\Session;
 use App\Models\Element;
 use App\Models\ElementType;
+use App\Models\Incidence;
 use App\Models\Point;
+use App\Models\Sensor;
 use App\Models\TreeType;
+use App\Models\WorkOrderBlockTask;
 use App\Models\Zone;
 use Exception;
 
@@ -53,10 +56,26 @@ class MapController
                             'id' => $element->getId(),
                             'latitude' => $element->point()->latitude,
                             'longitude' => $element->point()->longitude,
+                            'hasIncidences' => Incidence::count(['element_id' => $element->getId()]) > 0,
                         ];
                     }, $elements),
                 ];
             }
+            $sensors = Sensor::findAll(['zone_id' => $zone->getId()]);
+            $zoneData['elementTypes'][] = [
+                'id' => -1,
+                'icon' => 'fas fa-thermometer-half',
+                'color' => '#FF5733',
+                'name' => 'Sensor',
+                'elements' => array_map(function ($sensor) {
+                    return [
+                        'id' => $sensor->getId(),
+                        'latitude' => $sensor->point()->latitude,
+                        'longitude' => $sensor->point()->longitude,
+                        'is_active' => $sensor->is_active,
+                    ];
+                }, $sensors),
+            ];
 
             $data['zones'][] = $zoneData;
         }
@@ -277,8 +296,7 @@ class MapController
         header('Content-Type: application/json');
 
         try {
-            $elementId = $id;
-            $element = Element::find($elementId);
+            $element = Element::find($id);
             if ($element) {
                 $data = [
                     'id' => $element->getId(),
@@ -287,6 +305,7 @@ class MapController
                     'zone' => $element->zone(),
                     'point' => $element->point(),
                     'treeType' => $element->treeType(),
+                    'openIncidences' => Incidence::count(['element_id' => $element->getId(), 'status' => 'open']),
                 ];
                 echo json_encode($data);
             } else {
@@ -308,6 +327,100 @@ class MapController
                 $element->description = $postData['description'];
                 $element->save();
                 echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Element not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
+    public function getIncidences($id, $queryParams)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $incidences = Incidence::findAll(['element_id' => $id]);
+            $data = [];
+            foreach ($incidences as $incidence) {
+                $data[] = [
+                    'id' => $incidence->getId(),
+                    'name' => $incidence->name,
+                    'description' => $incidence->description,
+                    'status' => $incidence->status,
+                    'created_at' => $incidence->getCreatedAt(),
+                ];
+            }
+            echo json_encode($data);
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
+    public function createIncidence($id, $postData)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $elementId = $id;
+            $incidence = new Incidence;
+            $incidence->element_id = $elementId;
+            $incidence->name = $postData['name'];
+            $incidence->description = $postData['description'];
+            $incidence->status = 'open';
+            $incidence->save();
+            echo json_encode(['status' => 'success', 'incidence' => $incidence]);
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
+
+    public function toggleIncidenceStatus($id, $postData)
+    {
+        $incidence = Incidence::find($id);
+        if ($incidence) {
+            $incidence->status = $incidence->status === 'open' ? 'closed' : 'open';
+            $incidence->save();
+            echo json_encode(['status' => 'success', 'incidence' => $incidence]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Incidencia no encontrada.']);
+        }
+        exit;
+    }
+
+    public function deleteIncidence($id, $postData)
+    {
+        $incidence = Incidence::find($id);
+        if ($incidence) {
+            $incidence->delete();
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Incidence not found']);
+        }
+    }
+
+    public function getElementHistory($id, $queryParams)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $element = Element::find($id);
+            if ($element) {
+                $tasks = WorkOrderBlockTask::findAll(['element_type_id' => $element->element_type_id]);
+                $data = [];
+                foreach ($tasks as $task) {
+                    $data[] = [
+                        'task_id' => $task->getId(),
+                        'task_name' => $task->task()->name,
+                        'date' => $task->getCreatedAt(),
+                        'status' => $task->status == 1 ? 'completed' : 'pending',
+                        'work_order_id' => $task->workOrderBlock()->workOrder()->getId(),
+                    ];
+                }
+                echo json_encode($data);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Element not found']);
             }

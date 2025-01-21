@@ -7,7 +7,7 @@
     </a>
 </div>
 
-<div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
+<div class="bg-white p-8 border border-gray-300 rounded shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Creando nuevo tipo de elemento</h2>
 
     <form id="elementTypeForm" action="/admin/element-type/store" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -19,7 +19,7 @@
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
             <input type="text" id="name" name="name" placeholder="Introduce el nombre del tipo de elemento"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
         </div>
 
@@ -27,7 +27,7 @@
         <div>
             <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
             <input type="text" id="description" name="description" placeholder="Introduce una descripción"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
         </div>
 
@@ -35,14 +35,14 @@
         <div>
             <label for="icon" class="block text-sm font-medium text-gray-700 mb-1">Icono</label>
             <input type="text" id="icon" name="icon" placeholder="Introduce el icono (e.g., fa-solid fa-tree)"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
         </div>
 
         <!-- Element Color -->
         <div>
             <label for="color-input" class="block text-sm font-medium mb-2 dark:text-white">Color picker</label>
-            <input type="color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700" id="color-input" name="color" value="#2563eb" title="Choose your color">
+            <input type="color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700" id="color-input" name="color" value="#2563eb" title="Choose your color">
         </div>
 
         <!-- Requires Tree Type -->

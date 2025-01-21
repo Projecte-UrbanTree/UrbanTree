@@ -42,13 +42,16 @@ class Router
             if (strpos($contentType, 'application/json') !== false) {
                 // Read the raw POST data
                 $rawData = file_get_contents('php://input');
+                if (! empty($rawData)) {
+                    // Decode the JSON into an associative array
+                    $postData = json_decode($rawData, true);
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        $this->abort(400, 'Invalid JSON data');
 
-                // Decode the JSON into an associative array
-                $postData = json_decode($rawData, true);
-                if (json_last_error() !== JSON_ERROR_NONE) {
-                    $this->abort(400, 'Invalid JSON data');
-
-                    return;
+                        return;
+                    }
+                } else {
+                    $postData = [];
                 }
             } elseif (strpos($contentType, 'application/x-www-form-urlencoded') !== false) {
                 // Handle standard form data

@@ -23,7 +23,7 @@
 <body class="bg-gray-50 font-sans leading-normal tracking-normal flex items-center justify-center h-screen p-2 md:p-0">
 
     <!-- Auth content area -->
-    <div class="w-full max-w-lg bg-white rounded-lg p-8 border border-gray-200">
+    <div class="w-full max-w-lg bg-white rounded p-8 border border-gray-200">
         <!-- Header with Logo -->
         <header class="text-center my-8">
             <img src="/assets/images/logo.png" alt="Logo" class="mx-auto mb-4 w-48 md:w-64">

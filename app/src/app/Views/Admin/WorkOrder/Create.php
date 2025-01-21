@@ -19,7 +19,7 @@ function mapWithId($items, $getIdMethod)
     </a>
 </div>
 
-<div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
+<div class="bg-white p-8 border border-gray-300 rounded shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Crear nueva órden de trabajo</h2>
     <form id="workOrderForm" action="/admin/work-order/store" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Error Messages -->
@@ -28,13 +28,13 @@ function mapWithId($items, $getIdMethod)
         <!-- Date -->
         <div>
             <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
-            <input type="date" id="date" name="date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            <input type="date" id="date" name="date" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- Users -->
         <div>
             <label for="users" class="block text-sm font-medium text-gray-700 mb-1">Operarios</label>
-            <input type="text" name="userNames" id="workersInput" readonly onclick="openModal('modalWorkers', 'workersInput')" placeholder="Seleccionar Operarios" class="w-full px-4 py-2 border border-gray-300 rounded-lg cursor-pointer focus:outline-none">
+            <input type="text" name="userNames" id="workersInput" readonly onclick="openModal('modalWorkers', 'workersInput')" placeholder="Seleccionar Operarios" class="w-full px-4 py-2 border border-gray-300 rounded cursor-pointer focus:outline-none">
             <input type="hidden" name="userIds" id="userIdsInput">
         </div>
 
@@ -47,7 +47,7 @@ function mapWithId($items, $getIdMethod)
 
         <!-- Blocks Container -->
         <div id="blocksContainer" class="col-span-1 md:col-span-2 space-y-6">
-            <div class="workorder-block border border-gray-300 rounded-lg shadow p-6 bg-gray-50 mb-6" data-block-index="0">
+            <div class="workorder-block border border-gray-300 rounded shadow p-6 bg-gray-50 mb-6" data-block-index="0">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-800">Bloque <span class="block-number">1</span></h3>
                     <button type="button" onclick="removeBlock(this)" class="text-red-500 hover:text-red-700 focus:outline-none">
@@ -58,7 +58,7 @@ function mapWithId($items, $getIdMethod)
                 </div>
                 <div class="mb-4">
                     <label for="zonesInput_0" class="block text-sm font-medium text-gray-700 mb-1">Zonas</label>
-                    <input type="text" id="zonesInput_0" readonly onclick="openModal('modalZones', 'zonesInput_0')" placeholder="Seleccionar Zonas" class="w-full px-4 py-2 border border-gray-300 rounded-lg cursor-pointer focus:outline-none">
+                    <input type="text" id="zonesInput_0" readonly onclick="openModal('modalZones', 'zonesInput_0')" placeholder="Seleccionar Zonas" class="w-full px-4 py-2 border border-gray-300 rounded cursor-pointer focus:outline-none">
                     <input type="hidden" name="blocks[0][zonesIds]" id="zonesIdsInput_0">
                 </div>
                 <div class="tasksContainer space-y-4 mb-4">
@@ -66,7 +66,7 @@ function mapWithId($items, $getIdMethod)
                     <div class="task-row flex space-x-4 items-end" data-task-index="0">
                         <div class="flex-auto">
                             <label for="taskType_0_0" class="block text-sm font-medium text-gray-700 mb-1">Tarea</label>
-                            <select name="blocks[0][tasks][0][taskType]" id="taskType_0_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                            <select name="blocks[0][tasks][0][taskType]" id="taskType_0_0" class="w-full px-4 py-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                                 <option value="" disabled selected>Seleccione una tarea</option>
                                 <?php foreach ($task_types as $task_type) { ?>
                                     <option value="<?= htmlspecialchars($task_type->getId()) ?>"><?= htmlspecialchars($task_type->name) ?></option>
@@ -75,7 +75,7 @@ function mapWithId($items, $getIdMethod)
                         </div>
                         <div class="flex-auto">
                             <label for="elementType_0_0" class="block text-sm font-medium text-gray-700 mb-1">Elemento</label>
-                            <select name="blocks[0][tasks][0][elementType]" id="elementType_0_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                            <select name="blocks[0][tasks][0][elementType]" id="elementType_0_0" class="w-full px-4 py-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                                 <option value="" selected>Seleccione un elemento</option>
                                 <?php foreach ($element_types as $element_type) { ?>
                                     <option value="<?= htmlspecialchars($element_type->getId()) ?>"><?= htmlspecialchars($element_type->name) ?></option>
@@ -84,7 +84,7 @@ function mapWithId($items, $getIdMethod)
                         </div>
                         <div class="flex-auto">
                             <label for="species_0_0" class="block text-sm font-medium text-gray-700 mb-1">Species</label>
-                            <select name="blocks[0][tasks][0][species]" id="species_0_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                            <select name="blocks[0][tasks][0][species]" id="species_0_0" class="w-full px-4 py-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                                 <option value="" selected>Sin definir (Opcional)</option>
                                 <?php foreach ($tree_types as $tree_type) { ?>
                                     <option value="<?= htmlspecialchars($tree_type->getId()) ?>"><?= htmlspecialchars($tree_type->species) ?></option>
@@ -103,7 +103,7 @@ function mapWithId($items, $getIdMethod)
                 </button>
                 <div class="mt-4">
                     <label for="notes_0" class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
-                    <textarea name="blocks[0][notes]" id="notes_0" rows="4" placeholder="Añadir notas aquí..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
+                    <textarea name="blocks[0][notes]" id="notes_0" rows="4" placeholder="Añadir notas aquí..." class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@ function mapWithId($items, $getIdMethod)
 </div>
 
 <div id="modalWorkers" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
+    <div class="bg-white rounded shadow-lg p-6 w-1/3">
         <h3 class="text-lg font-semibold mb-4">Seleccionar Operarios</h3>
         <div class="space-y-2">
             <?php foreach ($users as $user) { ?>
@@ -129,10 +129,10 @@ function mapWithId($items, $getIdMethod)
             <?php } ?>
         </div>
         <div class="flex justify-end mt-4">
-            <button onclick="saveSelection('modalWorkers')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+            <button onclick="saveSelection('modalWorkers')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Aplicar
             </button>
-            <button onclick="closeModal('modalWorkers')" class="ml-2 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">
+            <button onclick="closeModal('modalWorkers')" class="ml-2 text-gray-700 px-4 py-2 rounded hover:bg-gray-200">
                 Cancelar
             </button>
         </div>
@@ -140,7 +140,7 @@ function mapWithId($items, $getIdMethod)
 </div>
 
 <div id="modalZones" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
+    <div class="bg-white rounded shadow-lg p-6 w-1/3">
         <h3 class="text-lg font-semibold mb-4">Seleccionar Zonas</h3>
         <div class="space-y-2">
             <?php foreach ($zones as $zone) { ?>
@@ -151,10 +151,10 @@ function mapWithId($items, $getIdMethod)
             <?php } ?>
         </div>
         <div class="flex justify-end mt-4">
-            <button onclick="saveSelection('modalZones')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+            <button onclick="saveSelection('modalZones')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Aplicar
             </button>
-            <button onclick="closeModal('modalZones')" class="ml-2 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">
+            <button onclick="closeModal('modalZones')" class="ml-2 text-gray-700 px-4 py-2 rounded hover:bg-gray-200">
                 Cancelar
             </button>
         </div>

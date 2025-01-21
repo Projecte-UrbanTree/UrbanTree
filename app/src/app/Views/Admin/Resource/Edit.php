@@ -8,7 +8,7 @@
     </a>
 </div>
 
-<div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
+<div class="bg-white p-8 border border-gray-300 rounded shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Editar recurso</h2>
 
     <form id="resourceForm" action="/admin/resource/<?= htmlspecialchars($resource->getId()); ?>/update" method="POST"
@@ -23,7 +23,7 @@
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
             <input type="text" id="name" name="name" placeholder="Introduce el nombre del recurso"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 value="<?= htmlspecialchars($resource->name); ?>" required>
         </div>
 
@@ -31,7 +31,7 @@
         <div>
             <label for="resource_type_id" class="block text-sm font-medium text-gray-700 mb-1">Tipo de recurso</label>
             <select id="resource_type_id" name="resource_type_id"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
                 <option value="">Selecciona un tipo de recurso</option>
                 <?php foreach ($resource_types as $resource_type) { ?>
@@ -47,7 +47,7 @@
         <div>
             <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
             <input type="text" id="description" name="description" placeholder="Introduce una descripción"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 value="<?= htmlspecialchars($resource->description); ?>">
         </div>
 

@@ -5,7 +5,7 @@
     </a>
 </div>
 <!-- Type Resources Table -->
-<div class="relative overflow-x-auto rounded-lg">
+<div class="relative overflow-x-auto rounded">
     <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
         <thead class="bg-gray-700 text-white">
             <tr class="h-12"> <!-- Adjusted height -->

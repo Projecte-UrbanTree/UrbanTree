@@ -1,11 +1,12 @@
 <?php
 function mapWithId($items, $getIdMethod)
 {
-	return array_map(function ($item) use ($getIdMethod) {
-		$properties = get_object_vars($item);
-		$properties['id'] = $item->$getIdMethod();
-		return (object) $properties;
-	}, $items);
+    return array_map(function ($item) use ($getIdMethod) {
+        $properties = get_object_vars($item);
+        $properties['id'] = $item->$getIdMethod();
+
+        return (object) $properties;
+    }, $items);
 }
 ?>
 

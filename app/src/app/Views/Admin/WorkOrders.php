@@ -4,7 +4,7 @@
         <i class="fas fa-plus mr-2"></i> Nueva órden de trabajo
     </a>
 </div>
-<div class="relative overflow-x-auto rounded-lg">
+<div class="relative overflow-x-auto rounded">
     <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
         <thead class="bg-gray-700 text-white">
             <tr class="h-12">
@@ -44,11 +44,11 @@
                         <td class="px-4 py-3">
                             <?php
                             $users = [];
-                            foreach ($work_order->users() as $user) {
-                                $users[] = $user->name.' '.$user->surname;
-                            }
-                            echo implode(', ', $users);
-                            ?>
+                    foreach ($work_order->users() as $user) {
+                        $users[] = $user->name.' '.$user->surname;
+                    }
+                    echo implode(', ', $users);
+                    ?>
                         </td>
                         <td class="px-4 py-3">
                             <?php if ($work_order->status() == 0) { ?>
@@ -82,7 +82,7 @@
                     <tr id="accordionContent<?= $index; ?>" class="hidden">
                         <td colspan="6" class="py-4 px-4">
                             <?php foreach ($work_order->blocks() as $block) { ?>
-                                <div class="mb-6 border rounded-lg shadow-sm overflow-hidden">
+                                <div class="mb-6 border rounded shadow-sm overflow-hidden">
                                     <table class="w-full text-sm text-left text-gray-700 bg-white divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
                                             <tr>
