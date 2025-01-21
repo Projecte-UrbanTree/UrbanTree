@@ -787,7 +787,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (hasIncidence) {
             const badge = document.createElement("span");
-            badge.className = "badge";
+            badge.className = "animate-bounce";
             badge.style.cssText =
                 "position: absolute; top: -5px; right: -5px; background-color: red; color: white; border-radius: 50%; width: 15px; height: 15px; display: flex; align-items: center; justify-content: center;";
             badge.innerHTML = `<i class="fas fa-exclamation-circle" style="font-size: 10px;"></i>`;
@@ -1250,6 +1250,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (result.status === "success") {
                     alert("Incidencia añadida correctamente.");
                     loadIncidences(elementId);
+                    reloadMap();
                 } else {
                     alert(`Error: ${result.message}`);
                 }
