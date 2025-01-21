@@ -370,7 +370,6 @@ class MapController
             $incidence->name = $postData['name'];
             $incidence->description = $postData['description'];
             $incidence->status = 'open';
-            $incidence->created_at = date('Y-m-d H:i:s');
             $incidence->save();
             echo json_encode(['status' => 'success', 'incidence' => $incidence]);
         } catch (Exception $e) {
