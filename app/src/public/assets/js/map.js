@@ -57,6 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
         center: [0.5826405437646912, 40.70973485628924],
         style: "mapbox://styles/mapbox/standard-satellite",
         zoom: 15,
+        bearing: 0,
+        pitch: 20,
+        antialias: true
     });
 
     // Event listeners
