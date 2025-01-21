@@ -56,7 +56,7 @@ class MapController
                             'id' => $element->getId(),
                             'latitude' => $element->point()->latitude,
                             'longitude' => $element->point()->longitude,
-                            'hasIncidences' => Incidence::count(['element_id' => $element->getId()]) > 0,
+                            'hasIncidence' => Incidence::count(['element_id' => $element->getId(), 'status' => 'open']) > 0,
                         ];
                     }, $elements),
                 ];

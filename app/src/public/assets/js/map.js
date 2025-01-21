@@ -690,7 +690,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const markerElement = createMarkerElement(
                     type.icon,
                     type.color,
-                    el.hasIncidences
+                    el.hasIncidence
                 );
                 markerElement.dataset.elementId = el.id;
 
@@ -1273,6 +1273,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (result.status === "success") {
                     alert("Estado de la incidencia cambiado correctamente.");
                     loadIncidences(elementId);
+                    reloadMap();
                 } else {
                     alert(
                         result.message ||

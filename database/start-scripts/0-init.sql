@@ -191,7 +191,7 @@ create table work_orders_blocks_tasks (
     task_id int not null,
     element_type_id int not null,
     tree_type_id int,
-    status int default 0, -- 0: pending, 1: in progress, 2: finished
+    status int default 0,
     spent_time TIME,
     created_at timestamp default current_timestamp,
     updated_at timestamp,
