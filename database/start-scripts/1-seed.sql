@@ -1,9 +1,9 @@
 --* Users
 INSERT INTO users (company, name, surname, dni, password, email, role) VALUES
-('TechCorp', 'Carlos', 'García', '12345678A', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'carlos.garcia@example.com', 0), -- Password: demopass
-('InnovaTech', 'Ana', 'Martínez', '23456789B', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'ana.martinez@example.com', 1),
-('DesignWorks', 'Gemma', 'Palanca', '33344456G', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'gemma.palanca@example.com', 1), -- Password: demopass
-('DesignWorks', 'José', 'Rodríguez', '34567890C', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'jose.rodriguez@example.com', 2); -- Password: demopass
+('Urban Tree 5.0', 'Admin', 'Demo', '12345678A', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'admin@urbantree.com', 2), -- Password: demopass
+('Urban Tree 5.0', 'Worker1', 'Demo', '12345678B', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'worker1@urbantree.com', 1), -- Password: demopass
+('Urban Tree 5.0', 'Worker2', 'Demo', '12345678C', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'worker2@urbantree.com', 1), -- Password: demopass
+('Urban Tree 5.0', 'Customer', 'Demo', '12345678D', '$2y$10$BvILqM2m0pJlHNzyugbIu.RqhLIKwKetsRCo3FQbpcOiVx2nHBc9m', 'customer@urbantree.com', 0); -- Password: demopass
 
 --* Contracts
 INSERT INTO contracts (name, start_date, end_date, invoice_proposed, invoice_agreed, invoice_paid) VALUES
@@ -73,9 +73,7 @@ INSERT INTO incidences (element_id, name, description) VALUES
 
 --* Work Orders
 INSERT INTO work_orders (contract_id, date) VALUES
-(1, "2021-01-01"),
-(1, "2021-02-01"),
-(1, "2021-03-01");
+(1, "2021-01-01");
 
 --* Work Orders Users
 INSERT INTO work_orders_users (work_order_id, user_id) VALUES
@@ -83,9 +81,7 @@ INSERT INTO work_orders_users (work_order_id, user_id) VALUES
 
 --* Work Reports
 INSERT INTO work_reports (work_order_id, observation, spent_fuel) VALUES
-(1, 'Observación de la orden 1', 50.0),
-(2, 'Observación de la orden 2', 60.0),
-(3, 'Observación de la orden 3', 70.0);
+(1, 'Observación de la orden 1', 50.0);
 
 --* Sensors
 INSERT INTO sensors (zone_id, contract_id, point_id, model, is_active) VALUES
@@ -107,20 +103,21 @@ INSERT INTO work_orders_blocks (work_order_id, notes) VALUES
 INSERT INTO work_orders_blocks_zones (work_orders_block_id, zone_id) VALUES
 (1, 1);
 
+--* Work Orders Blocks Tasks
 INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_id, element_type_id) VALUES
 (1, 1, 1, 1);
 
-INSERT INTO resource_type (id, name, description) VALUES
-(1, 'Vehiculo', 'Resources that are in written book format'),
-(2, 'Consumibles', 'Instructional or educational video content'),
-(3, 'Maquinaria', 'Written articles or blogs for learning');
+--* Work Orders Blocks Tasks Resources
+INSERT INTO resource_type (name, description) VALUES
+('Vehiculo', 'Resources that are in written book format'),
+('Consumibles', 'Instructional or educational video content'),
+('Maquinaria', 'Written articles or blogs for learning');
 
-INSERT INTO resources (id, name, description, resource_type_id) VALUES
-(1, 'Vechiculo A', NULL, 1),
-(2, 'jocs infantils', NULL, 2),
-(3, 'Corta Cesped', NULL, 3);
+--* Work Orders Blocks Tasks Resources
+INSERT INTO resources (name, description, resource_type_id) VALUES
+('Vechiculo A', NULL, 1),
+('jocs infantils', NULL, 2),
+('Corta Cesped', NULL, 3);
 
-INSERT INTO work_report_resources (id, work_report_id, resource_id) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3);
+INSERT INTO work_report_resources (work_report_id, resource_id) VALUES
+(1, 1);
