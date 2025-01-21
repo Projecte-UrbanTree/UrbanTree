@@ -77,6 +77,11 @@ return [
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
+        '/admin/work-report/:id' => [
+            'controller' => \App\Controllers\Admin\WorkReportController::class,
+            'method' => 'view',
+            'middlewares' => [\App\Middlewares\AdminMiddleware::class],
+        ],
         // === TreeTypes GET Routes
         '/admin/tree-types' => [
             'controller' => TreeTypeController::class,

@@ -13,13 +13,13 @@
                 <th scope="col" class="px-4 py-3 font-medium">Fecha</th>
                 <th scope="col" class="px-4 py-3 font-medium">Operarios</th>
                 <th scope="col" class="px-4 py-3 font-medium">Estatus</th>
-                <th scope="col" class="px-4 py-3 text-center font-medium w-32 rounded-tr-lg">Acciones</th>
+                <th scope="col" class="px-4 py-3 text-right font-medium w-32 rounded-tr-lg">Acciones</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
             <?php if (empty($work_orders)) { ?>
                 <tr>
-                    <td colspan="5" class="px-4 py-3 text-center text-gray-500">No hay órdenes de trabajo disponibles.</td>
+                    <td colspan="6" class="px-4 py-3 text-center text-gray-500">No hay órdenes de trabajo disponibles.</td>
                 </tr>
             <?php } else { ?>
                 <?php foreach ($work_orders as $index => $work_order) { ?>
@@ -33,7 +33,7 @@
                                         stroke-width="2" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
-                            <?= 'OT-'.htmlspecialchars($work_order->getId()); ?>
+                            <?= 'OT-' . htmlspecialchars($work_order->getId()); ?>
                         </th>
                         <td class="px-4 py-3">
                             <?= htmlspecialchars($work_order->contract()->name); ?>
@@ -44,38 +44,51 @@
                         <td class="px-4 py-3">
                             <?php
                             $users = [];
-                    foreach ($work_order->users() as $user) {
-                        $users[] = $user->name.' '.$user->surname;
-                    }
-                    echo implode(', ', $users);
-                    ?>
+                            foreach ($work_order->users() as $user) {
+                                $users[] = $user->name . ' ' . $user->surname;
+                            }
+                            echo implode(', ', $users);
+                            ?>
                         </td>
                         <td class="px-4 py-3">
-                            <?php if ($work_order->status() == 0) { ?>
-                                <span class="px-2 py-1 text-sm font-medium text-white bg-red-500 rounded-full">No
-                                    iniciado</span>
-                            <?php } elseif ($work_order->status() == 1) { ?>
-                                <span class="px-2 py-1 text-sm font-medium text-white bg-orange-500 rounded-full">En
-                                    progreso</span>
-                            <?php } elseif ($work_order->status() == 2) { ?>
-                                <span class="px-2 py-1 text-sm font-medium text-white bg-green-500 rounded-full">Completado</span>
+                            <?php if ($work_order->report()) { ?>
+                                <span class="px-2 py-1 text-sm font-medium text-white bg-blue-500 rounded-full">Parte entregado</span>
+                            <?php } else { ?>
+                                <?php if ($work_order->status() == 0) { ?>
+                                    <span class="px-2 py-1 text-sm font-medium text-white bg-red-500 rounded-full">No
+                                        iniciado</span>
+                                <?php } elseif ($work_order->status() == 1) { ?>
+                                    <span class="px-2 py-1 text-sm font-medium text-white bg-orange-500 rounded-full">En
+                                        progreso</span>
+                                <?php } elseif ($work_order->status() == 2) { ?>
+                                    <span class="px-2 py-1 text-sm font-medium text-white bg-green-500 rounded-full">Completado</span>
+                                <?php } ?>
                             <?php } ?>
                         </td>
-                        <td class="px-4 py-3 text-center">
-                            <div class="flex justify-center space-x-3">
+                        <td class="px-4 py-3 text-right">
+                            <div class="flex justify-end space-x-3">
                                 <a href="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/edit"
                                     class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
                                     title="Editar"
-                                    aria-label="Editar orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>">
+                                    aria-label="Editar orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>"
+                                    <?= $work_order->report() ? 'disabled' : '' ?>>
                                     <i class="fas fa-pencil"></i>
                                 </a>
                                 <a href="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/delete"
                                     onclick="return confirm('¿Está seguro de que desea eliminar esta orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>?');"
                                     class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
                                     title="Eliminar"
-                                    aria-label="Eliminar orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>">
+                                    aria-label="Eliminar orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>"
+                                    <?= $work_order->report() ? 'disabled' : '' ?>>
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
+                                <?php if ($work_order->report()) { ?>
+                                    <a href="/admin/work-report/<?= $work_order->report()->getId(); ?>"
+                                        class="p-2 text-gray-700 border border-transparent hover:text-blue-500 transition-all duration-200"
+                                        title="Ver Parte de Trabajo">
+                                        <i class="fas fa-file-alt"></i>
+                                    </a>
+                                <?php } ?>
                             </div>
                         </td>
                     </tr>
@@ -104,9 +117,9 @@
                                                     <ul>
                                                         <?php foreach ($block->tasks() as $blockTask) { ?>
                                                             <li>• <?= htmlspecialchars($blockTask->task()->name); ?>
-                                                                <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
+                                                                <?= htmlspecialchars(' ' . $blockTask->elementType()->name); ?>
                                                                 <?php if ($blockTask->treeType() != null) {
-                                                                    echo '('.htmlspecialchars($blockTask->treeType()->species.')');
+                                                                    echo '(' . htmlspecialchars($blockTask->treeType()->species . ')');
                                                                 } ?>
                                                             </li>
                                                         <?php } ?>
