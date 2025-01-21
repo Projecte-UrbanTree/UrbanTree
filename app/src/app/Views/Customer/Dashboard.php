@@ -1,4 +1,4 @@
-<div class="flex w-full h-screen-app p-4">
+<div class="flex w-full h-screen-app-c p-4">
     <!-- Map Container -->
     <div class="map w-full md:w-2/3 h-full">
         <div id="map" class="h-full"></div>

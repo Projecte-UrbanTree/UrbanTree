@@ -137,6 +137,9 @@ echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos lo
     </main>
 
     <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
+    <script>
+        window.userRole = <?= json_encode(Session::get('user')['role']) ?>;
+    </script>
     <script src="/assets/js/map.js?v=<?= time(); ?>"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

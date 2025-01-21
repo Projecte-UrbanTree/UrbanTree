@@ -40,6 +40,10 @@ h6 {
     height: calc(100vh - 72px - 66px);
 }
 
+.h-screen-app-c {
+    height: calc(100vh - 72px);
+}
+
 .inventory-map {
     display: flex;
     width: 100%;
@@ -112,3 +116,4 @@ h6 {
         display: block;
     }
 }
+

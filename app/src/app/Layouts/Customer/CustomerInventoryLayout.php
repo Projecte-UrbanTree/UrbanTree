@@ -14,7 +14,7 @@ $currentContract = Session::get('current_contract');
     <!-- Viewport settings to make the layout responsive on different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Page title dynamically generated from PHP -->
-    <title><?= $title . ' - ' . getenv('APP_NAME'); ?></title>
+    <title><?= $title.' - '.getenv('APP_NAME'); ?></title>
     <!-- Favicon link -->
     <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
     <!-- Tailwind CSS framework (via CDN) -->
@@ -62,15 +62,15 @@ $currentContract = Session::get('current_contract');
                 <select id="contractBtn" name="contractBtn" class="bg-white text-sm rounded-md p-2 text-right focus:outline-none" onchange="setCurrentContract(this.value)">
                     <?php
                     foreach ($contracts as $contract) {
-                        echo '<option value="' . $contract->getId() . '"' . ($currentContract == $contract->getId() ? ' selected' : '') . '>' . $contract->name . '</option>';
+                        echo '<option value="'.$contract->getId().'"'.($currentContract == $contract->getId() ? ' selected' : '').'>'.$contract->name.'</option>';
                     }
-                    echo '<option value="-1"' . ($currentContract == -1 ? ' selected' : '') . '>Todos los contratos</option>';
-                    ?>
+echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos los contratos</option>';
+?>
                 </select>
                 <div class="relative">
                     <!-- Letters avatar -->
                     <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer" onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
-                        <?= strtoupper(substr(Session::get('user')['name'], 0, 1) . substr(Session::get('user')['surname'], 0, 1)); ?>
+                        <?= strtoupper(substr(Session::get('user')['name'], 0, 1).substr(Session::get('user')['surname'], 0, 1)); ?>
                     </div>
                     <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
                         <a href="/admin/account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuración de la cuenta</a>
@@ -88,11 +88,12 @@ $currentContract = Session::get('current_contract');
 
     <!-- Submenu -->
     <div id="submenu" class="flex overflow-x-auto whitespace-nowrap justify-center items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
-        <button id="zone-control" class="text-sm text-gray-700 flex flex-col items-center">
+        <!-- Hide or disable editing buttons for customers -->
+        <button id="zone-control" class="hidden text-sm text-gray-700 flex flex-col items-center">
             <i class="fas fa-brush"></i>
             Editor de zonas
         </button>
-        <button id="element-control" class="text-sm text-gray-700 flex flex-col items-center">
+        <button id="element-control" class="hidden text-sm text-gray-700 flex flex-col items-center">
             <i class="fas fa-jar-wheat"></i>
             Editor de elementos
         </button>
@@ -100,19 +101,19 @@ $currentContract = Session::get('current_contract');
         <!-- Separator -->
         <div class="h-6 border-l border-gray-300 mx-4"></div>
 
-        <!-- Create Button -->
-        <button id="create-control" class="text-sm text-gray-300 flex flex-col items-center" disabled>
+        <!-- Create Button (Hidden for customers) -->
+        <button id="create-control" class="hidden text-sm text-gray-300 flex flex-col items-center" disabled>
             <i class="fas fa-plus-circle"></i>
             Crear nueva zona
         </button>
 
-        <!-- Finish Creation Button -->
+        <!-- Finish Creation Button (Hidden for customers) -->
         <button id="finish-control" class="hidden text-sm text-gray-700 flex flex-col items-center">
             <i class="fas fa-check-circle"></i>
             Finalizar creación
         </button>
 
-        <!-- Cancel Zone Creation Button -->
+        <!-- Cancel Zone Creation Button (Hidden for customers) -->
         <button id="cancel-zone-control" class="hidden text-sm text-gray-700 flex flex-col items-center">
             <i class='fas fa-times-circle'></i> Cancelar creación
         </button>
@@ -125,6 +126,9 @@ $currentContract = Session::get('current_contract');
     </main>
 
     <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
+    <script>
+        window.userRole = <?= json_encode(Session::get('user')['role']) ?>;
+    </script>
     <script src="/assets/js/map.js?v=<?= time(); ?>"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

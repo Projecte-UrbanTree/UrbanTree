@@ -3,8 +3,6 @@
 namespace App\Controllers\Admin;
 
 use App\Core\View;
-use App\Models\Element;
-use App\Models\Incidence;
 use App\Models\WorkReport;
 
 class WorkReportController

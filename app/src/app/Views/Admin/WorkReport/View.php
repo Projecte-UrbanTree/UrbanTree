@@ -9,13 +9,13 @@
 
 <div class="bg-white p-8 border border-gray-200 rounded shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Detalles del Parte de Trabajo</h2>
-    <?php if (!empty($report)) { ?>
+    <?php if (! empty($report)) { ?>
         <!-- Usuarios asignados -->
         <div class="mt-6 border border-gray-200 p-4 rounded">
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Usuarios Asignados</h3>
             <ul class="list-disc list-inside">
                 <?php foreach ($report->workOrder()->users() as $user) { ?>
-                    <li><?= htmlspecialchars($user->name . ' ' . $user->surname) ?></li>
+                    <li><?= htmlspecialchars($user->name.' '.$user->surname) ?></li>
                 <?php } ?>
             </ul>
         </div>
@@ -23,7 +23,7 @@
         <!-- Recursos usados -->
         <div class="mt-6 border border-gray-200 p-4 rounded">
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Recursos Usados</h3>
-            <?php if (!empty($report->workReportResources())) { ?>
+            <?php if (! empty($report->workReportResources())) { ?>
                 <ul class="list-disc list-inside">
                     <?php foreach ($report->workReportResources() as $resource) { ?>
                         <li><?= htmlspecialchars($resource->resource()->name) ?> (<?= htmlspecialchars($resource->resource()->resourceType()->name) ?>)</li>

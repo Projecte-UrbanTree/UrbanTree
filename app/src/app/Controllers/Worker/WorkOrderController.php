@@ -88,7 +88,7 @@ class WorkOrderController
             echo json_encode(['success' => true]);
             exit;
         } else {
-            header('Location: /worker/work-orders?date=' . $postData['date']);
+            header('Location: /worker/work-orders?date='.$postData['date']);
             exit;
         }
     }
@@ -116,14 +116,14 @@ class WorkOrderController
 
         $this->updateResources($work_report->getId(), $postData['resource_id'] ?? []);
 
-        header('Location: /worker/work-orders?work_order_id=' . $postData['work_order_id']);
+        header('Location: /worker/work-orders?work_order_id='.$postData['work_order_id']);
         exit;
     }
 
     private function updateResources($work_report_id, array $newResourceIds)
     {
         $existingResources = WorkReportResource::findAll(['work_report_id' => $work_report_id]);
-        $existingResourceIds = array_map(fn($res) => $res->resource_id, $existingResources);
+        $existingResourceIds = array_map(fn ($res) => $res->resource_id, $existingResources);
 
         $resourcesToDelete = array_diff($existingResourceIds, $newResourceIds);
         foreach ($resourcesToDelete as $resourceId) {

@@ -84,8 +84,23 @@ class MapController
         exit;
     }
 
+    private function ApiVerify()
+    {
+        $userRole = Session::get('user')['role'];
+
+        // Define allowed roles
+        $allowedRoles = [1, 2];
+
+        if (! in_array($userRole, $allowedRoles)) {
+            echo json_encode(['status' => 'error', 'message' => 'No autorizado.']);
+            exit;
+        }
+    }
+
     public function createZone($postData)
     {
+        $this->ApiVerify();
+
         header('Content-Type: application/json');
 
         try {
@@ -117,6 +132,8 @@ class MapController
 
     public function deleteZone($postData)
     {
+        $this->ApiVerify();
+
         header('Content-Type: application/json');
 
         try {
@@ -136,6 +153,8 @@ class MapController
 
     public function createElement($postData)
     {
+        $this->ApiVerify();
+
         header('Content-Type: application/json');
 
         try {
@@ -179,6 +198,8 @@ class MapController
 
     public function deleteElement($postData)
     {
+        $this->ApiVerify();
+
         header('Content-Type: application/json');
 
         try {
@@ -218,6 +239,8 @@ class MapController
 
     public function updateZoneName($postData)
     {
+        $this->ApiVerify();
+
         header('Content-Type: application/json');
 
         try {
@@ -237,6 +260,8 @@ class MapController
 
     public function updateZoneColor($postData)
     {
+        $this->ApiVerify();
+
         header('Content-Type: application/json');
 
         try {
@@ -256,6 +281,8 @@ class MapController
 
     public function updateZoneDescription($postData)
     {
+        $this->ApiVerify();
+
         header('Content-Type: application/json');
 
         try {
@@ -319,6 +346,8 @@ class MapController
 
     public function updateElementDescription($postData)
     {
+        $this->ApiVerify();
+
         header('Content-Type: application/json');
 
         try {
@@ -380,6 +409,8 @@ class MapController
 
     public function toggleIncidenceStatus($id, $postData)
     {
+        $this->ApiVerify();
+
         $incidence = Incidence::find($id);
         if ($incidence) {
             $incidence->status = $incidence->status === 'open' ? 'closed' : 'open';
@@ -393,6 +424,8 @@ class MapController
 
     public function deleteIncidence($id, $postData)
     {
+        $this->ApiVerify();
+
         $incidence = Incidence::find($id);
         if ($incidence) {
             $incidence->delete();

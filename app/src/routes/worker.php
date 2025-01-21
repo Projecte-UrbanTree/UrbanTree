@@ -1,9 +1,9 @@
 <?php
 
 use App\Controllers\Worker\DashboardController;
+use App\Controllers\Worker\InventoryController;
 use App\Controllers\Worker\WorkOrderController;
 use App\Middlewares\WorkerMiddleware;
-use App\Controllers\Worker\InventoryController;
 
 return [
     'GET' => [

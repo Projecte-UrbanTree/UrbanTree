@@ -32,7 +32,7 @@
                 <p class="text-lg font-semibold text-gray-800">Usuarios asignados:</p>
                 <input type="text" readonly
                     class="text-center border border-gray-300 rounded-md py-2 px-4 w-full mt-2 bg-gray-100"
-                    value="<?= implode(', ', array_map(fn($user) => $user->name . ' ' . $user->surname, $work_order->users())) ?>" required />
+                    value="<?= implode(', ', array_map(fn ($user) => $user->name.' '.$user->surname, $work_order->users())) ?>" required />
 
                 <?php $blockCounter = 1; ?>
                 <?php foreach ($work_order->blocks() as $block) { ?>
@@ -53,7 +53,7 @@
                                             <?= $work_report ? 'disabled' : '' ?> />
                                         <span>
                                             <?= htmlspecialchars($blockTask->task()->name) ?>
-                                            <?= htmlspecialchars(' ' . $blockTask->elementType()->name); ?>
+                                            <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
                                             <?php if ($blockTask->treeType() != null) { ?>
                                                 : <?= htmlspecialchars($blockTask->treeType()->species) ?>
                                             <?php } ?>
@@ -66,7 +66,7 @@
                         <!-- Notes -->
                         <div class="mt-4">
                             <p class="text-lg font-semibold text-gray-800">Notas:</p>
-                            <?php if (!empty($block->notes)) { ?>
+                            <?php if (! empty($block->notes)) { ?>
                                 <p class="mt-2 text-gray-700 bg-gray-100 rounded-md p-3">
                                     <?= htmlspecialchars($block->notes) ?>
                                 </p>
@@ -95,7 +95,7 @@
                                     <?php foreach ($block->tasks() as $blockTask) { ?>
                                         <li class="flex items-center space-x-2">
                                             <?= htmlspecialchars($blockTask->task()->name) ?>
-                                            <?= htmlspecialchars(' ' . $blockTask->elementType()->name); ?>
+                                            <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
                                             <?php if ($blockTask->treeType() != null) { ?>
                                                 : <?= htmlspecialchars($blockTask->treeType()->species) ?>
                                             <?php } ?>
@@ -134,10 +134,10 @@
                         <p class="text-lg font-semibold text-gray-800">Recursos:</p>
                         <?php
                         $resourcesByType = [];
-                        foreach ($resources as $resource) {
-                            $resourcesByType[$resource->resourceType()->name][] = $resource;
-                        }
-                        ?>
+            foreach ($resources as $resource) {
+                $resourcesByType[$resource->resourceType()->name][] = $resource;
+            }
+            ?>
 
                         <?php foreach ($resourcesByType as $typeName => $resourcesList) { ?>
                             <div class="mt-4">
