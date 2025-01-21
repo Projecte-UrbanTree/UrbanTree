@@ -33,7 +33,7 @@
                                         stroke-width="2" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
-                            <?= 'OT-'.htmlspecialchars($work_order->getId()); ?>
+                            <?= 'OT-' . htmlspecialchars($work_order->getId()); ?>
                         </th>
                         <td class="px-4 py-3">
                             <?= htmlspecialchars($work_order->contract()->name); ?>
@@ -44,11 +44,11 @@
                         <td class="px-4 py-3">
                             <?php
                             $users = [];
-                    foreach ($work_order->users() as $user) {
-                        $users[] = $user->name.' '.$user->surname;
-                    }
-                    echo implode(', ', $users);
-                    ?>
+                            foreach ($work_order->users() as $user) {
+                                $users[] = $user->name . ' ' . $user->surname;
+                            }
+                            echo implode(', ', $users);
+                            ?>
                         </td>
                         <td class="px-4 py-3">
                             <?php if ($work_order->report()) { ?>
@@ -67,21 +67,21 @@
                         </td>
                         <td class="px-4 py-3 text-right">
                             <div class="flex justify-end space-x-3">
-                                <a href="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/edit"
-                                    class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
-                                    title="Editar"
-                                    aria-label="Editar orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>"
-                                    <?= $work_order->report() ? 'disabled' : '' ?>>
-                                    <i class="fas fa-pencil"></i>
-                                </a>
-                                <a href="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/delete"
-                                    onclick="return confirm('¿Está seguro de que desea eliminar esta orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>?');"
-                                    class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
-                                    title="Eliminar"
-                                    aria-label="Eliminar orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>"
-                                    <?= $work_order->report() ? 'disabled' : '' ?>>
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
+                                <?php if (!$work_order->report()) { ?>
+                                    <a href="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/edit"
+                                        class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
+                                        title="Editar"
+                                        aria-label="Editar orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>">
+                                        <i class="fas fa-pencil"></i>
+                                    </a>
+                                    <a href="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/delete"
+                                        onclick="return confirm('¿Está seguro de que desea eliminar esta orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>?');"
+                                        class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
+                                        title="Eliminar"
+                                        aria-label="Eliminar orden de trabajo OT-<?= htmlspecialchars($work_order->contract()->getId()); ?>">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                <?php } ?>
                                 <?php if ($work_order->report()) { ?>
                                     <a href="/admin/work-report/<?= $work_order->report()->getId(); ?>"
                                         class="p-2 text-gray-700 border border-transparent hover:text-blue-500 transition-all duration-200"
@@ -117,9 +117,9 @@
                                                     <ul>
                                                         <?php foreach ($block->tasks() as $blockTask) { ?>
                                                             <li>• <?= htmlspecialchars($blockTask->task()->name); ?>
-                                                                <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
+                                                                <?= htmlspecialchars(' ' . $blockTask->elementType()->name); ?>
                                                                 <?php if ($blockTask->treeType() != null) {
-                                                                    echo '('.htmlspecialchars($blockTask->treeType()->species.')');
+                                                                    echo '(' . htmlspecialchars($blockTask->treeType()->species . ')');
                                                                 } ?>
                                                             </li>
                                                         <?php } ?>
