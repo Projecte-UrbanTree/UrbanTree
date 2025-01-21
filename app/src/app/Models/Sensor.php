@@ -10,8 +10,6 @@ class Sensor extends BaseModel
 
     public ?string $model;
 
-    public ?string $class;
-
     public bool $is_active;
 
     protected static function getTableName(): string
@@ -26,7 +24,6 @@ class Sensor extends BaseModel
         $sensor->zone_id = $data['zone_id'];
         $sensor->point_id = $data['point_id'];
         $sensor->model = $data['model'];
-        $sensor->class = $data['class'];
         $sensor->is_active = $data['is_active'];
         $sensor->created_at = $data['created_at'];
         $sensor->updated_at = $data['updated_at'];
