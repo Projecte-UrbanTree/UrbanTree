@@ -711,7 +711,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchSensorHistory(sensorId) {
         try {
-            const response = await fetch(`http://localhost:8001/api/v1/sensors/${sensorId}/history`);
+            const response = await fetch(`${window.location.protocol}//${window.location.hostname}:8001/api/v1/sensors/${sensorId}/history`);
             const result = await response.json();
             if (result.status === "success") {
                 const details = result.details;
