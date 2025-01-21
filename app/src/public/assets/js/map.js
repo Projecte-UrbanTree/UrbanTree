@@ -711,26 +711,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchSensorHistory(sensorId) {
         try {
-            const response = await fetch(`http://localhost:8001/api/sensors/${sensorId}/history`);
+            const response = await fetch(`http://localhost:8001/api/v1/sensors/${sensorId}/history`);
             const result = await response.json();
             if (result.status === "success") {
                 const details = result.details;
                 sensorModalContent.innerHTML = `
-                    <table class="min-w-full bg-white">
-                        <thead>
+                    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                        <thead class="bg-gray-100">
                             <tr>
-                                <th class="py-2">Temperature</th>
-                                <th class="py-2">Humidity</th>
-                                <th class="py-2">Inclination</th>
-                                <th class="py-2">Created At</th>
+                                <th class="py-2 px-4 border-b">Temperatura</th>
+                                <th class="py-2 px-4 border-b">Humedad</th>
+                                <th class="py-2 px-4 border-b">Inclinación</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="border px-4 py-2">${details.temperature}</td>
-                                <td class="border px-4 py-2">${details.humidity}</td>
-                                <td class="border px-4 py-2">${details.inclination}</td>
-                                <td class="border px-4 py-2">${new Date(details.created_at).toLocaleString()}</td>
+                            <tr class="hover:bg-gray-50">
+                                <td class="border px-4 py-2 text-center">${details.temperature} °C</td>
+                                <td class="border px-4 py-2 text-center">${details.humidity} %</td>
+                                <td class="border px-4 py-2 text-center">${details.inclination} °</td>
                             </tr>
                         </tbody>
                     </table>
