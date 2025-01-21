@@ -1025,6 +1025,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 loadIncidences(data.id);
                 loadElementHistory(data.id);
                 elementModal.classList.remove("hidden");
+                elementModalTabs.forEach((tab) => {
+                    tab.classList.remove("border-primary");
+                    tab.classList.add("border-transparent");
+                });
+                elementModalTabContents.forEach((tc) => tc.classList.add("hidden"));
+                const infoTab = document.querySelector('.element-modal-tab[data-target="element-modal-info"]');
+                if (infoTab) {
+                    infoTab.classList.add("border-primary");
+                    infoTab.classList.remove("border-transparent");
+                    document
+                        .getElementById(infoTab.dataset.target)
+                        .classList.remove("hidden");
+                }
 
                 const descriptionInput = document.getElementById(
                     "element-description-input"
