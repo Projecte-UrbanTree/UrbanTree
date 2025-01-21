@@ -9,6 +9,7 @@ use App\Models\Point;
 use App\Models\TreeType;
 use App\Models\Zone;
 use App\Models\Incidence;
+use App\Models\Sensor;
 use App\Core\Request;
 use Exception;
 
@@ -33,7 +34,7 @@ class MapController
                 'name' => $zone->name,
                 'description' => $zone->description,
                 'points' => array_map(function ($point) {
-                    return [$point->latitude, $point->longitude];
+                    return [$point->latitude, $point->longitude]; // Ensure correct order
                 }, $zone->points()),
                 'elementTypes' => [],
             ];
@@ -55,10 +56,26 @@ class MapController
                             'id' => $element->getId(),
                             'latitude' => $element->point()->latitude,
                             'longitude' => $element->point()->longitude,
+                            'hasIncidences' => Incidence::count(['element_id' => $element->getId()]) > 0,
                         ];
                     }, $elements),
                 ];
             }
+            $sensors = Sensor::findAll(['zone_id' => $zone->getId()]);
+            $zoneData['elementTypes'][] = [
+                'id' => -1,
+                'icon' => 'fas fa-thermometer-half',
+                'color' => '#FF5733',
+                'name' => 'Sensor',
+                'elements' => array_map(function ($sensor) {
+                    return [
+                        'id' => $sensor->getId(),
+                        'latitude' => $sensor->point()->latitude,
+                        'longitude' => $sensor->point()->longitude,
+                        'is_active' => $sensor->is_active,
+                    ];
+                }, $sensors),
+            ];
 
             $data['zones'][] = $zoneData;
         }
@@ -279,8 +296,7 @@ class MapController
         header('Content-Type: application/json');
 
         try {
-            $elementId = $id;
-            $element = Element::find($elementId);
+            $element = Element::find($id);
             if ($element) {
                 $data = [
                     'id' => $element->getId(),
@@ -289,6 +305,7 @@ class MapController
                     'zone' => $element->zone(),
                     'point' => $element->point(),
                     'treeType' => $element->treeType(),
+                    'openIncidences' => Incidence::count(['element_id' => $element->getId(), 'status' => 'open']),
                 ];
                 echo json_encode($data);
             } else {
@@ -324,8 +341,7 @@ class MapController
         header('Content-Type: application/json');
 
         try {
-            $elementId = $id;
-            $incidences = Incidence::findAll(['element_id' => $elementId]);
+            $incidences = Incidence::findAll(['element_id' => $id]);
             $data = [];
             foreach ($incidences as $incidence) {
                 $data[] = [

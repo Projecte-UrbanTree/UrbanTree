@@ -60,3 +60,18 @@
         </form>
     </div>
 </div>
+
+<!-- Sensor Modal -->
+<div id="sensor-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
+        <div class="flex justify-between items-center mb-4">
+            <h2 id="sensor-modal-title" class="text-xl font-bold"></h2>
+            <button id="sensor-modal-close" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="sensor-modal-content">
+            <!-- Sensor information will be injected here -->
+        </div>
+    </div>
+</div>

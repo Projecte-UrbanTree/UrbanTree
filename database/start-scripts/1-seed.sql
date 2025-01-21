@@ -33,17 +33,17 @@ INSERT INTO zones (name, contract_id, color, description) VALUES
 
 --* Points
 INSERT INTO points (latitude, longitude, zone_id, element_id) VALUES
-(0.5846986, 40.7097591, 1, NULL),
-(0.5868467, 40.7045287, 1, NULL),
-(0.5879137, 40.7058229, 1, NULL),
-(0.5879137, 40.7061787, 1, NULL),
-(0.5876434, 40.7068150, 1, NULL),
-(0.5880987, 40.7077425, 1, NULL),
-(0.5885966, 40.7078719, 1, NULL),
-(0.5889096, 40.7080228, 1, NULL),
-(0.5875581, 40.7087238, 1, NULL),
-(0.5864769, 40.7091660, 1, NULL),
-(0.5854810, 40.7095110, 1, NULL),
+(40.7097591, 0.5846986, 1, NULL),
+(40.7045287, 0.5868467, 1, NULL),
+(40.7058229, 0.5879137, 1, NULL),
+(40.7061787, 0.5879137, 1, NULL),
+(40.7068150, 0.5876434, 1, NULL),
+(40.7077425, 0.5880987, 1, NULL),
+(40.7078719, 0.5885966, 1, NULL),
+(40.7080228, 0.5889096, 1, NULL),
+(40.7087238, 0.5875581, 1, NULL),
+(40.7091660, 0.5864769, 1, NULL),
+(40.7095110, 0.5854810, 1, NULL),
 (40.7092449, 0.5852129, NULL, 2),
 (40.7084313, 0.5855778, NULL, 3),
 (40.7076177, 0.5858998, NULL, 4),
@@ -51,11 +51,13 @@ INSERT INTO points (latitude, longitude, zone_id, element_id) VALUES
 (40.7074062, 0.5875097, NULL, 6),
 (40.7068041, 0.5862003, NULL, 7),
 (40.7059580, 0.5865008, NULL, 8),
-(40.7051281, 0.5868442, NULL, 9);
+(40.7051281, 0.5868442, NULL, 9),
+(40.7089591, 0.5858981, NULL, NULL),
+(40.7087182, 0.5865504, NULL, NULL),
+(40.7084456, 0.5872194, NULL, NULL);
 
 --* Elements
 INSERT INTO elements (element_type_id, contract_id, zone_id, point_id, tree_type_id) VALUES
-(1, 1, 1, 1, 1),
 (1, 1, 1, 12, 1),
 (1, 1, 1, 13, 1),
 (1, 1, 1, 14, 1),
@@ -87,9 +89,9 @@ INSERT INTO work_reports (work_order_id, observation, spent_fuel) VALUES
 
 --* Sensors
 INSERT INTO sensors (zone_id, contract_id, point_id, model, is_active) VALUES
-(1, 1, 1, 'Sensor Modelo A', TRUE),
-(1, 1, 2, 'Sensor Modelo B', TRUE),
-(1, 1, 3, 'Sensor Modelo C', FALSE);
+(1, 1, 20, 'Sensor Modelo A', TRUE),
+(1, 1, 21, 'Sensor Modelo B', TRUE),
+(1, 1, 22, 'Sensor Modelo C', TRUE);
 
 --* Sensor History
 INSERT INTO sensor_history (sensor_id, temperature, humidity, inclination) VALUES
