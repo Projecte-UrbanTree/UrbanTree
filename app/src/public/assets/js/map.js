@@ -744,7 +744,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showSensorModal(sensor) {
         sensorModalTitle.innerText = `Sensor ${sensor.id}`;
-        sensorModalContent.innerHTML = `<p>Loading...</p>`;
+        sensorModalContent.innerHTML = `<p>Obteniendo datos...</p>`;
         sensorModal.classList.remove("hidden");
         fetchSensorHistory(sensor.id);
     }
