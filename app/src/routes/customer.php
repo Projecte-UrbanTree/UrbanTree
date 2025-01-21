@@ -1,12 +1,12 @@
 <?php
 
-use App\Controllers\Customer\HomeController;
+use App\Controllers\Customer\DashboardController;
 use App\Middlewares\CustomerMiddleware;
 
 return [
     'GET' => [
         '/customer' => [
-            'controller' => HomeController::class,
+            'controller' => DashboardController::class,
             'method' => 'index',
             'middlewares' => [CustomerMiddleware::class],
         ],

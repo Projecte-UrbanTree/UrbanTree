@@ -46,20 +46,16 @@ class AuthController
             exit;
         }
 
-        if ($user->role == 1 || $user->role == 2) {
-            $contracts = Contract::findAll();
-            foreach ($contracts as $contract) {
-                $currentDate = date('Y-m-d');
-                if ($currentDate > $contract->start_date && $currentDate < $contract->end_date) {
-                    $contract_id = $contract->getId();
-                    break;
-                }
+        $contracts = Contract::findAll();
+        foreach ($contracts as $contract) {
+            $currentDate = date('Y-m-d');
+            if ($currentDate > $contract->start_date && $currentDate < $contract->end_date) {
+                $contract_id = $contract->getId();
+                break;
             }
-            if (! isset($contract_id)) {
-                $contract_id = -1;
-            }
-        } else {
-            $contract_id = null;
+        }
+        if (! isset($contract_id)) {
+            $contract_id = -1;
         }
 
         Session::set('user', [
