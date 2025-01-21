@@ -30,7 +30,6 @@ class Incidence extends BaseModel
         $incidence->description = $data['description'];
         $incidence->photo_id = $data['photo_id'];
         $incidence->status = $data['status'] ?? 'open';
-        $incidence->created_at = $data['created_at'] ?? null;
         $incidence->created_at = $data['created_at'];
         $incidence->updated_at = $data['updated_at'];
         $incidence->deleted_at = $data['deleted_at'];

@@ -993,7 +993,18 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
                 `;
+                document.getElementById(
+                    "element-modal-history"
+                ).innerHTML = `
+                    <div class="space-y-2">
+                        <h3 class="text-lg font-semibold">Historial de Tareas</h3>
+                        <div id="history-list">
+                            <!-- History will be injected here -->
+                        </div>
+                    </div>
+                `;
                 loadIncidences(data.id);
+                loadElementHistory(data.id);
                 elementModal.classList.remove("hidden");
 
                 const descriptionInput = document.getElementById(
@@ -1030,6 +1041,54 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch((error) => {
                 console.error("Error al obtener los datos del elemento", error);
                 alert("Error al obtener los datos del elemento.");
+            });
+    }
+
+    function loadElementHistory(elementId) {
+        fetch(`/api/map/elements/${elementId}/history`)
+            .then((response) => response.json())
+            .then((data) => {
+                const historyList = document.getElementById("history-list");
+                historyList.innerHTML = "";
+                if (data.length === 0) {
+                    const emptyMessage = document.createElement("p");
+                    emptyMessage.innerText = "No hay historial de tareas.";
+                    historyList.appendChild(emptyMessage);
+                } else {
+                    data.forEach((history) => {
+                        const historyItem = document.createElement("div");
+                        historyItem.className =
+                            "border rounded-lg p-4 mb-4 bg-white shadow-sm";
+                        historyItem.innerHTML = `
+                            <p class="text-lg font-semibold mb-2">Tarea ${
+                                history.task_id
+                            }</p>
+                            <p class="mb-2"><strong><i class="fas fa-tag"></i> Nombre:</strong> ${
+                                history.task_name
+                            }</p>
+                            <p class="mb-2"><strong><i class="fas fa-calendar"></i> Fecha:</strong> ${
+                                history.date || "N/A"
+                            }</p>
+                            <p class="mb-2"><strong><i class="fas fa-info-circle"></i> Estado:</strong> <span class="text-sm rounded px-2 py-1 ml-2 ${
+                                history.status === "completed"
+                                    ? "bg-green-500 text-white"
+                                    : "bg-red-500 text-white"
+                            }">${
+                            history.status === "completed"
+                                ? '<i class="fas fa-check-circle mr-1"></i> Completado'
+                                : '<i class="fas fa-times-circle mr-1"></i> Pendiente'
+                        }</span></p>
+                            <p class="mb-2"><strong><i class="fas fa-clipboard-list"></i> Órden de trabajo:</strong> ${
+                                history.work_order_id
+                            }</p>
+                        `;
+                        historyList.appendChild(historyItem);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Error al cargar el historial de tareas", error);
+                alert("Error al cargar el historial de tareas.");
             });
     }
 

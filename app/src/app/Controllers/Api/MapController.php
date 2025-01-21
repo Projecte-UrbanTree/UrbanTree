@@ -10,6 +10,7 @@ use App\Models\TreeType;
 use App\Models\Zone;
 use App\Models\Incidence;
 use App\Models\Sensor;
+use App\Models\WorkOrderBlockTask;
 use App\Core\Request;
 use Exception;
 
@@ -401,5 +402,33 @@ class MapController
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Incidence not found']);
         }
+    }
+
+    public function getElementHistory($id, $queryParams)
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $element = Element::find($id);
+            if ($element) {
+                $tasks = WorkOrderBlockTask::findAll(['element_type_id' => $element->element_type_id]);
+                $data = [];
+                foreach ($tasks as $task) {
+                    $data[] = [
+                        'task_id' => $task->getId(),
+                        'task_name' => $task->task()->name,
+                        'date' => $task->created_at,
+                        'status' => $task->status == 1 ? 'completed' : 'pending',
+                        'work_order_id' => $task->workOrderBlock()->workOrder()->getId()
+                    ];
+                }
+                echo json_encode($data);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Element not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        exit;
     }
 }

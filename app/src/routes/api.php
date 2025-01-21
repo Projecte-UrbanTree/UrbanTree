@@ -24,6 +24,10 @@ return [
             'controller' => MapController::class,
             'method' => 'getIncidences',
         ],
+        '/api/map/elements/:id/history' => [
+            'controller' => MapController::class,
+            'method' => 'getElementHistory',
+        ],
     ],
     'POST' => [
         '/api/map/zones' => [

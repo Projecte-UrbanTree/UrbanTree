@@ -16,6 +16,8 @@ class WorkOrderBlockTask extends BaseModel
 
     public ?string $spent_time;
 
+    public ?string $created_at;
+
     protected static function getTableName(): string
     {
         return 'work_orders_blocks_tasks';
@@ -31,6 +33,9 @@ class WorkOrderBlockTask extends BaseModel
         $work_order_block_task->tree_type_id = $data['tree_type_id'];
         $work_order_block_task->status = $data['status'];
         $work_order_block_task->spent_time = $data['spent_time'] ?? null;
+        $work_order_block_task->created_at = $data['created_at'];
+        $work_order_block_task->updated_at = $data['updated_at'];
+        $work_order_block_task->deleted_at = $data['deleted_at'];
 
         return $work_order_block_task;
     }

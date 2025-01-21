@@ -26,12 +26,16 @@
         <div class="flex mb-4 border-b border-gray-200">
             <button class="element-modal-tab px-4 py-2 text-gray-700 border-b-2 border-primary focus:outline-none" data-target="element-modal-info">Información</button>
             <button class="element-modal-tab px-4 py-2 text-gray-700 border-b-2 border-transparent focus:outline-none" data-target="element-modal-incidences">Incidencias</button>
+            <button class="element-modal-tab px-4 py-2 text-gray-700 border-b-2 border-transparent focus:outline-none" data-target="element-modal-history">Historial</button>
         </div>
         <div id="element-modal-info" class="element-modal-tab-content">
             <!-- Information content will be injected here -->
         </div>
         <div id="element-modal-incidences" class="element-modal-tab-content hidden">
             <!-- Incidences content will be injected here -->
+        </div>
+        <div id="element-modal-history" class="element-modal-tab-content hidden">
+            <!-- History content will be injected here -->
         </div>
     </div>
 </div>
