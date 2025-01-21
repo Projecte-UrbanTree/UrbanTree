@@ -33,7 +33,7 @@
                                         stroke-width="2" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
-                            <?= 'OT-' . htmlspecialchars($work_order->getId()); ?>
+                            <?= 'OT-'.htmlspecialchars($work_order->getId()); ?>
                         </th>
                         <td class="px-4 py-3">
                             <?= htmlspecialchars($work_order->contract()->name); ?>
@@ -44,11 +44,11 @@
                         <td class="px-4 py-3">
                             <?php
                             $users = [];
-                            foreach ($work_order->users() as $user) {
-                                $users[] = $user->name . ' ' . $user->surname;
-                            }
-                            echo implode(', ', $users);
-                            ?>
+                    foreach ($work_order->users() as $user) {
+                        $users[] = $user->name.' '.$user->surname;
+                    }
+                    echo implode(', ', $users);
+                    ?>
                         </td>
                         <td class="px-4 py-3">
                             <?php if ($work_order->report()) { ?>
@@ -67,7 +67,7 @@
                         </td>
                         <td class="px-4 py-3 text-right">
                             <div class="flex justify-end space-x-3">
-                                <?php if (!$work_order->report()) { ?>
+                                <?php if (! $work_order->report()) { ?>
                                     <a href="/admin/work-order/<?= htmlspecialchars($work_order->getId()); ?>/edit"
                                         class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
                                         title="Editar"
@@ -117,9 +117,9 @@
                                                     <ul>
                                                         <?php foreach ($block->tasks() as $blockTask) { ?>
                                                             <li>• <?= htmlspecialchars($blockTask->task()->name); ?>
-                                                                <?= htmlspecialchars(' ' . $blockTask->elementType()->name); ?>
+                                                                <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
                                                                 <?php if ($blockTask->treeType() != null) {
-                                                                    echo '(' . htmlspecialchars($blockTask->treeType()->species . ')');
+                                                                    echo '('.htmlspecialchars($blockTask->treeType()->species.')');
                                                                 } ?>
                                                             </li>
                                                         <?php } ?>
