@@ -128,7 +128,7 @@ create table incidences (
     description varchar(255),
     photo_id int,
     status varchar(20) not null default 'open',
-    created_at datetime not null default current_timestamp,
+    created_at timestamp,
     updated_at timestamp,
     deleted_at timestamp,
     foreign key (element_id) references elements(id),
