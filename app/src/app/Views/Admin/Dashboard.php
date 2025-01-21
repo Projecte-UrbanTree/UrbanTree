@@ -10,7 +10,7 @@ use App\Core\Session;
         <span class="text-4xl text-gray-800">👋</span>
         <div>
             <h1 class="text-2xl font-semibold text-gray-800">Bienvenido de nuevo,
-                <?= Session::get('user')['name'].' '.Session::get('user')['surname']; ?>.
+                <?= Session::get('user')['name'] . ' ' . Session::get('user')['surname']; ?>.
             </h1>
             <p class="text-base text-gray-500 mt-2">Te damos la bienvenida a tu tablero. Aquí tienes un resumen
                 rápido de tus datos.</p>
@@ -59,21 +59,4 @@ use App\Core\Session;
         <h2 class="text-lg font-medium text-gray-800">Órdenes de trabajo</h2>
         <p class="mt-3 text-3xl font-semibold text-gray-900"><?= $workorders ?></p>
     </div>
-</div>
-
-<!-- GitHub Repository Card -->
-<div class="bg-white rounded-lg p-6 mt-8 border border-gray-200">
-    <div class="text-gray-800 mb-4 flex justify-center">
-        <!-- Increased the font size and centered the logo -->
-        <i class="fab fa-github fa-3x"></i>
-    </div>
-    <h2 class="text-lg font-medium text-gray-800 text-center">Proyecto UrbanTree</h2>
-    <p class="mt-4 text-base text-gray-700 text-center">Este proyecto ha sido realizado por estudiantes del
-        <strong>Institut Montsià</strong>. Puedes ver el código fuente y más detalles sobre el proyecto en el
-        siguiente repositorio de GitHub:
-    </p>
-    <a href="https://github.com/Projecte-UrbanTree/UrbanTree" target="_blank"
-        class="mt-4 text-blue-500 hover:underline block text-center">
-        <i class="fab fa-github mr-2"></i> Ver en GitHub
-    </a>
 </div>
