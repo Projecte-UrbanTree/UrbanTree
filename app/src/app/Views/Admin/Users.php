@@ -4,7 +4,7 @@
     </a>
 </div>
 <!-- Users Table -->
-<div class="relative overflow-x-auto rounded-lg">
+<div class="relative overflow-x-auto rounded">
     <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
         <thead class="bg-gray-700 text-white">
             <tr class="h-12"> <!-- Adjusted height -->
@@ -24,7 +24,7 @@
                 <?php foreach ($users as $user) { ?>
                     <tr class="hover:bg-gray-50 transition-colors duration-300">
                         <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
-                            <?= htmlspecialchars($user->name.' '.$user->surname); ?>
+                            <?= htmlspecialchars($user->name . ' ' . $user->surname); ?>
                         </th>
                         <td class="px-4 py-3">
                             <?= htmlspecialchars($user->company); ?>
@@ -39,13 +39,13 @@
                             <div class="flex justify-center space-x-3">
                                 <a href="/admin/user/<?= htmlspecialchars($user->getId()); ?>/edit"
                                     class="p-2 text-gray-700 border border-transparent hover:text-gray-500 transition-all duration-200"
-                                    title="Editar" aria-label="Editar usuario <?= htmlspecialchars($user->name.' '.$user->surname); ?>">
+                                    title="Editar" aria-label="Editar usuario <?= htmlspecialchars($user->name . ' ' . $user->surname); ?>">
                                     <i class="fas fa-pencil"></i>
                                 </a>
                                 <a href="/admin/user/<?= htmlspecialchars($user->getId()); ?>/delete"
-                                    onclick="return confirm('¿Desea eliminar el usuario <?= htmlspecialchars($user->name.' '.$user->surname); ?>?');"
+                                    onclick="return confirm('¿Desea eliminar el usuario <?= htmlspecialchars($user->name . ' ' . $user->surname); ?>?');"
                                     class="p-2 text-gray-700 border border-transparent hover:text-red-500 transition-all duration-200"
-                                    title="Eliminar" aria-label="Eliminar usuario <?= htmlspecialchars($user->name.' '.$user->surname); ?>">
+                                    title="Eliminar" aria-label="Eliminar usuario <?= htmlspecialchars($user->name . ' ' . $user->surname); ?>">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>

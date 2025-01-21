@@ -15,7 +15,7 @@ $currentContract = Session::get('current_contract');
     <!-- Viewport settings to make the layout responsive on different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Page title dynamically generated from PHP -->
-    <title><?= $title.' - '.getenv('APP_NAME'); ?></title>
+    <title><?= $title . ' - ' . getenv('APP_NAME'); ?></title>
     <!-- Favicon link -->
     <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
     <!-- Tailwind CSS framework (via CDN) -->
@@ -63,16 +63,16 @@ $currentContract = Session::get('current_contract');
                     onchange="setCurrentContract(this.value)">
                     <?php
                     foreach ($contracts as $contract) {
-                        echo '<option value="'.$contract->getId().'"'.($currentContract == $contract->getId() ? ' selected' : '').'>'.$contract->name.'</option>';
+                        echo '<option value="' . $contract->getId() . '"' . ($currentContract == $contract->getId() ? ' selected' : '') . '>' . $contract->name . '</option>';
                     }
-                    echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos los contratos</option>';
+                    echo '<option value="-1"' . ($currentContract == -1 ? ' selected' : '') . '>Todos los contratos</option>';
                     ?>
                 </select>
                 <div class="relative">
                     <!-- Letters avatar -->
                     <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer"
                         onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
-                        <?= strtoupper(substr(Session::get('user')['name'], 0, 1).substr(Session::get('user')['surname'], 0, 1)); ?>
+                        <?= strtoupper(substr(Session::get('user')['name'], 0, 1) . substr(Session::get('user')['surname'], 0, 1)); ?>
                     </div>
                     <div id="profile-dropdown"
                         class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
@@ -104,7 +104,7 @@ $currentContract = Session::get('current_contract');
     <main class="max-w-7xl mx-auto px-4 pt-8 pb-16">
         <?php if (Session::has('success')) { ?>
             <div id="alert-msg"
-                class="bg-green-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                class="bg-green-400 text-white px-4 py-3 rounded mb-6 transform transition-all duration-500 ease-in-out"
                 role="alert">
                 <span class="inline-block mr-2">
                     <!-- Success Icon (Font Awesome) -->
@@ -116,7 +116,7 @@ $currentContract = Session::get('current_contract');
 
         <?php if (Session::has('error')) { ?>
             <div id="alert-msg-error"
-                class="bg-red-400 text-white px-4 py-3 rounded-lg mb-6 transform transition-all duration-500 ease-in-out"
+                class="bg-red-400 text-white px-4 py-3 rounded mb-6 transform transition-all duration-500 ease-in-out"
                 role="alert">
                 <span class="inline-block mr-2">
                     <!-- Error Icon (Font Awesome) -->
@@ -131,7 +131,7 @@ $currentContract = Session::get('current_contract');
 
     <script src="/assets/js/worker.js?v=<?= time(); ?>"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Show alerts with animation (Success and Error messages)
             const alertMsg = document.querySelector("#alert-msg");
             const alertMsgError = document.querySelector("#alert-msg-error");
@@ -165,7 +165,7 @@ $currentContract = Session::get('current_contract');
             const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
             const mobileMenu = document.getElementById("mobile-menu");
 
-            mobileMenuToggle.addEventListener("click", function () {
+            mobileMenuToggle.addEventListener("click", function() {
                 mobileMenu.classList.toggle("hidden");
             });
         });

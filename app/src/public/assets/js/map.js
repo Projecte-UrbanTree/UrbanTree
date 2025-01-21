@@ -403,7 +403,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (zones.length === 0) {
             const emptyMessage = document.createElement("div");
             emptyMessage.className =
-                "text-gray-700 text-center p-6 bg-gray-100 rounded-lg flex flex-col items-center";
+                "text-gray-700 text-center p-6 bg-gray-100 rounded flex flex-col items-center";
             emptyMessage.innerHTML = `
                 <i class="fas fa-exclamation-circle text-4xl mb-4"></i>
                 <p class="text-lg font-semibold">No hay zonas creadas.</p>
@@ -420,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function buildZoneInventoryItem(zone) {
         const zoneItem = document.createElement("div");
-        zoneItem.className = "bg-white border rounded-lg mb-4 p-4";
+        zoneItem.className = "bg-white border rounded mb-4 p-4";
 
         const zoneHeader = document.createElement("div");
         zoneHeader.className = "flex items-center justify-between mb-4";
@@ -500,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const zoneDescription = document.createElement("textarea");
         zoneDescription.className =
-            "w-full mt-4 p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400 transition duration-200";
+            "w-full mt-4 p-3 border rounded text-gray-700 focus:ring-2 focus:ring-blue-400 transition duration-200";
         zoneDescription.placeholder = "Descripción de la zona";
         zoneDescription.value = zone.description || "";
 
@@ -547,7 +547,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const deleteButton = document.createElement("button");
         deleteButton.className =
-            "bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300";
+            "bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded transition duration-300";
         deleteButton.innerHTML = "<i class='fas fa-trash-alt'></i> Eliminar";
         deleteButton.onclick = () => {
             if (confirm("¿Estás seguro de que deseas eliminar esta zona?")) {
@@ -629,7 +629,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function createElementTypeItem(zone, type) {
         const elementTypeItem = document.createElement("div");
         elementTypeItem.className =
-            "flex items-center justify-between p-2 bg-gray-50 rounded-lg hover:bg-gray-200 transition ease-in-out duration-300";
+            "flex items-center justify-between p-2 bg-gray-50 rounded hover:bg-gray-200 transition ease-in-out duration-300";
         const elementCount = type.elements.length;
         elementTypeItem.innerHTML = `
             <span class="text-gray-700"><i class="${type.icon} text-xl mr-2"></i> ${type.name} (${elementCount} elementos)</span>
@@ -716,7 +716,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (result.status === "success") {
                 const details = result.details;
                 sensorModalContent.innerHTML = `
-                    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                    <table class="min-w-full bg-white border border-gray-300 rounded">
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="py-2 px-4 border-b">Temperatura</th>
@@ -878,7 +878,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <input
             type="color"
             data-zone-id="${zoneId}"
-            class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none"
+            class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded disabled:opacity-50 disabled:pointer-events-none"
             value="${color || "#2563eb"}"
             title="Choose your color"
         >
@@ -975,7 +975,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         }</textarea></p>
                     </div>
                     <div class="mt-4 flex justify-end">
-                        <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded-lg transition duration-300" data-element-id="${
+                        <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded transition duration-300" data-element-id="${
                             data.id
                         }">Eliminar elemento</button>
                     </div>
@@ -1058,7 +1058,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     data.forEach((history) => {
                         const historyItem = document.createElement("div");
                         historyItem.className =
-                            "border rounded-lg p-4 mb-4 bg-white shadow-sm";
+                            "border rounded p-4 mb-4 bg-white shadow-sm";
                         historyItem.innerHTML = `
                             <p class="text-lg font-semibold mb-2">Tarea ${
                                 history.task_id
@@ -1107,7 +1107,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     data.forEach((incidence) => {
                         const incidenceItem = document.createElement("div");
                         incidenceItem.className =
-                            "border rounded-lg p-4 mb-4 bg-white shadow-sm";
+                            "border rounded p-4 mb-4 bg-white shadow-sm";
                         incidenceItem.innerHTML = `
                             <p class="text-lg font-semibold mb-2">Incidencia ${
                                 incidence.id
@@ -1131,12 +1131,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                 incidence.description || "N/A"
                             }</p>
                             <div class="flex justify-end space-x-2">
-                                <button class="bg-green-500 text-white px-4 py-2 rounded-lg toggle-status-btn" data-incidence-id="${
+                                <button class="bg-green-500 text-white px-4 py-2 rounded toggle-status-btn" data-incidence-id="${
                                     incidence.id
                                 }">
                                     Cambiar Estado
                                 </button>
-                                <button class="bg-red-500 text-white px-4 py-2 rounded-lg delete-incidence-btn" data-incidence-id="${
+                                <button class="bg-red-500 text-white px-4 py-2 rounded delete-incidence-btn" data-incidence-id="${
                                     incidence.id
                                 }">
                                     Eliminar incidencia
@@ -1182,7 +1182,7 @@ document.addEventListener("DOMContentLoaded", () => {
         incidenceModal.className =
             "fixed inset-0 flex items-center justify-center bg-black bg-opacity-50";
         incidenceModal.innerHTML = `
-            <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
+            <div class="bg-white rounded shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
                 <h2 class="text-xl font-bold mb-4">Añadir Incidencia</h2>
                 <form id="add-incidence-form">
                     <div class="mb-4">

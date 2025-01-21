@@ -123,7 +123,7 @@ function addBlock() {
     const blockCount = blocksContainer.children.length;
 
     const block = document.createElement("div");
-    block.className = "workorder-block border border-gray-300 rounded-lg shadow p-6 bg-gray-50 mb-6";
+    block.className = "workorder-block border border-gray-300 rounded shadow p-6 bg-gray-50 mb-6";
     block.dataset.blockIndex = blockCount;
 
     block.innerHTML = `
@@ -137,7 +137,7 @@ function addBlock() {
         </div>
         <div class="mb-4">
             <label for="zonesInput_${blockCount}" class="block text-sm font-medium text-gray-700 mb-1">Zonas</label>
-            <input type="text" id="zonesInput_${blockCount}" readonly onclick="openModal('modalZones', 'zonesInput_${blockCount}')" placeholder="Seleccionar Zonas" class="w-full px-4 py-2 border border-gray-300 rounded-lg cursor-pointer focus:outline-none">
+            <input type="text" id="zonesInput_${blockCount}" readonly onclick="openModal('modalZones', 'zonesInput_${blockCount}')" placeholder="Seleccionar Zonas" class="w-full px-4 py-2 border border-gray-300 rounded cursor-pointer focus:outline-none">
             <input type="hidden" name="blocks[${blockCount}][zonesIds]" id="zonesIdsInput_${blockCount}">
         </div>
         <div class="tasksContainer space-y-4 mb-4">
@@ -145,19 +145,19 @@ function addBlock() {
             <div class="task-row flex space-x-4 items-end" data-task-index="0">
                 <div class="flex-auto">
                     <label for="taskType_${blockCount}_0" class="block text-sm font-medium text-gray-700 mb-1">Tarea</label>
-                    <select name="blocks[${blockCount}][tasks][0][taskType]" id="taskType_${blockCount}_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                    <select name="blocks[${blockCount}][tasks][0][taskType]" id="taskType_${blockCount}_0" class="w-full px-4 py-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                         ${taskTypeOptions}
                     </select>
                 </div>
                 <div class="flex-auto">
                     <label for="elementType_${blockCount}_0" class="block text-sm font-medium text-gray-700 mb-1">Elemento</label>
-                    <select name="blocks[${blockCount}][tasks][0][elementType]" id="elementType_${blockCount}_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                    <select name="blocks[${blockCount}][tasks][0][elementType]" id="elementType_${blockCount}_0" class="w-full px-4 py-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                         ${elementTypeOptions}
                     </select>
                 </div>
                 <div class="flex-auto">
                     <label for="species_${blockCount}_0" class="block text-sm font-medium text-gray-700 mb-1">Species</label>
-                    <select name="blocks[${blockCount}][tasks][0][species]" id="species_${blockCount}_0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                    <select name="blocks[${blockCount}][tasks][0][species]" id="species_${blockCount}_0" class="w-full px-4 py-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                         ${speciesOptions}
                     </select>
                 </div>
@@ -173,7 +173,7 @@ function addBlock() {
         </button>
         <div class="mt-4">
             <label for="notes_${blockCount}" class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
-            <textarea name="blocks[${blockCount}][notes]" id="notes_${blockCount}" rows="4" placeholder="Añadir notas aquí..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
+            <textarea name="blocks[${blockCount}][notes]" id="notes_${blockCount}" rows="4" placeholder="Añadir notas aquí..." class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
         </div>
     `;
 
@@ -194,19 +194,19 @@ function addTask(button) {
     taskRow.innerHTML = `
         <div class="flex-auto">
             <label for="taskType_${blockIndex}_${taskCount}" class="block text-sm font-medium text-gray-700 mb-1">Tarea</label>
-            <select name="blocks[${blockIndex}][tasks][${taskCount}][taskType]" id="taskType_${blockIndex}_${taskCount}" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            <select name="blocks[${blockIndex}][tasks][${taskCount}][taskType]" id="taskType_${blockIndex}_${taskCount}" class="w-full px-4 py-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 ${taskTypeOptions}
             </select>
         </div>
         <div class="flex-auto">
             <label for="elementType_${blockIndex}_${taskCount}" class="block text-sm font-medium text-gray-700 mb-1">Elemento</label>
-            <select name="blocks[${blockIndex}][tasks][${taskCount}][elementType]" id="elementType_${blockIndex}_${taskCount}" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            <select name="blocks[${blockIndex}][tasks][${taskCount}][elementType]" id="elementType_${blockIndex}_${taskCount}" class="w-full px-4 py-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 ${elementTypeOptions}
             </select>
         </div>
         <div class="flex-auto">
             <label for="species_${blockIndex}_${taskCount}" class="block text-sm font-medium text-gray-700 mb-1">Species</label>
-            <select name="blocks[${blockIndex}][tasks][${taskCount}][species]" id="species_${blockIndex}_${taskCount}" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            <select name="blocks[${blockIndex}][tasks][${taskCount}][species]" id="species_${blockIndex}_${taskCount}" class="w-full px-4 py-2 border border-gray-300 rounded bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 ${speciesOptions}
             </select>
         </div>

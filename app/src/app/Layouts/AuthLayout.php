@@ -7,7 +7,7 @@
     <!-- Viewport settings to make the layout responsive on different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Page title dynamically generated from PHP -->
-    <title><?= $title.' - '.getenv('APP_NAME'); ?></title>
+    <title><?= $title . ' - ' . getenv('APP_NAME'); ?></title>
     <!-- Favicon link -->
     <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
     <!-- Tailwind CSS framework (via CDN) -->
@@ -23,7 +23,7 @@
 <body class="bg-gray-50 font-sans leading-normal tracking-normal flex items-center justify-center h-screen p-2 md:p-0">
 
     <!-- Auth content area -->
-    <div class="w-full max-w-lg bg-white rounded-lg p-8 border border-gray-200">
+    <div class="w-full max-w-lg bg-white rounded p-8 border border-gray-200">
         <!-- Header with Logo -->
         <header class="text-center my-8">
             <img src="/assets/images/logo.png" alt="Logo" class="mx-auto mb-4 w-48 md:w-64">

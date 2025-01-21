@@ -8,7 +8,7 @@
     </a>
 </div>
 
-<div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
+<div class="bg-white p-8 border border-gray-300 rounded shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Crear Tipo de Recurso</h2>
     <form id="typeResourcesForm" action="/admin/resource-type/store" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Error Messages -->
@@ -18,7 +18,7 @@
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
             <input type="text" id="name" name="name"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
         </div>
 
@@ -26,7 +26,7 @@
         <div>
             <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
             <input type="text" id="description" name="description"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- Submit Button -->

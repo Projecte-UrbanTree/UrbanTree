@@ -4,7 +4,7 @@
         <i class="fas fa-plus mr-2"></i> Nueva órden de trabajo
     </a>
 </div>
-<div class="relative overflow-x-auto rounded-lg">
+<div class="relative overflow-x-auto rounded">
     <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
         <thead class="bg-gray-700 text-white">
             <tr class="h-12">
@@ -33,7 +33,7 @@
                                         stroke-width="2" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
-                            <?= 'OT-'.htmlspecialchars($work_order->getId()); ?>
+                            <?= 'OT-' . htmlspecialchars($work_order->getId()); ?>
                         </th>
                         <td class="px-4 py-3">
                             <?= htmlspecialchars($work_order->contract()->name); ?>
@@ -45,7 +45,7 @@
                             <?php
                             $users = [];
                             foreach ($work_order->users() as $user) {
-                                $users[] = $user->name.' '.$user->surname;
+                                $users[] = $user->name . ' ' . $user->surname;
                             }
                             echo implode(', ', $users);
                             ?>
@@ -82,7 +82,7 @@
                     <tr id="accordionContent<?= $index; ?>" class="hidden">
                         <td colspan="6" class="py-4 px-4">
                             <?php foreach ($work_order->blocks() as $block) { ?>
-                                <div class="mb-6 border rounded-lg shadow-sm overflow-hidden">
+                                <div class="mb-6 border rounded shadow-sm overflow-hidden">
                                     <table class="w-full text-sm text-left text-gray-700 bg-white divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
                                             <tr>
@@ -104,9 +104,9 @@
                                                     <ul>
                                                         <?php foreach ($block->tasks() as $blockTask) { ?>
                                                             <li>• <?= htmlspecialchars($blockTask->task()->name); ?>
-                                                                <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
+                                                                <?= htmlspecialchars(' ' . $blockTask->elementType()->name); ?>
                                                                 <?php if ($blockTask->treeType() != null) {
-                                                                    echo '('.htmlspecialchars($blockTask->treeType()->species.')');
+                                                                    echo '(' . htmlspecialchars($blockTask->treeType()->species . ')');
                                                                 } ?>
                                                             </li>
                                                         <?php } ?>

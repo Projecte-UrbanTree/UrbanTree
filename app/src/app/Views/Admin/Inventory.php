@@ -16,7 +16,7 @@
 
 <!-- Element Modal -->
 <div id="element-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-2/3 h-3/5 overflow-y-auto">
+    <div class="bg-white rounded shadow-lg p-6 w-5/6 md:w-3/6 lg:w-2/3 h-3/5 overflow-y-auto">
         <div class="flex justify-between items-center mb-4">
             <h2 id="element-modal-title" class="text-xl font-bold"></h2>
             <button id="element-modal-close" class="text-gray-500 hover:text-gray-700">
@@ -42,7 +42,7 @@
 
 <!-- Create Element Modal -->
 <div id="create-element-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
+    <div class="bg-white rounded shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
         <h2 class="text-xl font-bold mb-4">Añadir Elemento</h2>
         <form id="create-element-form">
             <div class="mb-4">
@@ -67,7 +67,7 @@
 
 <!-- Sensor Modal -->
 <div id="sensor-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
+    <div class="bg-white rounded shadow-lg p-6 w-5/6 md:w-3/6 lg:w-1/3">
         <div class="flex justify-between items-center mb-4">
             <h2 id="sensor-modal-title" class="text-xl font-bold"></h2>
             <button id="sensor-modal-close" class="text-gray-500 hover:text-gray-700">

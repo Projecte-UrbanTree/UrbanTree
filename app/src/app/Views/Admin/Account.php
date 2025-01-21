@@ -1,5 +1,5 @@
 <!-- Main Configuration Card -->
-<div class="bg-white rounded-lg p-6 border border-gray-200">
+<div class="bg-white rounded p-6 border border-gray-200">
     <h2 class="text-2xl font-semibold mb-5">Configuración de cuenta</h2>
     <form action="/admin/account" method="POST" id="accountForm">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -95,7 +95,7 @@
             <button
                 id="button-save"
                 type="submit"
-                class="bg-gray-400 text-gray-500 py-2 px-6 rounded-lg cursor-not-allowed disabled:bg-gray-400 disabled:text-white"
+                class="bg-gray-400 text-gray-500 py-2 px-6 rounded cursor-not-allowed disabled:bg-gray-400 disabled:text-white"
                 disabled>
                 Guardar cambios
             </button>

@@ -8,7 +8,7 @@
     </a>
 </div>
 
-<div class="bg-white p-8 border border-gray-300 rounded-lg shadow-md">
+<div class="bg-white p-8 border border-gray-300 rounded shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Creando nuevo tipo de tarea</h2>
 
     <form id="taskTypeForm" action="/admin/task-types/store" method="POST"
@@ -22,7 +22,7 @@
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
             <input type="text" id="name" name="name" placeholder="Introduce el nombre del tipo de tarea"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 required>
         </div>
 

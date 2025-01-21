@@ -7,7 +7,7 @@ use App\Core\Session;
 <?php $title = getenv('APP_NAME'); ?>
 
 <?php if (Session::has('error')) { ?>
-    <div class="bg-red-600 text-white px-4 py-3 rounded-lg mb-6" role="alert">
+    <div class="bg-red-600 text-white px-4 py-3 rounded mb-6" role="alert">
         <strong class="font-semibold">Error: </strong>
         <span><?= htmlspecialchars(Session::get('error')); ?></span>
     </div>
@@ -17,7 +17,7 @@ use App\Core\Session;
     <div>
         <label for="email" class="block text-sm font-medium text-gray-800">Correo electrónico</label>
         <input type="email" id="email" name="email" required
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             value="jose.rodriguez@example.com"
             placeholder="tucorreo@ejemplo.com">
     </div>
@@ -25,7 +25,7 @@ use App\Core\Session;
     <div>
         <label for="password" class="block text-sm font-medium text-gray-800">Contraseña</label>
         <input type="password" id="password" name="password" required
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
             value="demopass"
             placeholder="••••••••">
     </div>
@@ -40,7 +40,7 @@ use App\Core\Session;
 
     <div>
         <button type="submit"
-            class="w-full bg-primary hover:bg-primaryDark text-white font-medium py-2 px-4 rounded-lg">
+            class="w-full bg-primary hover:bg-primaryDark text-white font-medium py-2 px-4 rounded">
             Iniciar sesión
         </button>
     </div>
