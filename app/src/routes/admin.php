@@ -77,27 +77,6 @@ return [
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
-        // === Zones GET Routes
-        '/admin/zones' => [
-            'controller' => ZoneController::class,
-            'method' => 'index',
-            'middlewares' => [AdminMiddleware::class],
-        ],
-        '/admin/zone/create' => [
-            'controller' => ZoneController::class,
-            'method' => 'create',
-            'middlewares' => [AdminMiddleware::class],
-        ],
-        '/admin/zone/:id/edit' => [
-            'controller' => ZoneController::class,
-            'method' => 'edit',
-            'middlewares' => [AdminMiddleware::class],
-        ],
-        '/admin/zone/:id/delete' => [
-            'controller' => ZoneController::class,
-            'method' => 'destroy',
-            'middlewares' => [AdminMiddleware::class],
-        ],
         // === TreeTypes GET Routes
         '/admin/tree-types' => [
             'controller' => TreeTypeController::class,
@@ -319,17 +298,6 @@ return [
         ],
         '/admin/work-order/:id/update' => [
             'controller' => WorkOrderController::class,
-            'method' => 'update',
-            'middlewares' => [AdminMiddleware::class],
-        ],
-        // === Zones POST Routes
-        '/admin/zone/store' => [
-            'controller' => ZoneController::class,
-            'method' => 'store',
-            'middlewares' => [AdminMiddleware::class],
-        ],
-        '/admin/zone/:id/update' => [
-            'controller' => ZoneController::class,
             'method' => 'update',
             'middlewares' => [AdminMiddleware::class],
         ],
