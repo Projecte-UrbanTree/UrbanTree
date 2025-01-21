@@ -109,15 +109,13 @@ INSERT INTO work_orders_blocks_tasks (work_orders_block_id, task_id, tree_type_i
 
 --* Work Orders Blocks Tasks Resources
 INSERT INTO resource_type (name, description) VALUES
-('Vehiculo', 'Resources that are in written book format'),
-('Consumibles', 'Instructional or educational video content'),
-('Maquinaria', 'Written articles or blogs for learning');
+('Vehículo', 'Medios de transporte utilizados para diferentes actividades o trabajos'),
+('Consumibles', 'Materiales que se agotan con su uso, como alimentos o suministros'),
+('Maquinaria', 'Equipos o herramientas mecánicas utilizadas para realizar tareas específicas');
 
 --* Work Orders Blocks Tasks Resources
 INSERT INTO resources (name, description, resource_type_id) VALUES
-('Vechiculo A', NULL, 1),
-('jocs infantils', NULL, 2),
-('Corta Cesped', NULL, 3);
+('Plameca', NULL, 1);
 
 INSERT INTO work_report_resources (work_report_id, resource_id) VALUES
 (1, 1);
