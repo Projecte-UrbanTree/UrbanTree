@@ -349,7 +349,7 @@ class MapController
                     'name' => $incidence->name,
                     'description' => $incidence->description,
                     'status' => $incidence->status,
-                    'created_at' => $incidence->created_at,
+                    'created_at' => $incidence->getCreatedAt(),
                 ];
             }
             echo json_encode($data);
@@ -416,7 +416,7 @@ class MapController
                     $data[] = [
                         'task_id' => $task->getId(),
                         'task_name' => $task->task()->name,
-                        'date' => $task->created_at,
+                        'date' => $task->getCreatedAt(),
                         'status' => $task->status == 1 ? 'completed' : 'pending',
                         'work_order_id' => $task->workOrderBlock()->workOrder()->getId(),
                     ];

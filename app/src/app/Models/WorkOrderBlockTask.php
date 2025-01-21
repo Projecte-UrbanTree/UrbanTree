@@ -16,8 +16,6 @@ class WorkOrderBlockTask extends BaseModel
 
     public ?string $spent_time;
 
-    public ?string $created_at;
-
     protected static function getTableName(): string
     {
         return 'work_orders_blocks_tasks';

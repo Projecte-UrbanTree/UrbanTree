@@ -14,8 +14,6 @@ class Incidence extends BaseModel
 
     public string $status = 'open';
 
-    public ?string $created_at;
-
     protected static function getTableName(): string
     {
         return 'incidences';
