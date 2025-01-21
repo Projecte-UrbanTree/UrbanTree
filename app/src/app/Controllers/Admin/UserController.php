@@ -77,17 +77,16 @@ class UserController
     {
         $user = User::find($id);
 
-        $admin_count = User::count(['role' => 2]);
-
-        if ($user->role == 2 && $postData['role'] != 2) {
-            if ($admin_count <= 1) {
-                Session::set('error', 'No se puede cambiar el rol al único administrador');
-                header('Location: /admin/users');
-                exit;
-            }
-        }
-
         if ($user) {
+            if ($user->role == 2 && $postData['role'] != 2) {
+                $admin_count = User::count(['role' => 2]);
+                if ($admin_count <= 1) {
+                    Session::set('error', 'No se puede cambiar el rol al único administrador');
+                    header('Location: /admin/users');
+                    exit;
+                }
+            }
+
             $user->company = $postData['company'];
             $user->name = $postData['name'];
             $user->surname = $postData['surname'];
