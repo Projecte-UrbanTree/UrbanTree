@@ -1158,7 +1158,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     : "bg-yellow-500 text-white"
                             }">${
                             incidence.status === "closed"
-                                ? '<i class="fas fa-lock mr-1"></i> Cerrado'
+                                ? '<i class="fas fa-lock mr-1"></i> Cerrada'
                                 : '<i class="fas fa-exclamation-triangle mr-1"></i> Abierta'
                         }</span></p>
                             <p class="mb-4"><strong><i class="fas fa-align-left"></i> Descripción:</strong> ${
