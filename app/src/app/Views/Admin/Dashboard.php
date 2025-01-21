@@ -10,7 +10,7 @@ use App\Core\Session;
         <span class="text-4xl text-gray-800">👋</span>
         <div>
             <h1 class="text-2xl font-semibold text-gray-800">Bienvenido de nuevo,
-                <?= Session::get('user')['name'] . ' ' . Session::get('user')['surname']; ?>.
+                <?= Session::get('user')['name'].' '.Session::get('user')['surname']; ?>.
             </h1>
             <p class="text-base text-gray-500 mt-2">Te damos la bienvenida a tu tablero. Aquí tienes un resumen
                 rápido de tus datos.</p>

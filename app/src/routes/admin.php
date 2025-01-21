@@ -265,7 +265,7 @@ return [
             'middlewares' => [AdminMiddleware::class],
             'controller' => StatsController::class,
             'method' => 'index',
-        ]
+        ],
     ],
     'POST' => [
         '/admin/user/store' => [

@@ -26,7 +26,7 @@
                 <p class="text-lg font-semibold">Usuarios asignados:</p>
                 <input type="text" readonly
                     class="text-center border border-gray-300 rounded-md py-2 px-4 w-full mt-2 bg-gray-100"
-                    value="<?= implode(', ', array_map(fn($user) => $user->name . ' ' . $user->surname, $work_order->users())) ?>" />
+                    value="<?= implode(', ', array_map(fn ($user) => $user->name.' '.$user->surname, $work_order->users())) ?>" />
             </div>
 
             <?php $blockCounter = 1; ?>
@@ -47,7 +47,7 @@
                                         <?= $blockTask->status == 1 ? 'checked' : '' ?> />
                                     <span>
                                         <?= htmlspecialchars($blockTask->task()->name) ?>
-                                        <?= htmlspecialchars(' ' . $blockTask->elementType()->name); ?>
+                                        <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
                                         <?php if ($blockTask->treeType() != null) { ?>
                                             : <?= htmlspecialchars($blockTask->treeType()->species) ?>
                                         <?php } ?>
@@ -81,7 +81,7 @@
                                 <?php foreach ($block->tasks() as $blockTask) { ?>
                                     <li class="flex items-center space-x-2">
                                         <?= htmlspecialchars($blockTask->task()->name) ?>
-                                        <?= htmlspecialchars(' ' . $blockTask->elementType()->name); ?>
+                                        <?= htmlspecialchars(' '.$blockTask->elementType()->name); ?>
                                         <?php if ($blockTask->treeType() != null) { ?>
                                             : <?= htmlspecialchars($blockTask->treeType()->species) ?>
                                         <?php } ?>
@@ -119,10 +119,10 @@
                     <p class="text-lg font-semibold text-gray-800">Recursos:</p>
                     <?php
                     $resourcesByType = [];
-                    foreach ($resources as $resource) {
-                        $resourcesByType[$resource->resourceType()->name][] = $resource;
-                    }
-                    ?>
+            foreach ($resources as $resource) {
+                $resourcesByType[$resource->resourceType()->name][] = $resource;
+            }
+            ?>
 
                     <?php foreach ($resourcesByType as $typeName => $resourcesList) { ?>
                         <div class="mt-4">

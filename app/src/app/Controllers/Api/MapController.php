@@ -5,13 +5,12 @@ namespace App\Controllers\Api;
 use App\Core\Session;
 use App\Models\Element;
 use App\Models\ElementType;
-use App\Models\Point;
-use App\Models\TreeType;
-use App\Models\Zone;
 use App\Models\Incidence;
+use App\Models\Point;
 use App\Models\Sensor;
+use App\Models\TreeType;
 use App\Models\WorkOrderBlockTask;
-use App\Core\Request;
+use App\Models\Zone;
 use Exception;
 
 class MapController
@@ -419,7 +418,7 @@ class MapController
                         'task_name' => $task->task()->name,
                         'date' => $task->created_at,
                         'status' => $task->status == 1 ? 'completed' : 'pending',
-                        'work_order_id' => $task->workOrderBlock()->workOrder()->getId()
+                        'work_order_id' => $task->workOrderBlock()->workOrder()->getId(),
                     ];
                 }
                 echo json_encode($data);

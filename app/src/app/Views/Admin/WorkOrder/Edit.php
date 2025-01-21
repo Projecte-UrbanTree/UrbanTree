@@ -34,8 +34,8 @@ function mapWithId($items, $getIdMethod)
         <!-- Users -->
         <div>
             <label for="users" class="block text-sm font-medium text-gray-700 mb-1">Operarios</label>
-            <input type="text" name="userNames" id="workersInput" readonly onclick="openModal('modalWorkers', 'workersInput')" placeholder="Seleccionar Operarios" value="<?= htmlspecialchars(implode(', ', array_map(fn($user) => $user->name . ' ' . $user->surname, $work_order->users()))); ?>" class="w-full px-4 py-2 border border-gray-300 rounded cursor-pointer focus:outline-none">
-            <input type="hidden" name="userIds" id="userIdsInput" value="<?= htmlspecialchars(implode(',', array_map(fn($user) => $user->getId(), $work_order->users()))); ?>">
+            <input type="text" name="userNames" id="workersInput" readonly onclick="openModal('modalWorkers', 'workersInput')" placeholder="Seleccionar Operarios" value="<?= htmlspecialchars(implode(', ', array_map(fn ($user) => $user->name.' '.$user->surname, $work_order->users()))); ?>" class="w-full px-4 py-2 border border-gray-300 rounded cursor-pointer focus:outline-none">
+            <input type="hidden" name="userIds" id="userIdsInput" value="<?= htmlspecialchars(implode(',', array_map(fn ($user) => $user->getId(), $work_order->users()))); ?>">
         </div>
 
         <!-- Add Blocks Button -->
@@ -61,8 +61,8 @@ function mapWithId($items, $getIdMethod)
                     </div>
                     <div class="mb-4">
                         <label for="zonesInput_<?= $blockIndex ?>" class="block text-sm font-medium text-gray-700 mb-1">Zonas</label>
-                        <input type="text" id="zonesInput_<?= $blockIndex ?>" readonly onclick="openModal('modalZones', 'zonesInput_<?= $blockIndex ?>')" placeholder="Seleccionar Zonas" value="<?= htmlspecialchars(implode(', ', array_map(fn($zone) => $zone->name, $block->zones()))); ?>" class="w-full px-4 py-2 border border-gray-300 rounded cursor-pointer focus:outline-none">
-                        <input type="hidden" name="blocks[<?= $blockIndex ?>][zonesIds]" id="zonesIdsInput_<?= $blockIndex ?>" value="<?= htmlspecialchars(implode(',', array_map(fn($zone) => $zone->getId(), $block->zones()))); ?>">
+                        <input type="text" id="zonesInput_<?= $blockIndex ?>" readonly onclick="openModal('modalZones', 'zonesInput_<?= $blockIndex ?>')" placeholder="Seleccionar Zonas" value="<?= htmlspecialchars(implode(', ', array_map(fn ($zone) => $zone->name, $block->zones()))); ?>" class="w-full px-4 py-2 border border-gray-300 rounded cursor-pointer focus:outline-none">
+                        <input type="hidden" name="blocks[<?= $blockIndex ?>][zonesIds]" id="zonesIdsInput_<?= $blockIndex ?>" value="<?= htmlspecialchars(implode(',', array_map(fn ($zone) => $zone->getId(), $block->zones()))); ?>">
                     </div>
                     <div class="tasksContainer space-y-4 mb-4">
                         <h3 class="text-lg font-semibold text-gray-800 my-3">Tareas</h3>
@@ -136,7 +136,7 @@ function mapWithId($items, $getIdMethod)
             <?php foreach ($users as $user) { ?>
                 <label class="flex items-center space-x-2">
                     <input type="checkbox" value="<?= htmlspecialchars($user->getId()); ?>" class="form-checkbox">
-                    <span><?= htmlspecialchars($user->name . ' ' . $user->surname); ?></span>
+                    <span><?= htmlspecialchars($user->name.' '.$user->surname); ?></span>
                 </label>
             <?php } ?>
         </div>

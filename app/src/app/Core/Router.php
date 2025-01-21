@@ -42,7 +42,7 @@ class Router
             if (strpos($contentType, 'application/json') !== false) {
                 // Read the raw POST data
                 $rawData = file_get_contents('php://input');
-                if (!empty($rawData)) {
+                if (! empty($rawData)) {
                     // Decode the JSON into an associative array
                     $postData = json_decode($rawData, true);
                     if (json_last_error() !== JSON_ERROR_NONE) {
@@ -165,7 +165,7 @@ class Router
                 throw new Exception("Middleware {$middlewareClass} must implement MiddlewareInterface");
             }
 
-            $middleware->handle($_REQUEST, fn() => null);
+            $middleware->handle($_REQUEST, fn () => null);
         }
     }
 
