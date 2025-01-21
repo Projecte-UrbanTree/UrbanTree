@@ -14,7 +14,7 @@ $currentContract = Session::get('current_contract');
     <!-- Viewport settings to make the layout responsive on different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Page title dynamically generated from PHP -->
-    <title><?= $title.' - '.getenv('APP_NAME'); ?></title>
+    <title><?= $title . ' - ' . getenv('APP_NAME'); ?></title>
     <!-- Favicon link -->
     <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
     <!-- Tailwind CSS framework (via CDN) -->
@@ -62,16 +62,16 @@ $currentContract = Session::get('current_contract');
                     onchange="setCurrentContract(this.value)">
                     <?php
                     foreach ($contracts as $contract) {
-                        echo '<option value="'.$contract->getId().'"'.($currentContract == $contract->getId() ? ' selected' : '').'>'.$contract->name.'</option>';
+                        echo '<option value="' . $contract->getId() . '"' . ($currentContract == $contract->getId() ? ' selected' : '') . '>' . $contract->name . '</option>';
                     }
-echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos los contratos</option>';
-?>
+                    echo '<option value="-1"' . ($currentContract == -1 ? ' selected' : '') . '>Todos los contratos</option>';
+                    ?>
                 </select>
                 <div class="relative">
                     <!-- Letters avatar -->
                     <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer"
                         onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
-                        <?= strtoupper(substr(Session::get('user')['name'], 0, 1).substr(Session::get('user')['surname'], 0, 1)); ?>
+                        <?= strtoupper(substr(Session::get('user')['name'], 0, 1) . substr(Session::get('user')['surname'], 0, 1)); ?>
                     </div>
                     <div id="profile-dropdown"
                         class="hidden absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black/5 z-10">
@@ -170,7 +170,7 @@ echo '<option value="-1"'.($currentContract == -1 ? ' selected' : '').'>Todos lo
                 class="bg-red-400 text-white px-4 py-3 rounded mb-6 transform transition-all duration-500 ease-in-out"
                 role="alert">
                 <span class="inline-block mr-2">
-                    <!-- Error Icon (Font Awesome) -->
+                    <!-- Error Icon (FontAwesome) -->
                     <i class="fas fa-exclamation-circle w-5 h-5 text-white"></i>
                 </span>
                 <strong class="font-bold">Error:</strong> <?= htmlspecialchars(Session::get('error')); ?>
