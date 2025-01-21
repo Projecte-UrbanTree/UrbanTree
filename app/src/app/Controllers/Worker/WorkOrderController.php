@@ -33,8 +33,10 @@ class WorkOrderController
         }
 
         $work_report_resources = [];
+        $work_order_reports = [];
         foreach ($work_orders as $work_order) {
             $report = $work_order->report();
+            $work_order_reports[$work_order->getId()] = $report ? true : false;
             if ($report) {
                 $list = WorkReportResource::findAll(['work_report_id' => $report->getId()]);
                 $work_report_resources[$work_order->getId()] = array_map(function ($item) {
@@ -62,6 +64,7 @@ class WorkOrderController
                 'resources' => $resources,
                 'spent_fuel' => $work_report->spent_fuel ?? 0.0,
                 'work_report_resources' => $work_report_resources,
+                'work_order_reports' => $work_order_reports,
             ],
         ]);
     }
@@ -92,6 +95,7 @@ class WorkOrderController
 
     public function storeReport($postData)
     {
+
         foreach ($postData['spent_time'] as $taskId => $time) {
             $task = WorkOrderBlockTask::find($taskId);
             if ($task) {

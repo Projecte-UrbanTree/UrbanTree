@@ -5,7 +5,6 @@ use App\Controllers\Admin\ContractController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\ElementController;
 use App\Controllers\Admin\ElementTypeController;
-use App\Controllers\Admin\IncidenceController;
 use App\Controllers\Admin\InventoryController;
 use App\Controllers\Admin\ResourceController;
 use App\Controllers\Admin\ResourceTypeController;
@@ -14,7 +13,7 @@ use App\Controllers\Admin\TaskTypeController;
 use App\Controllers\Admin\TreeTypeController;
 use App\Controllers\Admin\UserController;
 use App\Controllers\Admin\WorkOrderController;
-use App\Controllers\Admin\ZoneController;
+use App\Controllers\Admin\WorkReportController;
 use App\Middlewares\AdminMiddleware;
 
 return [
@@ -77,6 +76,11 @@ return [
             'method' => 'destroy',
             'middlewares' => [AdminMiddleware::class],
         ],
+        '/admin/work-report/:id' => [
+            'controller' => WorkReportController::class,
+            'method' => 'view',
+            'middlewares' => [AdminMiddleware::class],
+        ],
         // === TreeTypes GET Routes
         '/admin/tree-types' => [
             'controller' => TreeTypeController::class,
@@ -96,22 +100,6 @@ return [
         '/admin/tree-type/:id/delete' => [
             'controller' => TreeTypeController::class,
             'method' => 'destroy',
-            'middlewares' => [AdminMiddleware::class],
-        ],
-        // === Incidence GET Routes
-        '/admin/incidence' => [
-            'controller' => IncidenceController::class,
-            'method' => 'index',
-            'middlewares' => [AdminMiddleware::class],
-        ],
-        '/admin/incidence/create' => [
-            'controller' => IncidenceController::class,
-            'method' => 'get',
-            'middlewares' => [AdminMiddleware::class],
-        ],
-        '/admin/incidence/all' => [
-            'controller' => IncidenceController::class,
-            'method' => 'findall',
             'middlewares' => [AdminMiddleware::class],
         ],
         // === Elements GET Routes

@@ -4,14 +4,14 @@ namespace App\Controllers\Customer;
 
 use App\Core\View;
 
-class HomeController
+class DashboardController
 {
     public function index($queryParams)
     {
         View::render([
-            'view' => 'Customer/Home',
+            'view' => 'Customer/Dashboard',
             'title' => 'Map',
-            'layout' => 'Customer/CustomerLayout',
+            'layout' => 'Customer/CustomerInventoryLayout',
         ]);
     }
 }

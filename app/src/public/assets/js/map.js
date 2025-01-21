@@ -59,6 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
         center: [0.5826405437646912, 40.70973485628924],
         style: "mapbox://styles/mapbox/standard-satellite",
         zoom: 15,
+        bearing: 0,
+        pitch: 20,
+        antialias: true
     });
 
     // Event listeners
@@ -441,40 +444,44 @@ document.addEventListener("DOMContentLoaded", () => {
         zoneTitleInput.value = ` ${zone.name}`;
 
         zoneTitle.addEventListener("click", () => {
-            zoneTitle.classList.add("hidden");
-            zoneTitleInput.classList.remove("hidden");
-            zoneTitleInput.focus();
+            if (window.userRole !== 0) {
+                zoneTitle.classList.add("hidden");
+                zoneTitleInput.classList.remove("hidden");
+                zoneTitleInput.focus();
+            }
         });
 
         zoneTitleInput.addEventListener("blur", async () => {
-            zoneTitle.classList.remove("hidden");
-            zoneTitleInput.classList.add("hidden");
-            zoneTitle.innerText = zoneTitleInput.value;
+            if (window.userRole !== 0) {
+                zoneTitle.classList.remove("hidden");
+                zoneTitleInput.classList.add("hidden");
+                zoneTitle.innerText = zoneTitleInput.value;
 
-            try {
-                const response = await fetch("/api/map/zones/name", {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        id: zone.id,
-                        name: zoneTitleInput.value,
-                    }),
-                });
+                try {
+                    const response = await fetch("/api/map/zones/name", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            id: zone.id,
+                            name: zoneTitleInput.value,
+                        }),
+                    });
 
-                const result = await response.json();
-                if (result.status !== "success") {
-                    alert(`Error: ${result.message}`);
+                    const result = await response.json();
+                    if (result.status !== "success") {
+                        alert(`Error: ${result.message}`);
+                    }
+                } catch (error) {
+                    console.error("Update Zone Name Error", error);
+                    alert("Error al actualizar el nombre de la zona.");
                 }
-            } catch (error) {
-                console.error("Update Zone Name Error", error);
-                alert("Error al actualizar el nombre de la zona.");
             }
         });
 
         zoneTitleInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
+            if (window.userRole !== 0 && e.key === "Enter") {
                 zoneTitleInput.blur();
             }
         });
@@ -505,27 +512,32 @@ document.addEventListener("DOMContentLoaded", () => {
             "w-full mt-4 p-3 border rounded text-gray-700 focus:ring-2 focus:ring-blue-400 transition duration-200";
         zoneDescription.placeholder = "Descripción de la zona";
         zoneDescription.value = zone.description || "";
+        if (window.userRole == 0) {
+            zoneDescription.disabled = true;
+        }
 
         zoneDescription.addEventListener("blur", async () => {
-            try {
-                const response = await fetch("/api/map/zones/description", {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        id: zone.id,
-                        description: zoneDescription.value,
-                    }),
-                });
+            if (window.userRole !== 0) {
+                try {
+                    const response = await fetch("/api/map/zones/description", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            id: zone.id,
+                            description: zoneDescription.value,
+                        }),
+                    });
 
-                const result = await response.json();
-                if (result.status !== "success") {
-                    alert(`Error: ${result.message}`);
+                    const result = await response.json();
+                    if (result.status !== "success") {
+                        alert(`Error: ${result.message}`);
+                    }
+                } catch (error) {
+                    console.error("Update Zone Description Error", error);
+                    alert("Error al actualizar la descripción de la zona.");
                 }
-            } catch (error) {
-                console.error("Update Zone Description Error", error);
-                alert("Error al actualizar la descripción de la zona.");
             }
         });
 
@@ -547,17 +559,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const zoneFooter = document.createElement("div");
         zoneFooter.className = "flex justify-end mt-4";
 
-        const deleteButton = document.createElement("button");
-        deleteButton.className =
-            "bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded transition duration-300";
-        deleteButton.innerHTML = "<i class='fas fa-trash-alt'></i> Eliminar";
-        deleteButton.onclick = () => {
-            if (confirm("¿Estás seguro de que deseas eliminar esta zona?")) {
-                removeZone(zone.id);
-            }
-        };
-
-        zoneFooter.appendChild(deleteButton);
+        if (window.userRole === 2) {
+            const deleteButton = document.createElement("button");
+            deleteButton.className =
+                "bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded transition duration-300";
+            deleteButton.innerHTML =
+                "<i class='fas fa-trash-alt'></i> Eliminar";
+            deleteButton.onclick = () => {
+                if (
+                    confirm("¿Estás seguro de que deseas eliminar esta zona?")
+                ) {
+                    removeZone(zone.id);
+                }
+            };
+            zoneFooter.appendChild(deleteButton);
+        }
 
         zoneItem.appendChild(zoneHeader);
         zoneItem.appendChild(zoneDescription);
@@ -776,7 +792,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (hasIncidence) {
             const badge = document.createElement("span");
-            badge.className = "badge";
+            badge.className = "animate-bounce";
             badge.style.cssText =
                 "position: absolute; top: -5px; right: -5px; background-color: red; color: white; border-radius: 50%; width: 15px; height: 15px; display: flex; align-items: center; justify-content: center;";
             badge.innerHTML = `<i class="fas fa-exclamation-circle" style="font-size: 10px;"></i>`;
@@ -885,6 +901,7 @@ document.addEventListener("DOMContentLoaded", () => {
             class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded disabled:opacity-50 disabled:pointer-events-none"
             value="${color || "#2563eb"}"
             title="Choose your color"
+            ${window.userRole != 0 ? "" : "disabled"}
         >
     `;
         const colorPickerInput = colorPickerContainer.querySelector("input");
@@ -974,14 +991,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p><strong><i class="fas fa-map-pin"></i> Coordenadas:</strong> ${
                             data.point.latitude
                         }, ${data.point.longitude}</p>
-                        <p><strong><i class="fas fa-align-left"></i> Descripción:</strong> <textarea id="element-description-input" class="border rounded p-1 w-full" rows="5">${
-                            data.description || ""
-                        }</textarea></p>
+                        <p><strong><i class="fas fa-align-left"></i> Descripción:</strong> <textarea id="element-description-input" class="border rounded p-1 w-full" rows="5" ${
+                            window.userRole === 0 ? "disabled" : ""
+                        }>${data.description || ""}</textarea></p>
                     </div>
                     <div class="mt-4 flex justify-end">
-                        <button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded transition duration-300" data-element-id="${
-                            data.id
-                        }">Eliminar elemento</button>
+                        ${
+                            window.userRole !== 0
+                                ? `<button id="delete-element-btn" class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded transition duration-300" data-element-id="${data.id}">Eliminar elemento</button>`
+                                : ""
+                        }
                     </div>
                 `;
                 document.getElementById(
@@ -1008,6 +1027,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 loadIncidences(data.id);
                 loadElementHistory(data.id);
                 elementModal.classList.remove("hidden");
+                elementModalTabs.forEach((tab) => {
+                    tab.classList.remove("border-primary");
+                    tab.classList.add("border-transparent");
+                });
+                elementModalTabContents.forEach((tc) => tc.classList.add("hidden"));
+                const infoTab = document.querySelector('.element-modal-tab[data-target="element-modal-info"]');
+                if (infoTab) {
+                    infoTab.classList.add("border-primary");
+                    infoTab.classList.remove("border-transparent");
+                    document
+                        .getElementById(infoTab.dataset.target)
+                        .classList.remove("hidden");
+                }
 
                 const descriptionInput = document.getElementById(
                     "element-description-input"
@@ -1026,13 +1058,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         elementModal.classList.add("hidden");
                     });
 
-                document
-                    .getElementById("delete-element-btn")
-                    .addEventListener("click", (event) => {
-                        const elementId =
-                            event.target.getAttribute("data-element-id");
-                        deleteElement(elementId);
-                    });
+                if (window.userRole !== 0) {
+                    document
+                        .getElementById("delete-element-btn")
+                        .addEventListener("click", (event) => {
+                            const elementId =
+                                event.target.getAttribute("data-element-id");
+                            deleteElement(elementId);
+                        });
+                }
 
                 document
                     .getElementById("add-incidence-btn")
@@ -1126,23 +1160,23 @@ document.addEventListener("DOMContentLoaded", () => {
                                     : "bg-yellow-500 text-white"
                             }">${
                             incidence.status === "closed"
-                                ? '<i class="fas fa-lock mr-1"></i> Cerrado'
+                                ? '<i class="fas fa-lock mr-1"></i> Cerrada'
                                 : '<i class="fas fa-exclamation-triangle mr-1"></i> Abierta'
                         }</span></p>
                             <p class="mb-4"><strong><i class="fas fa-align-left"></i> Descripción:</strong> ${
                                 incidence.description || "N/A"
                             }</p>
                             <div class="flex justify-end space-x-2">
-                                <button class="bg-green-500 text-white px-4 py-2 rounded toggle-status-btn" data-incidence-id="${
-                                    incidence.id
-                                }">
+                                ${
+                                    window.userRole !== 0
+                                        ? `<button class="bg-green-500 text-white px-4 py-2 rounded toggle-status-btn" data-incidence-id="${incidence.id}">
                                     Cambiar Estado
                                 </button>
-                                <button class="bg-red-500 text-white px-4 py-2 rounded delete-incidence-btn" data-incidence-id="${
-                                    incidence.id
-                                }">
+                                <button class="bg-red-500 text-white px-4 py-2 rounded delete-incidence-btn" data-incidence-id="${incidence.id}">
                                     Eliminar incidencia
-                                </button>
+                                </button>`
+                                        : ""
+                                }
                             </div>
                         `;
                         incidencesList.appendChild(incidenceItem);
@@ -1234,6 +1268,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (result.status === "success") {
                     alert("Incidencia añadida correctamente.");
                     loadIncidences(elementId);
+                    reloadMap();
                 } else {
                     alert(`Error: ${result.message}`);
                 }
@@ -1483,4 +1518,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetchElementTypes();
     fetchTreeTypes();
+
+    if (window.userRole === 0) {
+        document.getElementById("submenu").classList.add("hidden");
+    }
 });
+

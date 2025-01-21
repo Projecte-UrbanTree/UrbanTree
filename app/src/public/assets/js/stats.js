@@ -1,11 +1,11 @@
 var options = {
     series: [
         {
-            name: "Tasques no fetes",
+            name: "Tareas no hechas",
             data: tasksNotDoneCount,
         },
         {
-            name: "Tasques fetes",
+            name: "Tareas hechas",
             data: tasksDoneCount,
         },
     ],
@@ -31,16 +31,16 @@ var options = {
     },
     xaxis: {
         categories: [
-            "Dilluns",
-            "Dimarts",
-            "Dimecres",
-            "Dijous",
-            "Divendres",
+            "Lunes",
+            "Martes",
+            "Miércoles",
+            "Jueves",
+            "Viernes",
         ],
     },
     yaxis: {
         title: {
-            text: "Número de Tasques",
+            text: "Número de Tareas",
         },
     },
     fill: {
@@ -61,7 +61,7 @@ chart.render();
 var options2 = {
     series: [
         {
-            name: "Hores treballades",
+            name: "Horas trabajadas",
             data: hoursWorked,
         },
     ],
@@ -87,16 +87,16 @@ var options2 = {
     },
     xaxis: {
         categories: [
-            "Dilluns",
-            "Dimarts",
-            "Dimecres",
-            "Dijous",
-            "Divendres",
+            "Lunes",
+            "Martes",
+            "Miércoles",
+            "Jueves",
+            "Viernes",
         ],
     },
     yaxis: {
         title: {
-            text: "Hores treballades",
+            text: "Horas trabajadas",
         },
     },
     fill: {
@@ -117,7 +117,7 @@ chart2.render();
 var options3 = {
     series: [
         {
-            name: "Consum",
+            name: "Consumo",
             data: fuelConsumption,
         },
     ],
@@ -143,16 +143,16 @@ var options3 = {
     },
     xaxis: {
         categories: [
-            "Dilluns",
-            "Dimarts",
-            "Dimecres",
-            "Dijous",
-            "Divendres",
+            "Lunes",
+            "Martes",
+            "Miércoles",
+            "Jueves",
+            "Viernes",
         ],
     },
     yaxis: {
         title: {
-            text: "Consum de gasoil",
+            text: "Consumo de gasoil",
         },
     },
     fill: {
