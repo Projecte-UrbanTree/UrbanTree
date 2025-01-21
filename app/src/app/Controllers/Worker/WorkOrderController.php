@@ -33,8 +33,10 @@ class WorkOrderController
         }
 
         $work_report_resources = [];
+        $work_order_reports = [];
         foreach ($work_orders as $work_order) {
             $report = $work_order->report();
+            $work_order_reports[$work_order->getId()] = $report ? true : false;
             if ($report) {
                 $list = WorkReportResource::findAll(['work_report_id' => $report->getId()]);
                 $work_report_resources[$work_order->getId()] = array_map(function ($item) {
@@ -62,6 +64,7 @@ class WorkOrderController
                 'resources' => $resources,
                 'spent_fuel' => $work_report->spent_fuel ?? 0.0,
                 'work_report_resources' => $work_report_resources,
+                'work_order_reports' => $work_order_reports,
             ],
         ]);
     }
@@ -85,13 +88,14 @@ class WorkOrderController
             echo json_encode(['success' => true]);
             exit;
         } else {
-            header('Location: /worker/work-orders?date='.$postData['date']);
+            header('Location: /worker/work-orders?date=' . $postData['date']);
             exit;
         }
     }
 
     public function storeReport($postData)
     {
+
         foreach ($postData['spent_time'] as $taskId => $time) {
             $task = WorkOrderBlockTask::find($taskId);
             if ($task) {
@@ -112,14 +116,14 @@ class WorkOrderController
 
         $this->updateResources($work_report->getId(), $postData['resource_id'] ?? []);
 
-        header('Location: /worker/work-orders?work_order_id='.$postData['work_order_id']);
+        header('Location: /worker/work-orders?work_order_id=' . $postData['work_order_id']);
         exit;
     }
 
     private function updateResources($work_report_id, array $newResourceIds)
     {
         $existingResources = WorkReportResource::findAll(['work_report_id' => $work_report_id]);
-        $existingResourceIds = array_map(fn ($res) => $res->resource_id, $existingResources);
+        $existingResourceIds = array_map(fn($res) => $res->resource_id, $existingResources);
 
         $resourcesToDelete = array_diff($existingResourceIds, $newResourceIds);
         foreach ($resourcesToDelete as $resourceId) {

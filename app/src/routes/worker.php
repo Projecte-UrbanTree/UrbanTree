@@ -3,6 +3,7 @@
 use App\Controllers\Worker\DashboardController;
 use App\Controllers\Worker\WorkOrderController;
 use App\Middlewares\WorkerMiddleware;
+use App\Controllers\Worker\InventoryController;
 
 return [
     'GET' => [
@@ -16,6 +17,12 @@ return [
             'method' => 'index',
             'middlewares' => [WorkerMiddleware::class],
         ],
+        '/worker/inventory' => [
+            'controller' => InventoryController::class,
+            'method' => 'index',
+            'middlewares' => [WorkerMiddleware::class],
+        ],
+
     ],
     'POST' => [
         '/worker/work-orders/update-status' => [

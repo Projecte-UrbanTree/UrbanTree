@@ -34,6 +34,11 @@ $currentContract = Session::get('current_contract');
 
 <body class="bg-gray-50">
 
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <img src="/assets/images/logo.png" alt="Loading..." class="w-48 fade-animation">
+    </div>
+
     <!-- Navigation Bar -->
     <header class="border-b bg-white shadow-md">
         <nav class="flex items-center justify-between px-4 py-4 max-w-7xl mx-auto">
@@ -50,7 +55,7 @@ $currentContract = Session::get('current_contract');
 
             <!-- Navigation Links (Visible only on large screens) -->
             <div class="hidden md:flex space-x-6">
-                <a href="/worker/work-orders" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/worker/work-orders') ? 'font-semibold' : ''; ?>">
+                <a href="/worker/work-orders" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/worker/work-orders') === false) ? 'font-semibold' : ''; ?>">
                     <i class="fas fa-toolbox"></i> Ordenes de trabajo
                 </a>
                 <a href="/worker/inventory" class="text-sm text-gray-700 hover:text-gray-600 active:text-gray-700 <?= ($currentPath === '/worker/inventory') ? 'font-semibold' : ''; ?>">
@@ -60,6 +65,14 @@ $currentContract = Session::get('current_contract');
 
             <!-- Profile and Contract Dropdown -->
             <div class="flex items-center gap-4">
+                <select id="contractBtn" name="contractBtn" class="bg-white text-sm rounded-md p-2 text-right focus:outline-none" onchange="setCurrentContract(this.value)">
+                    <?php
+                    foreach ($contracts as $contract) {
+                        echo '<option value="' . $contract->getId() . '"' . ($currentContract == $contract->getId() ? ' selected' : '') . '>' . $contract->name . '</option>';
+                    }
+                    echo '<option value="-1"' . ($currentContract == -1 ? ' selected' : '') . '>Todos los contratos</option>';
+                    ?>
+                </select>
                 <div class="relative">
                     <!-- Letters avatar -->
                     <div class="h-10 w-10 flex items-center justify-center bg-gray-300 text-gray-700 font-semibold text-lg rounded-full cursor-pointer" onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
@@ -76,7 +89,7 @@ $currentContract = Session::get('current_contract');
 
         <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="hidden md:hidden px-4 py-4 bg-gray-100">
-            <a href="/worker/work-orders" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/worker/work-orders') ? 'font-semibold' : ''; ?>">
+            <a href="/worker/work-orders" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= (strpos($currentPath, '/admin') === 0 && strpos($currentPath, '/admin/inventory') === false) ? 'font-semibold' : ''; ?>">
                 <i class="fas fa-toolbox"></i> Ordenes de trabajo
             </a>
             <a href="/worker/inventory" class="block py-2 text-sm text-gray-700 hover:bg-gray-200 rounded <?= ($currentPath === '/worker/inventory') ? 'font-semibold' : ''; ?>">
@@ -85,67 +98,48 @@ $currentContract = Session::get('current_contract');
         </div>
     </header>
 
+    <!-- Submenu -->
+    <div id="submenu" class="flex overflow-x-auto whitespace-nowrap justify-center items-center gap-4 px-4 py-4 bg-gray-100 shadow-md">
+        <button id="zone-control" class="text-sm text-gray-700 flex flex-col items-center">
+            <i class="fas fa-brush"></i>
+            Editor de zonas
+        </button>
+        <button id="element-control" class="text-sm text-gray-700 flex flex-col items-center">
+            <i class="fas fa-jar-wheat"></i>
+            Editor de elementos
+        </button>
+
+        <!-- Separator -->
+        <div class="h-6 border-l border-gray-300 mx-4"></div>
+
+        <!-- Create Button -->
+        <button id="create-control" class="text-sm text-gray-300 flex flex-col items-center" disabled>
+            <i class="fas fa-plus-circle"></i>
+            Crear nueva zona
+        </button>
+
+        <!-- Finish Creation Button -->
+        <button id="finish-control" class="hidden text-sm text-gray-700 flex flex-col items-center">
+            <i class="fas fa-check-circle"></i>
+            Finalizar creación
+        </button>
+
+        <!-- Cancel Zone Creation Button -->
+        <button id="cancel-zone-control" class="hidden text-sm text-gray-700 flex flex-col items-center">
+            <i class='fas fa-times-circle'></i> Cancelar creación
+        </button>
+
+    </div>
+
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 pt-8 pb-16">
-        <?php if (Session::has('success')) { ?>
-            <div id="alert-msg"
-                class="bg-green-400 text-white px-4 py-3 rounded mb-6 transform transition-all duration-500 ease-in-out"
-                role="alert">
-                <span class="inline-block mr-2">
-                    <!-- Success Icon (Font Awesome) -->
-                    <i class="fas fa-check-circle w-5 h-5 text-white"></i>
-                </span>
-                <?= htmlspecialchars(Session::get('success')); ?>
-            </div>
-        <?php } ?>
-
-        <?php if (Session::has('error')) { ?>
-            <div id="alert-msg-error"
-                class="bg-red-400 text-white px-4 py-3 rounded mb-6 transform transition-all duration-500 ease-in-out"
-                role="alert">
-                <span class="inline-block mr-2">
-                    <!-- Error Icon (Font Awesome) -->
-                    <i class="fas fa-exclamation-circle w-5 h-5 text-white"></i>
-                </span>
-                <strong class="font-bold">Error:</strong> <?= htmlspecialchars(Session::get('error')); ?>
-            </div>
-        <?php } ?>
-
+    <main class="flex grow">
         <?= $content; ?>
     </main>
 
-    <script src="/assets/js/worker.js?v=<?= time(); ?>"></script>
+    <script src="/assets/js/app.js?v=<?= time(); ?>"></script>
+    <script src="/assets/js/map.js?v=<?= time(); ?>"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Show alerts with animation (Success and Error messages)
-            const alertMsg = document.querySelector("#alert-msg");
-            const alertMsgError = document.querySelector("#alert-msg-error");
-
-            if (alertMsg) {
-                setTimeout(() => {
-                    alertMsg.classList.remove("hidden", "opacity-0");
-                    alertMsg.classList.add("opacity-100");
-                }, 100);
-
-                setTimeout(() => {
-                    alertMsg.classList.add("opacity-0");
-                    alertMsg.classList.remove("opacity-100");
-                    setTimeout(() => {
-                        alertMsg.classList.add("hidden");
-                    }, 500);
-                }, 3500);
-            }
-
-            if (alertMsgError) {
-                setTimeout(() => {
-                    alertMsgError.classList.add("opacity-0");
-                    alertMsgError.classList.remove("opacity-100");
-                    setTimeout(() => {
-                        alertMsgError.classList.add("hidden");
-                    }, 500);
-                }, 3500);
-            }
-
             // Mobile menu toggle functionality
             const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
             const mobileMenu = document.getElementById("mobile-menu");

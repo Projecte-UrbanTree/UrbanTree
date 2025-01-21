@@ -28,7 +28,7 @@ class WorkOrder extends BaseModel
 
     public function report(): ?WorkReport
     {
-        return $this->hasOne(WorkReport::class, 'id');
+        return $this->hasOne(WorkReport::class, 'work_order_id');
     }
 
     public function contract(): Contract
@@ -48,8 +48,8 @@ class WorkOrder extends BaseModel
 
     public function status()
     {
-        $tasks = array_merge(...array_map(fn ($block) => $block->tasks(), $this->blocks()));
-        $completed = count(array_filter($tasks, fn ($task) => $task->status == 1));
+        $tasks = array_merge(...array_map(fn($block) => $block->tasks(), $this->blocks()));
+        $completed = count(array_filter($tasks, fn($task) => $task->status == 1));
         $total = count($tasks);
 
         return $completed === $total ? 2 : ($completed > 0 ? 1 : 0);

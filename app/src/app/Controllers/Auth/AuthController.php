@@ -46,7 +46,7 @@ class AuthController
             exit;
         }
 
-        if ($user->role == 2) {
+        if ($user->role == 1 || $user->role == 2) {
             $contracts = Contract::findAll();
             foreach ($contracts as $contract) {
                 $currentDate = date('Y-m-d');
@@ -75,7 +75,7 @@ class AuthController
         if ($user->role === 0) {
             header('Location: /customer');
         } elseif ($user->role === 1) {
-            header('Location: /worker');
+            header('Location: /worker/work-orders');
         } elseif ($user->role === 2) {
             header('Location: /admin');
         }
